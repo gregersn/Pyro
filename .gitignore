@@ -1,0 +1,9 @@
+# Ignore build and lib dirs
+build
+lib/*
+
+# Ignore executables
+bin/*
+
+# Ignore mac specific files
+.DS_Store
