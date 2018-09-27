@@ -1,10 +1,10 @@
 #ifndef PYROGRAPHICS_H
 #define PYROGRAPHICS_H
 
-#include <pyroconstants.h>
-#include <pyrocolor.h>
-#include <pyroimage.h>
-#include <pyroshape.h>
+#include "pyroconstants.h"
+#include "pyrocolor.h"
+#include "pyroimage.h"
+#include "pyroshape.h"
 
 #include <cairo/cairo.h>
 

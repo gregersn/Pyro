@@ -5,6 +5,7 @@
 SRCDIR := src
 BUILDDIR := build
 TARGET := libpyro.so
+DESTDIR := /usr/local
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
@@ -37,6 +38,18 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 clean:
 	@echo "Cleaning...";
 	$(RM) -r $(BUILDDIR) $(TARGET)
+
+.PHONY: install
+install: $(TARGET)
+	mkdir -p $(DESTDIR)/lib
+	mkdir -p $(DESTDIR)/include/pyro
+	cp $(TARGET) $(DESTDIR)/lib/$(TARGET)
+	cp include/*.h $(DESTDIR)/include/pyro/
+
+.PHONY: uninstall
+uninstall:
+	rm -f $(DESTDIR)/lib/$(TARGET)
+	rm -f $(DESTDIR)/include/pyro
 
 .PHONY: clean
 

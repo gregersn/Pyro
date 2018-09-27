@@ -48,3 +48,15 @@ Save as `mytest.cpp`, do a `make test`, and you should have an executable.
 ## Tests
 Some tests have been implemented using [Catch2](https://github.com/catchorg/Catch2)
 
+
+## Installing
+If you run `make install` at the moment, it is just doing some dumb stuff to get it installed on Mac. 
+You can then compile and link a file with something like:
+`g++ -MMD -MP -lpyro -std=c++17 somefile.cpp`
+
+## Todo
+- Write a better install target
+- Make a configure script?
+- Write some abstraction to make possible different backends for rendering
+
+
