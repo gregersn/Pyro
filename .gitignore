@@ -7,3 +7,5 @@ bin/*
 
 # Ignore mac specific files
 .DS_Store
+output/
+.vscode/

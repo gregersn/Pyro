@@ -11,11 +11,11 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
 # -g Produce debugging information in the operating system's native format
-CXXFLAGS = -Wall -std=c++14 -I include
+CXXFLAGS = -Wall -std=c++17 -I include
 LDFLAGS = -L.
 LDLIBS = -lpyro
 
-PYRO_CXXFLAGS := -g -Wall `pkg-config --cflags cairo` -std=c++14 -I include
+PYRO_CXXFLAGS := -g -Wall `pkg-config --cflags cairo` -std=c++17 -I include
 PYRO_LDFLAGS = -shared
 LIB := `pkg-config --libs cairo` -lfreeimage -lstdc++
 # INC := -I include

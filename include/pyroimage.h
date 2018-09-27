@@ -5,6 +5,9 @@
 #include <stdint.h>
 
 namespace Pyro {
+    enum FILETYPE {
+        JPEG, PNG, TIFF 
+    };
     class Image {
         private:
             bool pixels_locked;
@@ -23,12 +26,14 @@ namespace Pyro {
             Image();
             Image(unsigned int width, unsigned int height, unsigned int bpp);
             ~Image();
-            void save(const std::string &file);
+            void save(const std::string &filename);
+            static Image *load(const std::string &filename);
+
             void *get_data() { return this->data; };
             void *get_pre_multiplied_data();
             uint32_t *load_pixels();
             void update_pixels();
-            //static Image load(const std::wstring &file);
+            //static Image load(const std::wstring &filename);
             static Image *create(unsigned int width, unsigned int height);
     };
 
