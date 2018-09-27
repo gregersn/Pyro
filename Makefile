@@ -35,9 +35,16 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	$(CXX) $(PYRO_CXXFLAGS) $(INC) -c -o $@ $<
 
+.PHONY: clean
 clean:
 	@echo "Cleaning...";
 	$(RM) -r $(BUILDDIR) $(TARGET)
+	$(MAKE) -C tests clean
+
+.PHONY: test
+test: $(TARGET)
+	$(MAKE) -C tests
+	./tests/alltests
 
 .PHONY: install
 install: $(TARGET)
@@ -51,7 +58,6 @@ uninstall:
 	rm -f $(DESTDIR)/lib/$(TARGET)
 	rm -f $(DESTDIR)/include/pyro
 
-.PHONY: clean
 
 %.o: %.cpp                                                                                          
 	$(CXX) -MMD -MP $(CPPFLAGS) $(CXXFLAGS) -o $@ -c $<                                           
