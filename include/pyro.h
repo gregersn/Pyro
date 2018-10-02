@@ -11,11 +11,16 @@
 #include "pyrovector.h"
 
 namespace Pyro {
+    enum class Unit {
+        px, cm, mm, in
+    };
+
     extern Graphics *pg;
     extern unsigned int width;
     extern unsigned int height;
     extern uint32_t *pixels;
 
+    void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi);
     void size(unsigned int width, unsigned int height);
 
     uint32_t color(unsigned int r, unsigned int g, unsigned int b);

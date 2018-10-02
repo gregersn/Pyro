@@ -13,6 +13,27 @@ namespace Pyro {
         }
     }
 
+    void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi) {
+        float multiplier = 1.0f;
+        switch(unit) {
+            case Unit::mm:
+                multiplier = dpi / 25.4;
+                break;
+            case Unit::cm:
+                multiplier = dpi / 2.54;
+                break;
+            case Unit::in:
+                multiplier = dpi;
+                break;
+            case Unit::px:
+            default:
+                break;
+        }
+
+        return size((unsigned int)width * multiplier, (unsigned int)height * multiplier);
+    }
+
+
     void size(unsigned int w, unsigned int h) {
         if(pg == NULL) {
             std::atexit(exit);
