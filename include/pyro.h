@@ -32,8 +32,11 @@ namespace Pyro {
     void updatepixels();
     inline void image(Image *img, float x, float y) { pg->image(img, x, y); };
 
+    inline float random() { return pg->random(); }; 
+    
     template<typename T>
     inline T random(T a, T b) { return pg->random(a, b); };
+    
     inline void randomseed(unsigned int seed) { pg->randomseed(seed); };
 
     template<typename T>

@@ -1,9 +1,6 @@
 #include <pyroimage.h>
 #include <pyroconstants.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
 #include <FreeImage.h>
 
 namespace Pyro {

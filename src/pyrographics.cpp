@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <assert.h>
-#include <stdlib.h>
 #include <random>
 #include <cstring>
 

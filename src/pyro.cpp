@@ -2,13 +2,13 @@
 #include <cstdlib>
 
 namespace Pyro {
-    Graphics *pg = NULL;
+    Graphics *pg = nullptr;
     unsigned int width;
     unsigned int height;
-    uint32_t *pixels = NULL;
+    uint32_t *pixels = nullptr;
     
     void exit() {
-        if(pg != NULL) {
+        if(pg != nullptr) {
             delete pg;
         }
     }
@@ -35,11 +35,11 @@ namespace Pyro {
 
 
     void size(unsigned int w, unsigned int h) {
-        if(pg == NULL) {
+        if(pg == nullptr) {
             std::atexit(exit);
         }
 
-        if(pg != NULL) {
+        if(pg != nullptr) {
             delete pg;
         }
         width = w;
@@ -52,7 +52,7 @@ namespace Pyro {
     }
 
     void updatepixels() {
-        pixels = NULL;
+        pixels = nullptr;
     }
 
     uint32_t color(unsigned int r, unsigned int g, unsigned int b) {
