@@ -12,6 +12,10 @@
 namespace Pyro {
     Graphics::Graphics(unsigned int width, unsigned int height, unsigned int bpp) :
     Image() {
+
+        this->rng = std::default_random_engine(0);
+        this->rng_dist = std::uniform_real_distribution(0.0f, 1.0f);
+
         this->_width = width;
         this->_height = height;
         this->bpp = bpp;
@@ -41,30 +45,38 @@ namespace Pyro {
     }
 
     int Graphics::random(int range) {
-        return random(0, range);
+        return (int)random() * range;
     }
 
     int Graphics::random(int low, int high) {
         assert(high > low);
-        return (rand()%(high - low)) + low;
+        return (int)(random() * (high - low)) + low;
     }
     
     unsigned int Graphics::random(unsigned int range) {
-        return random(0u, range);
+        return (unsigned int)random() * range;
     }
 
     unsigned int Graphics::random(unsigned int low, unsigned int high) {
         assert(high > low);
-        return (rand()%(high - low)) + low;
+        return (unsigned int)(random() * (high - low)) + low;
     }
     
     float Graphics::random(float range) {
-        return random(0.0f, range);
+        return random() * range;
     }
 
     float Graphics::random(float low, float high) {
         assert(high > low);
-        return ((rand() / (float)RAND_MAX) * (high - low)) + low;
+        return (random() * (high - low)) + low;
+    }
+
+    float Graphics::random() {
+        return this->rng_dist(this->rng);
+    }
+
+    void Graphics::randomseed(unsigned int seed) {
+        this->rng.seed(seed);
     }
 
     void Graphics::image(Image *img, float x, float y) {

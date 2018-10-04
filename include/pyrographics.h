@@ -6,6 +6,7 @@
 #include "pyroimage.h"
 #include "pyroshape.h"
 
+#include <random>
 #include <cairo/cairo.h>
 
 namespace Pyro {
@@ -31,14 +32,20 @@ namespace Pyro {
             static Graphics *create(unsigned int width, unsigned int height);
             //void save(const std::string &file);
 
+            std::default_random_engine rng;
+            std::uniform_real_distribution<float> rng_dist;
+
             unsigned int random(unsigned int range);
             unsigned int random(unsigned int low, unsigned int high);
 
             int random(int range);
             int random(int low, int high);
 
+            float random(); // Returns a random number between 0 and 1
             float random(float range);
             float random(float low, float high);
+
+            void randomseed(unsigned int seed);
 
             void image(Image *img, float x, float y);
 

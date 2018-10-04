@@ -34,6 +34,7 @@ namespace Pyro {
 
     template<typename T>
     inline T random(T a, T b) { return pg->random(a, b); };
+    inline void randomseed(unsigned int seed) { pg->randomseed(seed); };
 
     template<typename T>
     inline T max(T a, T b) { return a ? a > b : b; }
