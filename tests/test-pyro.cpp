@@ -2,6 +2,12 @@
 
 #include <pyro.h>
 
+TEST_CASE("The library can be initialized", "[setup]") {
+    SECTION("using size() does not fail") {
+        REQUIRE_NOTHROW(Pyro::size(100, 100));
+    }
+}
+
 TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]") {
     SECTION("using pixels sets absolute size") {
         unsigned int width = 500;

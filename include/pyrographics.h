@@ -7,30 +7,26 @@
 #include "pyroshape.h"
 
 #include <random>
-#include <cairo/cairo.h>
 
 namespace Pyro {
     class Graphics : public Image {
-        cairo_surface_t *surface;
-        cairo_t *cr;
+        protected:
+            bool stroke_enable;
+            bool fill_enable;
 
-        bool stroke_enable;
-        bool fill_enable;
+            bool _smooth;
 
-        bool _smooth;
+            t_color stroke_color;
+            t_color fill_color;
+            float stroke_weight;
 
-        t_color stroke_color;
-        t_color fill_color;
-        float stroke_weight;
-
-        Shape _shape;
+            Shape _shape;
 
         public:
             Graphics(unsigned int width, unsigned int height, unsigned int bpp);
-            ~Graphics();
+            virtual ~Graphics();
 
             static Graphics *create(unsigned int width, unsigned int height);
-            //void save(const std::string &file);
 
             std::default_random_engine rng;
             std::uniform_real_distribution<float> rng_dist;
@@ -47,7 +43,7 @@ namespace Pyro {
 
             void randomseed(unsigned int seed);
 
-            void image(Image *img, float x, float y);
+            virtual void image(Image *img, float x, float y) = 0;
 
             // Color functions
             void nostroke();
@@ -74,16 +70,16 @@ namespace Pyro {
             void stroke(int r, int g, int b, int a);
 
             void strokeweight(float w); 
-            void strokecap(int cap);
+            virtual void strokecap(int cap);
 
-            void smooth();
-            void nosmooth();
+            virtual void smooth();
+            virtual void nosmooth();
 
             // Transformation
-            void translate(float x, float);
-            void rotate(float a);
-            void pushmatrix();
-            void popmatrix();
+            virtual void translate(float x, float) = 0;
+            virtual void rotate(float a) = 0;
+            virtual void pushmatrix() = 0;
+            virtual void popmatrix() = 0;
 
             // Drawing functions
             void background(int c) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, 1.0f); };
@@ -94,9 +90,9 @@ namespace Pyro {
             void background(float c) { this->background(c, c, c, 1.0); };
             void background(float c, float a) { this->background(c, c, c, a); };
             void background(float r, float g, float b) { this->background(r, g, b, 1.0); };
-            void background(float r, float g, float b, float a);
+            virtual void background(float r, float g, float b, float a);
 
-            void shape(Shape s, float x, float y);
+            virtual void shape(Shape s, float x, float y) = 0;
 
             void beginshape() {this->_shape.begin(); };
             void vertex(float x, float y) { this->_shape.vertex(x, y); };
@@ -104,7 +100,7 @@ namespace Pyro {
 
             // Primitive shapes
             void point(float x, float y);
-            void line(float x0, float y0, float x1, float y1);
+            virtual void line(float x0, float y0, float x1, float y1) = 0;
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
             void rect(float a, float b, float c, float d);
             void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);

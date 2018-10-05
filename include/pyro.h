@@ -3,10 +3,10 @@
 
 #include "pyroconstants.h"
 #include "pyrocolor.h"
-#include "pyrographics.h"
 #include "pyroimage.h"
 #include "pyroshape.h"
 #include "pyrovector.h"
+#include "pyrographics.h"
 
 namespace Pyro {
     enum class Unit {

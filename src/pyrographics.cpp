@@ -1,7 +1,8 @@
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 
 #include <pyrographics.h>
+#include <pyrographics_cairo.h>
 
 #include <iostream>
 #include <random>
@@ -18,11 +19,6 @@ namespace Pyro {
         this->_height = height;
         this->bpp = bpp;
         this->data = (void *)malloc(width * height * sizeof(unsigned char) * this->bpp);
-        this->surface = cairo_image_surface_create_for_data((unsigned char *)this->data,
-                                                            CAIRO_FORMAT_ARGB32,
-                                                            this->width(), this->height(),
-                                                            this->width() * this->bpp);
-        this->cr = cairo_create(this->surface);
 
         this->smooth();
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);
@@ -33,13 +29,11 @@ namespace Pyro {
     }
 
     Graphics::~Graphics() {
-        cairo_destroy(this->cr);
-        cairo_surface_destroy(this->surface);
     }
 
     Graphics *Graphics::create(unsigned int width, unsigned int height){
-        Graphics *pg = new Graphics(width, height, 4);        
-        return pg;
+       Graphics *pg = new GraphicsCairo(width, height, 4);        
+       return pg;
     }
 
     int Graphics::random(int range) {
@@ -77,90 +71,19 @@ namespace Pyro {
         this->rng.seed(seed);
     }
 
-    void Graphics::image(Image *img, float x, float y) {
-        cairo_surface_t *src = cairo_image_surface_create_for_data(
-            (unsigned char *)img->get_pre_multiplied_data(), CAIRO_FORMAT_ARGB32,
-            img->width(), img->height(), img->width() * 4);
-        cairo_set_source_surface(this->cr, src, x, y);
-        cairo_paint(this->cr);
-        cairo_surface_destroy(src);
-    
-    }
-    
-    void Graphics::shape(Shape s, float x, float y) {
-        cairo_new_path(this->cr);
-
-        cairo_save(this->cr);
-        cairo_set_line_width(this->cr, this->stroke_weight);
-
-        cairo_translate(this->cr, x, y);
-
-        for(size_t i = 0; i < s.getpoints().size(); i++) {
-            if(i == 0) {
-                cairo_move_to(this->cr, s.getpoints()[i].x(), s.getpoints()[i].y());
-            } else {
-                cairo_line_to(this->cr, s.getpoints()[i].x(), s.getpoints()[i].y());
-            }
-        }
-        if(s.close == CLOSE) {
-            cairo_close_path(this->cr);
-        }
-
-        if(this->fill_enable) {
-            cairo_set_source_rgba(this->cr, this->fill_color.r,
-                                            this->fill_color.g,
-                                            this->fill_color.b,
-                                            this->fill_color.a);
-            cairo_fill_preserve(this->cr);
-        }
-
-        if(this->stroke_enable) {
-            cairo_set_source_rgba(this->cr, this->stroke_color.r,
-                                            this->stroke_color.g,
-                                            this->stroke_color.b,
-                                            this->stroke_color.a);
-            cairo_stroke(this->cr);
-        }
-
-        cairo_restore(this->cr);
-    }
-
     void Graphics::point(float x, float y) {
         this->line(x, y, x + 1, y + 1);
-    }
-
-    void Graphics::translate(float x, float y) {
-        cairo_translate(this->cr, x, y);
-    }
-
-    void Graphics::rotate(float a) {
-        cairo_rotate(this->cr, a);
-    }
-
-    void Graphics::pushmatrix() {
-        cairo_save(this->cr);
-    }
-
-    void Graphics::popmatrix() {
-        cairo_restore(this->cr);
     }
 
     void Graphics::endshape(int close) {
         this->_shape.end(close);
         this->shape(this->_shape, 0, 0);
     }
-    void Graphics::line(float x0, float y0, float x1, float y1) {
-        cairo_new_path(this->cr);
-        cairo_move_to(this->cr, x0, y0);
-        cairo_line_to(this->cr, x1, y1);
-        cairo_set_line_width(this->cr, this->stroke_weight);
-        cairo_set_source_rgba(this->cr,
-            this->stroke_color.r,
-            this->stroke_color.g,
-            this->stroke_color.b,
-            this->stroke_color.a);
-        cairo_stroke(this->cr);
+
+    void Graphics::background(float r, float g, float b, float a) {
+        memset(this->data, 0, this->width() * this->height() * 4);
     }
+
 
     void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2) {
         Shape s = Shape();
@@ -230,20 +153,6 @@ namespace Pyro {
         s.end(CLOSE);
 
         this->shape(s, x, y);
-        return
-        cairo_set_source_rgba(this->cr, 0.0, 0.0, 1.0, 1.0);
-        cairo_new_path(this->cr);
-        
-        cairo_arc(this->cr, x, y, w / 2, 0, 2  * M_PI);
-        
-        cairo_set_line_width(this->cr, 20.0);
-        cairo_stroke(this->cr);
-    }
-
-    void Graphics::background(float r, float g, float b, float a) {
-        memset(this->data, 0, this->width() * this->height() * 4);
-        cairo_set_source_rgba(this->cr, r, g, b, a);
-        cairo_paint(this->cr);
     }
 
     void Graphics::stroke(float r, float g, float b, float a) {
@@ -312,12 +221,10 @@ namespace Pyro {
 
     void Graphics::smooth() {
         this->_smooth = true;
-        cairo_set_antialias(this->cr, CAIRO_ANTIALIAS_DEFAULT);
     }
 
     void Graphics::nosmooth() {
         this->_smooth = false;
-        cairo_set_antialias(this->cr, CAIRO_ANTIALIAS_NONE);
     }
 
     void Graphics::strokeweight(float w) {
@@ -325,17 +232,6 @@ namespace Pyro {
     }
 
     void Graphics::strokecap(int cap) {
-        if(cap == ROUND) {
-            cairo_set_line_cap(this->cr, CAIRO_LINE_CAP_ROUND);
-        }
-
-        if(cap == SQUARE) {
-            cairo_set_line_cap(this->cr, CAIRO_LINE_CAP_BUTT);
-        }
-
-        if(cap == PROJECT) {
-            cairo_set_line_cap(this->cr, CAIRO_LINE_CAP_SQUARE);
-        }
     }
 
     float Graphics::radians(float degree) { 

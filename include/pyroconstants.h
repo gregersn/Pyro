@@ -14,7 +14,6 @@ namespace Pyro {
     const int CLOSE = 2;
 
     // Arc drawing styles
-    // const int OPEN = 1
     const int PIE = 3;
     const int CHORD = 4;
     
