@@ -1,6 +1,6 @@
 #include <pyrovector.h>
 
-#include <math.h>
+#include <cmath>
 
 namespace Pyro {
     Vector::Vector(float x, float y) {

@@ -4,7 +4,6 @@
 #include <pyrographics.h>
 
 #include <iostream>
-#include <assert.h>
 #include <random>
 #include <cstring>
 

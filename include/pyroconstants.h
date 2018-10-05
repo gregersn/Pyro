@@ -2,7 +2,7 @@
 #define PYROCONSTANTS_H
 
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
 
 namespace Pyro {
     const double PI = M_PI;

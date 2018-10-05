@@ -1,8 +1,6 @@
 #ifndef PYRO_H
 #define PYRO_H
 
-#include <stdint.h>
-
 #include "pyroconstants.h"
 #include "pyrocolor.h"
 #include "pyrographics.h"

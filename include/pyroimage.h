@@ -2,7 +2,6 @@
 #define PYROIMAGE_H
 
 #include <string>
-#include <stdint.h>
 
 namespace Pyro {
     enum FILETYPE {
