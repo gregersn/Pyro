@@ -6,8 +6,6 @@
 #include "pyroimage.h"
 #include "pyroshape.h"
 
-#include <random>
-
 namespace Pyro {
     class Graphics : public Image {
         protected:
@@ -28,30 +26,17 @@ namespace Pyro {
 
             static Graphics *create(unsigned int width, unsigned int height);
 
-            std::default_random_engine rng;
-            std::uniform_real_distribution<float> rng_dist;
-
-            unsigned int random(unsigned int range);
-            unsigned int random(unsigned int low, unsigned int high);
-
-            int random(int range);
-            int random(int low, int high);
-
-            float random(); // Returns a random number between 0 and 1
-            float random(float range);
-            float random(float low, float high);
-
-            void randomseed(unsigned int seed);
-
             virtual void image(Image *img, float x, float y) = 0;
 
             // Color functions
             void nostroke();
             void nofill();
+
+            inline void fill(Color c) { this->fill(c.r, c.g, c.b, c.a); };
             
-            void fill(float c) { this->fill(c, c, c, 1.0); };
-            void fill(float c, float a) {this->fill(c, c, c, a); };
-            void fill(float r, float g, float b) {this->fill(r, g, b, 1.0); };
+            inline void fill(float c) { this->fill(c, c, c, 1.0); };
+            inline void fill(float c, float a) {this->fill(c, c, c, a); };
+            inline void fill(float r, float g, float b) {this->fill(r, g, b, 1.0); };
             void fill(float r, float g, float b, float a);
 
             void fill(int c);
@@ -59,9 +44,11 @@ namespace Pyro {
             void fill(int r, int g, int b);
             void fill(int r, int g, int b, int a);
 
-            void stroke(float c) { this->stroke(c, c, c, 1.0); };
-            void stroke(float c, float a) {this->stroke(c, c, c, a); };
-            void stroke(float r, float g, float b) {this->stroke(r, g, b, 1.0); };
+            inline void stroke(Color c) { this->stroke(c.r, c.g, c.b, c.a); };
+
+            inline void stroke(float c) { this->stroke(c, c, c, 1.0); };
+            inline void stroke(float c, float a) {this->stroke(c, c, c, a); };
+            inline void stroke(float r, float g, float b) {this->stroke(r, g, b, 1.0); };
             void stroke(float r, float g, float b, float a);
 
             void stroke(int c);
@@ -82,14 +69,15 @@ namespace Pyro {
             virtual void popmatrix() = 0;
 
             // Drawing functions
-            void background(int c) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, 1.0f); };
-            void background(int c, int a) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
-            void background(int r, int g, int b) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); };
-            void background(int r, int g, int b, int a) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); };
+            inline void background(Color c) { this->background(c.r, c.g, c.b, c.a); };
+            inline void background(int c) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, 1.0f); };
+            inline void background(int c, int a) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
+            inline void background(int r, int g, int b) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); };
+            inline void background(int r, int g, int b, int a) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); };
 
-            void background(float c) { this->background(c, c, c, 1.0); };
-            void background(float c, float a) { this->background(c, c, c, a); };
-            void background(float r, float g, float b) { this->background(r, g, b, 1.0); };
+            inline void background(float c) { this->background(c, c, c, 1.0); };
+            inline void background(float c, float a) { this->background(c, c, c, a); };
+            inline void background(float r, float g, float b) { this->background(r, g, b, 1.0); };
             virtual void background(float r, float g, float b, float a);
 
             virtual void shape(Shape s, float x, float y) = 0;
@@ -110,15 +98,6 @@ namespace Pyro {
 
             void ellipse(float x, float y, float w, float h);
             void ellipse(float x, float y, float r) { this->ellipse(x, y, r, r); };
-
-            // Math functions
-            template <typename T>
-            T map(T value, T start1, T stop1, T start2, T stop2) {
-                return ((value - start1) * (stop2 - start2) / (stop1 - start1)) + start2;
-            };
-            
-            float radians(float degree);
-
     };
 };
 

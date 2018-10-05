@@ -5,15 +5,11 @@
 #include <pyrographics_cairo.h>
 
 #include <iostream>
-#include <random>
 #include <cstring>
 
 namespace Pyro {
     Graphics::Graphics(unsigned int width, unsigned int height, unsigned int bpp) :
     Image() {
-
-        this->rng = std::default_random_engine(0);
-        this->rng_dist = std::uniform_real_distribution(0.0f, 1.0f);
 
         this->_width = width;
         this->_height = height;
@@ -34,41 +30,6 @@ namespace Pyro {
     Graphics *Graphics::create(unsigned int width, unsigned int height){
        Graphics *pg = new GraphicsCairo(width, height, 4);        
        return pg;
-    }
-
-    int Graphics::random(int range) {
-        return (int)random() * range;
-    }
-
-    int Graphics::random(int low, int high) {
-        assert(high > low);
-        return (int)(random() * (high - low)) + low;
-    }
-    
-    unsigned int Graphics::random(unsigned int range) {
-        return (unsigned int)random() * range;
-    }
-
-    unsigned int Graphics::random(unsigned int low, unsigned int high) {
-        assert(high > low);
-        return (unsigned int)(random() * (high - low)) + low;
-    }
-    
-    float Graphics::random(float range) {
-        return random() * range;
-    }
-
-    float Graphics::random(float low, float high) {
-        assert(high > low);
-        return (random() * (high - low)) + low;
-    }
-
-    float Graphics::random() {
-        return this->rng_dist(this->rng);
-    }
-
-    void Graphics::randomseed(unsigned int seed) {
-        this->rng.seed(seed);
     }
 
     void Graphics::point(float x, float y) {
@@ -233,9 +194,4 @@ namespace Pyro {
 
     void Graphics::strokecap(int cap) {
     }
-
-    float Graphics::radians(float degree) { 
-        return degree * M_PI / 180.0; 
-    }
-
 }

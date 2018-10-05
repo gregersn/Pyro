@@ -142,7 +142,4 @@ namespace Pyro {
             cairo_set_line_cap(this->cr, CAIRO_LINE_CAP_SQUARE);
         }
     }
-
-
-
 }
