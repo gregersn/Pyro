@@ -16,6 +16,8 @@ namespace Pyro {
             GraphicsCairo(unsigned int width, unsigned int height, unsigned int bpp);
             ~GraphicsCairo();
 
+            void blendmode(BlendMode mode);
+
             void translate(float x, float);
             void rotate(float a);
             void pushmatrix();

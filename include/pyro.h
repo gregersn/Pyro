@@ -50,6 +50,8 @@ namespace Pyro {
     inline void smooth() { pg->smooth(); };
     inline void nosmooth() { pg->nosmooth(); };
 
+    inline void blendmode(BlendMode mode) { pg->blendmode(mode); };
+
     inline void fill(Color c) { pg->fill(c); };
 
     inline void fill(float c) {  pg->fill(c, c, c, 1.0); };

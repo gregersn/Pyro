@@ -17,6 +17,38 @@ namespace Pyro {
 
     }
 
+    void GraphicsCairo::blendmode(BlendMode mode) {
+        switch(mode) {
+            case BlendMode::ADD:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_ADD);
+                break;
+            case BlendMode::BLEND:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_OVER);
+                break;
+            case BlendMode::DARKEST:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_DARKEN);
+                break;
+            case BlendMode::DIFFERENCE:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_DIFFERENCE);
+                break;
+            case BlendMode::EXCLUSION:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_EXCLUSION);
+                break;
+            case BlendMode::LIGHTEST:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_LIGHTEN);
+                break;
+            case BlendMode::MULTIPLY:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_MULTIPLY);
+                break;
+            case BlendMode::REPLACE:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_SOURCE);
+                break;
+            case BlendMode::SCREEN:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_SCREEN);
+                break;
+        }
+    }
+
     void GraphicsCairo::shape(Shape s, float x, float y) {
         cairo_new_path(this->cr);
 

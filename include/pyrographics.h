@@ -7,6 +7,19 @@
 #include "pyroshape.h"
 
 namespace Pyro {
+    enum class BlendMode {
+        ADD,
+        BLEND,
+        DARKEST,
+        DIFFERENCE,
+        EXCLUSION,
+        LIGHTEST,
+        MULTIPLY,
+        REPLACE,
+        SCREEN,
+        SUBTRACT
+    };
+
     class Graphics : public Image {
         protected:
             bool stroke_enable;
@@ -31,6 +44,8 @@ namespace Pyro {
             // Color functions
             void nostroke();
             void nofill();
+
+            virtual void blendmode(BlendMode mode) = 0;
 
             inline void fill(Color c) { this->fill(c.r, c.g, c.b, c.a); };
             
