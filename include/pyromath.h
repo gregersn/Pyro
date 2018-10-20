@@ -13,6 +13,12 @@ namespace Pyro {
         T map(T value, T start1, T stop1, T start2, T stop2) {
             return ((value - start1) * (stop2 - start2) / (stop1 - start1)) + start2;
         };
+
+        template<typename T>
+        T constrain(T value, T low, T high) {
+            T t = value <= high ? value : high;
+            return t >= low ? t : low;
+        };
         
         float radians(float degree);
 

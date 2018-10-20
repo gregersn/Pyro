@@ -3,7 +3,7 @@
 #include <pyromath.h>
 
 
-TEST_CASE("Random generation is sane", "[random]") {
+TEST_CASE("Random generation seems sane", "[random]") {
     SECTION("Setting random seed resets sequence") {
         unsigned int seed = 0;
         Pyro::randomseed(seed);
@@ -17,7 +17,7 @@ TEST_CASE("Random generation is sane", "[random]") {
         }
     }
 
-    SECTION("Getting random numbers is a verying sequence") {
+    SECTION("Getting random numbers is a varying sequence") {
         unsigned int seed = 0;
         Pyro::randomseed(seed);
         unsigned int collisions = 0;
@@ -45,5 +45,12 @@ TEST_CASE("Random generation is sane", "[random]") {
             INFO("The number is " << i);
             REQUIRE(firsts[i] < 99);
         }
+    }
+}
+
+TEST_CASE("Values can be...") {
+    SECTION("constrained") {
+        REQUIRE(Pyro::constrain(0, 10, 20) == 10);
+        REQUIRE(Pyro::constrain(30, 10, 20) == 20);
     }
 }

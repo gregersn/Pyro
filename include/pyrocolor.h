@@ -1,6 +1,7 @@
 #ifndef PYROCOLOR_H
 #define PYROCOLOR_H
 
+#include <string>
 
 namespace Pyro {
     struct t_color {
@@ -16,6 +17,15 @@ namespace Pyro {
             float g;
             float b;
             float a;
+            Color(const std::string color) {
+                if(color.length() == 7) {
+                    this->a = 1.0f;
+                    unsigned int t_c = std::stoul(color.substr(1, 7), nullptr, 16);
+                    this->r = ((t_c & 0xff0000) >> 16) / 255.0f;
+                    this->g = ((t_c & 0xff00) >> 8) / 255.0f;
+                    this->b = ((t_c & 0xff)) / 255.0f;
+                }
+            }
             Color(float r, float g, float b) {
                 this->r = r;
                 this->g = g;
@@ -36,6 +46,10 @@ namespace Pyro {
                 this->b = b / 255.0f;
                 this->a = 1.0f;
             }
+    };
+
+    class Palette {
+
     };
 
 

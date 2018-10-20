@@ -10,6 +10,7 @@ DESTDIR := /usr/local
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
+DEPS := $(OBJECTS:.o=.d)
 
 # -g Produce debugging information in the operating system's native format
 CXXFLAGS = -Wall -std=c++17 -I include
@@ -30,6 +31,8 @@ endif
 $(TARGET): $(OBJECTS)
 	@mkdir -p lib
 	$(CXX) $(PYRO_LDFLAGS) -o $(TARGET) $^ $(LIB)
+
+-include $(DEPS)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
@@ -63,5 +66,7 @@ uninstall:
 	$(CXX) -MMD -MP $(CPPFLAGS) $(CXXFLAGS) -o $@ -c $<                                           
 %.o: %.cc                                                                                              
 	$(CXX) -MMD -MP $(CPPFLAGS) $(CXXFLAGS) -o $@ -c $<
-DEPS=$(OBJS:.o=.d)
--include $(DEPS)
+
+%.d: %.cpp
+	@$(CXX) $(CFLAGS) $< -MM -MT $(@:.d=.o) >$@
+

@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-Save as `mytest.cpp`, do a `make test`, and you should have an executable.
+Save as `mytest.cpp`, do a `make mytest`, and you should have an executable.
 
 
 ## Tests

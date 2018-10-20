@@ -26,6 +26,7 @@ namespace Pyro {
             Image(unsigned int width, unsigned int height, unsigned int bpp);
             ~Image();
             void save(const std::string &filename);
+            void save(const std::string &filename, unsigned int dpi);
             static Image *load(const std::string &filename);
 
             void *get_data() { return this->data; };

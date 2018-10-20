@@ -26,7 +26,8 @@ namespace Pyro {
     uint32_t color(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
 
     inline void save(const std::string &file) { pg->save(file); };
-
+    inline void save(const std::string &file, unsigned int dpi) { pg->save(file, dpi); };
+    
     void loadpixels();
     void updatepixels();
     inline void image(Image *img, float x, float y) { pg->image(img, x, y); };

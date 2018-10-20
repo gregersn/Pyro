@@ -51,7 +51,12 @@ namespace Pyro {
             free(this->data);
         }
     }
+
     void Image::save(const std::string &filename) {
+        this->save(filename, 72);
+    }
+
+    void Image::save(const std::string &filename, unsigned int dpi) {
         if(!FI_initialised) {
             FI_init();
         }
@@ -67,6 +72,10 @@ namespace Pyro {
                                                      this->_width, this->_height,
                                                      this->_width * this->bpp, this->bpp * 8,
                                                      0xff0000, 0xff00, 0xff, 1);
+
+        unsigned int dots_per_meter = (unsigned int)((dpi * 100) / 2.54);
+        FreeImage_SetDotsPerMeterX(img, dots_per_meter);
+        FreeImage_SetDotsPerMeterY(img, dots_per_meter);
         
         FreeImage_Save(fif, img, filename.c_str());
         FreeImage_Unload(img);
