@@ -2,6 +2,7 @@
 #define PYROCOLOR_H
 
 #include <string>
+#include <vector>
 
 namespace Pyro {
     struct t_color {
@@ -49,7 +50,15 @@ namespace Pyro {
     };
 
     class Palette {
+        std::vector<Pyro::Color> colors;
 
+        public:
+            Palette();
+            unsigned int add(Color col);
+            Color get(unsigned int index);
+            unsigned int size();
+
+            Color operator[] (const unsigned int index);
     };
 
 
