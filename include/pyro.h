@@ -14,11 +14,12 @@ namespace Pyro {
         px, cm, mm, in
     };
 
-    extern Graphics *pg;
+    extern Graphics *pg; // Graphics context
     extern unsigned int width;
     extern unsigned int height;
     extern uint32_t *pixels;
 
+    // Initialize the library with this.
     void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi);
     void size(unsigned int width, unsigned int height);
 
@@ -80,8 +81,10 @@ namespace Pyro {
     inline void strokeweight(float w) { pg->strokeweight(w); };
 
     inline void beginshape() { pg->beginshape(); };
+    inline void endshape() { pg->endshape(); };
     inline void endshape(int close) { pg->endshape(close); };
     inline void vertex(float x, float y) { pg->vertex(x, y); };
+    inline void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { pg->beziervertex(x2, y2, x3, y3, x4, y4); };
 
     inline void point(float x, float y) { pg->point(x, y); };
     inline void line(float x0, float y0, float x1, float y1) { pg->line(x0, y0, x1, y1); };
@@ -99,8 +102,6 @@ namespace Pyro {
     inline void rotate(float a) { pg->rotate(a); };
     inline void pushmatrix() { pg->pushmatrix(); };
     inline void popmatrix() { pg->popmatrix(); };
-
-
 }
 
 #endif // PYRO_H

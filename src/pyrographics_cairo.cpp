@@ -22,9 +22,6 @@ namespace Pyro {
             case BlendMode::ADD:
                 cairo_set_operator(this->cr, CAIRO_OPERATOR_ADD);
                 break;
-            case BlendMode::BLEND:
-                cairo_set_operator(this->cr, CAIRO_OPERATOR_OVER);
-                break;
             case BlendMode::DARKEST:
                 cairo_set_operator(this->cr, CAIRO_OPERATOR_DARKEN);
                 break;
@@ -45,6 +42,10 @@ namespace Pyro {
                 break;
             case BlendMode::SCREEN:
                 cairo_set_operator(this->cr, CAIRO_OPERATOR_SCREEN);
+                break;
+            case BlendMode::BLEND:
+            default:
+                cairo_set_operator(this->cr, CAIRO_OPERATOR_OVER);
                 break;
         }
     }

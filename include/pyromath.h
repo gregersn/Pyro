@@ -14,11 +14,17 @@ namespace Pyro {
             return ((value - start1) * (stop2 - start2) / (stop1 - start1)) + start2;
         };
 
+        template <typename T>
+        T lerp(T start, T stop, float amt) {
+            return (stop * amt) + (start * (1.0 - amt));
+        };
+
         template<typename T>
         T constrain(T value, T low, T high) {
             T t = value <= high ? value : high;
             return t >= low ? t : low;
         };
+
         
         float radians(float degree);
 

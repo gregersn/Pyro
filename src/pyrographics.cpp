@@ -27,9 +27,15 @@ namespace Pyro {
     Graphics::~Graphics() {
     }
 
+    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode){
+       switch(mode) {
+            case GraphicsMode::CAIRO:
+            default:
+                return new GraphicsCairo(width, height, 4);
+       }
+    }
     Graphics *Graphics::create(unsigned int width, unsigned int height){
-       Graphics *pg = new GraphicsCairo(width, height, 4);        
-       return pg;
+        return create(width, height, GraphicsMode::CAIRO);
     }
 
     void Graphics::point(float x, float y) {
