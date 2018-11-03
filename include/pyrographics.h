@@ -104,6 +104,7 @@ namespace Pyro {
 
             void beginshape() {this->_shape.begin(); };
             void vertex(float x, float y) { this->_shape.vertex(x, y); };
+            void curvevertex(float x, float y) { this->_shape.curvevertex(x, y); };
             void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { this->_shape.beziervertex(x2, y2, x3, y3, x4, y4); }
             void endshape(int close);
             inline void endshape() { endshape(0); };
