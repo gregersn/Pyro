@@ -18,7 +18,9 @@ namespace Pyro {
     const unsigned int curve_resolution = 32;
 
     class Shape {
+            std::vector<std::vector<Pyro::Vector>> outcontours;
             std::vector<Pyro::Vector> outpoints;
+            
             std::vector<std::vector<Pyro::t_shapepoint>> contours;
             std::vector<Pyro::t_shapepoint> points;
 
@@ -41,6 +43,7 @@ namespace Pyro {
             void curvevertex(float x, float y);
             void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4);
             std::vector<Pyro::Vector> getpoints() { return this->outpoints; };
+            std::vector<std::vector<Pyro::Vector>> getcontours() { return this->outcontours; };
     };
 
     Shape createshape();

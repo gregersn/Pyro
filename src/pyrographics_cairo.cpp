@@ -51,6 +51,7 @@ namespace Pyro {
     }
 
     void GraphicsCairo::shape(Shape s, float x, float y) {
+        cairo_set_fill_rule (this->cr, CAIRO_FILL_RULE_WINDING);
         cairo_new_path(this->cr);
 
         cairo_save(this->cr);
@@ -58,13 +59,22 @@ namespace Pyro {
 
         cairo_translate(this->cr, x, y);
 
-        for(size_t i = 0; i < s.getpoints().size(); i++) {
-            if(i == 0) {
-                cairo_move_to(this->cr, s.getpoints()[i].x(), s.getpoints()[i].y());
-            } else {
-                cairo_line_to(this->cr, s.getpoints()[i].x(), s.getpoints()[i].y());
+        auto contours = s.getcontours();
+
+        for(size_t contour = 0; contour < contours.size(); contour++) {
+            if(contour > 0) {
+                cairo_new_sub_path(this->cr);
+            }
+            auto points = contours[contour];
+            for(size_t i = 0; i < points.size(); i++) {
+                if(i == 0) {
+                    cairo_move_to(this->cr, points[i].x(), points[i].y());
+                } else {
+                    cairo_line_to(this->cr, points[i].x(), points[i].y());
+                }
             }
         }
+
         if(s.close == CLOSE) {
             cairo_close_path(this->cr);
         }

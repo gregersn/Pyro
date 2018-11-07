@@ -31,11 +31,12 @@ namespace Pyro {
 
     void Shape::end(int close) { 
         this->close = close;
-        this->outpoints.clear();        
+        this->outcontours.clear();
         float delta = 1.0 / curve_resolution;
 
         for(unsigned int contouriterator = 0; contouriterator < this->contours.size(); contouriterator++) {
             auto contour = this->contours[contouriterator];
+            this->outpoints.clear();        
             std::cout << "Found contour with " << contour.size() << " points\n";
             for(unsigned int curveiterator = 0; curveiterator < contour.size(); curveiterator++) {
                 auto point = contour[curveiterator];
@@ -90,6 +91,7 @@ namespace Pyro {
                     this->outpoints.push_back(point.v);
                 }
             }
+            this->outcontours.push_back(this->outpoints);
         }
     };
 

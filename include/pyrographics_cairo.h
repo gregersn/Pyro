@@ -31,7 +31,6 @@ namespace Pyro {
             void smooth();
             void nosmooth();
             void strokecap(int cap);
-
     };
 }
 
