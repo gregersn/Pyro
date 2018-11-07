@@ -9,3 +9,4 @@ bin/*
 .DS_Store
 output/
 .vscode/
+.mypy_cache/
