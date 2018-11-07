@@ -83,6 +83,7 @@ namespace Pyro {
     inline void beginshape() { pg->beginshape(); };
     inline void endshape() { pg->endshape(); };
     inline void endshape(int close) { pg->endshape(close); };
+    inline void shape(Shape s) { pg->shape(s, 0, 0); };
     inline void vertex(float x, float y) { pg->vertex(x, y); };
     inline void curvevertex(float x, float y) { pg->curvevertex(x, y); };
     inline void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { pg->beziervertex(x2, y2, x3, y3, x4, y4); };

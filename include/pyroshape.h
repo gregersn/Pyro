@@ -19,18 +19,30 @@ namespace Pyro {
 
     class Shape {
             std::vector<Pyro::Vector> outpoints;
+            std::vector<std::vector<Pyro::t_shapepoint>> contours;
             std::vector<Pyro::t_shapepoint> points;
+
         public:
             int close;
             Shape();
             ~Shape();
-            void begin() { points.clear(); };
-            void end();
+            
+            void begin();
+            inline void end() { this->end(false); };
             void end(int close);
+
+            void begincontour();
+            void endcontour();
+
+            void nostroke();
+            void rotate(float angle);
+
             void vertex(float x, float y);
             void curvevertex(float x, float y);
             void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4);
             std::vector<Pyro::Vector> getpoints() { return this->outpoints; };
     };
+
+    Shape createshape();
 };
 #endif

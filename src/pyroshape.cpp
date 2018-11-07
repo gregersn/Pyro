@@ -34,59 +34,63 @@ namespace Pyro {
         this->outpoints.clear();        
         float delta = 1.0 / curve_resolution;
 
-        for(unsigned int curveiterator = 0; curveiterator < this->points.size(); curveiterator++) {
-            auto point = this->points[curveiterator];
-            if(point.type == PointType::curvevertex) {
-                if(curveiterator < 1) {
-                    continue;
-                }
+        for(unsigned int contouriterator = 0; contouriterator < this->contours.size(); contouriterator++) {
+            auto contour = this->contours[contouriterator];
+            std::cout << "Found contour with " << contour.size() << " points\n";
+            for(unsigned int curveiterator = 0; curveiterator < contour.size(); curveiterator++) {
+                auto point = contour[curveiterator];
+                std::cout << "Found point at " << point.v.x() << ", " << point.v.y() << "\n";
+                if(point.type == PointType::curvevertex) {
+                    if(curveiterator < 1) {
+                        continue;
+                    }
 
-                if((curveiterator + 2) > this->points.size()) {
-                    continue;
-                }
-                auto p0 = this->points[curveiterator - 1];
-                auto p2 = this->points[curveiterator + 1];
-                auto p3 = this->points[curveiterator + 2];
+                    if((curveiterator + 2) > contour.size()) {
+                        continue;
+                    }
+                    auto p0 = contour[curveiterator - 1];
+                    auto p2 = contour[curveiterator + 1];
+                    auto p3 = contour[curveiterator + 2];
 
 
-                for(unsigned int i = 0; i < curve_resolution; i++) {
-                    this->outpoints.push_back(
-                        Pyro::Vector(
-                            curvepoint(p0.v.x(), point.v.x(), p2.v.x(), p3.v.x(), i * delta),
-                            curvepoint(p0.v.y(), point.v.y(), p2.v.y(), p3.v.y(), i * delta)
-                        )
-                    );
-                }
-            } else if(point.type == PointType::beziervertex) {
-                if(curveiterator < 1) {
-                    std::cerr << "Missing first vertex\n";
-                    continue;
-                }
+                    for(unsigned int i = 0; i < curve_resolution; i++) {
+                        this->outpoints.push_back(
+                            Pyro::Vector(
+                                curvepoint(p0.v.x(), point.v.x(), p2.v.x(), p3.v.x(), i * delta),
+                                curvepoint(p0.v.y(), point.v.y(), p2.v.y(), p3.v.y(), i * delta)
+                            )
+                        );
+                    }
+                } else if(point.type == PointType::beziervertex) {
+                    if(curveiterator < 1) {
+                        std::cerr << "Missing first vertex\n";
+                        continue;
+                    }
 
-                if((curveiterator + 2 ) > this->points.size()) {
-                    std::cerr << "Missing following vertices\n";
-                    continue;
-                }
+                    if((curveiterator + 2 ) > contour.size()) {
+                        std::cerr << "Missing following vertices\n";
+                        continue;
+                    }
 
-                auto p0 = this->points[curveiterator - 1];
-                auto p2 = this->points[curveiterator + 1];
-                auto p3 = this->points[curveiterator + 2];
+                    auto p0 = contour[curveiterator - 1];
+                    auto p2 = contour[curveiterator + 1];
+                    auto p3 = contour[curveiterator + 2];
 
-                for(unsigned int i = 1; i < curve_resolution + 1; i++) {
-                    this->outpoints.push_back(
-                        Pyro::Vector(
-                            bezierpoint(p0.v.x(), point.v.x(), p2.v.x(), p3.v.x(), i * delta),
-                            bezierpoint(p0.v.y(), point.v.y(), p2.v.y(), p3.v.y(), i * delta)
-                        )
-                    );
+                    for(unsigned int i = 1; i < curve_resolution + 1; i++) {
+                        this->outpoints.push_back(
+                            Pyro::Vector(
+                                bezierpoint(p0.v.x(), point.v.x(), p2.v.x(), p3.v.x(), i * delta),
+                                bezierpoint(p0.v.y(), point.v.y(), p2.v.y(), p3.v.y(), i * delta)
+                            )
+                        );
+                    }
+                    curveiterator += 2;
                 }
-                curveiterator += 2;
-            }
-            else {
-                this->outpoints.push_back(point.v);
+                else {
+                    this->outpoints.push_back(point.v);
+                }
             }
         }
-        
     };
 
     void Shape::vertex(float x, float y) {
@@ -103,5 +107,26 @@ namespace Pyro {
         this->points.push_back({Pyro::Vector(x3, y3), PointType::beziervertex});
         this->points.push_back({Pyro::Vector(x4, y4), PointType::beziervertex});
     }
+
+    void Shape::begin() {
+        contours.clear();
+        points.clear();      
+    }
+
+    void Shape::begincontour() {
+        if(contours.size() < 1 && points.size() > 0) {
+            contours.push_back(points);
+            points.clear();
+        }
+    }
+
+    void Shape::endcontour() {
+        if(points.size() > 0) {
+            contours.push_back(points);
+            points.clear();
+        }
+    }
+
+    Shape createshape() { return Shape(); }
 
 }
