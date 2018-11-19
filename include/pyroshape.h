@@ -7,15 +7,6 @@
 #include "pyroconstants.h"
 
 namespace Pyro {
-    enum class PointType {
-        vertex, curvevertex, beziervertex
-    };
-
-    struct t_shapepoint {
-        Pyro::Vector v;
-        PointType type;
-    };
-
     const unsigned int curve_resolution = 32;
 
     class Shape {

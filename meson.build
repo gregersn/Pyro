@@ -5,6 +5,7 @@ project('Pyro', 'cpp',
 add_global_link_arguments('-lfreeimage', language: 'cpp')
 
 cairo_dep = dependency('cairo')
+eigen_dep = dependency('eigen3')
 inc_dir = include_directories('include')
 
 subdir('include')

@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 
     background(52);
     translate(width/2, height/2);
-    //s.rotate(0.01);
+    s.rotate(0.1);
     shape(s);
 
     save("output/contour.png");

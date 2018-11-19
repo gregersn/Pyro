@@ -2,7 +2,25 @@
 #include "pyromath.h"
 
 #include <iostream>
+
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
+
+typedef Eigen::Matrix<float, 3, 1> Vector3f;
+
 namespace Pyro {
+
+    enum class PointType {
+        vertex, curvevertex, beziervertex
+    };
+
+    struct t_shapepoint {
+        //Pyro::Vector v;
+        Vector3f v;
+        PointType type;
+    };
+
     float bezierpoint(float a, float b, float c, float d, float t) {
         float ab = lerp(a, b, t);
         float bc = lerp (b, c, t);
@@ -21,17 +39,23 @@ namespace Pyro {
                      (-p0 + 3 * p1 - 3 * p2 + p3) * t * t * t);
     }
 
-    class Shape::impl {
-            std::vector<std::vector<Pyro::Vector>> outcontours;
-            std::vector<Pyro::Vector> outpoints;
-            
-            std::vector<std::vector<Pyro::t_shapepoint>> contours;
-            std::vector<Pyro::t_shapepoint> points;
-            int close;
+    Shape createshape() { return Shape(); }
 
-        public:
-            impl(void) {}
-            ~impl(void) {}
+    class Shape::impl {
+        std::vector<std::vector<Pyro::Vector>> outcontours;
+        std::vector<Pyro::Vector> outpoints;
+            
+        std::vector<std::vector<Pyro::t_shapepoint>> contours;
+        std::vector<Pyro::t_shapepoint> points;
+        int close;
+
+        Eigen::Transform<float, 3, Eigen::Affine> transform;
+
+    public:
+        impl(void) {
+            this->transform = Eigen::Transform<float, 3, Eigen::Affine>::Identity();
+        }
+        ~impl(void) {}
     
         void end(int close) { 
             this->close = close;
@@ -92,7 +116,8 @@ namespace Pyro {
                         curveiterator += 2;
                     }
                     else {
-                        this->outpoints.push_back(point.v);
+                        Vector3f p = this->transform * point.v.colwise().homogeneous();
+                        this->outpoints.push_back(Pyro::Vector(p(0), p(1)));
                     }
                 }
                 this->outcontours.push_back(this->outpoints);
@@ -100,18 +125,18 @@ namespace Pyro {
         };
 
         void vertex(float x, float y) {
-            this->points.push_back({Pyro::Vector(x, y), PointType::vertex});
+            this->points.push_back({Vector3f(x, y, 0.0f), PointType::vertex});
         }
 
         void curvevertex(float x, float y) {
-            this->points.push_back({Pyro::Vector(x, y), PointType::curvevertex});        
+            this->points.push_back({Vector3f(x, y, 0.0f), PointType::curvevertex});        
         }
 
         void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) {
             assert(this->points.size() > 0);
-            this->points.push_back({Pyro::Vector(x2, y2), PointType::beziervertex});
-            this->points.push_back({Pyro::Vector(x3, y3), PointType::beziervertex});
-            this->points.push_back({Pyro::Vector(x4, y4), PointType::beziervertex});
+            this->points.push_back({Vector3f(x2, y2, 0.0f), PointType::beziervertex});
+            this->points.push_back({Vector3f(x3, y3, 0.0f), PointType::beziervertex});
+            this->points.push_back({Vector3f(x4, y4, 0.0f), PointType::beziervertex});
         }
 
         void begin() {
@@ -136,7 +161,7 @@ namespace Pyro {
         std::vector<std::vector<Pyro::Vector>> getcontours() { return this->outcontours; };
 
         void rotate(float angle) {
-
+            this->transform.rotate(Eigen::AngleAxisf(angle, Eigen::Vector3f::UnitZ()));
         }
 
         void nostroke() {
@@ -144,8 +169,6 @@ namespace Pyro {
         }
 
     };
-
-    Shape createshape() { return Shape(); }
 
     Shape::Shape(void): pimpl(new impl) {}
     Shape::Shape(const Shape &s): pimpl(new impl(*(s.pimpl))) {}
@@ -161,7 +184,6 @@ namespace Pyro {
         return *(this);
     }
 
-    
     void Shape::begin() {
         return pimpl->begin();
     }
@@ -197,6 +219,7 @@ namespace Pyro {
     void Shape::beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) {
         return pimpl->beziervertex(x2, y2, x3, y3, x4, y4);
     }
+
     std::vector<Pyro::Vector> Shape::getpoints() { return pimpl->getpoints(); };
     std::vector<std::vector<Pyro::Vector>> Shape::getcontours() { return pimpl->getcontours(); };
 
