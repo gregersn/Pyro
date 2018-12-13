@@ -14,6 +14,8 @@ namespace Pyro {
             class impl;
             impl *pimpl;
 
+            float rotation = 0.0f;
+
         public:
             int close;
             Shape(void);
@@ -33,12 +35,14 @@ namespace Pyro {
 
             void nostroke();
             void rotate(float angle);
+            float get_rotation() { return this->rotation; };
 
             void vertex(float x, float y);
             void curvevertex(float x, float y);
             void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4);
             std::vector<Pyro::Vector> getpoints();
             std::vector<std::vector<Pyro::Vector>> getcontours();
+
     };
 
     Shape createshape();

@@ -116,8 +116,8 @@ namespace Pyro {
                         curveiterator += 2;
                     }
                     else {
-                        Vector3f p = this->transform * point.v.colwise().homogeneous();
-                        this->outpoints.push_back(Pyro::Vector(p(0), p(1)));
+                        //Vector3f p = this->transform * point.v.colwise().homogeneous();
+                        this->outpoints.push_back(Pyro::Vector(point.v.x(), point.v.y()));
                     }
                 }
                 this->outcontours.push_back(this->outpoints);
@@ -205,7 +205,9 @@ namespace Pyro {
     }
 
     void Shape::rotate(float angle) {
-        return pimpl->rotate(angle);
+        // return pimpl->rotate(angle);
+        this->rotation += angle;
+        std::cout << "Rotation: " << this->rotation;
     }
 
     void Shape::vertex(float x, float y) {
