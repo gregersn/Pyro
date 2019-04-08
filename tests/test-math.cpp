@@ -54,3 +54,20 @@ TEST_CASE("Values can be...") {
         REQUIRE(Pyro::constrain(30, 10, 20) == 20);
     }
 }
+
+TEST_CASE("We have functions that can...") {
+    SECTION("give min value") {
+        REQUIRE(Pyro::min(0, 10) == 0);
+        REQUIRE(Pyro::min(-3, 5) == -3);
+        REQUIRE(Pyro::min(53, 3) == 3);
+        REQUIRE(Pyro::min(23, -34) == -34);
+    }
+
+    SECTION("give max value") {
+        REQUIRE(Pyro::max(0, 10) == 10);
+        REQUIRE(Pyro::max(-3, 5) == 5);
+        REQUIRE(Pyro::max(53, 3) == 53);
+        REQUIRE(Pyro::max(23, -34) == 23);
+    }
+
+}
