@@ -51,9 +51,9 @@ namespace Pyro {
     }
 
     void GraphicsCairo::shape(Shape s, float x, float y) {
+        cairo_save(this->cr);
         cairo_new_path(this->cr);
 
-        cairo_save(this->cr);
         cairo_set_line_width(this->cr, this->stroke_weight);
 
         cairo_translate(this->cr, x, y);

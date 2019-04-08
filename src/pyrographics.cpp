@@ -115,11 +115,12 @@ namespace Pyro {
         s.begin();
         float da = M_PI / 16;
         for(int i = 0; i < 32; i++) {
-            s.vertex(cos(i * da) * w / 2, sin(i * da) * h / 2);
+            s.vertex(cos(i * da) * w / 2 + x, 
+                     sin(i * da) * h / 2 + y);
         }
         s.end(CLOSE);
 
-        this->shape(s, x, y);
+        this->shape(s, 0, 0);
     }
 
     void Graphics::stroke(float r, float g, float b, float a) {
