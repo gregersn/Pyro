@@ -126,11 +126,11 @@ namespace Pyro {
         cairo_stroke(this->cr);
     }
 
-    void GraphicsCairo::ellipse(float x, float y, float w, float h) {
+    void GraphicsCairo::ellipse(float x, float y, float w, float h, unsigned int segments) {
         Shape s = Shape();
         s.begin();
-        float da = M_PI / 16;
-        for(int i = 0; i < 32; i++) {
+        float da = M_PI / (segments / 2);
+        for(int i = 0; i < segments; i++) {
             s.vertex(cos(i * da) * w / 2, sin(i * da) * h / 2);
         }
         s.end(CLOSE);
@@ -140,7 +140,7 @@ namespace Pyro {
         cairo_set_source_rgba(this->cr, 0.0, 0.0, 1.0, 1.0);
         cairo_new_path(this->cr);
         
-        cairo_arc(this->cr, x, y, w / 2, 0, 2  * M_PI);
+        cairo_arc(this->cr, x, y, w / 2, 0, 2 * M_PI);
         
         cairo_set_line_width(this->cr, 20.0);
         cairo_stroke(this->cr);

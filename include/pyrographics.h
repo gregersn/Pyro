@@ -119,8 +119,8 @@ namespace Pyro {
             void arc(float a, float b, float c, float d, float start, float end) { this->arc(a, b, c, d, start, end, OPEN); };
             void arc(float a, float b, float c, float d, float start, float end, int mode);
 
-            void ellipse(float x, float y, float w, float h);
-            void ellipse(float x, float y, float r) { this->ellipse(x, y, r, r); };
+            void ellipse(float x, float y, float w, float h, unsigned int segments);
+            void ellipse(float x, float y, float r, unsigned int segments) { this->ellipse(x, y, r, r, segments); };
     };
 };
 

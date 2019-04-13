@@ -96,8 +96,8 @@ namespace Pyro {
     inline void arc(float a, float b, float c, float d, float start, float end, int mode) { pg->arc(a, b, c, d, start, end); };
     inline void arc(float a, float b, float c, float d, float start, float end) { arc(a, b, c, d, start, end, OPEN); };
 
-    inline void ellipse(float x, float y, float w, float h) { pg->ellipse(x, y, w, h); };
-    inline void ellipse(float x, float y, float r) { ellipse(x, y, r, r); };
+    inline void ellipse(float x, float y, float w, float h, unsigned int segments=32) { pg->ellipse(x, y, w, h, segments); };
+    inline void circle(float x, float y, float r, unsigned int segments=32) { ellipse(x, y, r, r, segments); };
 
     inline void translate(float x, float y) { pg->translate(x, y); };
     inline void rotate(float a) { pg->rotate(a); };

@@ -26,7 +26,7 @@ namespace Pyro {
             void image(Image *img, float x, float y);
             void shape(Shape s, float x, float y);
             void line(float x0, float y0, float x1, float y1);
-            void ellipse(float x, float y, float w, float h);
+            void ellipse(float x, float y, float w, float h, unsigned int segments);
             void background(float r, float g, float b, float a);
             void smooth();
             void nosmooth();

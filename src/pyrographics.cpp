@@ -110,11 +110,11 @@ namespace Pyro {
         this->shape(s, x, y);
     }
 
-    void Graphics::ellipse(float x, float y, float w, float h) {
+    void Graphics::ellipse(float x, float y, float w, float h, unsigned int segments) {
         Shape s = Shape();
         s.begin();
-        float da = M_PI / 16;
-        for(int i = 0; i < 32; i++) {
+        float da = M_PI / (segments / 2);
+        for(int i = 0; i < segments; i++) {
             s.vertex(cos(i * da) * w / 2 + x, 
                      sin(i * da) * h / 2 + y);
         }
