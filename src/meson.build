@@ -1,4 +1,5 @@
 pyro_sources = ['pyro.cpp',
+                'pyro_sdl.cpp',
                 'pyrocolor.cpp', 
                 'pyrographics.cpp', 
                 'pyrographics_cairo.cpp',
@@ -10,5 +11,5 @@ pyro_sources = ['pyro.cpp',
 pyrolib = shared_library('pyro', 
                          pyro_sources, 
                           include_directories: inc_dir,
-                          dependencies: [cairo_dep],
+                          dependencies: [cairo_dep, sdl_dep],
                           install: true)

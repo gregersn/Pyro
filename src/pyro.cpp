@@ -3,8 +3,8 @@
 
 namespace Pyro {
     Graphics *pg = nullptr;
-    unsigned int width;
-    unsigned int height;
+    unsigned int width = 640;
+    unsigned int height = 480;
     uint32_t *pixels = nullptr;
     
     void exit() {
