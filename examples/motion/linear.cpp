@@ -23,12 +23,6 @@ void draw()
 }
 
 int main(int argc, char **argv) {
-    setup();
-    init();
-    while(running) {
-        draw();
-        update();
-    }
-    quit();
+    run(setup, draw);
     return 0;
 }

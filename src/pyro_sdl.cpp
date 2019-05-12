@@ -121,4 +121,17 @@ namespace Pyro {
     void quit() {
         runner->quit();
     }
+
+    void run(void (*setup)(), void (*draw)()) {
+        setup();
+        init();
+        while(running) {
+            pushmatrix();
+            draw();
+            update();
+            popmatrix();
+        }
+        quit();
+
+    }
 }
