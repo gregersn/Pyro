@@ -105,9 +105,11 @@ namespace Pyro {
     unsigned int framecount = 0;
     PyroRunner *runner = nullptr;
     bool running;
+    bool looping;
 
     void init() {
         running = true;
+        looping = true;
         runner = new PyroRunner(width, height);
         runner->init();
     }
@@ -122,14 +124,24 @@ namespace Pyro {
         runner->quit();
     }
 
+    void loop() {
+        looping = true;
+    }
+
+    void noloop() {
+        looping = false;
+    }
+
     void run(void (*setup)(), void (*draw)()) {
         setup();
         init();
         while(running) {
-            pushmatrix();
-            draw();
+            if(looping) {
+                pushmatrix();
+                draw();
+                popmatrix();
+            }
             update();
-            popmatrix();
         }
         quit();
 

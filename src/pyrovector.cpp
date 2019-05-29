@@ -3,6 +3,12 @@
 #include <cmath>
 
 namespace Pyro {
+    Vector::Vector() {
+        this->_x = 0.0f;
+        this->_y = 0.0f;
+        this->_z = 0.0f;
+    }
+
     Vector::Vector(float x, float y) {
         this->_x = x;
         this->_y = y;
@@ -33,5 +39,19 @@ namespace Pyro {
 
     float Vector::dist(Vector const &other) const {
         return (*this - other).mag();
+    }
+
+    float Vector::dot(Vector const &other) const {
+        return _x * other._x + _y * other._y + _z * other._z;
+    }
+
+    float Vector::heading() const {
+        return atan2(this->_y, this->_x);
+    }
+
+    float Vector::angle(Vector const &other) const {
+        float dot = this->dot(other);
+        float mags = this->mag() * other.mag();
+        return acos(dot / mags);
     }
 }

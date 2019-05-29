@@ -33,6 +33,8 @@ namespace Pyro {
     void update();
     void quit();
     void run(void (*setup)(), void (*draw)());
+    void noloop();
+    void loop();
 
     extern bool running;
     extern PyroRunner *pyro;
