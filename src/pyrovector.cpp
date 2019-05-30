@@ -54,4 +54,20 @@ namespace Pyro {
         float mags = this->mag() * other.mag();
         return acos(dot / mags);
     }
+
+    Vector Vector::div(float v) const{
+        return Vector(_x / v, _y / v, _z / v);
+    }
+
+    Vector Vector::copy() const {
+        return Vector(_x, _y, _z);
+    }
+
+    Vector Vector::normalize() const {
+        float m = this->mag();
+        if(m > 0) {
+            return this->div(m);
+        }
+        return this->copy();
+    }
 }

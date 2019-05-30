@@ -23,13 +23,32 @@ namespace Pyro {
             float heading() const;
             float angle(Vector const &other) const;
 
+            Vector normalize() const;
+            Vector copy() const;
+            Vector div(float v) const;
+
             inline Vector operator+ (Vector const &other) const {
                 return Vector(_x + other._x, _y + other._y, _z + other._z);
+            };
+
+            inline void operator+= (Vector const &other) {
+                _x += other._x;
+                _y += other._y;
+                _z += other._z;
             };
 
             inline Vector operator- (Vector const &other) const {
                 return Vector(_x - other._x, _y - other._y, _z - other._z);
             }
+
+            inline Vector operator/ (float const v) const {
+                return Vector(_x / v, _y /v);
+            }
+
+            inline Vector operator* (float const v) const {
+                return Vector(_x * v, _y * v);
+            }
+
 
             friend inline bool operator==(const Vector &lhs, const Vector &rhs) {
                 return lhs.dist(rhs) < __DBL_EPSILON__;
