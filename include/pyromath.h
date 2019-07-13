@@ -2,6 +2,7 @@
 #define PYROMATH_H
 
 #include <random>
+#include <cassert>
 
 namespace Pyro {
         template <typename T>

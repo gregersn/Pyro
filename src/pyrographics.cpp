@@ -114,7 +114,7 @@ namespace Pyro {
         Shape s = Shape();
         s.begin();
         float da = M_PI / (segments / 2);
-        for(int i = 0; i < segments; i++) {
+        for(unsigned int i = 0; i < segments; i++) {
             s.vertex(cos(i * da) * w / 2 + x, 
                      sin(i * da) * h / 2 + y);
         }

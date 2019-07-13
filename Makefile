@@ -17,9 +17,9 @@ CXXFLAGS = -Wall -std=c++17 -I include
 LDFLAGS = -L.
 LDLIBS = -lpyro
 
-PYRO_CXXFLAGS := -g -Wall `pkg-config --cflags cairo` -std=c++17 -I include
+PYRO_CXXFLAGS := -g -Wall `pkg-config --cflags cairo sdl2` -std=c++17 -I include -fPIC
 PYRO_LDFLAGS = -shared
-LIB := `pkg-config --libs cairo` -lfreeimage -lstdc++
+LIB := `pkg-config --libs cairo sdl2` -lfreeimage -lstdc++
 # INC := -I include
 
 ifeq ($(OS), Windows_NT)

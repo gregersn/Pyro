@@ -2,6 +2,8 @@
 #include <pyromath.h>
 
 #include <iostream>
+#include <cassert>
+
 namespace Pyro {
     float bezierpoint(float a, float b, float c, float d, float t) {
         float ab = lerp(a, b, t);

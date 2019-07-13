@@ -15,6 +15,7 @@ The state of the whole thing is not really userfriendly at the moment, but hopef
 | --------- | ------- | ---------------- |
 | Cairo     | 1.14.x  | LGPL/MPL         |
 | FreeImage | 3.17.x  | GPLv2/GPLv3/FIPL |
+| SDL       | 2.x     | zlib             |
 
 ## Building
 
