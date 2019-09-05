@@ -1,0 +1,13 @@
+[build-system]
+requires = ["sip >=5, <6"]
+build-backend = "sipbuild.api"
+
+[tool.sip.metadata]
+name = "pyro"
+
+[tool.sip.bindings.pyro]
+include-dirs = ["../../../include"]
+library-dirs = ["../../../build/src"]
+builder-settings = ["-std=c++17"]
+headers = ["pyro.h"]
+libraries = ["pyro"]
