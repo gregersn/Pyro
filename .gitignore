@@ -6,11 +6,15 @@ lib/*
 # Ignore executables
 bin/*
 
+# Ignore other artifacts
+*.png
+
 # Ignore mac specific files
 .DS_Store
 output/
 .vscode/
 .mypy_cache/
+__pycache__/
 
 # ignore Python bindings stuff
 sipyro/sippyrocmodule.cpp
