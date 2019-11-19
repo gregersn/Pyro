@@ -11,3 +11,13 @@ bin/*
 output/
 .vscode/
 .mypy_cache/
+
+# ignore Python bindings stuff
+sipyro/sippyrocmodule.cpp
+sipyro/sippyroPyro.cpp
+sipyro/sipAPIpyro.h
+sipyro/Makefile
+libpyro.so
+
+# Ignore subprojects files
+subprojects/*/

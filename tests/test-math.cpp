@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 
 #include <pyromath.h>
 
@@ -15,22 +15,6 @@ TEST_CASE("Random generation seems sane", "[random]") {
             unsigned int n = Pyro::random(100u);
             REQUIRE(n == first);
         }
-    }
-
-    SECTION("Getting random numbers is a varying sequence") {
-        unsigned int seed = 0;
-        Pyro::randomseed(seed);
-        unsigned int collisions = 0;
-        unsigned int prev = Pyro::random(100u);
-        for(unsigned int i =0; i < 100; i++) {
-            unsigned int cur = Pyro::random(100u);
-            if(cur == prev) {
-                collisions++;
-            }
-            prev = cur;
-        }
-        INFO("Number of equals in a sequence" << collisions);
-        CHECK(collisions < 2);
     }
 
     SECTION("Varying random seed gives different sequences") {

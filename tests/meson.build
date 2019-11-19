@@ -7,6 +7,8 @@ test_sources = ['tests-main.cpp',
 
 testexe = executable('alltests', test_sources,
                      include_directories: inc_dir,
-                     link_with: pyrolib)
+                     link_with: pyrolib,
+                     dependencies:  catch2.get_variable('catch2_dep'))
+
 
 test('Pyro test', testexe)

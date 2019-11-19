@@ -7,6 +7,7 @@ add_global_link_arguments('-lfreeimage', language: 'cpp')
 cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
 inc_dir = include_directories('include')
+catch2 = subproject('catch2')
 
 subdir('include')
 subdir('src')
