@@ -16,10 +16,28 @@ The state of the whole thing is not really userfriendly at the moment, but hopef
 | Cairo     | 1.14.x  | LGPL/MPL         |
 | FreeImage | 3.17.x  | GPLv2/GPLv3/FIPL |
 | SDL       | 2.x     | zlib             |
+| Catch2    | 2.9     | BSL-1.0          |
+
 
 ## Building
 
-Run make
+Using [Meson](https://mesonbuild.com/)
+```
+meson builddir
+cd builddir
+ninja
+```
+
+## Install
+```
+ninja install
+```
+
+## Run tests
+```
+ninja test
+```
+
 
 ## Build an example
 ```
@@ -59,5 +77,3 @@ You can then compile and link a file with something like:
 - Write a better install target
 - Make a configure script?
 - Write some abstraction to make possible different backends for rendering
-
-
