@@ -26,6 +26,12 @@ namespace Pyro {
             Vector normalize() const;
             Vector copy() const;
             Vector div(float v) const;
+            Vector setmag(float mag) const;
+            Vector limit(float mag) const;
+
+            static Vector fromangle(float a);
+            static Vector random2d();
+            static Vector random3d();
 
             inline Vector operator+ (Vector const &other) const {
                 return Vector(_x + other._x, _y + other._y, _z + other._z);
@@ -42,11 +48,11 @@ namespace Pyro {
             }
 
             inline Vector operator/ (float const v) const {
-                return Vector(_x / v, _y /v);
+                return Vector(_x / v, _y / v, _z / v);
             }
 
             inline Vector operator* (float const v) const {
-                return Vector(_x * v, _y * v);
+                return Vector(_x * v, _y * v, _z * v);
             }
 
 

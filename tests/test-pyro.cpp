@@ -3,7 +3,7 @@
 #include <pyro.h>
 
 TEST_CASE("The library can be initialized", "[setup]") {
-    SECTION("using size() does not fail") {
+    SECTION("using size()") {
         REQUIRE_NOTHROW(Pyro::size(100, 100));
     }
 }

@@ -27,6 +27,18 @@ namespace Pyro {
                     this->b = ((t_c & 0xff)) / 255.0f;
                 }
             }
+            Color(float v) {
+                this->r = v;
+                this->g = v;
+                this->b = v;
+                this->a = 1.0f;
+            }
+            Color(float v, float a) {
+                this->r = v;
+                this->g = v;
+                this->b = v;
+                this->a = a;
+            }
             Color(float r, float g, float b) {
                 this->r = r;
                 this->g = g;

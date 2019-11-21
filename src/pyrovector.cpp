@@ -1,5 +1,5 @@
 #include <pyrovector.h>
-
+#include <pyromath.h>
 #include <cmath>
 
 namespace Pyro {
@@ -21,6 +21,22 @@ namespace Pyro {
         this->_z = z;
     }
 
+    Vector Vector::fromangle(float a) {
+        return Vector(cos(a), sin(a));
+    }
+
+    Vector Vector::random2d() {
+        return Vector::fromangle(Pyro::random(1.0f) * M_2_PI);
+    }
+
+    Vector Vector::random3d() {
+        float phi = Pyro::random(0.0f, 1.0f * M_2_PI);
+        float costheta = Pyro::random(-1.0f, 1.0f);
+
+        float theta = acos(costheta);
+        return Vector(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
+    }
+
     float Vector::x() const {
         return this->_x;
     }
@@ -35,6 +51,10 @@ namespace Pyro {
 
     float Vector::mag() const {
         return sqrt(_x * _x + _y * _y + _z * _z);
+    }
+
+    Vector Vector::setmag(float m) const {
+        return this->normalize() * m;
     }
 
     float Vector::dist(Vector const &other) const {
@@ -67,6 +87,13 @@ namespace Pyro {
         float m = this->mag();
         if(m > 0) {
             return this->div(m);
+        }
+        return this->copy();
+    }
+
+    Vector Vector::limit(float m) const {
+        if(this->mag() > m) {
+            return this->setmag(m);
         }
         return this->copy();
     }

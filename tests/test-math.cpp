@@ -3,6 +3,7 @@
 #include <pyromath.h>
 
 
+
 TEST_CASE("Random generation seems sane", "[random]") {
     SECTION("Setting random seed resets sequence") {
         unsigned int seed = 0;
