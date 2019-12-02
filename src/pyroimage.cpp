@@ -104,7 +104,7 @@ namespace Pyro {
 
                 bpp = FreeImage_GetBPP(t);
 
-                Image *img = new Image(width, height, bpp);
+                Image *img = new Image(width, height, bpp / 4);
 
                 BYTE *d = (BYTE *)img->get_data();
                 BYTE *bits = (BYTE *)FreeImage_GetBits(t);
@@ -112,10 +112,10 @@ namespace Pyro {
                 for(unsigned int y = 0; y < height; y++) {
                     BYTE *pixel = (BYTE *)bits;
                     for(unsigned int x = 0; x < width; x++) {
-                        d[y * width + x] = pixel[FI_RGBA_RED];
-                        d[y * width + x + 1] = pixel[FI_RGBA_GREEN];
-                        d[y * width + x + 2] = pixel[FI_RGBA_BLUE];
-                        d[y * width + x + 3] = pixel[FI_RGBA_ALPHA];
+                        d[(height - y - 1) * width * 4 + x * 4] = pixel[FI_RGBA_BLUE];
+                        d[(height - y - 1) * width * 4 + x * 4 + 1] = pixel[FI_RGBA_GREEN];
+                        d[(height - y - 1) * width * 4 + x * 4 + 2] = pixel[FI_RGBA_RED];
+                        d[(height - y - 1) * width * 4 + x * 4 + 3] = pixel[FI_RGBA_ALPHA];
                         pixel += 4;
                     }
                     bits += pitch;
@@ -161,6 +161,14 @@ namespace Pyro {
             free(this->cache);
             this->cache = nullptr;
         }*/
+    }
+
+    uint32_t Image::get(unsigned int x, unsigned int y) {
+        // return ((uint32_t *)this->data)[y * this->_width + x];
+        unsigned char *pixels = (unsigned char *)this->data;
+        unsigned int pos = y * this->_width * 4 + x * 4;
+        return pixels[pos] << 24 | pixels[pos + 1] << 16 | pixels[pos + 2] << 8 | pixels[pos + 3];
+
     }
 
     Image* createimage(unsigned int width, unsigned int height, int mode) {

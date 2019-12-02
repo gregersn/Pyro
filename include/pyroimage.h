@@ -14,11 +14,11 @@ namespace Pyro {
 
         protected:
             void *data;
-            unsigned int bpp;
             unsigned int _width;
             unsigned int _height;
 
         public:
+            unsigned int bpp;
             unsigned int width() { return this->_width; };
             unsigned int height() { return this->_height; };
 
@@ -35,6 +35,7 @@ namespace Pyro {
             void update_pixels();
             //static Image load(const std::wstring &filename);
             static Image *create(unsigned int width, unsigned int height);
+            uint32_t get(unsigned int x, unsigned int y);
     };
 
     Image *createimage(unsigned int width, unsigned int height, int mode);
