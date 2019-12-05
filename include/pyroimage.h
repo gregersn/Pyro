@@ -33,11 +33,12 @@ namespace Pyro {
             void *get_pre_multiplied_data();
             uint32_t *load_pixels();
             void update_pixels();
-            //static Image load(const std::wstring &filename);
+            unsigned int operator[] (unsigned int);
             static Image *create(unsigned int width, unsigned int height);
             uint32_t get(unsigned int x, unsigned int y);
+            Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
     };
 
-    Image *createimage(unsigned int width, unsigned int height, int mode);
+    Image *createimage(unsigned int width, unsigned int height, int bpp);
 }
 #endif

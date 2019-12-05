@@ -112,10 +112,10 @@ namespace Pyro {
                 for(unsigned int y = 0; y < height; y++) {
                     BYTE *pixel = (BYTE *)bits;
                     for(unsigned int x = 0; x < width; x++) {
-                        d[(height - y - 1) * width * 4 + x * 4] = pixel[FI_RGBA_BLUE];
-                        d[(height - y - 1) * width * 4 + x * 4 + 1] = pixel[FI_RGBA_GREEN];
-                        d[(height - y - 1) * width * 4 + x * 4 + 2] = pixel[FI_RGBA_RED];
-                        d[(height - y - 1) * width * 4 + x * 4 + 3] = pixel[FI_RGBA_ALPHA];
+                        d[(height - y - 1) * width * 4 + x * 4] = pixel[FI_RGBA_ALPHA];
+                        d[(height - y - 1) * width * 4 + x * 4 + 1] = pixel[FI_RGBA_RED];
+                        d[(height - y - 1) * width * 4 + x * 4 + 2] = pixel[FI_RGBA_GREEN];
+                        d[(height - y - 1) * width * 4 + x * 4 + 3] = pixel[FI_RGBA_BLUE];
                         pixel += 4;
                     }
                     bits += pitch;
@@ -163,15 +163,30 @@ namespace Pyro {
         }*/
     }
 
-    uint32_t Image::get(unsigned int x, unsigned int y) {
-        // return ((uint32_t *)this->data)[y * this->_width + x];
-        unsigned char *pixels = (unsigned char *)this->data;
-        unsigned int pos = y * this->_width * 4 + x * 4;
-        return pixels[pos] << 24 | pixels[pos + 1] << 16 | pixels[pos + 2] << 8 | pixels[pos + 3];
-
+    unsigned int Image::operator[] (unsigned int index) {
+        if(index < this->_width * this->_height) {
+            return ((unsigned int *)this->data)[index];
+        }
     }
 
-    Image* createimage(unsigned int width, unsigned int height, int mode) {
-        return new Image(width, height, mode);
+    uint32_t Image::get(unsigned int x, unsigned int y) {
+        unsigned int *pixels = (unsigned int *)this->data;
+        return pixels[y * this->_width + x];
+    }
+
+    Image* Image::get(unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
+        Image *out = createimage(width, height, this->bpp);
+        for(unsigned int ty = 0; ty < height; ty++){
+            for(unsigned int tx = 0; tx < width; tx++) {
+                unsigned int pos = (y + ty) * this->_width + (x + tx);
+                unsigned int pixel = ((unsigned int *)this->data)[pos];
+                ((unsigned int *)out->data)[ty * width + tx] = pixel;
+            }
+        }
+        return out;
+    }
+
+    Image* createimage(unsigned int width, unsigned int height, int bpp) {
+        return new Image(width, height, bpp);
     }
 }
