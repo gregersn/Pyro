@@ -190,6 +190,25 @@ namespace Pyro {
         return out;
     }
 
+    Image *Image::resize(unsigned int width, unsigned int height) {
+        float sx = width / this->width();
+        float sy = height / this->height();
+        
+        Image *out = createimage(width, height, this->bpp);
+        unsigned int *out_pixels = out->load_pixels();
+        unsigned int *in_pixels = this->load_pixels();
+        for(unsigned int oy = 0; oy < out->height(); oy++) {
+            unsigned int out_line = oy * out->width();
+            unsigned int in_line = oy / sy * this->width();
+            for(unsigned int ox = 0; ox < out->width(); ox++) {
+                unsigned int in_col = ox / sx;
+                out_pixels[out_line + ox] = in_pixels[in_line +  in_col];
+            }
+        }
+
+        return out;
+    }
+
     // Utility functions
 
     Image* createimage(unsigned int width, unsigned int height, int bpp) {

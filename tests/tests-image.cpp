@@ -71,4 +71,44 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
         }
         delete img;
     }
+
+    SECTION("resize an image") {
+        SECTION("scale down") {
+            Pyro::Image *img = Pyro::Image::create(64, 32);
+            unsigned int pixelcolor = 0xff362d68;
+
+            REQUIRE(img->width() == 64);
+            REQUIRE(img->height() == 32);
+            ((unsigned int *)img->get_data())[0] = pixelcolor;
+
+            Pyro::Image *img2 = img->resize(32, 16);
+
+            REQUIRE(img2->width() == 64 / 2);
+            REQUIRE(img2->height() == 32 / 2);
+            REQUIRE(((unsigned int *)img2->get_data())[0] == pixelcolor);
+
+            delete img;
+            delete img2;
+        }
+
+        SECTION("scale up") {
+            Pyro::Image *img = Pyro::Image::create(64, 32);
+            unsigned int pixelcolor = 0xff362d68;
+
+            REQUIRE(img->width() == 64);
+            REQUIRE(img->height() == 32);
+            ((unsigned int *)img->get_data())[0] = pixelcolor;
+
+            Pyro::Image *img2 = img->resize(128, 64);
+
+            REQUIRE(img2->width() == 64 * 2);
+            REQUIRE(img2->height() == 32 * 2);
+            REQUIRE(((unsigned int *)img2->get_data())[0] == pixelcolor);
+
+            delete img;
+            delete img2;
+        }
+
+
+    }
 }

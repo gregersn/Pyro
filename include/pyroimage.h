@@ -41,6 +41,9 @@ namespace Pyro {
             unsigned int operator[] (unsigned int);
             uint32_t get(unsigned int x, unsigned int y);
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+
+            // Image manipulation functions
+            Image *resize(unsigned int width, unsigned int height);
     };
 
     Image *createimage(unsigned int width, unsigned int height, int bpp);
