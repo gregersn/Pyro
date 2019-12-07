@@ -25,6 +25,8 @@ namespace Pyro {
         }
     }
 
+    // Public functions
+
     Image::Image() {
         //printf("Creating image\n");
         this->data = nullptr;
@@ -52,33 +54,10 @@ namespace Pyro {
         }
     }
 
-    void Image::save(const std::string &filename) {
-        this->save(filename, 72);
-    }
-
-    void Image::save(const std::string &filename, unsigned int dpi) {
-        if(!FI_initialised) {
-            FI_init();
-        }
-
-        FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-        fif = FreeImage_GetFIFFromFilename(filename.c_str());
-        if(fif == FIF_UNKNOWN) {
-            printf("Unknown filetype, won't save!\n");
-            return;
-        }
-
-        FIBITMAP *img = FreeImage_ConvertFromRawBits((unsigned char *)this->data,
-                                                     this->_width, this->_height,
-                                                     this->_width * this->bpp, this->bpp * 8,
-                                                     0xff0000, 0xff00, 0xff, 1);
-
-        unsigned int dots_per_meter = (unsigned int)((dpi * 100) / 2.54);
-        FreeImage_SetDotsPerMeterX(img, dots_per_meter);
-        FreeImage_SetDotsPerMeterY(img, dots_per_meter);
-        
-        FreeImage_Save(fif, img, filename.c_str());
-        FreeImage_Unload(img);
+    Image* Image::create(unsigned int width, unsigned int height) {
+        unsigned int bpp = 4;
+        Image *img = new Image(width, height, bpp);
+        return img;
     }
 
     Image* Image::load(const std::string &filename) {
@@ -128,17 +107,37 @@ namespace Pyro {
         return nullptr;
     }
 
-    Image* Image::create(unsigned int width, unsigned int height) {
-        unsigned int bpp = 4;
-        Image *img = new Image(width, height, bpp);
-        return img;
+
+    void Image::save(const std::string &filename) {
+        this->save(filename, 72);
     }
 
-    uint32_t* Image::load_pixels() {
-        this->pixels_locked = true;
-        return (uint32_t *)this->data;
+    void Image::save(const std::string &filename, unsigned int dpi) {
+        if(!FI_initialised) {
+            FI_init();
+        }
+
+        FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
+        fif = FreeImage_GetFIFFromFilename(filename.c_str());
+        if(fif == FIF_UNKNOWN) {
+            printf("Unknown filetype, won't save!\n");
+            return;
+        }
+
+        FIBITMAP *img = FreeImage_ConvertFromRawBits((unsigned char *)this->data,
+                                                     this->_width, this->_height,
+                                                     this->_width * this->bpp, this->bpp * 8,
+                                                     0xff0000, 0xff00, 0xff, 1);
+
+        unsigned int dots_per_meter = (unsigned int)((dpi * 100) / 2.54);
+        FreeImage_SetDotsPerMeterX(img, dots_per_meter);
+        FreeImage_SetDotsPerMeterY(img, dots_per_meter);
+        
+        FreeImage_Save(fif, img, filename.c_str());
+        FreeImage_Unload(img);
     }
 
+    // Pixel access functions
     void *Image::get_pre_multiplied_data() {
         if(this->cache == nullptr) {
             this->cache = malloc(this->_width * this->_height * sizeof(unsigned char) * this->bpp);            
@@ -153,6 +152,11 @@ namespace Pyro {
             }
         }
         return this->cache;
+    }
+
+    uint32_t* Image::load_pixels() {
+        this->pixels_locked = true;
+        return (uint32_t *)this->data;
     }
 
     void Image::update_pixels() {
@@ -185,6 +189,8 @@ namespace Pyro {
         }
         return out;
     }
+
+    // Utility functions
 
     Image* createimage(unsigned int width, unsigned int height, int bpp) {
         return new Image(width, height, bpp);

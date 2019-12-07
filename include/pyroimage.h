@@ -25,16 +25,20 @@ namespace Pyro {
             Image();
             Image(unsigned int width, unsigned int height, unsigned int bpp);
             ~Image();
+
+            static Image *create(unsigned int width, unsigned int height);
+
+            static Image *load(const std::string &filename);
             void save(const std::string &filename);
             void save(const std::string &filename, unsigned int dpi);
-            static Image *load(const std::string &filename);
 
+
+            // Pixel access
             void *get_data() { return this->data; };
             void *get_pre_multiplied_data();
             uint32_t *load_pixels();
             void update_pixels();
             unsigned int operator[] (unsigned int);
-            static Image *create(unsigned int width, unsigned int height);
             uint32_t get(unsigned int x, unsigned int y);
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
     };
