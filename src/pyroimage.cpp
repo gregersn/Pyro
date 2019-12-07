@@ -91,10 +91,10 @@ namespace Pyro {
                 for(unsigned int y = 0; y < height; y++) {
                     BYTE *pixel = (BYTE *)bits;
                     for(unsigned int x = 0; x < width; x++) {
-                        d[(height - y - 1) * width * 4 + x * 4] = pixel[FI_RGBA_ALPHA];
-                        d[(height - y - 1) * width * 4 + x * 4 + 1] = pixel[FI_RGBA_RED];
-                        d[(height - y - 1) * width * 4 + x * 4 + 2] = pixel[FI_RGBA_GREEN];
-                        d[(height - y - 1) * width * 4 + x * 4 + 3] = pixel[FI_RGBA_BLUE];
+                        d[(height - y - 1) * width * 4 + x * 4 + 3] = pixel[FI_RGBA_ALPHA];
+                        d[(height - y - 1) * width * 4 + x * 4 + 2] = pixel[FI_RGBA_RED];
+                        d[(height - y - 1) * width * 4 + x * 4 + 1] = pixel[FI_RGBA_GREEN];
+                        d[(height - y - 1) * width * 4 + x * 4 + 0] = pixel[FI_RGBA_BLUE];
                         pixel += 4;
                     }
                     bits += pitch;

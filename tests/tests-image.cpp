@@ -44,7 +44,7 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
     }
 
     SECTION("create image with gradient, test save and load") {
-        Pyro::Image *img = Pyro::Image::create(256, 4);
+        Pyro::Image *img = Pyro::Image::create(256, 5);
 
         unsigned int *pixels = img->load_pixels();
         for(unsigned int i = 0; i < 256; i++) {
@@ -52,6 +52,8 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
             pixels[256 + i] = 0xff000000 | i << 8;
             pixels[512 + i] = 0xff000000 | i << 16;
             pixels[768 + i] = 0xff000000 | i | i << 16 | i << 8;
+            pixels[1024 + i] = i | i << 16 | i << 8 | i << 24;
+            
         }
 
         img->save("gradient_test.png");
@@ -65,6 +67,7 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
             REQUIRE(pixels[256 + i] == (0xff000000 | i << 8));
             REQUIRE(pixels[512 + i] == (0xff000000 | i << 16));
             REQUIRE(pixels[768 + i] == (0xff000000 | i | i << 16 | i << 8));
+            REQUIRE(pixels[1024 + i] == (i | i << 16 | i << 8 | i << 24));
         }
         delete img;
     }
