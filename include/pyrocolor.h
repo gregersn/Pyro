@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include <pyromath.h>
+
 namespace Pyro {
     struct t_color {
         float r;
@@ -58,6 +60,38 @@ namespace Pyro {
                 this->g = g / 255.0f;
                 this->b = b / 255.0f;
                 this->a = 1.0f;
+            }
+
+            Color(uint r, uint g, uint b, uint a) {
+                this->r = r / 255.0f;
+                this->g = g / 255.0f;
+                this->b = b / 255.0f;
+                this->a = a / 255.0f;
+            }
+
+            static Color from_uint(uint32_t c) {
+                return Color(
+                    (c & 0xff0000) >> 16,
+                    (c & 0xff00) >> 8,
+                    (c & 0xff),
+                    (c & 0xff000000) >> 24
+                );
+            }
+
+            uint32_t to_uint() {
+                return (
+                    (uint)(this->a * 255) << 24 |
+                    (uint)(this->r * 255) << 16 |
+                    (uint)(this->g * 255) << 8  |
+                    (uint)(this->b * 255)
+                );
+            }
+
+            Color lerp(Color other, float t) {
+                return Color(Pyro::lerp(this->r, other.r, t),
+                             Pyro::lerp(this->g, other.g, t),
+                             Pyro::lerp(this->b, other.b, t),
+                             Pyro::lerp(this->a, other.a, t));
             }
     };
 

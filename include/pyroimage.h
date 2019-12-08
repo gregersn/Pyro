@@ -7,10 +7,16 @@ namespace Pyro {
     enum FILETYPE {
         JPEG, PNG, TIFF 
     };
+    enum RESIZEMETHOD {
+        NEAREST, BILINEAR
+    };
     class Image {
         private:
             bool pixels_locked;
             void *cache;
+
+            Image *resize_nearest(unsigned int width, unsigned int height);
+            Image *resize_bilinear(unsigned int width, unsigned int height);
 
         protected:
             void *data;
@@ -43,7 +49,8 @@ namespace Pyro {
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
 
             // Image manipulation functions
-            Image *resize(unsigned int width, unsigned int height);
+            Image *resize(unsigned int width, unsigned int height) { return this->resize(width, height, NEAREST); };
+            Image *resize(unsigned int width, unsigned int height, RESIZEMETHOD method);
     };
 
     Image *createimage(unsigned int width, unsigned int height, int bpp);

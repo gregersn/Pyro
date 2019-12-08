@@ -109,6 +109,47 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
             delete img2;
         }
 
+        SECTION("Nearest neighbor scale down") {
+            Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
+            Pyro::Image *img2 = img->resize(500, 500, Pyro::NEAREST);
+
+            REQUIRE(img2->width() == 500);
+            REQUIRE(img2->height() == 500);
+            uint32_t *pixels = img2->load_pixels();
+            REQUIRE((pixels[0]&0xff000000) == 0xff000000);
+            // img2->save("lenna_500.png");
+            delete img2;
+            delete img;
+        }
+
+
+        SECTION("Bilinear scale up") {
+            Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
+            Pyro::Image *img2 = img->resize(600, 600, Pyro::BILINEAR);
+
+            REQUIRE(img2->width() == 600);
+            REQUIRE(img2->height() == 600);
+            uint32_t *pixels = img2->load_pixels();
+            img2->save("lenna_600.png");
+            REQUIRE((pixels[0]&0xff000000) == 0xff000000);
+            delete img2;
+            delete img;
+        }
+
+        SECTION("Bilinear scale down") {
+            Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
+            Pyro::Image *img2 = img->resize(400, 400, Pyro::BILINEAR);
+
+            REQUIRE(img2->width() == 400);
+            REQUIRE(img2->height() == 400);
+            uint32_t *pixels = img2->load_pixels();
+            img2->save("lenna_400.png");
+            REQUIRE((pixels[0]&0xff000000) == 0xff000000);
+            delete img2;
+            delete img;
+        }
+
+
 
     }
 }

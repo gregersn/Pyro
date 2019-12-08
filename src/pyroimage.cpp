@@ -1,4 +1,5 @@
 #include <pyroimage.h>
+#include <pyrocolor.h>
 #include <pyroconstants.h>
 
 #include <FreeImage.h>
@@ -190,7 +191,17 @@ namespace Pyro {
         return out;
     }
 
-    Image *Image::resize(unsigned int width, unsigned int height) {
+    Image *Image::resize(unsigned int width, unsigned int height, RESIZEMETHOD method) {
+        switch(method) {
+            case BILINEAR:
+                return this->resize_bilinear(width, height);
+            case NEAREST:
+            default:
+                return this->resize_nearest(width, height);
+            
+        }
+    }
+    Image *Image::resize_nearest(unsigned int width, unsigned int height) {
         float sx = width / this->width();
         float sy = height / this->height();
         
@@ -205,9 +216,48 @@ namespace Pyro {
                 out_pixels[out_line + ox] = in_pixels[in_line +  in_col];
             }
         }
+        out->update_pixels();
+        this->update_pixels();
 
         return out;
     }
+
+    Image *Image::resize_bilinear(unsigned int width, unsigned int height) {
+        float sx = (float)width / (float)this->width();
+        float sy = (float)height / (float)this->height();
+        
+        Image *out = createimage(width, height, this->bpp);
+        unsigned int *out_pixels = out->load_pixels();
+        unsigned int *in_pixels = this->load_pixels();
+
+        for(uint y = 0; y < height; y++) {
+            float in_y = (float)y / (float)sy;
+            uint y1 = (uint)in_y;
+            uint y2 = (uint)in_y + 1;
+            float y_lerp = in_y  - y1;
+            for(uint x = 0; x < width; x++) {
+                float in_x = (float)x / (float)sx;
+                uint x1 = (uint)in_x;
+                uint x2 = (uint)in_x + 1;
+                float x_lerp = in_x - x1;
+
+                Color q11 = Color::from_uint(in_pixels[y1 * this->width() + x1]);
+                Color q12 = Color::from_uint(in_pixels[y2 * this->width() + x1]);
+                Color q21 = Color::from_uint(in_pixels[y1 * this->width() + x2]);
+                Color q22 = Color::from_uint(in_pixels[y2 * this->width() + x2]);
+
+                Color xy1 = q11.lerp(q21, x_lerp);
+                Color xy2 = q12.lerp(q22, x_lerp);
+                Color out_color = xy1.lerp(xy2, y_lerp);
+                out_pixels[y * width + x] = out_color.to_uint();
+            }
+        }
+
+        out->update_pixels();
+        this->update_pixels();
+        return out;
+    }
+
 
     // Utility functions
 

@@ -43,4 +43,39 @@ TEST_CASE("Color objects", "[color]") {
         REQUIRE(a.b == 0.3f);
         REQUIRE(a.a == 0.5f);
     }
+
+    SECTION("Will initialize with four uint") {
+        Pyro::Color a = Pyro::Color(255, 0u, 0u, 255);
+        REQUIRE(a.r == 1.0f);
+        REQUIRE(a.g == 0.0f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+    }
+
+    SECTION("Will convert to uint32") {
+        Pyro::Color a = Pyro::Color(1.0f, 0.0f, 1.0f, 1.0f);
+        uint32_t c = a.to_uint();
+        REQUIRE(c == 0xffff00ff);
+    }
+
+
+    SECTION("Can be converted to and from uint32") {
+        Pyro::Color a = Pyro::Color::from_uint(0xff00ff00);
+        REQUIRE(a.r == 0.0f);
+        REQUIRE(a.g == 1.0f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+    }
+
+    SECTION("Colors can be lerped") {
+        Pyro::Color a = Pyro::Color(1.0f, 0.0f, 0.0f, 1.0f);
+        Pyro::Color b = Pyro::Color(0.0f, 1.0f, 0.0f, 0.0f);
+
+        Pyro::Color c = a.lerp(b, 0.5f);
+
+        REQUIRE(c.r == 0.5f);
+        REQUIRE(c.g == 0.5f);
+        REQUIRE(c.b == 0.0f);
+        REQUIRE(c.a == 0.5f);
+    }
 }
