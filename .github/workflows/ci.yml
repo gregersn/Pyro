@@ -1,0 +1,24 @@
+name: Tests
+on: [push]
+
+jobs:
+  build:
+    name: Pyro build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          pip install meson ninja
+          sudo apt-get update
+          sudo apt-get install libsdl2-dev libfreeimage-dev git-lfs
+      - name: Build project
+        run: meson setup build
+      - name: Run tests
+        run: |
+          cd build
+          ninja test
