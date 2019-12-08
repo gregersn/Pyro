@@ -72,6 +72,14 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
         delete img;
     }
 
+    SECTION("load an image from a different folder") {
+        Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
+        REQUIRE(img->width() == 512);
+        REQUIRE(img->height() == 512);
+    }
+}
+
+TEST_CASE("Images can be resized") {
     SECTION("resize an image") {
         SECTION("scale down") {
             Pyro::Image *img = Pyro::Image::create(64, 32);
@@ -117,10 +125,11 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
             REQUIRE(img2->height() == 500);
             uint32_t *pixels = img2->load_pixels();
             REQUIRE((pixels[0]&0xff000000) == 0xff000000);
-            // img2->save("lenna_500.png");
+            //img2->save("lenna_500.png");
             delete img2;
             delete img;
         }
+        
 
 
         SECTION("Bilinear scale up") {
@@ -130,7 +139,7 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
             REQUIRE(img2->width() == 600);
             REQUIRE(img2->height() == 600);
             uint32_t *pixels = img2->load_pixels();
-            img2->save("lenna_600.png");
+            //img2->save("lenna_600.png");
             REQUIRE((pixels[0]&0xff000000) == 0xff000000);
             delete img2;
             delete img;
@@ -143,13 +152,11 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
             REQUIRE(img2->width() == 400);
             REQUIRE(img2->height() == 400);
             uint32_t *pixels = img2->load_pixels();
-            img2->save("lenna_400.png");
+            //img2->save("lenna_400.png");
             REQUIRE((pixels[0]&0xff000000) == 0xff000000);
             delete img2;
             delete img;
         }
-
-
 
     }
 }

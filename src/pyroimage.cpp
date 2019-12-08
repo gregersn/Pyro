@@ -218,7 +218,7 @@ namespace Pyro {
         }
         out->update_pixels();
         this->update_pixels();
-
+        
         return out;
     }
 
