@@ -192,6 +192,11 @@ namespace Pyro {
     }
 
     Image *Image::resize(unsigned int width, unsigned int height, RESIZEMETHOD method) {
+        if(width == 0) {
+            width = uint((float)this->width() / ((float)this->height() / (float)height));
+        } else if(height == 0) {
+            height = uint((float)this->height() / ((float)this->width() / (float)width));
+        }
         switch(method) {
             case BILINEAR:
                 return this->resize_bilinear(width, height);

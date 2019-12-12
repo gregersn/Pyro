@@ -128,9 +128,7 @@ TEST_CASE("Images can be resized") {
             //img2->save("lenna_500.png");
             delete img2;
             delete img;
-        }
-        
-
+        }      
 
         SECTION("Bilinear scale up") {
             Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
@@ -158,5 +156,51 @@ TEST_CASE("Images can be resized") {
             delete img;
         }
 
+    }
+
+    SECTION("Resize images proportionally") {
+        SECTION("Scale down, setting only width") {
+            Pyro::Image *img = Pyro::Image::create(400, 300);
+            Pyro::Image *img2 = img->resize(200, 0);
+
+            REQUIRE(img2->width() == 200);
+            REQUIRE(img2->height() == 150);
+
+            delete img2;
+            delete img;
+        }
+
+        SECTION("Scale down, setting only height") {
+            Pyro::Image *img = Pyro::Image::create(400, 300);
+            Pyro::Image *img2 = img->resize(0, 150);
+
+            REQUIRE(img2->width() == 200);
+            REQUIRE(img2->height() == 150);
+            
+            delete img2;
+            delete img;
+        }
+
+        SECTION("Scale up, settings only width") {
+            Pyro::Image *img = Pyro::Image::create(400, 300);
+            Pyro::Image *img2 = img->resize(800, 0);
+
+            REQUIRE(img2->width() == 800);
+            REQUIRE(img2->height() == 600);
+            
+            delete img2;
+            delete img;
+        }
+
+        SECTION("Scale up, setting only height") {
+            Pyro::Image *img = Pyro::Image::create(400, 300);
+            Pyro::Image *img2 = img->resize(0, 600);
+
+            REQUIRE(img2->width() == 800);
+            REQUIRE(img2->height() == 600);
+            
+            delete img2;
+            delete img;
+        }
     }
 }
