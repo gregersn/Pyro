@@ -135,8 +135,13 @@ TEST_CASE( "Vectors have angle between them", "[vector]") {
 }
 
 TEST_CASE("Vectors can be initialized in various ways", "[vector]") {
-    Pyro::Vector v1 = Pyro::Vector(1.0f, 2.0f, 3.0f);
-    Pyro::Vector v2 = Pyro::Vector(3.0f, 2.0f, 1.0f);
+    SECTION("Normal initialization") {
+        Pyro::Vector v1 = Pyro::Vector(1.0f, 2.0f, 3.0f);
+        Pyro::Vector v2 = Pyro::Vector(3.0f, 2.0f, 1.0f);
+
+        REQUIRE(v1.x() == 1.0f);
+        REQUIRE(v2.x() == 3.0f);
+    }
 
     SECTION("Random 2D") {
         Pyro::Vector v = Pyro::Vector::random2d();

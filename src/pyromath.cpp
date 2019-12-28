@@ -8,6 +8,10 @@ namespace Pyro {
         return degree * M_PI / 180.0; 
     }
 
+    float degrees(float radians) {
+        return radians * 180.0 / M_PI;
+    }
+
     int random(int range) {
         return (int)(random() * range);
     }

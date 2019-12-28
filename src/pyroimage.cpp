@@ -41,7 +41,7 @@ namespace Pyro {
         this->cache = nullptr;
         this->_width = width;
         this->_height = height;
-        this->bpp = 4;
+        this->bpp = bpp;
         this->data = (unsigned char *)malloc(width * height * sizeof(unsigned char) * this->bpp);
 
     }
@@ -172,6 +172,7 @@ namespace Pyro {
         if(index < this->_width * this->_height) {
             return ((unsigned int *)this->data)[index];
         }
+        throw;
     }
 
     uint32_t Image::get(unsigned int x, unsigned int y) {

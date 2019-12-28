@@ -21,3 +21,6 @@ libpyro.so
 
 # Ignore subprojects files
 subprojects/*/
+
+# Ignore Python stuff
+*.pyc

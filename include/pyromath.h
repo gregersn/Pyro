@@ -28,6 +28,7 @@ namespace Pyro {
 
         
         float radians(float degree);
+        float degrees(float radians);
 
         static std::default_random_engine rng = std::default_random_engine(0);
         static std::uniform_real_distribution<double> rng_dist = std::uniform_real_distribution<double>(0.0, 1.0);
