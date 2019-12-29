@@ -44,13 +44,13 @@ namespace Pyro {
             static Graphics *create(unsigned int width, unsigned int height);
             static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode);
 
-            virtual void image(Image *img, float x, float y) = 0;
+            virtual void image(Image *img, float x, float y) {};
 
             // Color functions
             void nostroke();
             void nofill();
 
-            virtual void blendmode(BlendMode mode) = 0;
+            virtual void blendmode(BlendMode mode) {};
 
             inline void fill(Color c) { this->fill(c.r, c.g, c.b, c.a); };
             
@@ -83,10 +83,10 @@ namespace Pyro {
             virtual void nosmooth();
 
             // Transformation
-            virtual void translate(float x, float) = 0;
-            virtual void rotate(float a) = 0;
-            virtual void pushmatrix() = 0;
-            virtual void popmatrix() = 0;
+            virtual void translate(float x, float) {};
+            virtual void rotate(float a) {};
+            virtual void pushmatrix() {};
+            virtual void popmatrix() {};
 
             // Drawing functions
             inline void background(Color c) { this->background(c.r, c.g, c.b, c.a); };
@@ -100,7 +100,7 @@ namespace Pyro {
             inline void background(float r, float g, float b) { this->background(r, g, b, 1.0); };
             virtual void background(float r, float g, float b, float a);
 
-            virtual void shape(Shape s, float x, float y) = 0;
+            virtual void shape(Shape s, float x, float y) {};
 
             void beginshape() {this->_shape.begin(); };
             void vertex(float x, float y) { this->_shape.vertex(x, y); };
@@ -111,7 +111,7 @@ namespace Pyro {
 
             // Primitive shapes
             void point(float x, float y);
-            virtual void line(float x0, float y0, float x1, float y1) = 0;
+            virtual void line(float x0, float y0, float x1, float y1) {};
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
             void rect(float a, float b, float c, float d);
             void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
