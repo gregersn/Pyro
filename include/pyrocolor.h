@@ -20,6 +20,7 @@ namespace Pyro {
             float g;
             float b;
             float a;
+
             Color(const std::string color) {
                 if(color.length() == 7) {
                     this->a = 1.0f;
@@ -78,12 +79,26 @@ namespace Pyro {
                 );
             }
 
+            // HSB is the same as HSV
+            static Color hsba(float h, float s, float b, float a);
+
+            static Color hsla(float h, float s, float l, float a);
+
             uint32_t to_uint() {
                 return (
                     (uint)(this->a * 255) << 24 |
                     (uint)(this->r * 255) << 16 |
                     (uint)(this->g * 255) << 8  |
                     (uint)(this->b * 255)
+                );
+            }
+
+            static uint32_t fto32(float r, float g, float b, float a) {
+                return (
+                    (uint)(a * 255) << 24 |
+                    (uint)(r * 255) << 16 |
+                    (uint)(g * 255) << 8  |
+                    (uint)(b * 255)
                 );
             }
 

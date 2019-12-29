@@ -1,6 +1,40 @@
 #include "pyrocolor.h"
 
 namespace Pyro {
+    Color Color::hsba(float h, float s, float b, float a) {
+
+        float C = b * s;
+        float Hp = h * 6.0;
+        float X = C * (1.0f - abs(fmod(Hp, 2) - 1));
+        float R1 = 0.0f;
+        float G1 = 0.0f;
+        float B1 = 0.0f;
+
+        if(Hp <= 1.0f) {
+            R1 = C;
+            G1 = X;
+        } else if(Hp <= 2.0f) {
+            R1 = X;
+            G1 = C;
+        } else if(Hp <= 3.0f) {
+            G1 = C;
+            B1 = X;
+        } else if(Hp <= 4.0f) {
+            G1 = X;
+            B1 = C;
+        } else if(Hp <= 5.0f) {
+            R1 = C;
+            B1 = X;
+        } else if(Hp <= 6.0f) {
+            R1 = X;
+            B1 = C;
+        }
+
+        float m = b - C;
+
+        return Color(R1 + m, G1 + m, B1 + m, a);
+    }
+
     Palette::Palette() {
          this->colors = std::vector<Color>();
     }
