@@ -1,8 +1,9 @@
 test_sources = ['tests-main.cpp',
-                'test-math.cpp',
                 'test-color.cpp',
-                'test-pyro.cpp',
+                'test-graphics.cpp',
                 'tests-image.cpp',
+                'test-math.cpp',
+                'test-pyro.cpp',
                 'tests-vector.cpp']
 
 testexe = executable('alltests', test_sources,
