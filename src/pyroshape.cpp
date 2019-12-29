@@ -54,8 +54,8 @@ namespace Pyro {
                 for(unsigned int i = 0; i < curve_resolution; i++) {
                     this->outpoints.push_back(
                         Pyro::Vector(
-                            curvepoint(p0.v.x(), point.v.x(), p2.v.x(), p3.v.x(), i * delta),
-                            curvepoint(p0.v.y(), point.v.y(), p2.v.y(), p3.v.y(), i * delta)
+                            curvepoint(p0.v.x, point.v.x, p2.v.x, p3.v.x, i * delta),
+                            curvepoint(p0.v.y, point.v.y, p2.v.y, p3.v.y, i * delta)
                         )
                     );
                 }
@@ -77,8 +77,8 @@ namespace Pyro {
                 for(unsigned int i = 1; i < curve_resolution + 1; i++) {
                     this->outpoints.push_back(
                         Pyro::Vector(
-                            bezierpoint(p0.v.x(), point.v.x(), p2.v.x(), p3.v.x(), i * delta),
-                            bezierpoint(p0.v.y(), point.v.y(), p2.v.y(), p3.v.y(), i * delta)
+                            bezierpoint(p0.v.x, point.v.x, p2.v.x, p3.v.x, i * delta),
+                            bezierpoint(p0.v.y, point.v.y, p2.v.y, p3.v.y, i * delta)
                         )
                     );
                 }

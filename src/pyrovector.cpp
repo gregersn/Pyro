@@ -4,21 +4,21 @@
 
 namespace Pyro {
     Vector::Vector() {
-        this->_x = 0.0f;
-        this->_y = 0.0f;
-        this->_z = 0.0f;
+        this->x = 0.0f;
+        this->y = 0.0f;
+        this->z = 0.0f;
     }
 
     Vector::Vector(float x, float y) {
-        this->_x = x;
-        this->_y = y;
-        this->_z = 0.0f;
+        this->x = x;
+        this->y = y;
+        this->z = 0.0f;
     }
 
     Vector::Vector(float x, float y, float z) {
-        this->_x = x;
-        this->_y = y;
-        this->_z = z;
+        this->x = x;
+        this->y = y;
+        this->z = z;
     }
 
     Vector Vector::fromangle(float a) {
@@ -37,20 +37,8 @@ namespace Pyro {
         return Vector(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
     }
 
-    float Vector::x() const {
-        return this->_x;
-    }
-
-    float Vector::y() const {
-        return this->_y;
-    }
-
-    float Vector::z() const {
-        return this->_z;
-    }
-
     float Vector::mag() const {
-        return sqrt(_x * _x + _y * _y + _z * _z);
+        return sqrt(x * x + y * y + z * z);
     }
 
     Vector Vector::setmag(float m) const {
@@ -62,11 +50,11 @@ namespace Pyro {
     }
 
     float Vector::dot(Vector const &other) const {
-        return _x * other._x + _y * other._y + _z * other._z;
+        return x * other.x + y * other.y + z * other.z;
     }
 
     float Vector::heading() const {
-        return atan2(this->_y, this->_x);
+        return atan2(this->y, this->x);
     }
 
     float Vector::angle(Vector const &other) const {
@@ -76,11 +64,11 @@ namespace Pyro {
     }
 
     Vector Vector::div(float v) const{
-        return Vector(_x / v, _y / v, _z / v);
+        return Vector(x / v, y / v, z / v);
     }
 
     Vector Vector::copy() const {
-        return Vector(_x, _y, _z);
+        return Vector(x, y, z);
     }
 
     Vector Vector::normalize() const {

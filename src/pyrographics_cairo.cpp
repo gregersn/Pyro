@@ -60,9 +60,9 @@ namespace Pyro {
 
         for(size_t i = 0; i < s.getpoints().size(); i++) {
             if(i == 0) {
-                cairo_move_to(this->cr, s.getpoints()[i].x(), s.getpoints()[i].y());
+                cairo_move_to(this->cr, s.getpoints()[i].x, s.getpoints()[i].y);
             } else {
-                cairo_line_to(this->cr, s.getpoints()[i].x(), s.getpoints()[i].y());
+                cairo_line_to(this->cr, s.getpoints()[i].x, s.getpoints()[i].y);
             }
         }
         if(s.close == CLOSE) {

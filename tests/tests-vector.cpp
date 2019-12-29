@@ -8,25 +8,25 @@ TEST_CASE("Vectors", "[vector]") {
     Pyro::Vector v1 = Pyro::Vector(1, 2, 3);
     Pyro::Vector v2 = Pyro::Vector(3, 2, 1);
 
-    REQUIRE(a.x() == 0.0f);
-    REQUIRE(a.y() == 1.0f);
-    REQUIRE(b.x() == 1.0f);
-    REQUIRE(b.y() == 0.0f);
+    REQUIRE(a.x == 0.0f);
+    REQUIRE(a.y == 1.0f);
+    REQUIRE(b.x == 1.0f);
+    REQUIRE(b.y == 0.0f);
 
     SECTION("Calculations") {
         SECTION("Addition") {
             SECTION("add b to a") {
                 Pyro::Vector c = a + b;
 
-                REQUIRE(c.x() == 1.0f);
-                REQUIRE(c.y() == 1.0f);
+                REQUIRE(c.x == 1.0f);
+                REQUIRE(c.y == 1.0f);
             }
 
             SECTION("add a to b") {
                 Pyro::Vector c = b + a;
 
-                REQUIRE(c.x() == 1.0f);
-                REQUIRE(c.y() == 1.0f);
+                REQUIRE(c.x == 1.0f);
+                REQUIRE(c.y == 1.0f);
             }
 
             SECTION("Adding is commutative") {
@@ -37,14 +37,14 @@ TEST_CASE("Vectors", "[vector]") {
         SECTION("Subtraction") {
             SECTION("subtract b from a") {
                 Pyro::Vector c = a - b;
-                REQUIRE(c.x() == -1.0f);
-                REQUIRE(c.y() == 1.0f);
+                REQUIRE(c.x == -1.0f);
+                REQUIRE(c.y == 1.0f);
             }
 
             SECTION("subtract a from b") {
                 Pyro::Vector c = b - a;
-                REQUIRE(c.x() == 1.0f);
-                REQUIRE(c.y() == -1.0f);
+                REQUIRE(c.x == 1.0f);
+                REQUIRE(c.y == -1.0f);
             }
 
             SECTION("Subtraction is not commutative") {
@@ -55,16 +55,16 @@ TEST_CASE("Vectors", "[vector]") {
 
         SECTION("Multiplication") {
             Pyro::Vector v3 = v2 * 2.0f;
-            REQUIRE(v3.x() == 6);
-            REQUIRE(v3.y() == 4);
-            REQUIRE(v3.z() == 2);
+            REQUIRE(v3.x == 6);
+            REQUIRE(v3.y == 4);
+            REQUIRE(v3.z == 2);
         }
 
         SECTION("DIVISION") {
             Pyro::Vector v3 = v2 / 2.0f;
-            REQUIRE(v3.x() == 1.5);
-            REQUIRE(v3.y() == 1);
-            REQUIRE(v3.z() == 0.5);
+            REQUIRE(v3.x == 1.5);
+            REQUIRE(v3.y == 1);
+            REQUIRE(v3.z == 0.5);
 
         }
     }
@@ -139,8 +139,8 @@ TEST_CASE("Vectors can be initialized in various ways", "[vector]") {
         Pyro::Vector v1 = Pyro::Vector(1.0f, 2.0f, 3.0f);
         Pyro::Vector v2 = Pyro::Vector(3.0f, 2.0f, 1.0f);
 
-        REQUIRE(v1.x() == 1.0f);
-        REQUIRE(v2.x() == 3.0f);
+        REQUIRE(v1.x == 1.0f);
+        REQUIRE(v2.x == 3.0f);
     }
 
     SECTION("Random 2D") {

@@ -3,16 +3,11 @@
 
 namespace Pyro {
     class Vector {
-        private:
-        float _x;
-        float _y;
-        float _z;
-
         public:
-            float x() const;
-            float y() const;
-            float z() const;
-            
+            float x;
+            float y;
+            float z;
+
             Vector();
             Vector(float x, float y);
             Vector(float x, float y, float z);
@@ -34,25 +29,25 @@ namespace Pyro {
             static Vector random3d();
 
             inline Vector operator+ (Vector const &other) const {
-                return Vector(_x + other._x, _y + other._y, _z + other._z);
+                return Vector(x + other.x, y + other.y, z + other.z);
             };
 
             inline void operator+= (Vector const &other) {
-                _x += other._x;
-                _y += other._y;
-                _z += other._z;
+                x += other.x;
+                y += other.y;
+                z += other.z;
             };
 
             inline Vector operator- (Vector const &other) const {
-                return Vector(_x - other._x, _y - other._y, _z - other._z);
+                return Vector(x - other.x, y - other.y, z - other.z);
             }
 
             inline Vector operator/ (float const v) const {
-                return Vector(_x / v, _y / v, _z / v);
+                return Vector(x / v, y / v, z / v);
             }
 
             inline Vector operator* (float const v) const {
-                return Vector(_x * v, _y * v, _z * v);
+                return Vector(x * v, y * v, z * v);
             }
 
 
@@ -61,9 +56,9 @@ namespace Pyro {
             }
 
             void operator=(const Vector &rhs) {
-                this->_x = rhs.x();
-                this->_y = rhs.y();
-                this->_z = rhs.z();
+                this->x = rhs.x;
+                this->y = rhs.y;
+                this->z = rhs.z;
             }
 
     };
