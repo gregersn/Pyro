@@ -1,4 +1,4 @@
-#include <pyrographics_cairo.h>
+#include <pyro/pyrographics_cairo.h>
 
 namespace Pyro {
     GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels) : Graphics(width, height, channels) {

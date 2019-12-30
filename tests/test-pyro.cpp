@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include <pyro.h>
+#include <pyro/pyro.h>
 
 TEST_CASE("The library can be initialized", "[setup]") {
     SECTION("using size()") {

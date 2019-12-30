@@ -1,5 +1,5 @@
-#include <pyromath.h>
-#include <pyroconstants.h>
+#include <pyro/pyromath.h>
+#include <pyro/pyroconstants.h>
 
 #include <iostream>
 

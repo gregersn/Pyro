@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include <pyrovector.h>
+#include <pyro/pyrovector.h>
 
 TEST_CASE("Vectors", "[vector]") {
     Pyro::Vector a = Pyro::Vector(0.0f, 1.0f);

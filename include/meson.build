@@ -1,12 +1,12 @@
-header_files = ['pyro.h',
-                'pyro_sdl.h',
-                'pyrocolor.h',
-                'pyroconstants.h',
-                'pyrographics.h',
-                'pyroimage.h',
-                'pyromath.h',
-                'pyroshape.h',
-                'pyrovector.h',
-                'pyrographics_cairo.h']
+header_files = ['pyro/pyro.h',
+                'pyro/pyro_sdl.h',
+                'pyro/pyrocolor.h',
+                'pyro/pyroconstants.h',
+                'pyro/pyrographics.h',
+                'pyro/pyroimage.h',
+                'pyro/pyromath.h',
+                'pyro/pyroshape.h',
+                'pyro/pyrovector.h',
+                'pyro/pyrographics_cairo.h']
 
 install_headers(header_files, subdir: 'pyro')

@@ -49,7 +49,7 @@ make ./examples/graphics/piechart
 A very simple example
 
 ```
-#include <Pyro.h>
+#include <pyro/pyro.h>
 
 using namespace Pyro
 

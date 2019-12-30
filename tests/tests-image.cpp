@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include <pyroimage.h>
+#include <pyro/pyroimage.h>
 
 TEST_CASE( "Images are saved and loaded correctly", "[image]") {
     SECTION("saving an image and loading it gives same colors back") {

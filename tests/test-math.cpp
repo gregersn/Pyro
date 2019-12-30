@@ -1,7 +1,7 @@
 #include <catch2/catch.hpp>
 
-#include <pyroconstants.h>
-#include <pyromath.h>
+#include <pyro/pyroconstants.h>
+#include <pyro/pyromath.h>
 
 
 

@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include <pyromath.h>
+#include <pyro/pyromath.h>
 
 namespace Pyro {
     /*struct t_color {

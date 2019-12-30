@@ -1,4 +1,4 @@
-#include <pyro.h>
+#include <pyro/pyro.h>
 #include <cstdlib>
 
 namespace Pyro {

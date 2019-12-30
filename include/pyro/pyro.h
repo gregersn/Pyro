@@ -19,6 +19,10 @@ namespace Pyro {
     extern unsigned int height;
     extern uint32_t *pixels;
 
+    inline Graphics *create(unsigned int width, unsigned int height) {
+        return Graphics::create(width, height);
+    }
+
     // Initialize the library with this.
     void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi);
     void size(unsigned int width, unsigned int height);
@@ -26,9 +30,9 @@ namespace Pyro {
     uint32_t color(unsigned int r, unsigned int g, unsigned int b);
     uint32_t color(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
 
-    inline void save(const std::string &file) { pg->save(file); };
-    inline void save(const std::string &file, unsigned int dpi) { pg->save(file, dpi); };
-    
+    inline void save(const char *file) { pg->save(file); };
+    inline void save(const char *file, unsigned int dpi) { pg->save(file, dpi); };
+
     void loadpixels();
     void updatepixels();
     inline void image(Image *img, float x, float y) { pg->image(img, x, y); };
@@ -56,10 +60,10 @@ namespace Pyro {
 
     inline void fill(Color c) { pg->fill(c); };
 
-    inline void fill(float c) {  pg->fill(c, c, c, 1.0); };
+    inline void fill(float c) { pg->fill(c, c, c, 1.0); };
     inline void fill(float c, float a) { pg->fill(c, c, c, a); };
     inline void fill(float r, float g, float b) { pg->fill(r, g, b, 1.0); };
-    inline void fill(float r, float g, float b, float a) {pg->fill(r, g, b, a); };
+    inline void fill(float r, float g, float b, float a) { pg->fill(r, g, b, a); };
 
     inline void fill(int c) { pg->fill(c); };
     inline void fill(int c, int a) { pg->fill(c, a); };
@@ -68,10 +72,10 @@ namespace Pyro {
 
     inline void stroke(Color c) { pg->stroke(c); };
 
-    inline void stroke(float c) {  pg->stroke(c, c, c, 1.0); };
+    inline void stroke(float c) { pg->stroke(c, c, c, 1.0); };
     inline void stroke(float c, float a) { pg->stroke(c, c, c, a); };
     inline void stroke(float r, float g, float b) { pg->stroke(r, g, b, 1.0); };
-    inline void stroke(float r, float g, float b, float a) {pg->stroke(r, g, b, a); };
+    inline void stroke(float r, float g, float b, float a) { pg->stroke(r, g, b, a); };
 
     inline void stroke(int c) { pg->stroke(c); };
     inline void stroke(int c, int a) { pg->stroke(c, a); };
@@ -96,13 +100,13 @@ namespace Pyro {
     inline void arc(float a, float b, float c, float d, float start, float end, int mode) { pg->arc(a, b, c, d, start, end); };
     inline void arc(float a, float b, float c, float d, float start, float end) { arc(a, b, c, d, start, end, OPEN); };
 
-    inline void ellipse(float x, float y, float w, float h, unsigned int segments=32) { pg->ellipse(x, y, w, h, segments); };
-    inline void circle(float x, float y, float r, unsigned int segments=32) { ellipse(x, y, r, r, segments); };
+    inline void ellipse(float x, float y, float w, float h, unsigned int segments = 32) { pg->ellipse(x, y, w, h, segments); };
+    inline void circle(float x, float y, float r, unsigned int segments = 32) { ellipse(x, y, r, r, segments); };
 
     inline void translate(float x, float y) { pg->translate(x, y); };
     inline void rotate(float a) { pg->rotate(a); };
     inline void pushmatrix() { pg->pushmatrix(); };
     inline void popmatrix() { pg->popmatrix(); };
-}
+} // namespace Pyro
 
 #endif // PYRO_H

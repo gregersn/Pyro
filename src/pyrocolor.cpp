@@ -1,4 +1,4 @@
-#include "pyrocolor.h"
+#include <pyro/pyrocolor.h>
 
 namespace Pyro {
     void Color::set(float a, float b, float c, float d) {

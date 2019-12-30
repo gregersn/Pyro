@@ -1,6 +1,6 @@
-#include <pyroimage.h>
-#include <pyrocolor.h>
-#include <pyroconstants.h>
+#include <pyro/pyroimage.h>
+#include <pyro/pyrocolor.h>
+#include <pyro/pyroconstants.h>
 
 #include <FreeImage.h>
 

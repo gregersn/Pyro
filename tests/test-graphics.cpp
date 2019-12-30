@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include <pyrographics.h>
+#include <pyro/pyrographics.h>
 
 TEST_CASE("Graphics objects can be initialized", "[graphics]") {
     SECTION("Create a graphics object") {
