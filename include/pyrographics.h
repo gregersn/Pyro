@@ -31,8 +31,8 @@ namespace Pyro {
 
             bool _smooth;
 
-            t_color stroke_color;
-            t_color fill_color;
+            Color stroke_color;
+            Color fill_color;
             float stroke_weight;
 
             Shape _shape;
@@ -51,6 +51,10 @@ namespace Pyro {
             void nofill();
 
             virtual void blendmode(BlendMode mode) {};
+            virtual void colormode(ColorMode mode) {
+                this->stroke_color.colormode(mode);
+                this->fill_color.colormode(mode);
+            };
 
             inline void fill(Color c) { this->fill(c.r, c.g, c.b, c.a); };
             

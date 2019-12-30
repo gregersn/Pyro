@@ -7,19 +7,40 @@
 #include <pyromath.h>
 
 namespace Pyro {
-    struct t_color {
+    /*struct t_color {
         float r;
         float g;
         float b;
         float a;
+    };*/
+
+    enum class ColorMode {
+        RGB,
+        RGBA,
+        HSB,
+        HSBA
     };
-    
+
     class Color {
         public:
             float r;
             float g;
             float b;
             float a;
+
+            ColorMode mode = ColorMode::RGBA;
+
+            void colormode(ColorMode mode) {
+                this->mode = mode;
+            }
+
+            Color() {
+                this->mode = ColorMode::RGBA;
+                this->r = 0.0f;
+                this->g = 0.0f;
+                this->b = 0.0f;
+                this->a = 1.0f;
+            }
 
             Color(const std::string color) {
                 if(color.length() == 7) {
@@ -80,7 +101,7 @@ namespace Pyro {
             }
 
             // HSB is the same as HSV
-            static Color hsba(float h, float s, float b, float a);
+            void hsba(float h, float s, float b, float a);
 
             static Color hsla(float h, float s, float l, float a);
 
@@ -108,6 +129,8 @@ namespace Pyro {
                              Pyro::lerp(this->b, other.b, t),
                              Pyro::lerp(this->a, other.a, t));
             }
+
+            void set(float a, float b, float c, float d);
     };
 
     class Palette {

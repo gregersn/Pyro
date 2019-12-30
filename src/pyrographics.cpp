@@ -10,7 +10,6 @@
 namespace Pyro {
     Graphics::Graphics(unsigned int width, unsigned int height, unsigned int bpp) :
     Image() {
-
         this->_width = width;
         this->_height = height;
         this->bpp = bpp;
@@ -124,10 +123,7 @@ namespace Pyro {
     }
 
     void Graphics::stroke(float r, float g, float b, float a) {
-        this->stroke_color.r = r;
-        this->stroke_color.g = g;
-        this->stroke_color.b = b;
-        this->stroke_color.a = a;
+        this->stroke_color.set(r, g, b, a);
         this->stroke_enable = true;
     }
 
@@ -151,10 +147,7 @@ namespace Pyro {
     }
 
     void Graphics::fill(float r, float g, float b, float a) {
-        this->fill_color.r = r;
-        this->fill_color.g = g;
-        this->fill_color.b = b;
-        this->fill_color.a = a;
+        this->fill_color.set(r, g, b, a);
         this->fill_enable = true;
     }
 

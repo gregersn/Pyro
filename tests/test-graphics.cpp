@@ -52,3 +52,88 @@ TEST_CASE("Fill can be set", "[graphics]") {
         REQUIRE(q == 0xffff0000);
     }
 }
+
+TEST_CASE("Stroke can be set", "[graphics]") {
+    Pyro::Graphics *pg = Pyro::Graphics::create(10, 1);
+
+    SECTION("Set no stroke") {
+        pg->nostroke();
+        pg->nosmooth();
+        pg->nofill();
+
+        uint32_t p = pg->get(0, 0);
+        pg->line(0, 0, 10, 0);
+
+        uint32_t q = pg->get(0, 0);
+
+        REQUIRE(p == q);
+    }
+
+    SECTION("Set red stroke") {
+        pg->nofill();
+        pg->nosmooth();
+        pg->stroke(1.0f, 0.0f, 0.0f, 1.0f);
+
+        uint32_t p = pg->get(0, 0);
+        pg->line(0, 0, 10, 0);
+
+        uint32_t q = pg->get(0, 0);
+
+        REQUIRE(p == 0x00000000);
+        REQUIRE(q == 0xffff0000);
+
+    }
+}
+
+TEST_CASE("Shapes can be drawn", "[graphics]") {
+    Pyro::Graphics *pg = Pyro::Graphics::create(8, 8);
+
+    SECTION("Draw a filled square") {
+        pg->nosmooth();
+        pg->nostroke();
+        pg->fill(0.0f, 1.0f, 0.0f, 1.0f);
+
+        pg->beginshape();
+        pg->vertex(3.0f, 3.0f);
+        pg->vertex(6.0f, 3.0f);
+        pg->vertex(6.0f, 6.0f);
+        pg->vertex(3.0f, 6.0f);
+        pg->vertex(3.0f, 3.0f);
+        pg->endshape();
+
+        uint32_t p = pg->get(0, 0);
+        REQUIRE(p == 0x00000000);
+
+        uint32_t q = pg->get(4, 4);
+        REQUIRE(q == 0xff00ff00);
+
+    }
+
+    SECTION("Draw with curvevertex") {
+        pg->nostroke();
+        pg->fill(0.0f, 1.0f, 0.0f, 1.0f);
+
+        pg->beginshape();
+        pg->vertex(0, 0);
+        pg->curvevertex(2, 6);
+        pg->curvevertex(6, 3);
+        pg->vertex(0, 0);
+
+        pg->endshape();
+    }
+}
+
+TEST_CASE("Select different color modes") {
+    Pyro::Graphics *pg = Pyro::Graphics::create(3, 3);
+
+    SECTION("Use HSB") {
+        pg->nosmooth();
+        pg->nostroke();
+        pg->colormode(Pyro::ColorMode::HSB);
+        pg->fill(.5f, 1.0f, .5f);
+        pg->rect(0, 0, 2, 2);
+
+        uint32_t p = pg->get(1, 1);
+        REQUIRE(p == 0xff008080);
+    }
+}

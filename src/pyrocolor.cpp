@@ -1,7 +1,25 @@
 #include "pyrocolor.h"
 
 namespace Pyro {
-    Color Color::hsba(float h, float s, float b, float a) {
+    void Color::set(float a, float b, float c, float d) {
+        switch(this->mode) {
+            case ColorMode::HSB:
+            case ColorMode::HSBA:
+                this->hsba(a, b, c, d);
+                break;
+
+            case ColorMode::RGB:
+            case ColorMode::RGBA:
+            default:
+                this->r = a;
+                this->g = b;
+                this->b = c;
+                this->a = d;
+                break;
+
+        }
+    }
+    void Color::hsba(float h, float s, float b, float a) {
 
         float C = b * s;
         float Hp = h * 6.0;
@@ -32,7 +50,10 @@ namespace Pyro {
 
         float m = b - C;
 
-        return Color(R1 + m, G1 + m, B1 + m, a);
+        this->r = R1 + m;
+        this->g = G1 + m;
+        this->b = B1 + m;
+        this->a = a;
     }
 
     Palette::Palette() {
