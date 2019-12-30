@@ -24,12 +24,12 @@ namespace Pyro {
             unsigned int _height;
 
         public:
-            unsigned int bpp;
+            unsigned int channels;
             unsigned int width() { return this->_width; };
             unsigned int height() { return this->_height; };
 
             Image();
-            Image(unsigned int width, unsigned int height, unsigned int bpp);
+            Image(unsigned int width, unsigned int height, unsigned int channels);
             ~Image();
 
             static Image *create(unsigned int width, unsigned int height);
@@ -53,6 +53,6 @@ namespace Pyro {
             Image *resize(unsigned int width, unsigned int height, RESIZEMETHOD method);
     };
 
-    Image *createimage(unsigned int width, unsigned int height, int bpp);
+    Image *createimage(unsigned int width, unsigned int height, int channels);
 }
 #endif

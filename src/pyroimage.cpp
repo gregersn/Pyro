@@ -34,15 +34,15 @@ namespace Pyro {
         this->cache = nullptr;
     }
 
-    Image::Image(unsigned int width, unsigned int height, unsigned int bpp) {
+    Image::Image(unsigned int width, unsigned int height, unsigned int channels) {
         //printf("Creating image\n");
         this->pixels_locked = false;
         this->data = nullptr;
         this->cache = nullptr;
         this->_width = width;
         this->_height = height;
-        this->bpp = bpp;
-        this->data = (unsigned char *)malloc(width * height * sizeof(unsigned char) * this->bpp);
+        this->channels = channels;
+        this->data = (unsigned char *)malloc(width * height * sizeof(unsigned char) * this->channels);
 
     }
 
@@ -56,8 +56,8 @@ namespace Pyro {
     }
 
     Image* Image::create(unsigned int width, unsigned int height) {
-        unsigned int bpp = 4;
-        Image *img = new Image(width, height, bpp);
+        unsigned int channels = 4;
+        Image *img = new Image(width, height, channels);
         return img;
     }
 
@@ -127,7 +127,7 @@ namespace Pyro {
 
         FIBITMAP *img = FreeImage_ConvertFromRawBits((unsigned char *)this->data,
                                                      this->_width, this->_height,
-                                                     this->_width * this->bpp, this->bpp * 8,
+                                                     this->_width * this->channels, this->channels * 8,
                                                      0xff0000, 0xff00, 0xff, 1);
 
         unsigned int dots_per_meter = (unsigned int)((dpi * 100) / 2.54);
@@ -141,7 +141,7 @@ namespace Pyro {
     // Pixel access functions
     void *Image::get_pre_multiplied_data() {
         if(this->cache == nullptr) {
-            this->cache = malloc(this->_width * this->_height * sizeof(unsigned char) * this->bpp);            
+            this->cache = malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);            
             unsigned char *cache = (unsigned char *)this->cache;
             unsigned char *source = (unsigned char *)this->data;
             
@@ -181,7 +181,7 @@ namespace Pyro {
     }
 
     Image* Image::get(unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
-        Image *out = createimage(width, height, this->bpp);
+        Image *out = createimage(width, height, this->channels);
         for(unsigned int ty = 0; ty < height; ty++){
             for(unsigned int tx = 0; tx < width; tx++) {
                 unsigned int pos = (y + ty) * this->_width + (x + tx);
@@ -211,7 +211,8 @@ namespace Pyro {
         float sx = width / this->width();
         float sy = height / this->height();
         
-        Image *out = createimage(width, height, this->bpp);
+        Image *out = createimage(width, height, this->channels);
+
         unsigned int *out_pixels = out->load_pixels();
         unsigned int *in_pixels = this->load_pixels();
         for(unsigned int oy = 0; oy < out->height(); oy++) {
@@ -232,7 +233,7 @@ namespace Pyro {
         float sx = (float)width / (float)this->width();
         float sy = (float)height / (float)this->height();
         
-        Image *out = createimage(width, height, this->bpp);
+        Image *out = createimage(width, height, this->channels);
         unsigned int *out_pixels = out->load_pixels();
         unsigned int *in_pixels = this->load_pixels();
 
@@ -267,7 +268,7 @@ namespace Pyro {
 
     // Utility functions
 
-    Image* createimage(unsigned int width, unsigned int height, int bpp) {
-        return new Image(width, height, bpp);
+    Image* createimage(unsigned int width, unsigned int height, int channels) {
+        return new Image(width, height, channels);
     }
 }

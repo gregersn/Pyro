@@ -13,7 +13,7 @@ namespace Pyro {
 
 
         public:
-            GraphicsCairo(unsigned int width, unsigned int height, unsigned int bpp);
+            GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels);
             ~GraphicsCairo();
 
             void blendmode(BlendMode mode);

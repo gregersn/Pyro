@@ -158,7 +158,7 @@ SCENARIO("Image can be created with a given size and depth") {
         THEN(" width is 400, height is 300 and depth is 4") {
             REQUIRE(img->width() == 400);
             REQUIRE(img->height() == 300);
-            REQUIRE(img->bpp == 4);
+            REQUIRE(img->channels == 4);
         }
         delete img;
     }
@@ -168,7 +168,7 @@ SCENARIO("Image can be created with a given size and depth") {
         THEN(" width is 300, height is 400 and depth is 3") {
             REQUIRE(img->width() == 300);
             REQUIRE(img->height() == 400);
-            REQUIRE(img->bpp == 3);
+            REQUIRE(img->channels == 3);
         }
         delete img;
     }
@@ -178,7 +178,7 @@ SCENARIO("Image can be created with a given size and depth") {
         THEN(" width is 180, height is 200 and depth is 4") {
             REQUIRE(img->width() == 180);
             REQUIRE(img->height() == 200);
-            REQUIRE(img->bpp == 4);
+            REQUIRE(img->channels == 4);
         }
         delete img;
     }

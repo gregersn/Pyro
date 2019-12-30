@@ -1,11 +1,11 @@
 #include <pyrographics_cairo.h>
 
 namespace Pyro {
-    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int bpp) : Graphics(width, height, bpp) {
+    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels) : Graphics(width, height, channels) {
         this->surface = cairo_image_surface_create_for_data((unsigned char *)this->data,
                                                             CAIRO_FORMAT_ARGB32,
                                                             this->width(), this->height(),
-                                                            this->width() * this->bpp);
+                                                            this->width() * this->channels);
         this->cr = cairo_create(this->surface);
 
 

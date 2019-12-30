@@ -22,8 +22,8 @@ namespace Pyro {
     const int SQUARE = 6;
     const int PROJECT = 7;
 
-    const int RGB = 24;
-    const int RGBA = 32;
+    const int RGB = 3;
+    const int RGBA = 4;
 
 }
 

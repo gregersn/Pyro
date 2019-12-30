@@ -38,7 +38,7 @@ namespace Pyro {
             Shape _shape;
 
         public:
-            Graphics(unsigned int width, unsigned int height, unsigned int bpp);
+            Graphics(unsigned int width, unsigned int height, unsigned int channels);
             virtual ~Graphics();
 
             static Graphics *create(unsigned int width, unsigned int height);
@@ -101,7 +101,7 @@ namespace Pyro {
 
             inline void background(float c) { this->background(c, c, c, 1.0); };
             inline void background(float c, float a) { this->background(c, c, c, a); };
-            inline void background(float r, float g, float b) { this->background(r, g, b, 1.0); };
+            inline void background(float r, float g, float b) { this->background(r, g, b, 1.0f); };
             virtual void background(float r, float g, float b, float a);
 
             virtual void shape(Shape s, float x, float y) {};

@@ -8,12 +8,12 @@
 #include <cstring>
 
 namespace Pyro {
-    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int bpp) :
+    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int channels) :
     Image() {
         this->_width = width;
         this->_height = height;
-        this->bpp = bpp;
-        this->data = (void *)malloc(width * height * sizeof(unsigned char) * this->bpp);
+        this->channels = channels;
+        this->data = (void *)malloc(width * height * sizeof(unsigned char) * this->channels);
 
         this->smooth();
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);

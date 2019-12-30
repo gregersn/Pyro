@@ -137,3 +137,20 @@ TEST_CASE("Select different color modes") {
         REQUIRE(p == 0xff008080);
     }
 }
+
+TEST_CASE("Save and load images") {
+    Pyro::Graphics *pg = Pyro::Graphics::create(4, 4);
+
+    SECTION("Create, save and load") {
+        pg->background(1.0f, 0.0f, 1.0f, 1.0f);
+        pg->save("__testimage__.png");
+
+        Pyro::Image *img = pg->load("__testimage__.png");
+
+        uint32_t p = pg->get(1, 1);
+        uint32_t q = img->get(1, 1);
+
+        REQUIRE(p == q);
+        REQUIRE(p == 0xffff00ff);
+    }
+}
