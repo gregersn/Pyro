@@ -7,6 +7,10 @@
 #include "pyroshape.h"
 
 namespace Pyro {
+    enum class RectMode {
+        CORNER,
+        CENTER
+    };
     enum class BlendMode {
         ADD,
         BLEND,
@@ -33,6 +37,7 @@ namespace Pyro {
 
             Color stroke_color;
             Color fill_color;
+            RectMode _rect_mode;
             float stroke_weight;
 
             Shape _shape;
@@ -117,6 +122,7 @@ namespace Pyro {
             void point(float x, float y);
             virtual void line(float x0, float y0, float x1, float y1) {};
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
+            void rectmode(RectMode mode) { this->_rect_mode = mode; };
             void rect(float a, float b, float c, float d);
             void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 

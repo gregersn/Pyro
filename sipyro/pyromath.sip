@@ -19,6 +19,7 @@ namespace Pyro {
 #include <pyro/pyromath.h>
 %End
     int random(int range);
+    int random(int low, int high);
     float radians(float degrees);
     float degrees(float radian);
 

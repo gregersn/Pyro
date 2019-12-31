@@ -121,6 +121,65 @@ TEST_CASE("Shapes can be drawn", "[graphics]") {
 
         pg->endshape();
     }
+
+    SECTION("Draw rect") {
+        SECTION("RectMode default") {
+            /**
+             *     11110000
+             *     11110000
+             *     11110000
+             *     11110000
+             *     00000000
+             *     00000000
+             *     00000000
+             *     00000000
+             * */
+            pg->nosmooth();
+            pg->nostroke();
+            pg->fill(1.0f);
+
+            pg->rect(0, 0, 4, 4);
+            pg->save("s.png");
+            uint32_t p = pg->get(0, 0);
+            REQUIRE(p == 0xffffffff);
+
+            uint32_t q = pg->get(3, 3);
+            REQUIRE(q == 0xffffffff);
+
+            uint32_t r = pg->get(4, 4);
+            REQUIRE(r == 0x00000000);
+        }
+
+        SECTION("RectMode center") {
+            /**
+             *     11000000
+             *     11000000
+             *     00000000
+             *     00000000
+             *     00000000
+             *     00000000
+             *     00000000
+             *     00000000
+             * */
+            pg->nosmooth();
+            pg->rectmode(Pyro::RectMode::CENTER);
+            pg->nostroke();
+            pg->fill(1.0f);
+
+            pg->rect(0, 0, 4, 4);
+            pg->save("t.png");
+            uint32_t p = pg->get(0, 0);
+            REQUIRE(p == 0xffffffff);
+
+            uint32_t q = pg->get(1, 1);
+            REQUIRE(q == 0xffffffff);
+
+            uint32_t r = pg->get(2, 2);
+            REQUIRE(r == 0x00000000);
+
+
+        }
+    }
 }
 
 TEST_CASE("Select different color modes") {

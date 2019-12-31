@@ -62,6 +62,11 @@ namespace Pyro {
     }
 
     void Graphics::rect(float a, float b, float c, float d) {
+        if(this->_rect_mode == RectMode::CENTER) {
+            a -= c / 2.0f;
+            b -= d / 2.0f;
+        }
+        
         Shape s = Shape();
         s.begin();
         s.vertex(a, b);

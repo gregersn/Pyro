@@ -5,6 +5,11 @@ namespace Pyro {
 #include <pyro/pyrographics.h>
 #include <Python.h>
 %End
+    enum class RectMode {
+        CORNER,
+        CENTER
+    };
+
     class Graphics {
         public:
             Graphics(unsigned int width, unsigned int height, unsigned int channels);
@@ -34,6 +39,7 @@ namespace Pyro {
             void fill(float r, float g, float b, float a);
 
             void line(float x0, float y0, float x1, float y1);
+            void rectmode(RectMode mode);
             void rect(float a, float b, float c, float d);
 
     };
