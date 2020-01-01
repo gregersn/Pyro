@@ -10,10 +10,12 @@
 %Include pyroimage.sip
 %Include pyrographics.sip
 
-namespace Pyro {
-%TypeHeaderCode
+%HideNamespace(name=Pyro)
+%ModuleCode
 #include <pyro/pyro.h>
 %End
+
+namespace Pyro {
     enum class Unit { px, cm, mm, in };
 
     unsigned int width;

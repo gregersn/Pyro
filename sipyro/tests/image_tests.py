@@ -6,14 +6,12 @@ from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
 
+from PIL import Image
 import numpy as np
 import unittest
 import os
 
-from pyro import Pyro
-PyroImage = Pyro.Image
-
-from PIL import Image
+import pyro
 
 
 def split_32bit(a: int):
@@ -49,7 +47,7 @@ def test_createimage():
 
 class ResizeTests(unittest.TestCase):
     def setUp(self):
-        self.img = PyroImage.load('../tests/Lenna.png')
+        self.img = pyro.Image.load('../tests/Lenna.png')
 
     def test_resize(self):
         img = self.img
@@ -74,7 +72,7 @@ class ResizeTests(unittest.TestCase):
 
 class PixelTests(unittest.TestCase):
     def setUp(self):
-        self.img = PyroImage.load('../tests/Lenna.png')
+        self.img = pyro.Image.load('../tests/Lenna.png')
 
     def test_get(self):
         pixel = self.img.get(0, 0)
@@ -144,7 +142,7 @@ class ImageTests(unittest.TestCase):
         assert pixels[0, 0, 0] == 128
 
     def test_load(self):
-        img = PyroImage.load('../tests/Lenna.png')
+        img = pyro.Image.load('../tests/Lenna.png')
         assert img.width() == 512
         assert img.height() == 512
 
@@ -162,7 +160,7 @@ class ImageTests(unittest.TestCase):
         self.assertEqual("RGBA", i.mode)
 
     # def test_getchannels(self):
-    #     img = PyroImage.load('examples/Lenna.png')
+    #     img = pyro.Image.load('examples/Lenna.png')
 
     #     channels = img.get_channels()
 

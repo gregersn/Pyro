@@ -19,7 +19,7 @@ class PixelsTests(unittest.TestCase):
             os.unlink('__testfile__.png')
 
     def test_red_background(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(1.0, 0.0, 0.0, 1.0)
         p.save('__testfile__.png')
 
@@ -30,7 +30,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_red_fill(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.fill(1.0, 0.0, 0.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
@@ -43,7 +43,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_green_background(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(0.0, 1.0, 0.0, 1.0)
         p.save('__testfile__.png')
 
@@ -54,7 +54,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_green_fill(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.fill(0.0, 1.0, 0.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
@@ -67,7 +67,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_blue_background(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(0.0, 0.0, 1.0, 1.0)
         p.save('__testfile__.png')
 
@@ -78,7 +78,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_blue_fill(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.fill(0.0, 0.0, 1.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
@@ -91,7 +91,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_black_background(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(0.0, 0.0, 0.0, 1.0)
         p.save('__testfile__.png')
 
@@ -102,7 +102,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_white_background(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(1.0, 1.0, 1.0, 1.0)
         p.save('__testfile__.png')
 
@@ -114,7 +114,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_black_fill(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.fill(0.0, 0.0, 0.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
@@ -127,7 +127,7 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_white_fill(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.fill(1.0, 1.0, 1.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
@@ -141,11 +141,11 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_red_image(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(1.0, 0.0, 0.0, 1.0)
         p.save('__testfile__.png')
 
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         img = p.loadimage('__testfile__.png')
         p.image(img, 0, 0)
         p.save('__testfile__.png')
@@ -157,11 +157,11 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_green_image(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(0.0, 1.0, 0.0, 1.0)
         p.save('__testfile__.png')
 
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         img = p.loadimage('__testfile__.png')
         p.image(img, 0, 0)
         p.save('__testfile__.png')
@@ -173,11 +173,11 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_blue_image(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(0.0, 0.0, 1.0, 1.0)
         p.save('__testfile__.png')
 
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         img = p.loadimage('__testfile__.png')
         p.image(img, 0, 0)
         p.save('__testfile__.png')
@@ -189,11 +189,11 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_black_image(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(0.0, 0.0, 0.0, 1.0)
         p.save('__testfile__.png')
 
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         img = p.loadimage('__testfile__.png')
         p.image(img, 0, 0)
         p.save('__testfile__.png')
@@ -205,11 +205,11 @@ class PixelsTests(unittest.TestCase):
         i.close()
 
     def test_white_image(self):
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         p.background(1.0, 1.0, 1.0, 1.0)
         p.save('__testfile__.png')
 
-        p = pyro.Pyro.create(256, 256)
+        p = pyro.create(256, 256)
         img = p.loadimage('__testfile__.png')
         p.image(img, 0, 0)
         p.save('__testfile__.png')
