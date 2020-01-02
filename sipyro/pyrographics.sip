@@ -25,6 +25,8 @@ namespace Pyro {
             void save(const char *filename, unsigned int dpi);
 
 
+            void background(float c);
+            void background(float c, float a);
             void background(float r, float g, float b);
             void background(float r, float g, float b, float a);
 
@@ -39,8 +41,14 @@ namespace Pyro {
             void fill(float r, float g, float b, float a);
 
             void line(float x0, float y0, float x1, float y1);
+
+            void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
+
             void rectmode(RectMode mode);
             void rect(float a, float b, float c, float d);
+
+            void ellipse(float x, float y, float w, float h, unsigned int segments);
+
 
     };
 
