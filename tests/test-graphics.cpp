@@ -188,7 +188,7 @@ TEST_CASE("Select different color modes") {
     SECTION("Use HSB") {
         pg->nosmooth();
         pg->nostroke();
-        pg->colormode(Pyro::ColorMode::HSB);
+        pg->colormode(Pyro::HSB);
         pg->fill(.5f, 1.0f, .5f);
         pg->rect(0, 0, 2, 2);
 

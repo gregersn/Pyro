@@ -4,23 +4,10 @@
 #include <string>
 #include <vector>
 
+#include <pyro/pyroconstants.h>
 #include <pyro/pyromath.h>
 
 namespace Pyro {
-    /*struct t_color {
-        float r;
-        float g;
-        float b;
-        float a;
-    };*/
-
-    enum class ColorMode {
-        RGB,
-        RGBA,
-        HSB,
-        HSBA
-    };
-
     class Color {
         public:
             float r;
@@ -28,14 +15,14 @@ namespace Pyro {
             float b;
             float a;
 
-            ColorMode mode = ColorMode::RGBA;
+            int mode = Pyro::RGBA;
 
-            void colormode(ColorMode mode) {
+            void colormode(int mode) {
                 this->mode = mode;
             }
 
             Color() {
-                this->mode = ColorMode::RGBA;
+                this->mode = Pyro::RGBA;
                 this->r = 0.0f;
                 this->g = 0.0f;
                 this->b = 0.0f;

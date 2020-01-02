@@ -78,4 +78,61 @@ TEST_CASE("Color objects", "[color]") {
         REQUIRE(c.b == 0.0f);
         REQUIRE(c.a == 0.5f);
     }
+
+    SECTION("Colors can be set with HSB") {
+        Pyro::Color a = Pyro::Color(1.0f);
+        a.hsba(0.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 1.0f);
+        REQUIRE(a.g == 0.0f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(0.125f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 1.0f);
+        REQUIRE(a.g == 0.25f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(0.25f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 1.0f);
+        REQUIRE(a.g == 0.5f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(0.5f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 1.0f);
+        REQUIRE(a.g == 1.0f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(0.75f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 0.5f);
+        REQUIRE(a.g == 1.0f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(1.0f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 0.0f);
+        REQUIRE(a.g == 1.0f);
+        REQUIRE(a.b == 0.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(1.5f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 0.0f);
+        REQUIRE(a.g == 1.0f);
+        REQUIRE(a.b == 1.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(2.0f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 0.0f);
+        REQUIRE(a.g == 0.0f);
+        REQUIRE(a.b == 1.0f);
+        REQUIRE(a.a == 1.0f);
+
+        a.hsba(2.5f / 3.0f, 1.0f, 1.0f, 1.0f);
+        REQUIRE(a.r == 1.0f);
+        REQUIRE(a.g == 0.0f);
+        REQUIRE(a.b == 1.0f);
+        REQUIRE(a.a == 1.0f);
+    }
 }

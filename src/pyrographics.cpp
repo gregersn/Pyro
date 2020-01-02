@@ -50,6 +50,16 @@ namespace Pyro {
         memset(this->data, 0, this->width() * this->height() * 4);
     }
 
+    void Graphics::triangle(Vector a, Vector b, Vector c) {
+        Shape s = Shape();
+        s.begin();
+        s.vertex(a);
+        s.vertex(b);
+        s.vertex(c);
+        s.end(CLOSE);
+        this->shape(s, 0, 0);
+    }
+
 
     void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2) {
         Shape s = Shape();
@@ -77,8 +87,19 @@ namespace Pyro {
         this->shape(s, 0, 0);
     }
 
+    void Graphics::quad(Vector a, Vector b, Vector c, Vector d) {
+        Shape s = Shape();
+        s.begin();
+        s.vertex(a);
+        s.vertex(b);
+        s.vertex(c);
+        s.vertex(d);
+        s.end(CLOSE);
+        this->shape(s, 0, 0);
+    }
+
     void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) {
-        Shape s  = Shape();
+        Shape s = Shape();
         s.begin();
         s.vertex(x0, y0);
         s.vertex(x1, y1);

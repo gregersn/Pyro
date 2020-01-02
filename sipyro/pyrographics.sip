@@ -24,6 +24,11 @@ namespace Pyro {
             void save(const char *filename);
             void save(const char *filename, unsigned int dpi);
 
+            // Transformation
+            void translate(float x, float);
+            void rotate(float a);
+            void pushmatrix();
+            void popmatrix();
 
             void background(float c);
             void background(float c, float a);
@@ -34,6 +39,8 @@ namespace Pyro {
 
             void nostroke();
             void nofill();
+            void colormode(int mode);
+
 
             void fill(float c);
             void fill(float c, float a);
@@ -42,7 +49,11 @@ namespace Pyro {
 
             void line(float x0, float y0, float x1, float y1);
 
+            void triangle(Vector a, Vector b, Vector c);
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
+
+            void quad(Vector a, Vector b, Vector c, Vector d);
+            void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
             void rectmode(RectMode mode);
             void rect(float a, float b, float c, float d);

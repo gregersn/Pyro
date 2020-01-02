@@ -56,7 +56,7 @@ namespace Pyro {
             void nofill();
 
             virtual void blendmode(BlendMode mode) {};
-            virtual void colormode(ColorMode mode) {
+            virtual void colormode(int mode) {
                 this->stroke_color.colormode(mode);
                 this->fill_color.colormode(mode);
             };
@@ -112,6 +112,7 @@ namespace Pyro {
             virtual void shape(Shape s, float x, float y) {};
 
             void beginshape() {this->_shape.begin(); };
+            void vertex(Vector v) { this->_shape.vertex(v.x, v.y); };
             void vertex(float x, float y) { this->_shape.vertex(x, y); };
             void curvevertex(float x, float y) { this->_shape.curvevertex(x, y); };
             void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { this->_shape.beziervertex(x2, y2, x3, y3, x4, y4); }
@@ -121,9 +122,14 @@ namespace Pyro {
             // Primitive shapes
             void point(float x, float y);
             virtual void line(float x0, float y0, float x1, float y1) {};
+
+            void triangle(Vector a, Vector b, Vector c);
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
+    
             void rectmode(RectMode mode) { this->_rect_mode = mode; };
             void rect(float a, float b, float c, float d);
+
+            void quad(Vector a, Vector b, Vector c, Vector d);
             void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
             void arc(float a, float b, float c, float d, float start, float end) { this->arc(a, b, c, d, start, end, OPEN); };

@@ -1,15 +1,16 @@
+#include <pyro/pyroconstants.h>
 #include <pyro/pyrocolor.h>
 
 namespace Pyro {
     void Color::set(float a, float b, float c, float d) {
         switch(this->mode) {
-            case ColorMode::HSB:
-            case ColorMode::HSBA:
+            case Pyro::HSB:
+            case Pyro::HSBA:
                 this->hsba(a, b, c, d);
                 break;
 
-            case ColorMode::RGB:
-            case ColorMode::RGBA:
+            case Pyro::RGB:
+            case Pyro::RGBA:
             default:
                 this->r = a;
                 this->g = b;
@@ -19,36 +20,35 @@ namespace Pyro {
 
         }
     }
-    void Color::hsba(float h, float s, float b, float a) {
-
-        float C = b * s;
-        float Hp = h * 6.0;
-        float X = C * (1.0f - abs(fmod(Hp, 2) - 1));
+    void Color::hsba(float hue, float saturation, float brightness, float a) {
+        float C = brightness * saturation;
+        float Hp = hue * 6.0f;
+        float X = C * (1.0f - std::abs(fmod(Hp, 2.0f) - 1.0f));
         float R1 = 0.0f;
         float G1 = 0.0f;
         float B1 = 0.0f;
 
-        if(Hp <= 1.0f) {
+        if(Hp <= 1) {
             R1 = C;
             G1 = X;
-        } else if(Hp <= 2.0f) {
+        } else if(Hp <= 2) {
             R1 = X;
             G1 = C;
-        } else if(Hp <= 3.0f) {
+        } else if(Hp <= 3) {
             G1 = C;
             B1 = X;
-        } else if(Hp <= 4.0f) {
+        } else if(Hp <= 4) {
             G1 = X;
             B1 = C;
-        } else if(Hp <= 5.0f) {
-            R1 = C;
-            B1 = X;
-        } else if(Hp <= 6.0f) {
+        } else if(Hp <= 5) {
             R1 = X;
             B1 = C;
+        } else if(Hp <= 6) {
+            R1 = C;
+            B1 = X;
         }
 
-        float m = b - C;
+        float m = brightness - C;
 
         this->r = R1 + m;
         this->g = G1 + m;
