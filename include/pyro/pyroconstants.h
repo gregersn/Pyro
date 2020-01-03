@@ -27,6 +27,10 @@ namespace Pyro {
     const int RGB = 3;
     const int RGBA = 4;
 
+    const int GRAY = 1;
+    const int GRAYALPHA = 2;
+    const int ARGB = 4;
+
 }
 
 #endif

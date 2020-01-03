@@ -121,8 +121,9 @@ class PixelTests(unittest.TestCase):
 
 class ImageTests(unittest.TestCase):
     def tearDown(self):
-        if os.path.isfile('__testfile__.png'):
-            os.unlink('__testfile__.png')
+        if os.path.isfile('_test_image__.png'):
+            os.unlink('_test_image__.png')
+            pass
 
     def test_init(self):
         img = Pyro.createimage(10, 11, Pyro.RGB)
@@ -149,7 +150,7 @@ class ImageTests(unittest.TestCase):
         pixels = img.load_pixels()
         assert pixels.shape[0] == 512
         assert pixels.shape[1] == 512
-        assert pixels.shape[2] == 8
+        assert pixels.shape[2] == 3
         assert pixels.dtype == np.uint8, ("Pixels dtype %s" % pixels.dtype)
 
     def test_create_save_load(self):

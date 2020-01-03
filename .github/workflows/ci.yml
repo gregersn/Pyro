@@ -15,7 +15,7 @@ jobs:
         run: |
           pip install meson ninja
           sudo apt-get update
-          sudo apt-get install libsdl2-dev libfreeimage-dev git-lfs
+          sudo apt-get install libsdl2-dev libpng-dev git-lfs
       - name: Build project
         run: meson setup build
       - name: Run tests

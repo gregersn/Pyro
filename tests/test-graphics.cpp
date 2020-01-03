@@ -19,6 +19,7 @@ TEST_CASE("Graphics can have backgrounds", "[graphics]") {
         uint32_t p = pg->get(0, 0);
 
         REQUIRE(p == 0xffff0000);
+        pg->save("red.png");
 
     }
 
@@ -148,6 +149,8 @@ TEST_CASE("Shapes can be drawn", "[graphics]") {
 
             uint32_t r = pg->get(4, 4);
             REQUIRE(r == 0x00000000);
+
+            remove("s.png");
         }
 
         SECTION("RectMode center") {
@@ -177,7 +180,7 @@ TEST_CASE("Shapes can be drawn", "[graphics]") {
             uint32_t r = pg->get(2, 2);
             REQUIRE(r == 0x00000000);
 
-
+            remove("t.png");
         }
     }
 }
@@ -199,17 +202,23 @@ TEST_CASE("Select different color modes") {
 
 TEST_CASE("Save and load images") {
     Pyro::Graphics *pg = Pyro::Graphics::create(4, 4);
-
+    const char *filename = "__4x4_ARGB__.png";
     SECTION("Create, save and load") {
         pg->background(1.0f, 0.0f, 1.0f, 1.0f);
-        pg->save("__testimage__.png");
+        pg->save(filename);
 
-        Pyro::Image *img = pg->load("__testimage__.png");
+        Pyro::Image *img = pg->load(filename);
 
         uint32_t p = pg->get(1, 1);
         uint32_t q = img->get(1, 1);
 
+        REQUIRE(img->channels == 4);
+        REQUIRE(img->width() == 4);
+        REQUIRE(img->height() == 4);
+
         REQUIRE(p == q);
         REQUIRE(p == 0xffff00ff);
+
+        remove(filename);
     }
 }

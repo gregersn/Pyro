@@ -207,14 +207,14 @@ class PixelsTests(unittest.TestCase):
     def test_white_image(self):
         p = pyro.create(256, 256)
         p.background(1.0, 1.0, 1.0, 1.0)
-        p.save('__testfile__.png')
+        p.save('__testfile_white__.png')
 
         p = pyro.create(256, 256)
-        img = p.loadimage('__testfile__.png')
+        img = p.loadimage('__testfile_white__.png')
         p.image(img, 0, 0)
-        p.save('__testfile__.png')
+        p.save('__testfile_white__.png')
 
-        i = Image.open('__testfile__.png')
+        i = Image.open('__testfile_white__.png')
         pixel = i.getpixel((128, 128))
         assert (255, 255, 255, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
