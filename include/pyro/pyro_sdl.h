@@ -1,6 +1,7 @@
 #ifndef PYRO_SDL_H
 #define PYRO_SDL_H
 
+#include <functional>
 #include "pyro.h"
 #include <SDL2/SDL.h>
 
@@ -32,7 +33,7 @@ namespace Pyro {
     void init();
     void update();
     void quit();
-    void run(void (*setup)(), void (*draw)());
+    void run(std::function<void()>  setup, std::function<void()>  draw);
     void noloop();
     void loop();
 

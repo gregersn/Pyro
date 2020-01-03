@@ -9,6 +9,7 @@
 %Include pyrovector.sip
 %Include pyroimage.sip
 %Include pyrographics.sip
+%Include pyrosdl.sip
 
 %HideNamespace(name=Pyro)
 %ModuleCode

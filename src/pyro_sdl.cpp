@@ -1,4 +1,4 @@
-#include <pyro/pyro_sdl.h>
+#include "pyro/pyro_sdl.h"
 #include <iostream>
 
 namespace Pyro {
@@ -132,7 +132,7 @@ namespace Pyro {
         looping = false;
     }
 
-    void run(void (*setup)(), void (*draw)()) {
+    void run(cb setup, cb draw) {
         setup();
         init();
         while(running) {
