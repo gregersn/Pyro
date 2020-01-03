@@ -36,6 +36,7 @@ namespace Pyro {
             void background(float r, float g, float b, float a);
 
             unsigned int get(unsigned int x, unsigned int y);
+            void set(unsigned int x, unsigned int y, unsigned int c);
 
             void nostroke();
             void nofill();

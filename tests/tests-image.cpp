@@ -1,6 +1,11 @@
 #include <catch2/catch.hpp>
 
-#include <pyro/pyroimage.h>
+#include "pyro/pyroimage.h"
+#include "pyro/pyroconstants.h"
+
+unsigned int pack(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+    return (a << 24) | (r << 16) | (g << 8) | b;
+}
 
 TEST_CASE( "Images are saved and loaded correctly", "[image]") {
     SECTION("saving an image and loading it gives same colors back") {
@@ -9,16 +14,20 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
         unsigned int pixel = 0xffff9911;
         
         unsigned int *pixels = img->load_pixels();
+        REQUIRE(pixels != nullptr);
+
         pixels[0] = pixel;
         img->save("test.png");
 
         Pyro::Image *img2 = Pyro::Image::load("test.png");
         pixels = img->load_pixels();
+        REQUIRE(pixels != nullptr);
 
         REQUIRE(pixels[0] == pixel);
 
         delete img;
         delete img2;
+        remove("test.png");
     }
 
     SECTION("saving an image and loading it gives the same size") {
@@ -27,11 +36,14 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
         unsigned int pixel = 0xffff9911;
         
         unsigned int *pixels = img->load_pixels();
+        REQUIRE(pixels != nullptr);
+
         pixels[0] = pixel;
         img->save("test.png");
 
         Pyro::Image *img2 = Pyro::Image::load("test.png");
         pixels = img->load_pixels();
+        REQUIRE(pixels != nullptr);
 
         REQUIRE(img->width() == img2->width());
         REQUIRE(img->height() == img2->height());
@@ -41,41 +53,107 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
 
         delete img;
         delete img2;
+        remove("test.png");
     }
 
     SECTION("create image with gradient, test save and load") {
-        Pyro::Image *img = Pyro::Image::create(256, 5);
+        SECTION("Create and save the image") {
+            Pyro::Image *img = Pyro::Image::create(256, 5);
 
-        unsigned int *pixels = img->load_pixels();
-        for(unsigned int i = 0; i < 256; i++) {
-            pixels[i] = 0xff000000 | i;
-            pixels[256 + i] = 0xff000000 | i << 8;
-            pixels[512 + i] = 0xff000000 | i << 16;
-            pixels[768 + i] = 0xff000000 | i | i << 16 | i << 8;
-            pixels[1024 + i] = i | i << 16 | i << 8 | i << 24;
-            
+            unsigned int *pixels = img->load_pixels();
+            REQUIRE(pixels != nullptr);
+
+            for(unsigned int i = 0; i < 256; i++) {
+                pixels[i] = 0xff000000 | i;
+                pixels[256 + i] = 0xff000000 | i << 8;
+                pixels[512 + i] = 0xff000000 | i << 16;
+                pixels[768 + i] = 0xff000000 | i | i << 16 | i << 8;
+                pixels[1024 + i] = i | i << 16 | i << 8 | i << 24;
+                
+            }
+
+            img->save("gradient_test.png");
+            delete img;
         }
 
-        img->save("gradient_test.png");
-        delete img;
+        SECTION("Load the image back in") {
+            Pyro::Image *img = Pyro::Image::load("gradient_test.png");
 
-        img = Pyro::Image::load("gradient_test.png");
+            unsigned int *pixels = img->load_pixels();
+            REQUIRE(pixels != nullptr);
 
-        pixels = img->load_pixels();
-        for(unsigned int i = 0; i < 256; i++) {
-            REQUIRE(pixels[i] == (0xff000000 | i));
-            REQUIRE(pixels[256 + i] == (0xff000000 | i << 8));
-            REQUIRE(pixels[512 + i] == (0xff000000 | i << 16));
-            REQUIRE(pixels[768 + i] == (0xff000000 | i | i << 16 | i << 8));
-            REQUIRE(pixels[1024 + i] == (i | i << 16 | i << 8 | i << 24));
+            for(unsigned int i = 0; i < 256; i++) {
+                REQUIRE(pixels[i] == (0xff000000 | i));
+                REQUIRE(pixels[256 + i] == (0xff000000 | i << 8));
+                REQUIRE(pixels[512 + i] == (0xff000000 | i << 16));
+                REQUIRE(pixels[768 + i] == (0xff000000 | i | i << 16 | i << 8));
+                REQUIRE(pixels[1024 + i] == (i | i << 16 | i << 8 | i << 24));
+            }
+            delete img;
+
+            //remove("gradient_test.png");
         }
-        delete img;
     }
 
     SECTION("load an image from a different folder") {
         Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
+        REQUIRE(img != nullptr);
         REQUIRE(img->width() == 512);
         REQUIRE(img->height() == 512);
+    }
+}
+
+TEST_CASE("PNG files can be loaded and saved") {
+    SECTION("Load a test image") {
+        Pyro::Image *img = Pyro::Image::loadPNG("../tests/Lenna.png");
+        REQUIRE(img != nullptr);
+        REQUIRE(img->width() == 512);
+        REQUIRE(img->height() == 512);
+        REQUIRE(img->channels == 3);
+
+        SECTION("Check pixels") {
+            REQUIRE(img->get(0, 0) == pack(226, 137, 125, 255));
+            REQUIRE(img->get(img->width() - 1, 0) == pack(200, 99, 90, 255));
+            REQUIRE(img->get(0, img->height() - 1) == pack(82, 22, 57, 255));
+            REQUIRE(img->get(img->width() - 1 , img->height() - 1) == pack(185, 74, 81, 255));
+        }
+    }
+
+    SECTION("Save and load an image") {
+        SECTION("Create and save") {
+            Pyro::Image *img = Pyro::Image::create(256, 5);
+
+            unsigned int *pixels = img->load_pixels();
+            REQUIRE(pixels != nullptr);
+            for(unsigned int i = 0; i < 256; i++) {
+                pixels[i] = 0xff000000 | i;
+                pixels[256 + i] = 0xff000000 | i << 8;
+                pixels[512 + i] = 0xff000000 | i << 16;
+                pixels[768 + i] = 0xff000000 | i | i << 16 | i << 8;
+                pixels[1024 + i] = i | i << 16 | i << 8 | i << 24;
+                
+            }
+
+            img->savePNG("savepng_gradient_test.png");
+            delete img;
+        }
+
+        SECTION("Load the image back in") {
+            Pyro::Image *img = Pyro::Image::loadPNG("savepng_gradient_test.png");
+
+            unsigned int *pixels = img->load_pixels();
+            REQUIRE(pixels != nullptr);
+
+            for(unsigned int i = 0; i < 256; i++) {
+                REQUIRE(pixels[i] == (0xff000000 | i));
+                REQUIRE(pixels[256 + i] == (0xff000000 | i << 8));
+                REQUIRE(pixels[512 + i] == (0xff000000 | i << 16));
+                REQUIRE(pixels[768 + i] == (0xff000000 | i | i << 16 | i << 8));
+                REQUIRE(pixels[1024 + i] == (i | i << 16 | i << 8 | i << 24));
+            }
+            delete img;
+            remove("savepng_gradient_test.png");
+        }
     }
 }
 
@@ -93,6 +171,7 @@ TEST_CASE("Images can be resized") {
 
             REQUIRE(img2->width() == 64 / 2);
             REQUIRE(img2->height() == 32 / 2);
+
             REQUIRE(((unsigned int *)img2->get_data())[0] == pixelcolor);
 
             delete img;
@@ -113,14 +192,15 @@ TEST_CASE("Images can be resized") {
 
     SECTION("Resize a loaded image with different methods") {
         Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
-        
+        REQUIRE(img != nullptr);
+
         SECTION("Nearest neighbor scale down") {
             Pyro::Image *img2 = img->resize(500, 500, Pyro::NEAREST);
 
             REQUIRE(img2->width() == 500);
             REQUIRE(img2->height() == 500);
-            uint32_t *pixels = img2->load_pixels();
-            REQUIRE((pixels[0]&0xff000000) == 0xff000000);
+
+            REQUIRE((img2->get(0, 0)&0xff000000) == 0xff000000);
 
             delete img2;
             delete img;
@@ -131,8 +211,8 @@ TEST_CASE("Images can be resized") {
 
             REQUIRE(img2->width() == 600);
             REQUIRE(img2->height() == 600);
-            uint32_t *pixels = img2->load_pixels();
-            REQUIRE((pixels[0]&0xff000000) == 0xff000000);
+
+            REQUIRE((img2->get(0, 0)&0xff000000) == 0xff000000);
 
             delete img2;
             delete img;
@@ -143,8 +223,9 @@ TEST_CASE("Images can be resized") {
 
             REQUIRE(img2->width() == 400);
             REQUIRE(img2->height() == 400);
-            uint32_t *pixels = img2->load_pixels();
-            REQUIRE((pixels[0]&0xff000000) == 0xff000000);
+
+            REQUIRE((img2->get(0, 0)&0xff000000) == 0xff000000);
+            img2->save("bilinear_downscale.png");
             delete img2;
             delete img;
         }
@@ -182,6 +263,62 @@ SCENARIO("Image can be created with a given size and depth") {
         }
         delete img;
     }
+}
+
+TEST_CASE("Image can be created in different formats", "[image]") {
+    const char *filename = "__testimage_channels__.png";
+
+    SECTION("Create single channel image") {
+        Pyro::Image *img = Pyro::createimage(300, 200, Pyro::GRAY);
+        REQUIRE(img->channels == 1);
+        REQUIRE(img->width() == 300);
+        REQUIRE(img->height() == 200);
+
+        img->save(filename);
+
+        delete img;
+
+        img = Pyro::Image::load(filename);
+        REQUIRE(img->channels == 1);
+        REQUIRE(img->width() == 300);
+        REQUIRE(img->height() == 200);
+
+    }
+
+    SECTION("Create RGB image") {
+        Pyro::Image *img = Pyro::createimage(300, 200, Pyro::RGB);
+        REQUIRE(img->channels == 3);
+        REQUIRE(img->width() == 300);
+        REQUIRE(img->height() == 200);
+
+        img->save(filename);
+        
+        delete img;
+
+        img = Pyro::Image::load(filename);
+        REQUIRE(img->channels == 3);
+        REQUIRE(img->width() == 300);
+        REQUIRE(img->height() == 200);
+
+    }
+
+    SECTION("Create ARGB image") {
+        Pyro::Image *img = Pyro::createimage(300, 200, Pyro::ARGB);
+        REQUIRE(img->channels == 4);
+        REQUIRE(img->width() == 300);
+        REQUIRE(img->height() == 200);
+
+        img->save(filename);
+
+        delete img;
+
+        img = Pyro::Image::load(filename);
+        REQUIRE(img->channels == 4);
+        REQUIRE(img->width() == 300);
+        REQUIRE(img->height() == 200);
+
+    }
+    remove(filename);
 }
 
 SCENARIO("Images can be resized proportionally", "[image]") {

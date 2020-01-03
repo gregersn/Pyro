@@ -35,8 +35,13 @@ namespace Pyro {
             static Image *create(unsigned int width, unsigned int height);
 
             static Image *load(const std::string &filename);
+            static Image *loadPNG(const std::string &filename);
+
             void save(const std::string &filename);
             void save(const std::string &filename, unsigned int dpi);
+
+            void savePNG(const std::string &filename) { this->savePNG(filename, 72); };
+            void savePNG(const std::string &filename, unsigned int dpi);
 
 
             // Pixel access
@@ -47,6 +52,7 @@ namespace Pyro {
             unsigned int operator[] (unsigned int);
             uint32_t get(unsigned int x, unsigned int y);
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+            void set(unsigned int x, unsigned int y, unsigned int c);
 
             // Image manipulation functions
             Image *resize(unsigned int width, unsigned int height) { return this->resize(width, height, NEAREST); };

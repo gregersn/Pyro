@@ -1,41 +1,18 @@
-#include <pyro/pyroimage.h>
-#include <pyro/pyrocolor.h>
-#include <pyro/pyroconstants.h>
+#include "pyro/pyroimage.h"
+#include "pyro/pyrocolor.h"
+#include "pyro/pyroconstants.h"
 
-#include <FreeImage.h>
+#include <png.h>
 
 namespace Pyro {
-    static bool FI_initialised = false;
-
-    void FreeImageErrorHandler(FREE_IMAGE_FORMAT fif, const char *message) {
-        printf("\n*** ");
-        if(fif != FIF_UNKNOWN) {
-            printf("%s Format\n", FreeImage_GetFormatFromFIF(fif));
-        }
-        printf("%s", message);
-        printf(" ***\n");
-    }
-
-    void FI_init() {
-        if(!FI_initialised) {
-            printf("Initialize FreeImage\n");
-            FreeImage_Initialise();
-            FreeImage_SetOutputMessage(FreeImageErrorHandler);
-            std::atexit(FreeImage_DeInitialise);
-            FI_initialised = true;
-        }
-    }
-
     // Public functions
 
     Image::Image() {
-        //printf("Creating image\n");
         this->data = nullptr;
         this->cache = nullptr;
     }
 
     Image::Image(unsigned int width, unsigned int height, unsigned int channels) {
-        //printf("Creating image\n");
         this->pixels_locked = false;
         this->data = nullptr;
         this->cache = nullptr;
@@ -62,80 +39,137 @@ namespace Pyro {
     }
 
     Image* Image::load(const std::string &filename) {
-        if(!FI_initialised) {
-            FI_init();
-        }
-
-        FREE_IMAGE_FORMAT fif  = FIF_UNKNOWN;
-        fif = FreeImage_GetFileType(filename.c_str(), 0);
-        if(fif == FIF_UNKNOWN) {
-            fif = FreeImage_GetFIFFromFilename(filename.c_str());
-        }
-
-        if((fif != FIF_UNKNOWN) && FreeImage_FIFSupportsReading(fif)) {
-            FIBITMAP *bitmap = FreeImage_Load(fif, filename.c_str(), 0);
-            if(bitmap) {
-                unsigned int width = FreeImage_GetWidth(bitmap);
-                unsigned int height = FreeImage_GetHeight(bitmap);
-                unsigned int bpp = FreeImage_GetBPP(bitmap);
-
-                FIBITMAP *t = FreeImage_ConvertTo32Bits(bitmap);
-                FreeImage_Unload(bitmap);
-
-                bpp = FreeImage_GetBPP(t);
-
-                Image *img = new Image(width, height, bpp / 4);
-
-                BYTE *d = (BYTE *)img->get_data();
-                BYTE *bits = (BYTE *)FreeImage_GetBits(t);
-                unsigned int pitch = FreeImage_GetPitch(t);
-                for(unsigned int y = 0; y < height; y++) {
-                    BYTE *pixel = (BYTE *)bits;
-                    for(unsigned int x = 0; x < width; x++) {
-                        d[(height - y - 1) * width * 4 + x * 4 + 3] = pixel[FI_RGBA_ALPHA];
-                        d[(height - y - 1) * width * 4 + x * 4 + 2] = pixel[FI_RGBA_RED];
-                        d[(height - y - 1) * width * 4 + x * 4 + 1] = pixel[FI_RGBA_GREEN];
-                        d[(height - y - 1) * width * 4 + x * 4 + 0] = pixel[FI_RGBA_BLUE];
-                        pixel += 4;
-                    }
-                    bits += pitch;
-                }
-
-                FreeImage_Unload(t); 
-                return img;
-            }
-        }
-        return nullptr;
+        return loadPNG(filename);
     }
 
+    Image *Image::loadPNG(const std::string &filename) {
+        FILE *fp = fopen(filename.c_str(), "rb");
+        if(!fp) {
+            return nullptr;
+        }
+        unsigned int number = 8;
+        png_const_bytep header = (png_const_bytep)malloc(sizeof(char) * number);
+        fread((void *)header, 1, number, fp);
+        bool is_png = !png_sig_cmp(header, 0, number);
+        if(!is_png) {
+            return nullptr;
+        }
+
+        png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        if(!png_ptr) {
+            return nullptr;
+        }
+
+        png_infop info_ptr = png_create_info_struct(png_ptr);
+        if(!info_ptr) {
+            png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+            return nullptr;
+        }
+
+        png_infop end_info = png_create_info_struct(png_ptr);
+        if(!end_info) {
+            png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+            return nullptr;
+        }
+
+        png_init_io(png_ptr, fp);
+        png_set_sig_bytes(png_ptr, number);
+        png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR, NULL);
+        png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
+
+        unsigned int width = png_get_image_width(png_ptr, info_ptr);
+        unsigned int height = png_get_image_height(png_ptr, info_ptr);
+        unsigned int channels = png_get_channels(png_ptr, info_ptr);
+
+        printf("Loading image %s, %d, %d, Number of channels: %d\n", filename.c_str(), width, height, channels);
+        Image *img = new Image(width, height, channels);
+        unsigned char *d = (unsigned char *)img->get_data();
+        for(unsigned int y = 0; y < height; y++) {
+            png_bytep row = row_pointers[y];
+            unsigned int line = y * width * channels;
+
+            for(unsigned int x = 0; x < width; x++) {
+                for(unsigned int ch = 0; ch < channels; ch++) {
+                    d[line + x * channels + ch] = row[x * channels + ch];
+                }
+            }
+        }
+        return img;
+    }
 
     void Image::save(const std::string &filename) {
         this->save(filename, 72);
     }
 
     void Image::save(const std::string &filename, unsigned int dpi) {
-        if(!FI_initialised) {
-            FI_init();
+        return this->savePNG(filename, dpi);
+    }
+
+    void Image::savePNG(const std::string &filename, unsigned int dpi) {
+        FILE *fp = fopen(filename.c_str(), "wb");
+        if(!fp) {
+            throw;
         }
 
-        FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
-        fif = FreeImage_GetFIFFromFilename(filename.c_str());
-        if(fif == FIF_UNKNOWN) {
-            printf("Unknown filetype, won't save!\n");
-            return;
+        png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+        if(!png_ptr) {
+            throw;
         }
 
-        FIBITMAP *img = FreeImage_ConvertFromRawBits((unsigned char *)this->data,
-                                                     this->_width, this->_height,
-                                                     this->_width * this->channels, this->channels * 8,
-                                                     0xff0000, 0xff00, 0xff, 1);
+        png_infop info_ptr = png_create_info_struct(png_ptr);
+        if(!info_ptr) {
+            png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
+            throw;
+        }
 
-        unsigned int dots_per_meter = (unsigned int)((dpi * 100) / 2.54);
-        FreeImage_SetDotsPerMeterX(img, dots_per_meter);
-        FreeImage_SetDotsPerMeterY(img, dots_per_meter);
-        
-        FreeImage_Save(fif, img, filename.c_str());
-        FreeImage_Unload(img);
+        if(setjmp(png_jmpbuf(png_ptr))) throw;
+
+        png_init_io(png_ptr, fp);
+
+        int color_type = 0;
+        switch(this->channels) {
+            case GRAY:
+                color_type = PNG_COLOR_TYPE_GRAY;
+                break;
+            case GRAYALPHA:
+                color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+                break;
+            case RGB:
+                color_type = PNG_COLOR_TYPE_RGB;
+                break;
+            case ARGB:
+            default:
+                color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+                break;
+        }
+
+        png_set_IHDR(
+            png_ptr,
+            info_ptr,
+            this->width(),
+            this->height(),
+            8,
+            color_type,
+            PNG_INTERLACE_NONE,
+            PNG_COMPRESSION_TYPE_DEFAULT,
+            PNG_FILTER_TYPE_DEFAULT
+        );
+
+        //png_write_info(png_ptr, info_ptr);
+
+        png_bytep row_pointers[this->height()];
+        png_bytep data = (png_bytep)this->get_data();
+        for(unsigned int y = 0; y < this->height(); y++) {
+            row_pointers[y] = &(data[y * this->width() * this->channels]);
+        }
+
+        png_set_rows(png_ptr, info_ptr, row_pointers);
+        //png_write_image(png_ptr, row_pointers);
+        //png_write_end(png_ptr, NULL);
+        png_write_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR, NULL);
+        fclose(fp);
+        png_destroy_write_struct(&png_ptr, &info_ptr);
+
     }
 
     // Pixel access functions
@@ -157,10 +191,15 @@ namespace Pyro {
 
     uint32_t* Image::load_pixels() {
         this->pixels_locked = true;
-        return (uint32_t *)this->data;
+        if(this->channels == 4) {
+            return (uint32_t *)this->data;
+        }
+        return nullptr;
     }
 
     void Image::update_pixels() {
+        if(this->channels == 4) {
+        }
         this->pixels_locked = false;
         /*if(this->cache != nullptr) {
             free(this->cache);
@@ -176,8 +215,15 @@ namespace Pyro {
     }
 
     uint32_t Image::get(unsigned int x, unsigned int y) {
-        unsigned int *pixels = (unsigned int *)this->data;
-        return pixels[y * this->_width + x];
+        if(this->channels == 4) {
+            unsigned int *pixels = (unsigned int *)this->data;
+            return pixels[y * this->_width + x];
+        }
+        if(this->channels == 3) {
+            unsigned char *pixels = (unsigned char *)this->data;
+            unsigned int line = y * this->_width * this->channels;
+            return 0xff000000 | (pixels[line + x * this->channels + 2] << 16) | (pixels[line + x * this->channels + 1] << 8) | (pixels[line + x * this->channels + 0]);
+        }
     }
 
     Image* Image::get(unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
@@ -190,6 +236,14 @@ namespace Pyro {
             }
         }
         return out;
+    }
+
+    void Image::set(unsigned int x, unsigned int y, unsigned int c) {
+        if(x < this->width() && y < this->height()) {
+            unsigned int *pixels = (unsigned int *)this->data;
+            pixels[y * this->width() + x] = c;
+        }
+        
     }
 
     Image *Image::resize(unsigned int width, unsigned int height, RESIZEMETHOD method) {
@@ -213,19 +267,20 @@ namespace Pyro {
         
         Image *out = createimage(width, height, this->channels);
 
-        unsigned int *out_pixels = out->load_pixels();
-        unsigned int *in_pixels = this->load_pixels();
+        unsigned char *out_pixels = (unsigned char *)out->get_data();
+        unsigned char *in_pixels = (unsigned char *)this->get_data();
         for(unsigned int oy = 0; oy < out->height(); oy++) {
-            unsigned int out_line = oy * out->width();
-            unsigned int in_line = oy / sy * this->width();
+            
+            unsigned int out_line = oy * out->width() * out->channels;
+            unsigned int in_line = (oy / sy) * this->width() * this->channels;
+
             for(unsigned int ox = 0; ox < out->width(); ox++) {
-                unsigned int in_col = ox / sx;
-                out_pixels[out_line + ox] = in_pixels[in_line +  in_col];
+                unsigned int in_col = (ox / sx) * out->channels;
+                for(unsigned int ch = 0; ch < this->channels; ch++)
+                    out_pixels[out_line + ox * this->channels + ch] = in_pixels[in_line +  in_col + ch];
             }
         }
-        out->update_pixels();
-        this->update_pixels();
-        
+
         return out;
     }
 
@@ -234,8 +289,9 @@ namespace Pyro {
         float sy = (float)height / (float)this->height();
         
         Image *out = createimage(width, height, this->channels);
-        unsigned int *out_pixels = out->load_pixels();
-        unsigned int *in_pixels = this->load_pixels();
+
+        unsigned char *out_pixels = (unsigned char *)out->get_data();
+        unsigned char *in_pixels = (unsigned char *)this->get_data();
 
         for(uint y = 0; y < height; y++) {
             float in_y = (float)y / (float)sy;
@@ -248,15 +304,17 @@ namespace Pyro {
                 uint x2 = (uint)in_x + 1;
                 float x_lerp = in_x - x1;
 
-                Color q11 = Color::from_uint(in_pixels[y1 * this->width() + x1]);
-                Color q12 = Color::from_uint(in_pixels[y2 * this->width() + x1]);
-                Color q21 = Color::from_uint(in_pixels[y1 * this->width() + x2]);
-                Color q22 = Color::from_uint(in_pixels[y2 * this->width() + x2]);
+                for(unsigned int ch = 0; ch < this->channels; ch++) {
+                    unsigned char q11 = in_pixels[y1 * this->width() * this->channels + x1 * this->channels + ch];
+                    unsigned char q12 = in_pixels[y2 * this->width() * this->channels + x1 * this->channels + ch];
+                    unsigned char q21 = in_pixels[y1 * this->width() * this->channels + x2 * this->channels + ch];
+                    unsigned char q22 = in_pixels[y2 * this->width() * this->channels + x2 * this->channels + ch];
 
-                Color xy1 = q11.lerp(q21, x_lerp);
-                Color xy2 = q12.lerp(q22, x_lerp);
-                Color out_color = xy1.lerp(xy2, y_lerp);
-                out_pixels[y * width + x] = out_color.to_uint();
+                    unsigned char xy1 = lerp(q11, q21, x_lerp);
+                    unsigned char xy2 = lerp(q12, q22, x_lerp);
+                    unsigned char out_color = lerp(xy1, xy2, y_lerp);
+                    out_pixels[y * width * this->channels + x * this->channels + ch] = out_color;
+                }
             }
         }
 

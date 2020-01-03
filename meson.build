@@ -2,8 +2,7 @@ project('Pyro', 'cpp',
         license: 'GPLv3',
         default_options: ['cpp_std=c++17'])
 
-add_global_link_arguments('-lfreeimage', language: 'cpp')
-
+libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
 inc_dir = include_directories('include')
