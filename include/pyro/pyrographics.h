@@ -50,6 +50,7 @@ namespace Pyro {
             static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode);
 
             virtual void image(Image *img, float x, float y) {};
+            inline Image *loadimage(std::string filename) { return Image::load(filename); };
 
             // Color functions
             void nostroke();
