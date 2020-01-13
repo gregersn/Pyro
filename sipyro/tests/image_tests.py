@@ -39,10 +39,10 @@ def compare_pixels(a, b):
 
 
 def test_createimage():
-    img = Pyro.createimage(320, 240, Pyro.RGB)
+    img = pyro.createimage(320, 240, pyro.RGB)
     assert img.width() == 320
     assert img.height() == 240
-    # assert img.mode() == Pyro.RGB
+    # assert img.mode() == pyro.RGB
 
 
 class ResizeTests(unittest.TestCase):
@@ -126,7 +126,7 @@ class ImageTests(unittest.TestCase):
             pass
 
     def test_init(self):
-        img = Pyro.createimage(10, 11, Pyro.RGB)
+        img = pyro.createimage(10, 11, pyro.RGB)
 
         assert img.load_pixels() is not None
         assert img.load_pixels().shape[0] == 11
@@ -154,7 +154,7 @@ class ImageTests(unittest.TestCase):
         assert pixels.dtype == np.uint8, ("Pixels dtype %s" % pixels.dtype)
 
     def test_create_save_load(self):
-        img = Pyro.createimage(4, 4, 4)
+        img = pyro.createimage(4, 4, 4)
         img.save("__test_image__.png")
         i = Image.open("__test_image__.png")
 

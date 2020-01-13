@@ -14,16 +14,23 @@ from PIL import Image
 
 
 class PixelsTests(unittest.TestCase):
+    def setUp(self):
+        self.filename = "__testfile__.png"
+
     def tearDown(self):
-        if os.path.isfile('__testfile__.png'):
-            os.unlink('__testfile__.png')
+        if os.path.isfile(self.filename):
+            os.unlink(self.filename)
 
     def test_red_background(self):
         p = pyro.create(256, 256)
-        p.background(1.0, 0.0, 0.0, 1.0)
-        p.save('__testfile__.png')
+        p.background(1.0, 0.0, 0.0)
 
-        i = Image.open('__testfile__.png')
+        pixel = p.get(128, 128)
+        self.assertEqual(pixel, 0xffff0000)
+
+        p.save(self.filename)
+
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (255, 0, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -34,9 +41,14 @@ class PixelsTests(unittest.TestCase):
         p.fill(1.0, 0.0, 0.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
-        p.save('__testfile__.png')
 
-        i = Image.open('__testfile__.png')
+        pixel = p.get(128, 128)
+        self.assertEqual(pixel, 0xffff0000)
+
+
+        p.save(self.filename)
+
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (255, 0, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -45,9 +57,13 @@ class PixelsTests(unittest.TestCase):
     def test_green_background(self):
         p = pyro.create(256, 256)
         p.background(0.0, 1.0, 0.0, 1.0)
-        p.save('__testfile__.png')
 
-        i = Image.open('__testfile__.png')
+        pixel = p.get(128, 128)
+        self.assertEqual(pixel, 0xff00ff00)
+
+        p.save(self.filename)
+
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 255, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -58,9 +74,13 @@ class PixelsTests(unittest.TestCase):
         p.fill(0.0, 1.0, 0.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
-        p.save('__testfile__.png')
 
-        i = Image.open('__testfile__.png')
+        pixel = p.get(128, 128)
+        self.assertEqual(pixel, 0xff00ff00)
+
+        p.save(self.filename)
+
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 255, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -69,9 +89,13 @@ class PixelsTests(unittest.TestCase):
     def test_blue_background(self):
         p = pyro.create(256, 256)
         p.background(0.0, 0.0, 1.0, 1.0)
-        p.save('__testfile__.png')
 
-        i = Image.open('__testfile__.png')
+        pixel = p.get(128, 128)
+        self.assertEqual(pixel, 0xff0000ff)
+
+        p.save(self.filename)
+
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 0, 255, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -82,9 +106,13 @@ class PixelsTests(unittest.TestCase):
         p.fill(0.0, 0.0, 1.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
-        p.save('__testfile__.png')
 
-        i = Image.open('__testfile__.png')
+        pixel = p.get(128, 128)
+        self.assertEqual(pixel, 0xff0000ff)
+
+        p.save(self.filename)
+
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 0, 255, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -93,9 +121,13 @@ class PixelsTests(unittest.TestCase):
     def test_black_background(self):
         p = pyro.create(256, 256)
         p.background(0.0, 0.0, 0.0, 1.0)
-        p.save('__testfile__.png')
 
-        i = Image.open('__testfile__.png')
+        pixel = p.get(128, 128)
+        self.assertEqual(pixel, 0xff000000)
+
+        p.save(self.filename)
+
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 0, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -104,9 +136,9 @@ class PixelsTests(unittest.TestCase):
     def test_white_background(self):
         p = pyro.create(256, 256)
         p.background(1.0, 1.0, 1.0, 1.0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile__.png')
+        i = Image.open(self.filename)
         self.assertEqual(i.mode, 'RGBA')
         pixel = i.getpixel((128, 128))
         assert (255, 255, 255, 255) == pixel,\
@@ -118,9 +150,9 @@ class PixelsTests(unittest.TestCase):
         p.fill(0.0, 0.0, 0.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile__.png')
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 0, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -131,9 +163,9 @@ class PixelsTests(unittest.TestCase):
         p.fill(1.0, 1.0, 1.0, 1.0)
         p.nostroke()
         p.rect(0, 0, 256, 256)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile__.png')
+        i = Image.open(self.filename)
         self.assertEqual(i.mode, 'RGBA')
         pixel = i.getpixel((128, 128))
         assert (255, 255, 255, 255) == pixel,\
@@ -143,14 +175,15 @@ class PixelsTests(unittest.TestCase):
     def test_red_image(self):
         p = pyro.create(256, 256)
         p.background(1.0, 0.0, 0.0, 1.0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
         p = pyro.create(256, 256)
-        img = p.loadimage('__testfile__.png')
+        img = p.loadimage(self.filename)
         p.image(img, 0, 0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile__.png')
+        i = Image.open(self.filename)
+        print(i.mode)
         pixel = i.getpixel((128, 128))
         assert (255, 0, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -159,14 +192,14 @@ class PixelsTests(unittest.TestCase):
     def test_green_image(self):
         p = pyro.create(256, 256)
         p.background(0.0, 1.0, 0.0, 1.0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
         p = pyro.create(256, 256)
-        img = p.loadimage('__testfile__.png')
+        img = p.loadimage(self.filename)
         p.image(img, 0, 0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile__.png')
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 255, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -175,14 +208,14 @@ class PixelsTests(unittest.TestCase):
     def test_blue_image(self):
         p = pyro.create(256, 256)
         p.background(0.0, 0.0, 1.0, 1.0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
         p = pyro.create(256, 256)
-        img = p.loadimage('__testfile__.png')
+        img = p.loadimage(self.filename)
         p.image(img, 0, 0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile__.png')
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 0, 255, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -191,14 +224,14 @@ class PixelsTests(unittest.TestCase):
     def test_black_image(self):
         p = pyro.create(256, 256)
         p.background(0.0, 0.0, 0.0, 1.0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
         p = pyro.create(256, 256)
-        img = p.loadimage('__testfile__.png')
+        img = p.loadimage(self.filename)
         p.image(img, 0, 0)
-        p.save('__testfile__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile__.png')
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (0, 0, 0, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)
@@ -207,14 +240,14 @@ class PixelsTests(unittest.TestCase):
     def test_white_image(self):
         p = pyro.create(256, 256)
         p.background(1.0, 1.0, 1.0, 1.0)
-        p.save('__testfile_white__.png')
+        p.save(self.filename)
 
         p = pyro.create(256, 256)
-        img = p.loadimage('__testfile_white__.png')
+        img = p.loadimage(self.filename)
         p.image(img, 0, 0)
-        p.save('__testfile_white__.png')
+        p.save(self.filename)
 
-        i = Image.open('__testfile_white__.png')
+        i = Image.open(self.filename)
         pixel = i.getpixel((128, 128))
         assert (255, 255, 255, 255) == pixel,\
             "Pixel is not matching %s" % str(pixel)

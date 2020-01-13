@@ -81,7 +81,6 @@ namespace Pyro {
         unsigned int height = png_get_image_height(png_ptr, info_ptr);
         unsigned int channels = png_get_channels(png_ptr, info_ptr);
 
-        printf("Loading image %s, %d, %d, Number of channels: %d\n", filename.c_str(), width, height, channels);
         Image *img = new Image(width, height, channels);
         unsigned char *d = (unsigned char *)img->get_data();
         for(unsigned int y = 0; y < height; y++) {

@@ -22,7 +22,7 @@ class DrawTests(unittest.TestCase):
     def test_rect(self):
         for h in range(20):
             for w in range(25):
-                p = pyro.Pyro.create(200, 200)
+                p = pyro.create(200, 200)
                 p.background(0, 0, 0, 1)
 
                 p.nostroke()

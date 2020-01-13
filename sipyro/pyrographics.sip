@@ -20,6 +20,8 @@ namespace Pyro {
             unsigned int channels;
 
             static Image *load(const char *);
+            Image *loadimage(const char *);
+            void image(Image *img, float x, float y);
 
             void save(const char *filename);
             void save(const char *filename, unsigned int dpi);

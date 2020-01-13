@@ -19,8 +19,6 @@ TEST_CASE("Graphics can have backgrounds", "[graphics]") {
         uint32_t p = pg->get(0, 0);
 
         REQUIRE(p == 0xffff0000);
-        pg->save("red.png");
-
     }
 
     SECTION("Set a green background") {
