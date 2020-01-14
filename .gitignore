@@ -2,6 +2,7 @@
 build
 builddir/
 lib/*
+output/
 
 # Ignore executables
 bin/*
@@ -11,10 +12,6 @@ bin/*
 
 # Ignore mac specific files
 .DS_Store
-output/
-.vscode/
-.mypy_cache/
-__pycache__/
 
 # ignore Python bindings stuff
 sipyro/sippyrocmodule.cpp
@@ -28,3 +25,6 @@ subprojects/*/
 
 # Ignore Python stuff
 *.pyc
+.pytest_cache/
+.mypy_cache/
+__pycache__/

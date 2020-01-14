@@ -223,6 +223,8 @@ namespace Pyro {
             unsigned int line = y * this->_width * this->channels;
             return 0xff000000 | (pixels[line + x * this->channels + 2] << 16) | (pixels[line + x * this->channels + 1] << 8) | (pixels[line + x * this->channels + 0]);
         }
+
+        throw;
     }
 
     Image* Image::get(unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
