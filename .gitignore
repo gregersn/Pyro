@@ -3,12 +3,14 @@ build
 builddir/
 lib/*
 output/
+screenshot-tests/current/
 
 # Ignore executables
 bin/*
 
 # Ignore other artifacts
-*.png
+# *.png
+sipyro/*.png
 
 # Ignore mac specific files
 .DS_Store
