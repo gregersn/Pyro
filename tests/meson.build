@@ -6,11 +6,11 @@ test_sources = ['tests-main.cpp',
                 'test-pyro.cpp',
                 'tests-vector.cpp']
 
-testexe = executable('alltests', test_sources,
+testexe = executable('unit-tests', test_sources,
                      include_directories: inc_dir,
                      link_with: pyrolib,
                      dependencies: catch2.get_variable('catch2_dep'),
                      install: false)
 
 
-test('Pyro', testexe)
+test('Unittests', testexe)
