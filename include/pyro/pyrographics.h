@@ -11,6 +11,12 @@ namespace Pyro {
         CORNER,
         CENTER
     };
+
+    enum class ImageMode {
+        CORNER,
+        CENTER
+    };
+
     enum class BlendMode {
         ADD,
         BLEND,
@@ -38,6 +44,7 @@ namespace Pyro {
             Color stroke_color;
             Color fill_color;
             RectMode _rect_mode;
+            ImageMode _image_mode;
             float stroke_weight;
 
             Shape _shape;
@@ -49,7 +56,9 @@ namespace Pyro {
             static Graphics *create(unsigned int width, unsigned int height);
             static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode);
 
-            virtual void image(Image *img, float x, float y) {};
+            void imagemode(ImageMode mode) { this->_image_mode = mode; };
+            void image(Image *img, float x, float y);
+            virtual void image_impl(Image *img, float x, float y) {};
             inline Image *loadimage(std::string filename) { return Image::load(filename); };
 
             // Color functions
@@ -95,6 +104,7 @@ namespace Pyro {
             // Transformation
             virtual void translate(float x, float) {};
             virtual void rotate(float a) {};
+            virtual void scale(float sx, float sy) {};
             virtual void pushmatrix() {};
             virtual void popmatrix() {};
 

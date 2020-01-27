@@ -2,6 +2,7 @@
 #include "pyro/pyrocolor.h"
 #include "pyro/pyroconstants.h"
 
+#include <unistd.h>
 #include <png.h>
 
 namespace Pyro {
@@ -39,6 +40,9 @@ namespace Pyro {
     }
 
     Image* Image::load(const std::string &filename) {
+        if(access(filename.c_str(), F_OK) == -1) {
+            return nullptr;
+        }
         return loadPNG(filename);
     }
 

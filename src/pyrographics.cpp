@@ -50,6 +50,16 @@ namespace Pyro {
         memset(this->data, 0, this->width() * this->height() * 4);
     }
 
+    void Graphics::image(Image *img, float x, float y) {
+        if(this->_image_mode == ImageMode::CENTER) {
+            x -= img->width() / 2.0f;
+            y -= img->height() / 2.0f;
+        }
+
+        this->image_impl(img, x, y);
+    };
+
+
     void Graphics::triangle(Vector a, Vector b, Vector c) {
         Shape s = Shape();
         s.begin();

@@ -20,10 +20,11 @@ namespace Pyro {
 
             void translate(float x, float);
             void rotate(float a);
+            void scale(float sx, float sy);
             void pushmatrix();
             void popmatrix();
 
-            void image(Image *img, float x, float y);
+            void image_impl(Image *img, float x, float y);
             void shape(Shape s, float x, float y);
             void line(float x0, float y0, float x1, float y1);
             void ellipse(float x, float y, float w, float h, unsigned int segments);

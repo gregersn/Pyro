@@ -88,7 +88,7 @@ namespace Pyro {
         cairo_restore(this->cr);
     }
 
-    void GraphicsCairo::image(Image *img, float x, float y) {
+    void GraphicsCairo::image_impl(Image *img, float x, float y) {
         cairo_surface_t *src = cairo_image_surface_create_for_data(
             (unsigned char *)img->get_pre_multiplied_data(), CAIRO_FORMAT_ARGB32,
             img->width(), img->height(), img->width() * 4);
@@ -103,6 +103,10 @@ namespace Pyro {
 
     void GraphicsCairo::rotate(float a) {
         cairo_rotate(this->cr, a);
+    }
+
+    void GraphicsCairo::scale(float sx, float sy) {
+        cairo_scale(this->cr, sx, sy);
     }
 
     void GraphicsCairo::pushmatrix() {

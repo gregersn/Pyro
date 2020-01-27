@@ -4,7 +4,7 @@
 #include <catch2/catch.hpp>
 
 static inline std::string const actual_folder = "../screenshot-tests/actual/";
-static inline std::string const current_folder = "../screenshot-tests/current/";
+static inline std::string const current_folder = "./current/";
 
 class ImageMatch : public Catch::MatcherBase<std::string> {
     std::string actual_file;
