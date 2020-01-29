@@ -30,6 +30,21 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
         remove("test.png");
     }
 
+    SECTION("Trying to load non-exsiting image gives nullptr") {
+        Pyro::Image *img = Pyro::Image::load("askdjfhasd");
+        REQUIRE(img == nullptr);
+    }
+
+    SECTION("Trying to load non-existing PNG gives nullptr") {
+        Pyro::Image *img = Pyro::Image::loadPNG("asldkfjasdlf");
+        REQUIRE(img == nullptr);
+    }
+
+    SECTION("Trying to load a file that is not PNG gives nullptr") {
+        Pyro::Image *img = Pyro::Image::loadPNG("build.ninja");
+        REQUIRE(img == nullptr);
+    }
+
     SECTION("saving an image and loading it gives the same size") {
         Pyro::Image *img = Pyro::Image::create(4, 2);
         img->save("test.png");

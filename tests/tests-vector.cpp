@@ -7,6 +7,8 @@ TEST_CASE("Vectors", "[vector]") {
     Pyro::Vector b = Pyro::Vector(1.0f, 0.0f);
     Pyro::Vector v1 = Pyro::Vector(1, 2, 3);
     Pyro::Vector v2 = Pyro::Vector(3, 2, 1);
+    Pyro::Vector v3 = Pyro::Vector(); // zero vector
+    Pyro::Vector v4 = Pyro::Vector(0.2f, 0.1f); // Less than 1 Vector
 
     REQUIRE(a.x == 0.0f);
     REQUIRE(a.y == 1.0f);
@@ -103,6 +105,13 @@ TEST_CASE("Vectors", "[vector]") {
 
             t = v1.normalize();
             REQUIRE(t.mag() == Approx(1.0f));
+
+            t = v3.normalize();
+            REQUIRE(t.mag() == Approx(0.0f));
+
+            t = v4.normalize();
+            REQUIRE(t.mag() == Approx(1.0f));
+
         }
 
         SECTION("Limit") {
@@ -134,7 +143,20 @@ TEST_CASE( "Vectors have angle between them", "[vector]") {
     REQUIRE( angle - (3.1415926 / 4.) <  0.0001);
 }
 
+TEST_CASE( "Vectors have a heading", "[vector]") {
+    REQUIRE(Pyro::Vector(1.0f, 0.0f).heading() == 0.0f);
+    REQUIRE(Pyro::Vector(0.0f, 1.0f).heading() == Approx(M_PI_2));
+    REQUIRE(Pyro::Vector(-1.0f, 0.0f).heading() == Approx(M_PI));
+    REQUIRE(Pyro::Vector(0.0f, -1.0f).heading() == Approx(-M_PI_2));
+}
+
+
 TEST_CASE("Vectors can be initialized in various ways", "[vector]") {
+    SECTION("Zero initialisation") {
+        Pyro::Vector v1 = Pyro::Vector();
+        REQUIRE(v1.x == 0.0f);
+        REQUIRE(v1.y == 0.0f);
+    }
     SECTION("Normal initialization") {
         Pyro::Vector v1 = Pyro::Vector(1.0f, 2.0f, 3.0f);
         Pyro::Vector v2 = Pyro::Vector(3.0f, 2.0f, 1.0f);
