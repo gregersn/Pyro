@@ -1,5 +1,6 @@
-#define CATCH_CONFIG_MAIN
+#define CATCH_CONFIG_RUNNER
 #include <catch2/catch.hpp>
+#include <cstdlib>
 #include "test-settings.h"
 
 #include "pyro/pyro.h"
@@ -34,6 +35,14 @@ TEST_CASE("Create test image") {
     delete p;
 
     CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+}
 
+int main( int argc, char* argv[] ) {
+    const int direrr = system("mkdir -p ./current");
+    if(direrr == -1) {
+        exit(1);
+    }
 
+    int result = Catch::Session().run( argc, argv );
+    return result;
 }
