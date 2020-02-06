@@ -16,6 +16,12 @@ namespace Pyro {
     // Arc drawing styles
     const int PIE = 3;
     const int CHORD = 4;
+
+    // Shape drawing modes (rect, ellipse, image, shape)
+    const int CORNER = 0;
+    const int CORNERS = 1;
+    const int CENTER = 2;
+    const int RADIUS = 3;
     
     // Stroke caps
     const int ROUND = 5;

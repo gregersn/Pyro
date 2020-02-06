@@ -16,6 +16,12 @@ namespace Pyro {
     const int PIE;
     const int CHORD;
     
+    // Shape drawing modes (rect, ellipse, image, shape)
+    const int CORNER;
+    const int CORNERS;
+    const int CENTER;
+    const int RADIUS;
+    
     // Stroke caps
     const int ROUND;
     const int SQUARE;

@@ -163,7 +163,7 @@ TEST_CASE("Shapes can be drawn", "[graphics]") {
              *     00000000
              * */
             pg->nosmooth();
-            pg->rectmode(Pyro::RectMode::CENTER);
+            pg->rectmode(Pyro::CENTER);
             pg->nostroke();
             pg->fill(1.0f);
 

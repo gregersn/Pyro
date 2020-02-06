@@ -32,7 +32,7 @@ TEST_CASE("Place image 50% at center rotated 45 degrees") {
     }
 
     Pyro::Graphics *p = Pyro::Graphics::create(img->width(), img->height());
-    p->imagemode(Pyro::ImageMode::CENTER);
+    p->imagemode(Pyro::CENTER);
     p->translate(p->width() / 2.0f, p->height() / 2.0f);
     p->rotate(Pyro::QUARTER_PI);
     p->scale(0.5, 0.5);

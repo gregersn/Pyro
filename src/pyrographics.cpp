@@ -51,7 +51,7 @@ namespace Pyro {
     }
 
     void Graphics::image(Image *img, float x, float y) {
-        if(this->_image_mode == ImageMode::CENTER) {
+        if(this->_image_mode == CENTER) {
             x -= img->width() / 2.0f;
             y -= img->height() / 2.0f;
         }
@@ -82,7 +82,7 @@ namespace Pyro {
     }
 
     void Graphics::rect(float a, float b, float c, float d) {
-        if(this->_rect_mode == RectMode::CENTER) {
+        if(this->_rect_mode == CENTER) {
             a -= c / 2.0f;
             b -= d / 2.0f;
         }

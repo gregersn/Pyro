@@ -33,7 +33,7 @@ TEST_CASE("Test Rect") {
     SECTION("Center drawing") {
         Pyro::Graphics *p = Pyro::Graphics::create(250, 250);
         std::string filename ="shape_rect_center.png";
-        p->rectmode(Pyro::RectMode::CENTER);
+        p->rectmode(Pyro::CENTER);
         p->nofill();
         p->stroke(0.0f, 1.0f);
         p->rect(60, 60, 100, 100);

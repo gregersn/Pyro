@@ -7,16 +7,6 @@
 #include "pyroshape.h"
 
 namespace Pyro {
-    enum class RectMode {
-        CORNER,
-        CENTER
-    };
-
-    enum class ImageMode {
-        CORNER,
-        CENTER
-    };
-
     enum class BlendMode {
         ADD,
         BLEND,
@@ -43,8 +33,9 @@ namespace Pyro {
 
             Color stroke_color;
             Color fill_color;
-            RectMode _rect_mode;
-            ImageMode _image_mode;
+            int _rect_mode;
+            int _image_mode;
+            int _ellipse_mode;
             float stroke_weight;
 
             Shape _shape;
@@ -56,7 +47,7 @@ namespace Pyro {
             static Graphics *create(unsigned int width, unsigned int height);
             static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode);
 
-            void imagemode(ImageMode mode) { this->_image_mode = mode; };
+            void imagemode(int mode) { this->_image_mode = mode; };
             void image(Image *img, float x, float y);
             virtual void image_impl(Image *img, float x, float y) {};
             inline Image *loadimage(std::string filename) { return Image::load(filename); };
@@ -137,7 +128,7 @@ namespace Pyro {
             void triangle(Vector a, Vector b, Vector c);
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
     
-            void rectmode(RectMode mode) { this->_rect_mode = mode; };
+            void rectmode(int mode) { this->_rect_mode = mode; };
             void rect(float a, float b, float c, float d);
 
             void quad(Vector a, Vector b, Vector c, Vector d);
@@ -146,6 +137,7 @@ namespace Pyro {
             void arc(float a, float b, float c, float d, float start, float end) { this->arc(a, b, c, d, start, end, OPEN); };
             void arc(float a, float b, float c, float d, float start, float end, int mode);
 
+            void ellipsemode(int mode) { this->_ellipse_mode = mode; };
             void ellipse(float x, float y, float w, float h, unsigned int segments);
             void ellipse(float x, float y, float r, unsigned int segments) { this->ellipse(x, y, r, r, segments); };
     };
