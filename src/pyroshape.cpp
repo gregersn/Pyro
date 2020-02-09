@@ -31,7 +31,16 @@ namespace Pyro {
         return;
     }
 
-    void Shape::end(int close) { 
+    void Shape::begin() {
+         this->points.clear();
+         this->outpoints.clear();
+    }
+
+    void Shape::end() {
+        return this->end(OPEN);
+    }
+
+    void Shape::end(int close) {
         this->close = close;
         this->outpoints.clear();        
         float delta = 1.0 / curve_resolution;
@@ -43,7 +52,7 @@ namespace Pyro {
                     continue;
                 }
 
-                if((curveiterator + 2) > this->points.size()) {
+                if((curveiterator + 2) >= this->points.size()) {
                     continue;
                 }
                 auto p0 = this->points[curveiterator - 1];
@@ -51,7 +60,7 @@ namespace Pyro {
                 auto p3 = this->points[curveiterator + 2];
 
 
-                for(unsigned int i = 0; i < curve_resolution; i++) {
+                for(unsigned int i = 0; i < curve_resolution + 1; i++) {
                     this->outpoints.push_back(
                         Pyro::Vector(
                             curvepoint(p0.v.x, point.v.x, p2.v.x, p3.v.x, i * delta),

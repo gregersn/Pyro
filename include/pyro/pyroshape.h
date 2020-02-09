@@ -24,7 +24,7 @@ namespace Pyro {
             int close;
             Shape();
             ~Shape();
-            void begin() { points.clear(); };
+            void begin();
             void end();
             void end(int close);
             void vertex(Vector v) { this->vertex(v.x, v.y); };

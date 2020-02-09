@@ -57,3 +57,44 @@ TEST_CASE("Test Rect") {
 
 
 }
+
+TEST_CASE("Test curve") {
+    std::string filename = "";
+
+    SECTION("Draw with curvevertex()") {
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100);
+        std::string filename = "shape_curve_vertex.png";
+        p->background(192);
+        p->nofill();
+        p->beginshape();
+        p->curvevertex(84,  91);
+        p->curvevertex(84,  91);
+        p->curvevertex(68,  19);
+        p->curvevertex(21,  17);
+        p->curvevertex(32, 100);
+        p->curvevertex(32, 100);
+        p->endshape();
+        p->save(current_folder + filename);
+        delete p;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+
+    }
+
+    SECTION("Draw with curve()") {
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100);
+        std::string filename = "shape_curve.png";
+        p->background(192);
+        p->nofill();
+        p->stroke(255, 102, 0);
+        p->curve(5, 26, 5, 26, 73, 24, 73, 61);
+        p->stroke(0); 
+        p->curve(5, 26, 73, 24, 73, 61, 15, 65); 
+        p->stroke(255, 102, 0);
+        p->curve(73, 24, 73, 61, 15, 65, 15, 65);
+
+        p->save(current_folder + filename);
+        delete p;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    }
+
+}

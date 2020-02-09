@@ -124,6 +124,7 @@ namespace Pyro {
             // Primitive shapes
             void point(float x, float y);
             virtual void line(float x0, float y0, float x1, float y1) {};
+            void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
             void triangle(Vector a, Vector b, Vector c);
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);

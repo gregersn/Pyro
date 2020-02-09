@@ -37,8 +37,13 @@ namespace Pyro {
 
             void nostroke();
             void nofill();
+            void strokeweight(float w); 
             void colormode(int mode);
 
+            void stroke(float c);
+            void stroke(float c, float a);
+            void stroke(float r, float g, float b);
+            void stroke(float r, float g, float b, float a);
 
             void fill(float c);
             void fill(float c, float a);
@@ -46,6 +51,7 @@ namespace Pyro {
             void fill(float r, float g, float b, float a);
 
             void line(float x0, float y0, float x1, float y1);
+            void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
             void triangle(Vector a, Vector b, Vector c);
             void triangle(float x0, float y0, float x1, float y1, float x2, float y2);

@@ -105,6 +105,9 @@ namespace Pyro {
     }
 
     void Image::save(const std::string &filename, unsigned int dpi) {
+        if(access(filename.c_str(), F_OK) == 0) {
+            remove(filename.c_str());
+        }
         return this->savePNG(filename, dpi);
     }
 

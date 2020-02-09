@@ -142,14 +142,6 @@ namespace Pyro {
         s.end(CLOSE);
 
         this->shape(s, x, y);
-        return
-        cairo_set_source_rgba(this->cr, 0.0, 0.0, 1.0, 1.0);
-        cairo_new_path(this->cr);
-        
-        cairo_arc(this->cr, x, y, w / 2, 0, 2 * M_PI);
-        
-        cairo_set_line_width(this->cr, 20.0);
-        cairo_stroke(this->cr);
     }
 
     void GraphicsCairo::background(float r, float g, float b, float a) {
