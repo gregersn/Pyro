@@ -126,6 +126,15 @@ TEST_CASE("Vectors", "[vector]") {
             v = v.limit(0.5f);
             REQUIRE(v.mag() == 0.5f);
         }
+
+        SECTION("Rotation") {
+            Pyro::Vector v = Pyro::Vector(1.0f, 0.0f);
+            v = v.rotate(M_PI);
+            printf("x, y: %f, %a\n", v.x, v.y);
+            REQUIRE(v.mag() == Approx(1.0f));
+            REQUIRE(v.x == Approx(-1.0f));
+            REQUIRE(abs(v.y) == 0.0f); // A bug in Catch2(?) requires the use of abs()
+        }
     }
 }
 

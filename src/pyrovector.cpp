@@ -63,6 +63,11 @@ namespace Pyro {
         return acos(dot / mags);
     }
 
+    Vector Vector::rotate(const float a) const {
+        return Vector(x * cos(a) - y * sin(a),
+                      x * sin(a) + y * cos(a));
+    }
+
     Vector Vector::div(float v) const{
         return Vector(x / v, y / v, z / v);
     }

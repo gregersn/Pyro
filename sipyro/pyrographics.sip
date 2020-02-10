@@ -65,6 +65,13 @@ namespace Pyro {
             void ellipsemode(int mode);
             void ellipse(float x, float y, float w, float h, unsigned int segments);
 
+            void beginshape();
+            void vertex(Vector v);
+            void vertex(float x, float y);
+            void curvevertex(float x, float y);
+            void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4);
+            void endshape(int close);
+            void endshape();
 
     };
 

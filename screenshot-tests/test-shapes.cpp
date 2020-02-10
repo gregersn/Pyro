@@ -98,3 +98,20 @@ TEST_CASE("Test curve") {
     }
 
 }
+
+TEST_CASE("Bezier curve") {
+    std::string filename = "";
+    SECTION("Draw with beziervertex()") {
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100);
+        std::string filename = "shape_curve_bezier_vertex.png";
+        p->background(192);
+        p->nofill();
+        p->beginshape();
+        p->vertex(30, 20);
+        p->beziervertex(80, 0, 80, 75, 30, 75);
+        p->endshape();
+        p->save(current_folder + filename);
+        delete p;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    }
+}

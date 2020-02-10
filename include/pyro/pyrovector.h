@@ -17,6 +17,7 @@ namespace Pyro {
             float dot(const Vector &other) const;
             float heading() const;
             float angle(Vector const &other) const;
+            Vector rotate(const float a) const;
 
             Vector normalize() const;
             Vector copy() const;
