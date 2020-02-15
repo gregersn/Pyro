@@ -6,6 +6,8 @@
 #include "pyroconstants.h"
 
 namespace Pyro {
+    float bezierpoint(float a, float b, float c, float d, float t);
+    float curvepoint(float p0, float p1, float p2, float p3, float t);
     enum class PointType {
         vertex, curvevertex, beziervertex
     };

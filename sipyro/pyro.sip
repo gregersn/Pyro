@@ -13,6 +13,7 @@
 %HideNamespace(name=Pyro)
 %ModuleCode
 #include <pyro/pyro.h>
+#include <pyro/pyroshape.h>
 %End
 
 namespace Pyro {
@@ -50,6 +51,7 @@ namespace Pyro {
     void line(float x0, float y0, float x1, float y1);
     void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
     void rect(float a, float b, float c, float d);
+    float curvepoint(float p0, float p1, float p2, float p3, float t);
 
     void ellipse(float x, float y, float w, float h, unsigned int segments = 32);
 
