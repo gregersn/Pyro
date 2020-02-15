@@ -108,6 +108,15 @@ namespace Pyro {
         this->shape(s, 0, 0);
     }
 
+    void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)  {
+        Shape s = Shape();
+        s.begin();
+        s.vertex(x0, y0);
+        s.beziervertex(x1, y1, x2, y2, x3, y3);
+        s.end(OPEN);
+        this->shape(s, 0, 0);
+    }
+
 
     void Graphics::quad(Vector a, Vector b, Vector c, Vector d) {
         Shape s = Shape();

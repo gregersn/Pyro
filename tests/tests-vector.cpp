@@ -133,7 +133,8 @@ TEST_CASE("Vectors", "[vector]") {
             printf("x, y: %f, %a\n", v.x, v.y);
             REQUIRE(v.mag() == Approx(1.0f));
             REQUIRE(v.x == Approx(-1.0f));
-            REQUIRE(abs(v.y) == 0.0f); // A bug in Catch2(?) requires the use of abs()
+            REQUIRE(v.y == Approx(0.0f).margin(.0000001f));
+
         }
     }
 }

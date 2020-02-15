@@ -114,4 +114,29 @@ TEST_CASE("Bezier curve") {
         delete p;
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
+
+    SECTION("Draw with bezier()") {
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 200);
+        std::string filename = "shape_curve_bezier.png";
+        p->background(192);
+        p->nofill();
+
+        p->stroke(255, 102, 0);
+        p->line(85, 20, 10, 10);
+        p->line(90, 90, 15, 80);
+        p->stroke(0, 0, 0);
+        p->bezier(85, 20, 10, 10, 90, 90, 15, 80);
+
+        p->translate(0, 100);
+
+        p->stroke(255, 102, 0);
+        p->line(30, 20, 80, 5);
+        p->line(80, 75, 30, 75);
+        p->stroke(0, 0, 0);
+        p->bezier(30, 20, 80, 5, 80, 75, 30, 75);
+
+        p->save(current_folder + filename);
+        delete p;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    }
 }
