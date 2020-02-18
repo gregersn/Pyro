@@ -51,6 +51,7 @@ namespace Pyro {
             uint8_t *load_bytes();
             void update_pixels();
             unsigned int operator[] (unsigned int);
+            Image *get();
             uint32_t get(unsigned int x, unsigned int y);
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
             void set(unsigned int x, unsigned int y, unsigned int c);
@@ -58,6 +59,8 @@ namespace Pyro {
             // Image manipulation functions
             Image *resize(unsigned int width, unsigned int height) { return this->resize(width, height, NEAREST); };
             Image *resize(unsigned int width, unsigned int height, RESIZEMETHOD method);
+
+            Image *convert(unsigned int channels);
     };
 
     Image *createimage(unsigned int width, unsigned int height, int channels);

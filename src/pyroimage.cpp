@@ -225,6 +225,10 @@ namespace Pyro {
         throw;
     }
 
+    Image *Image::get() {
+        return this->get(0, 0, this->width(), this->height());
+    }
+
     uint32_t Image::get(unsigned int x, unsigned int y) {
         if(this->channels == 4) {
             unsigned int *pixels = (unsigned int *)this->data;
@@ -257,6 +261,69 @@ namespace Pyro {
             pixels[y * this->width() + x] = c;
         }
         
+    }
+
+    Image *Image::convert(unsigned int channels) {
+        Image *out = createimage(this->width(), this->height(), channels);
+        uint8_t *out_p = out->load_bytes();
+        uint8_t *in_p = this->load_bytes();
+
+        unsigned int inpp = 0;
+        unsigned int outpp = 0;
+
+        if(this->channels == channels) {
+            return this->get();
+        }
+
+        if(this->channels < channels) {
+            for(uint i = 0; i < this->width() * this->height(); i++) {
+                inpp = i * this->channels;
+                outpp = i * channels;
+                if(channels == Pyro::RGB) {
+                    out_p[outpp] = in_p[inpp];
+                    out_p[outpp + 1] = in_p[inpp];
+                    out_p[outpp + 2] = in_p[inpp];
+                }
+                if(channels == Pyro::RGBA) {
+                    if(this->channels == Pyro::GRAY) {
+                        out_p[outpp] = in_p[inpp];
+                        out_p[outpp + 1] = in_p[inpp];
+                        out_p[outpp + 2] = in_p[inpp];
+                        out_p[outpp + 3] = 255;
+                    }
+
+                    if(this->channels == Pyro::RGB) {
+                        out_p[outpp] = in_p[inpp];
+                        out_p[outpp + 1] = in_p[inpp + 1];
+                        out_p[outpp + 2] = in_p[inpp + 2];
+                        out_p[outpp + 3] = 255;
+                    }
+                }
+
+            }
+        }
+
+        if(this->channels > channels) {
+            for(uint i = 0; i < this->width() * this->height(); i++) {
+                inpp = i * this->channels;
+                outpp = i * channels;
+
+                if(channels == Pyro::GRAY) {
+                    out_p[outpp] = in_p[inpp + 2] * 0.2126 + in_p[inpp + 1] * 0.7152 + in_p[inpp] * 0.0722;
+                }
+
+                if(channels == Pyro::RGB) {
+                    out_p[outpp] = in_p[inpp];
+                    out_p[outpp + 1] = in_p[inpp + 1];
+                    out_p[outpp + 2] = in_p[inpp + 2];
+
+                }
+            }
+        }
+        this->update_pixels();
+        out->update_pixels();
+
+        return out;
     }
 
     Image *Image::resize(unsigned int width, unsigned int height, RESIZEMETHOD method) {

@@ -1,6 +1,7 @@
 test_sources = ['tests-main.cpp',
                 'test-shapes.cpp',
                 'test-image-placements.cpp',
+                'test_image.cpp',
                 'screenshotmatcher.cpp']
 
 testexe = executable('screenshot-tests', test_sources,
