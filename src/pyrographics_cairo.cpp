@@ -89,13 +89,28 @@ namespace Pyro {
     }
 
     void GraphicsCairo::image_impl(Image *img, float x, float y) {
-        cairo_surface_t *src = cairo_image_surface_create_for_data(
-            (unsigned char *)img->get_pre_multiplied_data(), CAIRO_FORMAT_ARGB32,
-            img->width(), img->height(), img->width() * 4);
-        cairo_set_source_surface(this->cr, src, x, y);
-        cairo_paint(this->cr);
-        cairo_surface_destroy(src);
-    
+        cairo_surface_t *src = nullptr;
+        if(img->channels == 4) {
+            src = cairo_image_surface_create_for_data(
+                (unsigned char *)img->get_pre_multiplied_data(), CAIRO_FORMAT_ARGB32,
+                img->width(), img->height(), img->width() * 4);
+        }
+        if(img->channels == 3) {
+            src = cairo_image_surface_create_for_data(
+                (unsigned char*)img->convert(4)->get_data(), CAIRO_FORMAT_RGB24,
+                img->width(), img->height(), img->width() * 4);
+        }
+        if(img->channels == 1) {
+            src = cairo_image_surface_create_for_data(
+                (unsigned char*)img->convert(4)->get_data(), CAIRO_FORMAT_RGB24,
+                img->width(), img->height(), img->width() * 4);
+        }
+
+        if(src != nullptr) {
+            cairo_set_source_surface(this->cr, src, x, y);
+            cairo_paint(this->cr);
+            cairo_surface_destroy(src);
+        }
     }
     void GraphicsCairo::translate(float x, float y) {
         cairo_translate(this->cr, x, y);
