@@ -37,6 +37,7 @@ namespace Pyro {
             int _image_mode;
             int _ellipse_mode;
             float stroke_weight;
+            float text_size;
 
             Shape _shape;
 
@@ -142,6 +143,13 @@ namespace Pyro {
             void ellipsemode(int mode) { this->_ellipse_mode = mode; };
             void ellipse(float x, float y, float w, float h, unsigned int segments);
             void ellipse(float x, float y, float r, unsigned int segments) { this->ellipse(x, y, r, r, segments); };
+
+            // Typography
+
+            void textsize(float size);
+            void text(std::string text, float x, float y);
+            virtual void text_impl(std::string text, float x, float y) {};
+
     };
 };
 

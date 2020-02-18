@@ -19,6 +19,7 @@ namespace Pyro {
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);
         this->stroke(0.0f, 0.0f, 0.0f, 1.0f);    
         this->strokeweight(1.0f);
+        this->textsize(16.0f);
         this->strokecap(ROUND);
         this->background(192);
     }
@@ -250,5 +251,15 @@ namespace Pyro {
     }
 
     void Graphics::strokecap(int cap) {
+    }
+
+    // Typography
+
+    void Graphics::textsize(float size) {
+        this->text_size = size;
+    }
+
+    void Graphics::text(std::string text, float x, float y) {
+        this->text_impl(text, x, y);
     }
 }

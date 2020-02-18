@@ -188,4 +188,19 @@ namespace Pyro {
             cairo_set_line_cap(this->cr, CAIRO_LINE_CAP_SQUARE);
         }
     }
+
+    // Typography
+
+    void GraphicsCairo::text_impl(std::string text, float x, float y) {
+        cairo_set_source_rgba(this->cr,
+                              this->fill_color.r,
+                              this->fill_color.g,
+                              this->fill_color.b,
+                              this->fill_color.a);
+        
+        cairo_set_font_size(this->cr, this->text_size);
+        cairo_move_to(this->cr, x, y);
+        cairo_show_text(this->cr, text.c_str());
+
+    }
 }

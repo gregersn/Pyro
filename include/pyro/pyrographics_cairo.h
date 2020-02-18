@@ -33,6 +33,7 @@ namespace Pyro {
             void nosmooth();
             void strokecap(int cap);
 
+            void text_impl(std::string text, float x, float y);
     };
 }
 
