@@ -37,11 +37,11 @@ bool ImageMatch::match(std::string const& filename) const {
 
     // Check all pixels
     // TODO: Add tolerance(?)
-    unsigned int *actual_pixels = actual->load_pixels();
-    unsigned int *input_pixels = input->load_pixels();
+    uint8_t *actual_pixels = actual->load_bytes();
+    uint8_t *input_pixels = input->load_bytes();
     bool result = true;
 
-    for(unsigned int i = 0; i < input->width() * input->height(); i++) {
+    for(unsigned int i = 0; i < input->width() * input->height() * input->channels; i++) {
         if(actual_pixels[i] != input_pixels[i]) {
             // TODO: Create a diff
             result = false;

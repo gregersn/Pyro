@@ -203,6 +203,11 @@ namespace Pyro {
         return nullptr;
     }
 
+    uint8_t* Image::load_bytes() {
+        this->pixels_locked = true;
+        return (uint8_t *)this->data;
+    }
+
     void Image::update_pixels() {
         if(this->channels == 4) {
         }

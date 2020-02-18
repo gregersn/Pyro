@@ -48,6 +48,7 @@ namespace Pyro {
             void *get_data() { return this->data; };
             void *get_pre_multiplied_data();
             uint32_t *load_pixels();
+            uint8_t *load_bytes();
             void update_pixels();
             unsigned int operator[] (unsigned int);
             uint32_t get(unsigned int x, unsigned int y);
