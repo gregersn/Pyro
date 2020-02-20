@@ -1,0 +1,21 @@
+#include <catch2/catch.hpp>
+#include "test-settings.h"
+#include "pyro/pyronoise.h"
+#include "pyro/pyro.h"
+
+TEST_CASE("Test noise") {
+    std::string filename = "noise_2d.png";
+    Pyro::Image *img = Pyro::Image::create(128, 128);
+    unsigned int *pixels = img->load_pixels();
+
+    for(uint y = 0; y < 128; y++) {
+        for(uint x = 0; x < 128; x++) {
+           pixels[y * 128 + x] = 0xff000000 | (uint8_t)((Pyro::noise(x * 0.1, y * 0.1) + 1.0) * 128);
+        }
+    }
+
+    img->save(current_folder + filename);
+    delete img;
+
+    CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+}
