@@ -24,6 +24,7 @@ namespace Pyro {
             // Transformation
             void translate(float x, float);
             void rotate(float a);
+            void scale(float sx, float sy);
             void pushmatrix();
             void popmatrix();
 
