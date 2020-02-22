@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "optional": "cpp",
-        "*.cuh": "cpp"
+        "*.cuh": "cpp",
+        "array": "cpp"
     },
     "python.pythonPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {
@@ -16,4 +17,5 @@
     "python.testing.unittestEnabled": false,
     "python.testing.nosetestsEnabled": false,
     "python.testing.pytestEnabled": true,
+    "C_Cpp.errorSquiggles": "Enabled",
 }

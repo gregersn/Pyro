@@ -42,11 +42,12 @@ namespace Pyro {
             Shape _shape;
 
         public:
-            Graphics(unsigned int width, unsigned int height, unsigned int channels);
+            Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
             virtual ~Graphics();
 
             static Graphics *create(unsigned int width, unsigned int height);
             static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode);
+            static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi);
 
             void imagemode(int mode) { this->_image_mode = mode; };
             void image(Image *img, float x, float y);

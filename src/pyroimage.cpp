@@ -13,7 +13,8 @@ namespace Pyro {
         this->cache = nullptr;
     }
 
-    Image::Image(unsigned int width, unsigned int height, unsigned int channels) {
+    Image::Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) {
+        this->dpi = dpi;
         this->pixels_locked = false;
         this->data = nullptr;
         this->cache = nullptr;
@@ -35,7 +36,7 @@ namespace Pyro {
 
     Image* Image::create(unsigned int width, unsigned int height) {
         unsigned int channels = 4;
-        Image *img = new Image(width, height, channels);
+        Image *img = new Image(width, height, channels, 72);
         return img;
     }
 
@@ -85,7 +86,7 @@ namespace Pyro {
         unsigned int height = png_get_image_height(png_ptr, info_ptr);
         unsigned int channels = png_get_channels(png_ptr, info_ptr);
 
-        Image *img = new Image(width, height, channels);
+        Image *img = new Image(width, height, channels, 72);
         unsigned char *d = (unsigned char *)img->get_data();
         for(unsigned int y = 0; y < height; y++) {
             png_bytep row = row_pointers[y];
@@ -101,7 +102,7 @@ namespace Pyro {
     }
 
     void Image::save(const std::string &filename) {
-        this->save(filename, 72);
+        this->save(filename, this->dpi);
     }
 
     void Image::save(const std::string &filename, unsigned int dpi) {
@@ -406,7 +407,15 @@ namespace Pyro {
 
     // Utility functions
 
+    Image* createimage(unsigned int width, unsigned int height) {
+        return new Image(width, height, 4, 72);
+    }
+
     Image* createimage(unsigned int width, unsigned int height, int channels) {
-        return new Image(width, height, channels);
+        return new Image(width, height, channels, 72);
+    }
+
+    Image* createimage(unsigned int width, unsigned int height, int channels, unsigned int dpi) {
+        return new Image(width, height, channels, dpi);
     }
 }

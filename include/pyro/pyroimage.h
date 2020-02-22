@@ -14,6 +14,7 @@ namespace Pyro {
         private:
             bool pixels_locked;
             void *cache;
+            unsigned int dpi;
 
             Image *resize_nearest(unsigned int width, unsigned int height);
             Image *resize_bilinear(unsigned int width, unsigned int height);
@@ -29,11 +30,10 @@ namespace Pyro {
             unsigned int height() { return this->_height; };
 
             Image();
-            Image(unsigned int width, unsigned int height, unsigned int channels);
+            Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
             ~Image();
 
             static Image *create(unsigned int width, unsigned int height);
-
             static Image *load(const std::string &filename);
             static Image *loadPNG(const std::string &filename);
 
@@ -63,6 +63,8 @@ namespace Pyro {
             Image *convert(unsigned int channels);
     };
 
+    Image *createimage(unsigned int width, unsigned int height);
     Image *createimage(unsigned int width, unsigned int height, int channels);
+    Image *createimage(unsigned int width, unsigned int height, int channels, unsigned int dpi);
 }
 #endif

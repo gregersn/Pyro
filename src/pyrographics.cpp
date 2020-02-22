@@ -8,7 +8,7 @@
 #include <cstring>
 
 namespace Pyro {
-    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int channels) :
+    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) :
     Image() {
         this->_width = width;
         this->_height = height;
@@ -27,13 +27,18 @@ namespace Pyro {
     Graphics::~Graphics() {
     }
 
-    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode){
-       switch(mode) {
-            case GraphicsMode::CAIRO:
-            default:
-                return new GraphicsCairo(width, height, 4);
-       }
+    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi){
+        switch(mode) {
+                case GraphicsMode::CAIRO:
+                default:
+                    return new GraphicsCairo(width, height, 4, dpi);
+        }
     }
+
+    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode){
+        return create(width, height, mode, 72);
+    }
+
     Graphics *Graphics::create(unsigned int width, unsigned int height){
         return create(width, height, GraphicsMode::CAIRO);
     }
