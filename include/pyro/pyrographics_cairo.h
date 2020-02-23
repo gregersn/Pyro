@@ -8,13 +8,16 @@
 
 namespace Pyro {
     class GraphicsCairo : public Graphics {
-        cairo_surface_t *surface;
-        cairo_t *cr;
+        cairo_surface_t *surface = nullptr;
+        cairo_t *cr = nullptr;
 
 
         public:
+            GraphicsCairo(const GraphicsCairo &in);
             GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
             ~GraphicsCairo();
+
+            GraphicsCairo &operator=(const GraphicsCairo &in);
 
             void blendmode(BlendMode mode);
 

@@ -3,22 +3,13 @@
 #include <cmath>
 
 namespace Pyro {
-    Vector::Vector() {
-        this->x = 0.0f;
-        this->y = 0.0f;
-        this->z = 0.0f;
+    Vector::Vector() : x(0.0f), y(0.0f), z(0.0f) {
     }
 
-    Vector::Vector(float x, float y) {
-        this->x = x;
-        this->y = y;
-        this->z = 0.0f;
+    Vector::Vector(float x, float y) : x(x), y(y), z(0.0f) {
     }
 
-    Vector::Vector(float x, float y, float z) {
-        this->x = x;
-        this->y = y;
-        this->z = z;
+    Vector::Vector(float x, float y, float z) : x(x), y(y), z(z) {
     }
 
     Vector Vector::fromangle(float a) {

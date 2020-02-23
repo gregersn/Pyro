@@ -20,10 +20,10 @@ namespace Pyro {
     const unsigned int curve_resolution = 32;
 
     class Shape {
-            std::vector<Pyro::Vector> outpoints;
-            std::vector<Pyro::t_shapepoint> points;
+            std::vector<Pyro::Vector> outpoints = std::vector<Pyro::Vector>();
+            std::vector<Pyro::t_shapepoint> points = std::vector<Pyro::t_shapepoint>();
         public:
-            int close;
+            int close = false;
             Shape();
             ~Shape();
             void begin();

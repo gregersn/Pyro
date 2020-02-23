@@ -2,16 +2,10 @@
 #include <iostream>
 
 namespace Pyro {
-    PyroRunner::PyroRunner() {
-        this->width = 640;
-        this->height = 480;
-        this->running = true;
+    PyroRunner::PyroRunner() : width(640), height(480), running(true) {
     }
 
-    PyroRunner::PyroRunner(unsigned int width, unsigned int height) {
-        this->width = width;
-        this->height = height;
-        this->running = true;
+    PyroRunner::PyroRunner(unsigned int width, unsigned int height) : width(width), height(height), running(true) {
     }
 
     PyroRunner::~PyroRunner() {

@@ -26,20 +26,20 @@ namespace Pyro {
 
     class Graphics : public Image {
         protected:
-            bool stroke_enable;
-            bool fill_enable;
+            bool stroke_enable = true;
+            bool fill_enable = true;
 
-            bool _smooth;
+            bool _smooth = true;
 
-            Color stroke_color;
-            Color fill_color;
-            int _rect_mode;
-            int _image_mode;
-            int _ellipse_mode;
-            float stroke_weight;
-            float text_size;
+            Color stroke_color = Color(0.0f, 1.0f);
+            Color fill_color = Color(1.0f, 1.0f);
+            int _rect_mode = Pyro::CORNER;
+            int _image_mode = Pyro::CORNER;
+            int _ellipse_mode = Pyro::CENTER;
+            float stroke_weight =  1.0f;
+            float text_size = 16.0f;
 
-            Shape _shape;
+            Shape _shape = Shape();
 
         public:
             Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);

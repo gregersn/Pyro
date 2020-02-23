@@ -4,26 +4,55 @@
 
 #include <unistd.h>
 #include <png.h>
+#include <string.h>
 
 namespace Pyro {
     // Public functions
 
     Image::Image() {
+    }
+
+    Image::Image(const Image& in) {
+        this->_width = in._width;
+        this->_height = in._height;
+        this->dpi = in.dpi;
+        this->pixels_locked = false;
+        this->channels = in.channels;
         this->data = nullptr;
         this->cache = nullptr;
+        this->data = (unsigned char *)malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        memcpy(this->data, in.data, this->_width * this->_height * sizeof(unsigned char) * this->channels);
     }
 
     Image::Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) {
         this->dpi = dpi;
-        this->pixels_locked = false;
-        this->data = nullptr;
-        this->cache = nullptr;
         this->_width = width;
         this->_height = height;
         this->channels = channels;
         this->data = (unsigned char *)malloc(width * height * sizeof(unsigned char) * this->channels);
 
     }
+
+    Image & Image::operator=(const Image &in) {
+        if(this == &in) {
+            return *this;
+        }
+        if(this->data != nullptr)
+            free(this->data);
+
+        this->_width = in._width;
+        this->_height = in._height;
+        this->dpi = in.dpi;
+        this->pixels_locked = false;
+        this->channels = in.channels;
+        this->data = nullptr;
+        this->cache = nullptr;
+        this->data = (unsigned char *)malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        memcpy(this->data, in.data, this->_width * this->_height * sizeof(unsigned char) * this->channels);
+
+        return *this;
+    }
+
 
     Image::~Image() {
         if(this->cache != nullptr) {

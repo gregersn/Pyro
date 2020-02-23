@@ -56,8 +56,7 @@ namespace Pyro {
         this->a = a;
     }
 
-    Palette::Palette() {
-         this->colors = std::vector<Color>();
+    Palette::Palette() : colors(std::vector<Color>()) {
     }
 
     unsigned int Palette::add(Color col) {

@@ -10,10 +10,10 @@
 namespace Pyro {
     class Color {
         public:
-            float r;
-            float g;
-            float b;
-            float a;
+            float r = 0.0f;
+            float g = 0.0f;
+            float b = 0.0f;
+            float a = 0.0f;
 
             int mode = Pyro::RGBA;
 
@@ -22,11 +22,6 @@ namespace Pyro {
             }
 
             Color() {
-                this->mode = Pyro::RGBA;
-                this->r = 0.0f;
-                this->g = 0.0f;
-                this->b = 0.0f;
-                this->a = 1.0f;
             }
 
             Color(const std::string color) {

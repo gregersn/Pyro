@@ -56,10 +56,11 @@ namespace Pyro {
                 return lhs.dist(rhs) < __DBL_EPSILON__;
             }
 
-            void operator=(const Vector &rhs) {
+            Vector & operator=(const Vector &rhs) {
                 this->x = rhs.x;
                 this->y = rhs.y;
                 this->z = rhs.z;
+                return *this;
             }
 
     };

@@ -12,26 +12,28 @@ namespace Pyro {
     };
     class Image {
         private:
-            bool pixels_locked;
-            void *cache;
-            unsigned int dpi;
+            bool pixels_locked = false;
+            void *cache = nullptr;
+            unsigned int dpi =  72;
 
             Image *resize_nearest(unsigned int width, unsigned int height);
             Image *resize_bilinear(unsigned int width, unsigned int height);
 
         protected:
-            void *data;
-            unsigned int _width;
-            unsigned int _height;
+            void *data = nullptr;
+            unsigned int _width = 0;
+            unsigned int _height = 0;
 
         public:
-            unsigned int channels;
+            unsigned int channels = 4;
             unsigned int width() { return this->_width; };
             unsigned int height() { return this->_height; };
 
             Image();
+            Image(const Image &in);
             Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
-            ~Image();
+            Image & operator=(const Image &in);
+            virtual ~Image();
 
             static Image *create(unsigned int width, unsigned int height);
             static Image *load(const std::string &filename);

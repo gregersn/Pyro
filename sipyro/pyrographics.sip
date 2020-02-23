@@ -7,7 +7,7 @@ namespace Pyro {
 %End
     class Graphics {
         public:
-            Graphics(unsigned int width, unsigned int height, unsigned int channels);
+            Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
             static Graphics *create(unsigned int width, unsigned int height);
             
             unsigned int width();

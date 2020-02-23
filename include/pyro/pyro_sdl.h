@@ -19,7 +19,9 @@ namespace Pyro {
 
         public:
             PyroRunner();
+            PyroRunner(const PyroRunner &in);
             PyroRunner(unsigned int width, unsigned int height);
+            PyroRunner & operator=(const PyroRunner &in);
             ~PyroRunner();
             int update();
             int quit();
