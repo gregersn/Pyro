@@ -36,6 +36,9 @@ namespace Pyro {
             unsigned int get(unsigned int x, unsigned int y);
             void set(unsigned int x, unsigned int y, unsigned int c);
 
+            void smooth();
+            void nosmooth();
+
             void nostroke();
             void nofill();
             void strokeweight(float w); 

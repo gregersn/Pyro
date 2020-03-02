@@ -11,7 +11,7 @@ namespace Pyro {
             noise_init = true;
         }
 
-        return noiseimpl.eval(x, y, z, w);
+        return (noiseimpl.eval(x, y, z, w) + 1.0) / 2.0;
     }
 
     double noise(double x, double y, double z) {
@@ -20,7 +20,7 @@ namespace Pyro {
             noise_init = true;
         }
 
-        return noiseimpl.eval(x, y, z);
+        return (noiseimpl.eval(x, y, z) + 1.0) / 2.0;
     }
 
     double noise(double x, double y) {
@@ -29,7 +29,7 @@ namespace Pyro {
             noise_init = true;
         }
 
-        return noiseimpl.eval(x, y);
+        return (noiseimpl.eval(x, y) + 1.0) / 2.0;
     }
 
     double noise(double x) {

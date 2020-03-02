@@ -59,4 +59,8 @@ namespace Pyro {
     void rotate(float a);
     void pushmatrix();
     void popmatrix();
+
+    double noise(double x, double y);
+    double noise(double x, double y, double z);
+    double noise(double x, double y, double z, double w);
 };

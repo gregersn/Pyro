@@ -10,7 +10,9 @@ TEST_CASE("Test noise") {
 
     for(uint y = 0; y < 128; y++) {
         for(uint x = 0; x < 128; x++) {
-           pixels[y * 128 + x] = 0xff000000 | (uint8_t)((Pyro::noise(x * 0.1, y * 0.1) + 1.0) * 128);
+            double v = Pyro::noise(x * 0.1, y * 0.1);
+            REQUIRE(v >= 0.0);
+           pixels[y * 128 + x] = 0xff000000 | (uint8_t)((v) * 255);
         }
     }
 

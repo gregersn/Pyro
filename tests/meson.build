@@ -4,6 +4,7 @@ test_sources = ['tests-main.cpp',
                 'tests-image.cpp',
                 'test-math.cpp',
                 'test-pyro.cpp',
+                'test-noise.cpp',
                 'tests-vector.cpp']
 
 testexe = executable('unit-tests', test_sources,

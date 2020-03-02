@@ -127,6 +127,8 @@ namespace Pyro {
                 }
             }
         }
+
+        fclose(fp);
         return img;
     }
 

@@ -10,6 +10,7 @@ from __future__ import division
 # from pyro import pyro_noise
 # from nose.tools import assert_raises
 
+import pyro 
 
 # def test_init():
 #     assert pyro_noise.SINCOS_PRECISION == 0.5
@@ -21,23 +22,27 @@ from __future__ import division
 #     assert len(pyro_noise.COS_LUT) == 720
 
 def test_noise():
-    result = pyro_noise.noise(0)
-    assert result > 0
-    assert result < 1
+    y = 0.0
+    x = 0.0
+    for y in range(0, 1000):
+        for x in range(0, 1000):
+            result = pyro.noise(x / 30, y / 30)
+            assert result >= 0
+            assert result < 1
 
 
 def test_noise_seed():
-    pyro_noise.noise_seed(99)
+    pyro.noise_seed(99)
     # assert len(pyro_noise.perlin) == 0
     # assert pyro_noise.perlinRandom is not None
 
     resultA = []
     t = 0
     for i in range(5):
-        resultA.append(pyro_noise.noise(t))
+        resultA.append(pyro.noise(t))
         t += 0.01
 
-    pyro_noise.noise_seed(99)
+    pyro.noise_seed(99)
 
     # assert len(pyro_noise.perlin) == 0
     # assert pyro_noise.perlinRandom is not None
@@ -45,7 +50,7 @@ def test_noise_seed():
     t = 0
     resultB = []
     for i in range(5):
-        resultB.append(pyro_noise.noise(t))
+        resultB.append(pyro.noise(t))
         t += 0.01
 
     for v in resultA:
