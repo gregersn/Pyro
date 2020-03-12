@@ -135,8 +135,8 @@ namespace Pyro {
     void GraphicsCairo::line(float x0, float y0, float x1, float y1) {
         if(this->stroke_enable) {
             cairo_new_path(this->cr);
-            cairo_move_to(this->cr, x0 + .5, y0 + .5);
-            cairo_line_to(this->cr, x1 + .5, y1 + .5);
+            cairo_move_to(this->cr, x0, y0);
+            cairo_line_to(this->cr, x1, y1);
             cairo_set_line_width(this->cr, this->stroke_weight);
             cairo_set_source_rgba(this->cr,
                 this->stroke_color.r,

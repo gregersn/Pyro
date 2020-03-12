@@ -74,13 +74,12 @@ TEST_CASE("Stroke can be set", "[graphics]") {
         pg->stroke(1.0f, 0.0f, 0.0f, 1.0f);
 
         uint32_t p = pg->get(0, 0);
-        pg->line(0, 0, 10, 0);
+        pg->line(0.5, 0.5, 10.5, 0.5);
 
         uint32_t q = pg->get(0, 0);
 
         REQUIRE(p == 0x00000000);
         REQUIRE(q == 0xffff0000);
-
     }
 }
 
