@@ -9,6 +9,7 @@
 #include "pyrovector.h"
 #include "pyrographics.h"
 #include "pyronoise.h"
+#include "pyrofont.h"
 
 namespace Pyro {
     enum class Unit {
@@ -108,6 +109,8 @@ namespace Pyro {
     inline void rotate(float a) { pg->rotate(a); };
     inline void pushmatrix() { pg->pushmatrix(); };
     inline void popmatrix() { pg->popmatrix(); };
+
+    inline Font* loadfont(std::string filename) { return pg->loadfont(filename); };
 } // namespace Pyro
 
 #endif // PYRO_H

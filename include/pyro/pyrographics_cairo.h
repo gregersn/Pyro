@@ -2,15 +2,14 @@
 #define PYROGRAPHICS_CAIRO_H
 
 #include "pyrographics.h"
+#include "pyrofont_cairo.h"
 
 #include <cairo/cairo.h>
-
 
 namespace Pyro {
     class GraphicsCairo : public Graphics {
         cairo_surface_t *surface = nullptr;
         cairo_t *cr = nullptr;
-
 
         public:
             GraphicsCairo(const GraphicsCairo &in);
@@ -37,6 +36,8 @@ namespace Pyro {
             void strokecap(int cap);
 
             void text_impl(std::string text, float x, float y);
+            void loadfont_impl(std::string filename);
+            void textfont_impl(Font *f);
     };
 }
 

@@ -1,5 +1,4 @@
 header_files = ['pyro/pyro.h',
-                'pyro/pyro_sdl.h',
                 'pyro/pyrocolor.h',
                 'pyro/pyroconstants.h',
                 'pyro/pyrographics.h',

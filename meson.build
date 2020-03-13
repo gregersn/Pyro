@@ -6,6 +6,7 @@ project('Pyro', 'cpp',
 libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
+freetype2_dep = dependency('freetype2')
 
 catch2 = subproject('catch2')
 

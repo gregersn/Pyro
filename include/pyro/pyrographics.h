@@ -5,6 +5,7 @@
 #include "pyrocolor.h"
 #include "pyroimage.h"
 #include "pyroshape.h"
+#include "pyrofont.h"
 
 namespace Pyro {
     enum class BlendMode {
@@ -149,6 +150,11 @@ namespace Pyro {
 
             void textsize(float size);
             void text(std::string text, float x, float y);
+            Font *loadfont_impl(const std::string filename);
+            Font *loadfont(std::string filename);
+            virtual void textfont_impl(Font *f) {};
+            void textfont(Font *f) { this->textfont_impl(f); };
+            
             virtual void text_impl(std::string text, float x, float y) {};
 
     };

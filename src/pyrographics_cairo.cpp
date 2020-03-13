@@ -1,4 +1,4 @@
-#include <pyro/pyrographics_cairo.h>
+#include "pyro/pyrographics_cairo.h"
 
 namespace Pyro {
     GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) : Graphics(width, height, channels, dpi) {
@@ -202,5 +202,13 @@ namespace Pyro {
         cairo_move_to(this->cr, x, y);
         cairo_show_text(this->cr, text.c_str());
 
+    }
+
+    void GraphicsCairo::loadfont_impl(std::string filename) {
+        //return FontCairo::load(filename);
+    }
+
+    void GraphicsCairo::textfont_impl(Font *f) {
+        //cairo_set_font_face(this->cr, ((FontCairo *)f)->ct);
     }
 }

@@ -3,9 +3,9 @@
 
 #include <pyro/pyrographics.h>
 #include <pyro/pyrographics_cairo.h>
+#include <pyro/pyrofont.h>
 
 #include <iostream>
-#include <cstring>
 
 namespace Pyro {
     Graphics::Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) :
@@ -266,5 +266,14 @@ namespace Pyro {
 
     void Graphics::text(std::string text, float x, float y) {
         this->text_impl(text, x, y);
+    }
+
+    Font *Graphics::loadfont(std::string filename) {
+         //return loadfont_impl(filename);
+        return loadfont_impl(filename);
+    }
+
+    Font *Graphics::loadfont_impl(std::string filename) {
+        return Font::load(filename);
     }
 }

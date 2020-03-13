@@ -5,12 +5,13 @@ test_sources = ['tests-main.cpp',
                 'test-math.cpp',
                 'test-pyro.cpp',
                 'test-noise.cpp',
+                'test-cairo.cpp',
                 'tests-vector.cpp']
 
 testexe = executable('unit-tests', test_sources,
                      include_directories: inc_dir,
                      link_with: pyrolib,
-                     dependencies: catch2.get_variable('catch2_dep'),
+                     dependencies: [freetype2_dep, catch2.get_variable('catch2_dep')],
                      install: false)
 
 

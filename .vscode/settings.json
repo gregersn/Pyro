@@ -2,7 +2,8 @@
     "files.associations": {
         "optional": "cpp",
         "*.cuh": "cpp",
-        "array": "cpp"
+        "array": "cpp",
+        "iostream": "cpp"
     },
     "python.pythonPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {
