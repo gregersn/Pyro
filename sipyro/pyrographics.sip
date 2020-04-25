@@ -5,7 +5,7 @@ namespace Pyro {
 #include <pyro/pyrographics.h>
 #include <Python.h>
 %End
-    class Graphics {
+    class Graphics : public Pyro::Image {
         public:
             Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
             static Graphics *create(unsigned int width, unsigned int height);
