@@ -2,6 +2,7 @@
 #define PYRO_H
 
 #include "pyroconstants.h"
+#include "pyrostring.h"
 #include "pyromath.h"
 #include "pyrocolor.h"
 #include "pyroimage.h"

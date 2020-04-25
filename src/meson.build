@@ -8,6 +8,7 @@ pyro_sources = ['pyro.cpp',
                 'pyroshape.cpp',
                 'pyrovector.cpp',
                 'pyronoise.cpp',
+                'pyrostring.cpp',
                 'opensimplexnoise.cpp']
 
 pyrolib = shared_library('pyro', 
