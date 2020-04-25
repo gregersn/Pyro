@@ -75,4 +75,22 @@ namespace Pyro {
     Color Palette::operator[] (const unsigned int index) {
         return this->colors[index];
     }
+
+    uint32_t color(unsigned int gray) {
+        return color(gray, 255);
+    }
+
+    uint32_t color(unsigned int gray, unsigned int alpha) {
+        return color(gray, gray, gray, alpha);
+    }
+
+    uint32_t color(unsigned int r, unsigned int g, unsigned int b) {
+        return 0xff000000 | r << 16 | g << 8 | b;
+    }
+
+    uint32_t color(unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
+        return a << 24 | r << 16 | g << 8 | b;
+    }
+
+
 }

@@ -29,9 +29,6 @@ namespace Pyro {
     void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi);
     void size(unsigned int width, unsigned int height);
 
-    uint32_t color(unsigned int r, unsigned int g, unsigned int b);
-    uint32_t color(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
-
     inline void save(const char *file) { pg->save(file); };
     inline void save(const char *file, unsigned int dpi) { pg->save(file, dpi); };
 
