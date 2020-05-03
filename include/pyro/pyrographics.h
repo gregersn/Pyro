@@ -25,6 +25,7 @@ namespace Pyro
 
     enum class GraphicsMode
     {
+        P2D,
         CAIRO
     };
 

@@ -3,6 +3,7 @@
 
 #include <pyro/pyrographics.h>
 #include <pyro/pyrographics_cairo.h>
+#include <pyro/pyrographics_2d.h>
 
 #include <iostream>
 #include <cstring>
@@ -24,13 +25,13 @@ namespace Pyro
     {
     }
 
-    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi)
-    {
-        switch (mode)
-        {
-        case GraphicsMode::CAIRO:
-        default:
-            return new GraphicsCairo(width, height, ARGB, 1);
+    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi){
+        switch(mode) {
+                case GraphicsMode::P2D:
+                    return new Graphics2D(width, height, 4, dpi);
+                case GraphicsMode::CAIRO:
+                default:
+                    return new GraphicsCairo(width, height, ARGB, 1);
         }
     }
 

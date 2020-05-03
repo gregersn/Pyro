@@ -2,7 +2,7 @@
 
 #include <pyro/pyrographics.h>
 
-TEST_CASE("Graphics objects can be initialized", "[graphics]")
+TEST_CASE("Cairo graphics objects can be initialized", "[graphics-cairo]")
 {
     SECTION("Create a graphics object")
     {
@@ -13,7 +13,7 @@ TEST_CASE("Graphics objects can be initialized", "[graphics]")
     }
 }
 
-TEST_CASE("Graphics can have backgrounds", "[graphics]")
+TEST_CASE("Cairo graphics can have backgrounds", "[graphics-cairo]")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(4, 4);
 
@@ -42,7 +42,7 @@ TEST_CASE("Graphics can have backgrounds", "[graphics]")
     }
 }
 
-TEST_CASE("Fill can be set", "[graphics]")
+TEST_CASE("Cairo graphics fill can be set", "[graphics-cairo]")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(8, 8);
 
@@ -61,7 +61,7 @@ TEST_CASE("Fill can be set", "[graphics]")
     }
 }
 
-TEST_CASE("Stroke can be set", "[graphics]")
+TEST_CASE("Cairo graphics stroke can be set", "[graphics-cairo]")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(10, 1);
 
@@ -96,7 +96,7 @@ TEST_CASE("Stroke can be set", "[graphics]")
     }
 }
 
-TEST_CASE("Shapes can be drawn", "[graphics]")
+TEST_CASE("Shapes can be drawn with Cairo graphics", "[graphics-cairo]")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(8, 8);
 
@@ -203,7 +203,7 @@ TEST_CASE("Shapes can be drawn", "[graphics]")
     }
 }
 
-TEST_CASE("Select different color modes")
+TEST_CASE("Cairo graphics can have different color modes")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(3, 3);
 
@@ -220,7 +220,7 @@ TEST_CASE("Select different color modes")
     }
 }
 
-TEST_CASE("Save and load images")
+TEST_CASE("Cairo graphics can save and load images")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(4, 4);
     const char *filename = "__4x4_ARGB__.png";

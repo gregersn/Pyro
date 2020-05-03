@@ -7,6 +7,7 @@ header_files = ['pyro/pyro.h',
                 'pyro/pyromath.h',
                 'pyro/pyroshape.h',
                 'pyro/pyrovector.h',
+                'pyro/pyrographics_2d.h',
                 'pyro/pyrographics_cairo.h']
 
 install_headers(header_files, subdir: 'pyro')
