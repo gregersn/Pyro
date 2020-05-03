@@ -18,8 +18,8 @@ namespace Pyro {
 %TypeHeaderCode
 #include <pyro/pyromath.h>
 %End
-    int random(int range);
-    int random(int low, int high);
+    double random(double range);
+    double random(double low, double high);
     float radians(float degrees);
     float degrees(float radian);
 
