@@ -13,7 +13,7 @@ namespace Pyro {
 
             Graphics3d &operator=(const Graphics3d &in);
 
-            void blendmode(BlendMode mode);
+            /*void blendmode(BlendMode mode);
 
             void translate(float x, float);
             void rotate(float a);
@@ -30,7 +30,7 @@ namespace Pyro {
             void nosmooth();
             void strokecap(int cap);
 
-            void text_impl(std::string text, float x, float y);
+            void text_impl(std::string text, float x, float y);*/
     };
 }
 
