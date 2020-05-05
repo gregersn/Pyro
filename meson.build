@@ -10,6 +10,7 @@ cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
 
 catch2 = subproject('catch2')
+eigen = dependency('eigen3')
 
 inc_dir = include_directories('include')
 
