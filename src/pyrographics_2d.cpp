@@ -10,9 +10,33 @@ namespace Pyro {
         return ((uint)(a * 255) << 24) | ((uint)(r * 255) << 16) | ((uint)(g * 255) << 8) | (uint)(b * 255);
     }
 
-    Graphics2D::Graphics2D(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) : Graphics(width, height, channels, dpi) { }
+    Graphics2D::Graphics2D(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) : Graphics(width, height, channels, dpi) { 
+        this->transformer = Transformer2D();
+    }
     Graphics2D::~Graphics2D() { }
 
+    // Coordinates
+    void Graphics2D::translate(float x, float y) {
+        this->transformer.translate(x, y);
+    }
+
+    void Graphics2D::rotate(float a) {
+        this->transformer.rotate(a);
+    }
+
+    void Graphics2D::scale(float sx, float sy) {
+        this->transformer.scale(sx, sy);
+    }
+
+    void Graphics2D::pushmatrix() {
+        this->transformer.pushmatrix();
+    }
+
+    void Graphics2D::popmatrix() {
+        this->transformer.popmatrix();
+    }
+
+    // Shapes
     void Graphics2D::background(float r, float g, float b, float a) {
         uint32_t color = color_pack(r, g, b, a);
         uint32_t *data = (uint32_t *)this->data;
@@ -22,6 +46,12 @@ namespace Pyro {
     }
 
     void Graphics2D::line(float x0, float y0, float x1, float y1) {
+        Pyro::Vector a = this->transformer.apply(Pyro::Vector(x0, y0));
+        Pyro::Vector b = this->transformer.apply(Pyro::Vector(x1, y1));
+        this->draw_line(a.x, a.y, b.x, b.y);
+    }
+
+    void Graphics2D::draw_line(float x0, float y0, float x1, float y1) {
         if(!this->stroke_enable) {
             return;
         }
@@ -95,16 +125,19 @@ namespace Pyro {
     }
 
     void Graphics2D::shape(Shape s, float x, float y) {
-        for(size_t i = 0; i < s.getpoints().size() - 1; i++) {
-            auto p0 = s.getpoints()[i];
-            auto p1 =  s.getpoints()[i + 1];
+        if(this->stroke_enable) {
+            for(size_t i = 0; i < s.getpoints().size() - 1; i++) {
+                auto p0 = this->transformer.apply(s.getpoints()[i]);
+                auto p1 = this->transformer.apply(s.getpoints()[i + 1]);
 
-            this->line(p0.x, p0.y, p1.x, p1.y);
-        }
-        if(s.close == CLOSE) {
-            auto p0 = s.getpoints()[s.getpoints().size() - 1];
-            auto p1 =  s.getpoints()[0];
-            this->line(p0.x, p0.y, p1.x, p1.y);
+                this->draw_line(p0.x, p0.y, p1.x, p1.y);
+            }
+            if(s.close == CLOSE) {
+                auto p0 = this->transformer.apply(s.getpoints()[s.getpoints().size() - 1]);
+                auto p1 = this->transformer.apply(s.getpoints()[0]);
+
+                this->draw_line(p0.x, p0.y, p1.x, p1.y);
+            }
         }
     }
 }
