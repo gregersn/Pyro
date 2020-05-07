@@ -1,4 +1,6 @@
 #include <pyro/pyrographics_2d.h>
+#include <pyro/pyrocolor.h>
+#include <algorithm>
 
 #define ipart(x) (int)(x)
 #define round(x) ipart(x + .5)
@@ -6,12 +8,39 @@
 #define rfpart(x) (1 - fpart(x))
 
 namespace Pyro {
-    uint32_t Graphics2D::color_pack(float r, float g, float b, float a) {
+    uint32_t color_pack(float r, float g, float b, float a) {
         return ((uint)(a * 255) << 24) | ((uint)(r * 255) << 16) | ((uint)(g * 255) << 8) | (uint)(b * 255);
     }
 
-    Graphics2D::Graphics2D(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) : Graphics(width, height, channels, dpi) { 
-        this->transformer = Transformer2D();
+    uint32_t set_alpha(uint32_t color, uint8_t a) {
+        return ((a&255) << 24) | (color & 0xffffff);
+    }
+
+    uint32_t multiply_alpha(uint32_t color) {
+        float a = ((color & 0xff000000) >> 24) / 255.0f;
+        float r = std::clamp(((color & 0xff0000) >> 16) / 255.0f * a, 0.0f, 1.0f);
+        float g = std::clamp(((color & 0xff00) >> 8) / 255.0f * a, 0.0f, 1.0f);
+        float b = std::clamp(((color & 0xff) >> 0) / 255.0f * a , 0.0f, 1.0f);
+
+        return ((uint)(a * 255) << 24) | ((uint)(r * 255) << 16) | ((uint)(g * 255) << 8) | (uint)(b * 255);
+    }
+
+    uint32_t a_over_b(uint32_t a, uint32_t b) {
+        Color ca = Color::from_uint(a);
+        Color cb = Color::from_uint(b);
+
+        Color cc = Color(
+            (ca.r * ca.a + cb.r * cb.a * (1 - ca.a)) / (ca.a + cb.a * (1 - ca.a)),
+            (ca.g * ca.a + cb.g * cb.a * (1 - ca.a)) / (ca.a + cb.a * (1 - ca.a)),
+            (ca.b * ca.a + cb.b * cb.a * (1 - ca.a)) / (ca.a + cb.a * (1 - ca.a)),
+            ca.a + cb.a * (1 - ca.a)
+        );
+        return cc.to_uint();
+    }
+
+
+
+    Graphics2D::Graphics2D(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) : Graphics(width, height, channels, dpi), transformer() { 
     }
     Graphics2D::~Graphics2D() { }
 
@@ -51,12 +80,27 @@ namespace Pyro {
         this->draw_line(a.x, a.y, b.x, b.y);
     }
 
+    void Graphics2D::putpixel(int x, int y, float brightness) {
+        uint32_t color = this->stroke_color.to_uint();
+        this->putpixel(x, y, brightness, color);
+    }
+
+    void Graphics2D::putpixel(int x, int y, float brightness, uint32_t color) {
+        brightness = std::clamp(brightness, 0.0f, 1.0f);
+        if (x < 0 || y < 0 || x >= this->_width || y >= this->_height) return;
+
+        color = set_alpha(color, (uint)(brightness * 255));
+        uint32_t a = color;
+
+        uint32_t b = ((uint32_t *)this->data)[y * this->_width + x];
+        ((uint32_t *)this->data)[y * this->_width + x] = a_over_b(a, b);
+    }
+
     void Graphics2D::draw_line(float x0, float y0, float x1, float y1) {
         if(!this->stroke_enable) {
             return;
         }
 
-        uint32_t color = this->stroke_color.to_uint();
         x0 -= .5;
         y0 -= .5;
         x1 -= .5;
@@ -86,11 +130,11 @@ namespace Pyro {
         float ypxl1 = ipart(yend);
 
         if(steep) {
-            this->set(ypxl1, xpxl1, color);
-            this->set(ypxl1 + 1, xpxl1, color);
+            this->putpixel(ypxl1, xpxl1, rfpart(yend) * xgap);
+            this->putpixel(ypxl1 + 1, xpxl1, fpart(yend) * xgap);
         } else {
-            this->set(xpxl1, ypxl1, color);
-            this->set(xpxl1, ypxl1 + 1, color);
+            this->putpixel(xpxl1, ypxl1, rfpart(yend) * xgap);
+            this->putpixel(xpxl1, ypxl1 + 1, fpart(yend) * xgap);
         }
         float intery = yend + gradient;
 
@@ -101,43 +145,70 @@ namespace Pyro {
         float xpxl2 = xend;
         float ypxl2 = ipart(yend);
         if(steep) {
-            this->set(ypxl2, xpxl2, color);
-            this->set(ypxl2 + 1, xpxl2, color);
+            this->putpixel(ypxl2, xpxl2, rfpart(yend) * xgap);
+            this->putpixel(ypxl2 + 1, xpxl2, fpart(yend) * xgap);
         } else 
         {
-            this->set(xpxl2, ypxl2, color);
-            this->set(xpxl2, ypxl2 + 1, color);
+            this->putpixel(xpxl2, ypxl2, rfpart(yend) * xgap);
+            this->putpixel(xpxl2, ypxl2 + 1, fpart(yend) * xgap);
         }
 
         if(steep) {
             for(uint64_t x = xpxl1 + 1; x < xpxl2; x++) {
-                this->set(ipart(intery), x, color);
-                this->set(ipart(intery) + 1, x, color);
+                this->putpixel(ipart(intery), x, rfpart(intery));
+                this->putpixel(ipart(intery) + 1, x, fpart(intery));
                 intery = intery + gradient;                
             }
         } else {
             for(uint64_t x = xpxl1 + 1; x < xpxl2; x++) {
-                this->set(x, ipart(intery), color);
-                this->set(x, ipart(intery) + 1, color);
+                this->putpixel(x, ipart(intery), rfpart(intery));
+                this->putpixel(x, ipart(intery) + 1, fpart(intery));
                 intery = intery + gradient;
             }
         }
     }
 
+    void Graphics2D::hline(int y, int x0, int x1, uint32_t col) {
+        for(int x = std::min(x0, x1); x <= std::max(x0, x1); x++) {
+            this->putpixel(x, y, 1.0f, col);
+        }
+    }
+
     void Graphics2D::shape(Shape s, float x, float y) {
+        auto points = s.getpoints();
+        if(this->fill_enable) {
+            float minx = points[0].x;
+            float maxx = points[0].x;
+            float miny = points[0].y;
+            float maxy = points[0].y;
+            for(size_t i = 0; i < points.size(); i++) {
+                minx = std::min(minx, points[i].x);
+                miny = std::min(miny, points[i].y);
+                maxx = std::max(maxx, points[i].x);
+                maxy = std::max(maxy, points[i].y);
+            }
+            for(uint y = miny; y <= maxy; y++) {
+                this->hline(y, minx, maxx, this->fill_color.to_uint());
+            }
+        }
         if(this->stroke_enable) {
-            for(size_t i = 0; i < s.getpoints().size() - 1; i++) {
-                auto p0 = this->transformer.apply(s.getpoints()[i]);
-                auto p1 = this->transformer.apply(s.getpoints()[i + 1]);
+            for(size_t i = 0; i < points.size() - 1; i++) {
+                auto p0 = this->transformer.apply(points[i]);
+                auto p1 = this->transformer.apply(points[i + 1]);
 
                 this->draw_line(p0.x, p0.y, p1.x, p1.y);
             }
             if(s.close == CLOSE) {
-                auto p0 = this->transformer.apply(s.getpoints()[s.getpoints().size() - 1]);
-                auto p1 = this->transformer.apply(s.getpoints()[0]);
+                auto p0 = this->transformer.apply(points[points.size() - 1]);
+                auto p1 = this->transformer.apply(points[0]);
 
                 this->draw_line(p0.x, p0.y, p1.x, p1.y);
             }
         }
+    }
+
+    void Graphics2D::image_impl(Image *i, float x, float y) {
+        this->fill(255, 0, 0, 255);
+        this->rect(x, y, i->width(), i->height());
     }
 }
