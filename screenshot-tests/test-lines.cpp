@@ -9,12 +9,14 @@ TEST_CASE("Draw line", "[strokes]") {
         std::string filename = "stroke_weight.png";
         p->background(192);
 
+        p->strokeweight(.5);  //  Thin
+        p->line(20, 15, 80, 15);
         p->strokeweight(1);  // Default
-        p->line(20, 20, 80, 20);
+        p->line(20, 25, 80, 25);
         p->strokeweight(4);  // Thicker
-        p->line(20, 40, 80, 40);
+        p->line(20, 45, 80, 45);
         p->strokeweight(10);  // Beastly
-        p->line(20, 70, 80, 70);
+        p->line(20, 75, 80, 75);
 
         p->save(current_folder + filename);
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
