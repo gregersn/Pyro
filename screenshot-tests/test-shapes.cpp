@@ -2,11 +2,11 @@
 #include "test-settings.h"
 #include "pyro/pyrographics.h"
 
-TEST_CASE("Test Rect") {
+TEST_CASE("Test Rect", "[shapes") {
     std::string filename = "";
 
     SECTION("Corner drawing") {
-        Pyro::Graphics *p = Pyro::Graphics::create(250, 250);
+        Pyro::Graphics *p = Pyro::Graphics::create(250, 250, testmode);
         filename ="shape_rect_corner.png";
         p->nofill();
         p->stroke(0.0f, 1.0f);
@@ -31,7 +31,7 @@ TEST_CASE("Test Rect") {
     }
 
     SECTION("Center drawing") {
-        Pyro::Graphics *p = Pyro::Graphics::create(250, 250);
+        Pyro::Graphics *p = Pyro::Graphics::create(250, 250, testmode);
         std::string filename ="shape_rect_center.png";
         p->rectmode(Pyro::CENTER);
         p->nofill();
@@ -58,85 +58,38 @@ TEST_CASE("Test Rect") {
 
 }
 
-TEST_CASE("Test curve") {
-    std::string filename = "";
-
-    SECTION("Draw with curvevertex()") {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 100);
-        std::string filename = "shape_curve_vertex.png";
+TEST_CASE("Draw shapes", "[shapes]") {
+    Pyro::Graphics *p = Pyro::Graphics::create(128, 128, testmode);
+    SECTION("Draw triangle") {
+        std::string filename = "shape_triangle.png";
         p->background(192);
-        p->nofill();
-        p->beginshape();
-        p->curvevertex(84,  91);
-        p->curvevertex(84,  91);
-        p->curvevertex(68,  19);
-        p->curvevertex(21,  17);
-        p->curvevertex(32, 100);
-        p->curvevertex(32, 100);
-        p->endshape();
+        p->nostroke();
+        p->fill(0, 128, 255);
+        p->triangle(p->width() / 2, 0, 0, p->height() - 1, p->width() - 1, p->height() - 1);
         p->save(current_folder + filename);
-        delete p;
-        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-
-    }
-
-    SECTION("Draw with curve()") {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 100);
-        std::string filename = "shape_curve.png";
-        p->background(192);
-        p->nofill();
-        p->stroke(255, 102, 0);
-        p->curve(5, 26, 5, 26, 73, 24, 73, 61);
-        p->stroke(0); 
-        p->curve(5, 26, 73, 24, 73, 61, 15, 65); 
-        p->stroke(255, 102, 0);
-        p->curve(73, 24, 73, 61, 15, 65, 15, 65);
-
-        p->save(current_folder + filename);
-        delete p;
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
 
+    SECTION("Draw circle") {
+        std::string filename = "shape_circle.png";
+        p->background(192);
+        p->nostroke();
+        p->fill(64, 64, 255);
+        p->ellipse(p->width() / 2, p->height() / 2, 60, 64);
+        p->save(current_folder + filename);
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    }
+
+    SECTION("Draw ellipse") {
+        std::string filename = "shape_ellipse.png";
+        p->background(192);
+        p->nostroke();
+        p->fill(255, 64, 128);
+        p->ellipse(p->width() / 2, p->height() / 2, 60, 120, 64);
+        p->save(current_folder + filename);
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    }
+
+    delete p;
 }
 
-TEST_CASE("Bezier curve") {
-    std::string filename = "";
-    SECTION("Draw with beziervertex()") {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 100);
-        std::string filename = "shape_curve_bezier_vertex.png";
-        p->background(192);
-        p->nofill();
-        p->beginshape();
-        p->vertex(30, 20);
-        p->beziervertex(80, 0, 80, 75, 30, 75);
-        p->endshape();
-        p->save(current_folder + filename);
-        delete p;
-        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-    }
-
-    SECTION("Draw with bezier()") {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 200);
-        std::string filename = "shape_curve_bezier.png";
-        p->background(192);
-        p->nofill();
-
-        p->stroke(255, 102, 0);
-        p->line(85, 20, 10, 10);
-        p->line(90, 90, 15, 80);
-        p->stroke(0, 0, 0);
-        p->bezier(85, 20, 10, 10, 90, 90, 15, 80);
-
-        p->translate(0, 100);
-
-        p->stroke(255, 102, 0);
-        p->line(30, 20, 80, 5);
-        p->line(80, 75, 30, 75);
-        p->stroke(0, 0, 0);
-        p->bezier(30, 20, 80, 5, 80, 75, 30, 75);
-
-        p->save(current_folder + filename);
-        delete p;
-        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-    }
-}

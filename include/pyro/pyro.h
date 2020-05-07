@@ -25,6 +25,10 @@ namespace Pyro {
         return Graphics::create(width, height);
     }
 
+    inline Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode) {
+        return Graphics::create(width, height, mode);
+    }
+
     // Initialize the library with this.
     void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi);
     void size(unsigned int width, unsigned int height);

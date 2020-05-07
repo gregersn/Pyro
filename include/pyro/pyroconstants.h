@@ -28,6 +28,11 @@ namespace Pyro {
     const int SQUARE = 6;
     const int PROJECT = 7;
 
+    // Stroke joins
+    const int MITER = 8;
+    const int BEVEL = 9;
+    // Already defined const int ROUND;
+
     const int HSB = 1;
     const int HSBA = 2;
     const int RGB = 3;

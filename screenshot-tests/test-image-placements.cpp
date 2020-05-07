@@ -11,7 +11,7 @@ TEST_CASE("Place image full screen") {
         return;
     }
 
-    Pyro::Graphics *p = Pyro::Graphics::create(img->width(), img->height());
+    Pyro::Graphics *p = Pyro::Graphics::create(img->width(), img->height(), testmode);
     p->image(img, 0, 0);
 
     p->save(current_folder + filename);
@@ -31,7 +31,7 @@ TEST_CASE("Place image 50% at center rotated 45 degrees") {
         return;
     }
 
-    Pyro::Graphics *p = Pyro::Graphics::create(img->width(), img->height());
+    Pyro::Graphics *p = Pyro::Graphics::create(img->width(), img->height(), testmode);
     p->imagemode(Pyro::CENTER);
     p->translate(p->width() / 2.0f, p->height() / 2.0f);
     p->rotate(Pyro::QUARTER_PI);
@@ -53,7 +53,7 @@ TEST_CASE("Place images with different channel count") {
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png");
         REQUIRE(img->channels == 4);
 
-        Pyro::Graphics *p = Pyro::create(img->width(), img->height());
+        Pyro::Graphics *p = Pyro::create(img->width(), img->height(), testmode);
         p->imagemode(Pyro::CORNER);
         p->image(img, 0, 0);
         p->save(current_folder + filename);
@@ -68,7 +68,7 @@ TEST_CASE("Place images with different channel count") {
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png")->convert(Pyro::RGB);
         REQUIRE(img->channels == 3);
 
-        Pyro::Graphics *p = Pyro::create(img->width(), img->height());
+        Pyro::Graphics *p = Pyro::create(img->width(), img->height(), testmode);
         p->imagemode(Pyro::CORNER);
         p->image(img, 0, 0);
         p->save(current_folder + filename);
@@ -84,7 +84,7 @@ TEST_CASE("Place images with different channel count") {
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png")->convert(Pyro::GRAY);
         REQUIRE(img->channels == 1);
 
-        Pyro::Graphics *p = Pyro::create(img->width(), img->height());
+        Pyro::Graphics *p = Pyro::create(img->width(), img->height(), testmode);
         p->imagemode(Pyro::CORNER);
         p->image(img, 0, 0);
         p->save(current_folder + filename);

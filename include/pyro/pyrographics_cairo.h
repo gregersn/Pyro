@@ -35,6 +35,7 @@ namespace Pyro {
             void smooth();
             void nosmooth();
             void strokecap(int cap);
+            void strokejoin(int join);
 
             void text_impl(std::string text, float x, float y);
     };

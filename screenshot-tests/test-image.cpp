@@ -4,7 +4,6 @@
 #include "pyro/pyroimage.h"
 #include "pyro/pyroconstants.h"
 
-
 SCENARIO("Image can be converted to different depths")
 {
     GIVEN("An image with 4 channels")

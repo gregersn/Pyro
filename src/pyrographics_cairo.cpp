@@ -189,6 +189,20 @@ namespace Pyro {
         }
     }
 
+    void GraphicsCairo::strokejoin(int join) {
+        if(join == MITER) {
+            cairo_set_line_join (this->cr, CAIRO_LINE_JOIN_MITER);
+        }
+
+        if(join == BEVEL) {
+            cairo_set_line_join (this->cr, CAIRO_LINE_JOIN_BEVEL);
+        }
+
+        if(join == ROUND) {
+            cairo_set_line_join (this->cr, CAIRO_LINE_JOIN_ROUND);
+        }
+    }
+
     // Typography
 
     void GraphicsCairo::text_impl(std::string text, float x, float y) {

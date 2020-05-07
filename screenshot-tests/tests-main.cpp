@@ -7,7 +7,7 @@
 
 TEST_CASE("Create test image") {
     std::string filename = "test_image.png";
-    Pyro::Graphics *p = Pyro::create(128, 128);
+    Pyro::Graphics *p = Pyro::create(128, 128, testmode);
 
     p->nostroke();
     

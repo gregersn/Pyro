@@ -90,6 +90,7 @@ namespace Pyro {
 
             void strokeweight(float w); 
             virtual void strokecap(int cap);
+            virtual void strokejoin(int join);
 
             virtual void smooth();
             virtual void nosmooth();

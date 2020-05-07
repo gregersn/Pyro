@@ -258,6 +258,10 @@ namespace Pyro {
     void Graphics::strokecap(int cap) {
     }
 
+    void Graphics::strokejoin(int join) {
+        
+    }
+
     // Typography
 
     void Graphics::textsize(float size) {

@@ -5,7 +5,7 @@
 TEST_CASE("Write text") {
     std::string filename = "";
     SECTION("Simple strings") {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 100);
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
         filename ="typography_simple_string.png";
         
         p->background(192);

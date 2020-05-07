@@ -1,9 +1,10 @@
 test_sources = ['tests-main.cpp',
                 'test-shapes.cpp',
                 'test-image-placements.cpp',
-                'test_image.cpp',
+                'test-image.cpp',
                 'test-typography.cpp',
                 'test-noise.cpp',
+                'test-lines.cpp',
                 'screenshotmatcher.cpp']
 
 testexe = executable('screenshot-tests', test_sources,
