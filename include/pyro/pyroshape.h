@@ -45,6 +45,7 @@ namespace Pyro
         void curvevertex(float x, float y);
         void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4);
         std::vector<std::vector<Pyro::Vector>> getpoints() { return this->outpoints; };
+        bool is_point_in_path(float x, float y);
     };
 };
 #endif

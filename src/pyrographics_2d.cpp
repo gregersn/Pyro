@@ -188,7 +188,11 @@ namespace Pyro {
                 maxy = std::max(maxy, points[i].y);
             }
             for(uint y = miny; y <= maxy; y++) {
-                this->hline(y, minx, maxx, this->fill_color.to_uint());
+                uint32_t col = this->fill_color.to_uint();
+                for(uint x = minx; x <= maxx; x++) {
+                    if(s.is_point_in_path(x, y))
+                        this->putpixel(x, y, 1.0f, col);
+                }
             }
         }
         if(this->stroke_enable) {
