@@ -175,10 +175,10 @@ namespace Pyro {
     void Graphics::ellipse(float x, float y, float w, float h, unsigned int segments) {
         Shape s = Shape();
         s.begin();
-        float da = M_PI / (segments / 2);
+        float da = M_PI / (segments / 2.0f);
         for(unsigned int i = 0; i < segments; i++) {
-            s.vertex(cos(i * da) * w / 2 + x, 
-                     sin(i * da) * h / 2 + y);
+            s.vertex(cos(i * da) * w / 2.0f + x, 
+                     sin(i * da) * h / 2.0f + y);
         }
         s.end(CLOSE);
 

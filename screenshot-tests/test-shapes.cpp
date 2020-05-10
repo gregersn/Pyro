@@ -93,3 +93,25 @@ TEST_CASE("Draw shapes", "[shapes]") {
     delete p;
 }
 
+TEST_CASE("Varible side count ellipses", "[shapes]") {
+    Pyro::Graphics *p = Pyro::Graphics::create(512, 512, testmode);
+    SECTION("Draw ellipses with n siders") {
+        std::string filename = "shape_n_ellipses.png";
+        p->background(192);
+        p->fill(255, 64, 128);
+        p->ellipsemode(Pyro::CENTER);
+
+        for(uint y = 0; y < 4; y++) {
+            p->pushmatrix();
+            for(uint x = 0; x < 4; x++) {
+                p->ellipse(512 / 8, 512 / 8, 500 / 4, 500 / 4, (y * 4) + x  + 3);
+                p->translate(512 / 4, 0);
+            }
+            p->popmatrix();
+            p->translate(0, 512 / 4);
+        }
+        p->save(current_folder + filename);
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    }
+    delete p;
+}
