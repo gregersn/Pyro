@@ -97,6 +97,31 @@ namespace Pyro {
     }
 
     void Graphics2D::draw_line(float x0, float y0, float x1, float y1) {
+        int x_0 = round(x0);
+        int y_0 = round(y0);
+        int x_1 = round(x1);
+        int y_1 = round(y1);
+        int dx = abs(x_1 - x_0);
+        int sx = x_0 < x_1 ? 1 : -1;
+        int dy = -abs(y_1 - y_0);
+        int sy = y_0 < y_1 ? 1 : -1;
+        int err = dx + dy;
+        while(true) {
+            this->putpixel(x_0, y_0, 255);
+            if(x_0 == x_1 && y_0 == y_1) break;
+            int e2 = 2 * err;
+            if(e2 >= dy) {
+                err += dy;
+                x_0 += sx;
+            }
+            if(e2 <= dx) {
+                err += dx;
+                y_0 += sy;
+            }
+        }
+    }
+
+    void Graphics2D::draw_line_aa(float x0, float y0, float x1, float y1) {
         if(!this->stroke_enable) {
             return;
         }
