@@ -58,17 +58,21 @@ namespace Pyro {
 
         cairo_translate(this->cr, x, y);
 
-        for(size_t i = 0; i < s.getpoints().size(); i++) {
-            if(i == 0) {
-                cairo_move_to(this->cr, s.getpoints()[i].x, s.getpoints()[i].y);
-            } else {
-                cairo_line_to(this->cr, s.getpoints()[i].x, s.getpoints()[i].y);
-            }
-        }
-        if(s.close == CLOSE) {
-            cairo_close_path(this->cr);
-        }
+        for(size_t contour_index = 0; contour_index < s.getpoints().size(); contour_index++) {
+            std::vector<Pyro::Vector> contour_points = s.getpoints()[contour_index];
 
+            for(size_t i = 0; i < contour_points.size(); i++) {
+                if(i == 0) {
+                    cairo_move_to(this->cr, contour_points[i].x, contour_points[i].y);
+                } else {
+                    cairo_line_to(this->cr, contour_points[i].x, contour_points[i].y);
+                }
+            }
+            if(s.close == CLOSE) {
+                cairo_close_path(this->cr);
+            }
+
+        }
         if(this->fill_enable) {
             cairo_set_source_rgba(this->cr, this->fill_color.r,
                                             this->fill_color.g,

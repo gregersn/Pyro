@@ -117,6 +117,8 @@ namespace Pyro {
             virtual void shape(Shape s, float x, float y) {};
 
             void beginshape() {this->_shape.begin(); };
+            void begincontour() {this->_shape.begincontour(); };
+            void endcontour() { this->_shape.endcontour(); };
             void vertex(Vector v) { this->_shape.vertex(v.x, v.y); };
             void vertex(float x, float y) { this->_shape.vertex(x, y); };
             void curvevertex(float x, float y) { this->_shape.curvevertex(x, y); };
