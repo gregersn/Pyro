@@ -93,7 +93,7 @@ TEST_CASE("Draw shapes", "[shapes]") {
     delete p;
 }
 
-TEST_CASE("Varible side count ellipses", "[shapes]") {
+TEST_CASE("Variable side count ellipses", "[shapes]") {
     Pyro::Graphics *p = Pyro::Graphics::create(512, 512, testmode);
     SECTION("Draw ellipses with n siders") {
         std::string filename = "shape_n_ellipses.png";
@@ -112,6 +112,34 @@ TEST_CASE("Varible side count ellipses", "[shapes]") {
         }
         p->save(current_folder + filename);
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    }
+    delete p;
+}
+
+TEST_CASE("Complex shapes", "[shapes]") {
+    Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+    SECTION("Draw shape with hole") {
+        std::string filename = "shape_multi_contour.png";
+        p->translate(50, 50);
+        p->stroke(255, 0, 0);
+        p->beginshape();
+        // Exterior part of shape, clockwise winding
+        p->vertex(-40, -40);
+        p->vertex(40, -40);
+        p->vertex(40, 40);
+        p->vertex(-40, 40);
+        // Interior part of shape, counter-clockwise winding
+        p->begincontour();
+        p->vertex(-20, -20);
+        p->vertex(-20, 20);
+        p->vertex(20, 20);
+        p->vertex(20, -20);
+        p->endcontour();
+        p->endshape(Pyro::CLOSE);
+
+        p->save(current_folder + filename);
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+
     }
     delete p;
 }

@@ -20,8 +20,9 @@ namespace Pyro {
     const unsigned int curve_resolution = 32;
 
     class Shape {
-            std::vector<Pyro::Vector> outpoints = std::vector<Pyro::Vector>();
+            std::vector<std::vector<Pyro::Vector>> outpoints = std::vector<std::vector<Pyro::Vector>>();
             std::vector<Pyro::t_shapepoint> points = std::vector<Pyro::t_shapepoint>();
+            std::vector<std::vector<Pyro::t_shapepoint>> contours = std::vector<std::vector<Pyro::t_shapepoint>>();
         public:
             int close = false;
             Shape();
@@ -29,11 +30,13 @@ namespace Pyro {
             void begin();
             void end();
             void end(int close);
+            void begincontour();
+            void endcontour();
             void vertex(Vector v) { this->vertex(v.x, v.y); };
             void vertex(float x, float y);
             void curvevertex(float x, float y);
             void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4);
-            std::vector<Pyro::Vector> getpoints() { return this->outpoints; };
+            std::vector<std::vector<Pyro::Vector>> getpoints() { return this->outpoints; };
     };
 };
 #endif
