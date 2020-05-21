@@ -6,7 +6,7 @@
 
 static inline std::string const actual_folder = "../screenshots/expected/";
 static inline std::string const current_folder = "../screenshots/current/";
-constexpr static inline Pyro::GraphicsMode testmode = Pyro::GraphicsMode::CAIRO;
+constexpr static inline Pyro::GraphicsMode testmode = Pyro::GraphicsMode::P2D;
 
 class ImageMatch : public Catch::MatcherBase<std::string>
 {

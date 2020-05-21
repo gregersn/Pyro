@@ -28,6 +28,11 @@ namespace Pyro
                       (-p0 + 3 * p1 - 3 * p2 + p3) * t * t * t);
     }
 
+    bool Shape::is_point_in_path(Vector p)
+    {
+        return this->is_point_in_path(p.x, p.y);
+    }
+
     bool Shape::is_point_in_path(float x, float y)
     {
         uint num = this->points.size();

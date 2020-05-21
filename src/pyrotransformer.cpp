@@ -6,6 +6,7 @@
 namespace Pyro {
     Transformer2D::Transformer2D() {
         this->current = Eigen::Affine2d::Identity();
+        this->stack = std::vector<Eigen::Affine2d>();
     }
 
     void Transformer2D::translate(float x, float y) {
@@ -23,11 +24,12 @@ namespace Pyro {
     }
 
     void Transformer2D::pushmatrix() {
-
+         this->stack.push_back(Eigen::Affine2d(this->current));
     }
 
     void Transformer2D::popmatrix() {
-
+        this->current = this->stack[this->stack.size() - 1];
+        this->stack.pop_back();
     }
 
     Pyro::Vector Transformer2D::apply(Pyro::Vector v) {

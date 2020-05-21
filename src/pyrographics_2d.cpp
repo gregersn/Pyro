@@ -80,6 +80,14 @@ namespace Pyro {
         this->draw_line(a.x, a.y, b.x, b.y);
     }
 
+    void Graphics2D::putpixel(Vector v, float brightness) {
+        this->putpixel(v.x, v.y, brightness);
+    }
+
+    void Graphics2D::putpixel(Vector v, float brightness, uint32_t color) {
+        this->putpixel(v.x, v.y, brightness, color);
+    }
+
     void Graphics2D::putpixel(int x, int y, float brightness) {
         uint32_t color = this->stroke_color.to_uint();
         this->putpixel(x, y, brightness, color);
@@ -200,38 +208,41 @@ namespace Pyro {
     }
 
     void Graphics2D::shape(Shape s, float x, float y) {
-        auto points = s.getpoints();
-        if(this->fill_enable) {
-            float minx = points[0].x;
-            float maxx = points[0].x;
-            float miny = points[0].y;
-            float maxy = points[0].y;
-            for(size_t i = 0; i < points.size(); i++) {
-                minx = std::min(minx, points[i].x);
-                miny = std::min(miny, points[i].y);
-                maxx = std::max(maxx, points[i].x);
-                maxy = std::max(maxy, points[i].y);
-            }
-            for(uint y = miny; y <= maxy; y++) {
-                uint32_t col = this->fill_color.to_uint();
-                for(uint x = minx; x <= maxx; x++) {
-                    if(s.is_point_in_path(x, y))
-                        this->putpixel(x, y, 1.0f, col);
+        for(uint c = 0; c < s.getpoints().size(); c++) {
+            auto points = s.getpoints()[c];
+            if(this->fill_enable) {
+                float minx = points[0].x;
+                float maxx = points[0].x;
+                float miny = points[0].y;
+                float maxy = points[0].y;
+                for(size_t i = 0; i < points.size(); i++) {
+                    minx = std::min(minx, points[i].x);
+                    miny = std::min(miny, points[i].y);
+                    maxx = std::max(maxx, points[i].x);
+                    maxy = std::max(maxy, points[i].y);
+                }
+                for(uint y = miny; y <= maxy; y++) {
+                    uint32_t col = this->fill_color.to_uint();
+                    for(uint x = minx; x <= maxx; x++) {
+                        Vector p = Vector(x, y);
+                        if(s.is_point_in_path(p))
+                            this->putpixel(this->transformer.apply(p), 1.0f, col);
+                    }
                 }
             }
-        }
-        if(this->stroke_enable) {
-            for(size_t i = 0; i < points.size() - 1; i++) {
-                auto p0 = this->transformer.apply(points[i]);
-                auto p1 = this->transformer.apply(points[i + 1]);
+            if(this->stroke_enable) {
+                for(size_t i = 0; i < points.size() - 1; i++) {
+                    auto p0 = this->transformer.apply(points[i]);
+                    auto p1 = this->transformer.apply(points[i + 1]);
 
-                this->draw_line(p0.x, p0.y, p1.x, p1.y);
-            }
-            if(s.close == CLOSE) {
-                auto p0 = this->transformer.apply(points[points.size() - 1]);
-                auto p1 = this->transformer.apply(points[0]);
+                    this->draw_line(p0.x, p0.y, p1.x, p1.y);
+                }
+                if(s.close == CLOSE) {
+                    auto p0 = this->transformer.apply(points[points.size() - 1]);
+                    auto p1 = this->transformer.apply(points[0]);
 
-                this->draw_line(p0.x, p0.y, p1.x, p1.y);
+                    this->draw_line(p0.x, p0.y, p1.x, p1.y);
+                }
             }
         }
     }

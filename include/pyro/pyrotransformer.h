@@ -7,6 +7,7 @@
 namespace Pyro {
     class Transformer2D {
         private:
+            std::vector<Eigen::Affine2d> stack;
             Eigen::Affine2d current;
 
         public:

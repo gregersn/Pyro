@@ -15,6 +15,8 @@ namespace Pyro {
             void hline(int y, int x0, int x1, uint32_t col);
             void draw_line(float x0, float y0, float x1, float y1);
             void draw_line_aa(float x0, float y0, float x1, float y1);
+            void putpixel(Vector p, float brightness);
+            void putpixel(Vector p, float brightness, uint32_t color);
             void putpixel(int x, int y, float brightness);
             void putpixel(int x, int y, float brightness, uint32_t color);
 
