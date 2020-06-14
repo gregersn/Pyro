@@ -9,12 +9,7 @@
 
 namespace Pyro {
     Graphics::Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) :
-    Image() {
-        this->_width = width;
-        this->_height = height;
-        this->channels = channels;
-        this->data = (void *)malloc(width * height * sizeof(unsigned char) * this->channels);
-
+    Image(width, height, channels, dpi) {
         this->smooth();
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);
         this->stroke(0.0f, 0.0f, 0.0f, 1.0f);    
@@ -53,7 +48,7 @@ namespace Pyro {
     }
 
     void Graphics::background(float r, float g, float b, float a) {
-        memset(this->data, 0, this->width() * this->height() * 4);
+        memset(this->get_data(), 0, this->width() * this->height() * 4);
     }
 
     void Graphics::image(Image *img, float x, float y) {

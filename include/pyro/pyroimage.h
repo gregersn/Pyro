@@ -14,13 +14,13 @@ namespace Pyro {
         private:
             bool pixels_locked = false;
             void *cache = nullptr;
+            void *data = nullptr;
             unsigned int dpi =  72;
 
             Image *resize_nearest(unsigned int width, unsigned int height);
             Image *resize_bilinear(unsigned int width, unsigned int height);
 
         protected:
-            void *data = nullptr;
             unsigned int _width = 0;
             unsigned int _height = 0;
 
@@ -29,7 +29,6 @@ namespace Pyro {
             unsigned int width() { return this->_width; };
             unsigned int height() { return this->_height; };
 
-            Image();
             Image(const Image &in);
             Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
             Image & operator=(const Image &in);
@@ -47,7 +46,7 @@ namespace Pyro {
 
 
             // Pixel access
-            void *get_data() { return this->data; };
+            void *get_data() const { return this->data; };
             void *get_pre_multiplied_data();
             uint32_t *load_pixels();
             uint8_t *load_bytes();
@@ -56,7 +55,10 @@ namespace Pyro {
             Image *get();
             uint32_t get(unsigned int x, unsigned int y);
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+
             void set(unsigned int x, unsigned int y, unsigned int c);
+            void set(int x, int y, Image *img);
+            void set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c);
 
             // Image manipulation functions
             Image *resize(unsigned int width, unsigned int height) { return this->resize(width, height, NEAREST); };
