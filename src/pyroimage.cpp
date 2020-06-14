@@ -9,9 +9,6 @@
 namespace Pyro {
     // Public functions
 
-    Image::Image() {
-    }
-
     Image::Image(const Image& in) {
         this->_width = in._width;
         this->_height = in._height;
@@ -20,8 +17,8 @@ namespace Pyro {
         this->channels = in.channels;
         this->data = nullptr;
         this->cache = nullptr;
-        this->data = (unsigned char *)malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
-        memcpy(this->data, in.data, this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        this->data = malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        memcpy(this->get_data(), in.get_data(), this->_width * this->_height * sizeof(unsigned char) * this->channels);
     }
 
     Image::Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) {
@@ -37,8 +34,8 @@ namespace Pyro {
         if(this == &in) {
             return *this;
         }
-        if(this->data != nullptr)
-            free(this->data);
+        if(this->get_data() != nullptr)
+            free(this->get_data());
 
         this->_width = in._width;
         this->_height = in._height;
@@ -48,7 +45,7 @@ namespace Pyro {
         this->data = nullptr;
         this->cache = nullptr;
         this->data = (unsigned char *)malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
-        memcpy(this->data, in.data, this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        memcpy(this->get_data(), in.get_data(), this->_width * this->_height * sizeof(unsigned char) * this->channels);
 
         return *this;
     }
@@ -58,8 +55,8 @@ namespace Pyro {
         if(this->cache != nullptr) {
             free(this->cache);
         }
-        if(this->data != nullptr) {
-            free(this->data);
+        if(this->get_data() != nullptr) {
+            free(this->get_data());
         }
     }
 
@@ -215,7 +212,7 @@ namespace Pyro {
         if(this->cache == nullptr) {
             this->cache = malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);            
             unsigned char *cache = (unsigned char *)this->cache;
-            unsigned char *source = (unsigned char *)this->data;
+            unsigned char *source = this->load_bytes();
             
             for(unsigned int i = 0; i < this->_width * this->_height * 4; i += 4) {
                 cache[i] = source[i] * source[i + 3] / 255;
@@ -252,7 +249,7 @@ namespace Pyro {
 
     unsigned int Image::operator[] (unsigned int index) {
         if(index < this->_width * this->_height) {
-            return ((unsigned int *)this->data)[index];
+            return (this->load_pixels())[index];
         }
         throw;
     }
@@ -263,11 +260,11 @@ namespace Pyro {
 
     uint32_t Image::get(unsigned int x, unsigned int y) {
         if(this->channels == 4) {
-            unsigned int *pixels = (unsigned int *)this->data;
+            unsigned int *pixels = this->load_pixels();
             return pixels[y * this->_width + x];
         }
         if(this->channels == 3) {
-            unsigned char *pixels = (unsigned char *)this->data;
+            unsigned char *pixels = this->load_bytes();
             unsigned int line = y * this->_width * this->channels;
             return 0xff000000 | (pixels[line + x * this->channels + 2] << 16) | (pixels[line + x * this->channels + 1] << 8) | (pixels[line + x * this->channels + 0]);
         }
@@ -280,8 +277,8 @@ namespace Pyro {
         for(unsigned int ty = 0; ty < height; ty++){
             for(unsigned int tx = 0; tx < width; tx++) {
                 unsigned int pos = (y + ty) * this->_width + (x + tx);
-                unsigned int pixel = ((unsigned int *)this->data)[pos];
-                ((unsigned int *)out->data)[ty * width + tx] = pixel;
+                unsigned int pixel = this->load_pixels()[pos];
+                out->load_pixels()[ty * width + tx] = pixel;
             }
         }
         return out;
@@ -289,7 +286,7 @@ namespace Pyro {
 
     void Image::set(unsigned int x, unsigned int y, unsigned int c) {
         if(x < this->width() && y < this->height()) {
-            unsigned int *pixels = (unsigned int *)this->data;
+            unsigned int *pixels = this->load_pixels();
             pixels[y * this->width() + x] = c;
         }
         
