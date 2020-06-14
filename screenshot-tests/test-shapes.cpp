@@ -2,6 +2,57 @@
 #include "test-settings.h"
 #include "pyro/pyrographics.h"
 
+using namespace Pyro;
+
+TEST_CASE("Test arc", "[shapes]") {
+    std::string filename = "";
+
+    SECTION("Misc arcs") {
+        filename = "shape_arc.png";
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        p->background(192);
+        p->arc(50, 55, 50, 50, 0, Pyro::HALF_PI);
+        p->nofill();
+        p->arc(50, 55, 60, 60, Pyro::HALF_PI, Pyro::PI);
+        p->arc(50, 55, 70, 70, Pyro::PI, Pyro::PI + Pyro::QUARTER_PI);
+        p->arc(50, 55, 80, 80, Pyro::PI + Pyro::QUARTER_PI, Pyro::TWO_PI);        
+        p->save(current_folder + filename);
+        delete p;
+    }
+
+    SECTION("Open arc") {
+        filename = "shape_arc_open.png";
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        p->background(192);
+        p->arc(50, 50, 80, 80, 0, PI+QUARTER_PI, OPEN);      
+        p->save(current_folder + filename);
+        delete p;
+    }
+
+    SECTION("Chord arc") {
+        filename = "shape_arc_chord.png";
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        p->background(192);
+        p->arc(50, 50, 80, 80, 0, PI+QUARTER_PI, CHORD);      
+        p->save(current_folder + filename);
+        delete p;        
+    }
+
+    SECTION("Pie arc") {
+        filename = "shape_arc_pie.png";
+        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        p->background(192);
+        p->arc(50, 50, 80, 80, 0, PI+QUARTER_PI, PIE);      
+        p->save(current_folder + filename);
+        delete p;        
+
+    }
+
+
+    CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+
+}
+
 TEST_CASE("Test Rect", "[shapes") {
     std::string filename = "";
 

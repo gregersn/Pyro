@@ -141,7 +141,7 @@ namespace Pyro {
             void quad(Vector a, Vector b, Vector c, Vector d);
             void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
-            void arc(float a, float b, float c, float d, float start, float end) { this->arc(a, b, c, d, start, end, OPEN); };
+            void arc(float a, float b, float c, float d, float start, float end) { this->arc(a, b, c, d, start, end, DEFAULT); };
             void arc(float a, float b, float c, float d, float start, float end, int mode);
 
             void ellipsemode(int mode) { this->_ellipse_mode = mode; };

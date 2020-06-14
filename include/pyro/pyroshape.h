@@ -28,8 +28,9 @@ namespace Pyro {
             Shape();
             ~Shape();
             void begin();
+            void begin(int kind);
             void end();
-            void end(int close);
+            void end(int mode);
             void begincontour();
             void endcontour();
             void vertex(Vector v) { this->vertex(v.x, v.y); };

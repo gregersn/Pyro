@@ -10,6 +10,8 @@ namespace Pyro {
     const double HALF_PI = PI / 2.0;
     const double QUARTER_PI = PI / 4.0;
 
+    const int DEFAULT = 0;
+    
     const int OPEN = 1;
     const int CLOSE = 2;
 
