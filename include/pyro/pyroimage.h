@@ -41,7 +41,7 @@ namespace Pyro {
             void save(const std::string &filename);
             void save(const std::string &filename, unsigned int dpi);
 
-            void savePNG(const std::string &filename) { this->savePNG(filename, 72); };
+            void savePNG(const std::string &filename) { this->savePNG(filename, this->dpi); };
             void savePNG(const std::string &filename, unsigned int dpi);
 
 

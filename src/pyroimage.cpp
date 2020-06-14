@@ -2,6 +2,7 @@
 #include "pyro/pyrocolor.h"
 #include "pyro/pyroconstants.h"
 
+#include <new>
 #include <unistd.h>
 #include <png.h>
 #include <string.h>
@@ -17,7 +18,7 @@ namespace Pyro {
         this->channels = in.channels;
         this->data = nullptr;
         this->cache = nullptr;
-        this->data = malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        this->data = ::operator new(this->_width * this->_height * sizeof(unsigned char) * this->channels);
         memcpy(this->get_data(), in.get_data(), this->_width * this->_height * sizeof(unsigned char) * this->channels);
     }
 
@@ -26,7 +27,7 @@ namespace Pyro {
         this->_width = width;
         this->_height = height;
         this->channels = channels;
-        this->data = (unsigned char *)malloc(width * height * sizeof(unsigned char) * this->channels);
+        this->data = ::operator new(width * height * sizeof(unsigned char) * this->channels);
 
     }
 
@@ -35,7 +36,7 @@ namespace Pyro {
             return *this;
         }
         if(this->get_data() != nullptr)
-            free(this->get_data());
+            ::operator delete(this->get_data());
 
         this->_width = in._width;
         this->_height = in._height;
@@ -44,7 +45,7 @@ namespace Pyro {
         this->channels = in.channels;
         this->data = nullptr;
         this->cache = nullptr;
-        this->data = (unsigned char *)malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        this->data = ::operator new(this->_width * this->_height * sizeof(unsigned char) * this->channels);
         memcpy(this->get_data(), in.get_data(), this->_width * this->_height * sizeof(unsigned char) * this->channels);
 
         return *this;
@@ -53,10 +54,10 @@ namespace Pyro {
 
     Image::~Image() {
         if(this->cache != nullptr) {
-            free(this->cache);
+            ::operator delete(this->cache);
         }
         if(this->get_data() != nullptr) {
-            free(this->get_data());
+            ::operator delete(this->get_data());
         }
     }
 
@@ -189,6 +190,8 @@ namespace Pyro {
             PNG_COMPRESSION_TYPE_DEFAULT,
             PNG_FILTER_TYPE_DEFAULT
         );
+        int pixels_per_meter = int((dpi * 100.0) / 2.54);
+        png_set_pHYs(png_ptr, info_ptr, pixels_per_meter, pixels_per_meter, PNG_RESOLUTION_METER);
 
         //png_write_info(png_ptr, info_ptr);
 
@@ -290,6 +293,36 @@ namespace Pyro {
             pixels[y * this->width() + x] = c;
         }
         
+    }
+
+    void Image::set(int x, int y, Image *img) {
+        unsigned int *pixels = this->load_pixels();
+        unsigned int *inpixels = img->load_pixels();
+
+        for(uint sy = 0; sy < img->height(); sy++) {
+            int ay = y + sy;
+            for(uint sx = 0; sx < img->width(); sx++) {
+                int ax = x + sx;
+                if(ax >= 0 && ax < int(this->width()) && ay >= 0 && ay < int(this->height()))
+                {
+                    pixels[ay * this->width() + ax] = inpixels[sy * img->width() + sx];
+                }
+            }
+        }
+    }
+
+    void Image::set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c) {
+        unsigned int *pixels = this->load_pixels();
+        for(uint  iy = 0; iy < height; iy++) {
+            uint ay = y + iy;
+            for(uint ix = 0; ix < width; ix++) {
+                uint ax = x + ix;
+                if(ax < this->width() && ay < this->height()) {
+                    pixels[ay * this->width() + ax] = c;
+                }
+            }
+        }
+        this->update_pixels();
     }
 
     Image *Image::convert(unsigned int channels) {
