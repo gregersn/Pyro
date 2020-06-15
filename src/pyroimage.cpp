@@ -400,28 +400,30 @@ namespace Pyro {
             case NEAREST:
             default:
                 return this->resize_nearest(width, height);
-            
         }
     }
+
     Image *Image::resize_nearest(unsigned int width, unsigned int height) {
-        float sx = width / this->width();
-        float sy = height / this->height();
-        
+        float sx = float(width) / float(this->width());
+        float sy = float(height) / float(this->height());
+
         Image *out = createimage(width, height, this->channels);
 
-        unsigned char *out_pixels = (unsigned char *)out->get_data();
-        unsigned char *in_pixels = (unsigned char *)this->get_data();
-        for(unsigned int oy = 0; oy < out->height(); oy++) {
-            
-            unsigned int out_line = oy * out->width() * out->channels;
-            unsigned int in_line = (oy / sy) * this->width() * this->channels;
+        unsigned char *out_pixels = out->load_bytes();
+        unsigned char *in_pixels = this->load_bytes();
 
-            for(unsigned int ox = 0; ox < out->width(); ox++) {
-                unsigned int in_col = (ox / sx) * out->channels;
-                for(unsigned int ch = 0; ch < this->channels; ch++)
-                    out_pixels[out_line + ox * this->channels + ch] = in_pixels[in_line +  in_col + ch];
+        for (unsigned int oy = 0; oy < out->height(); oy++) {
+            unsigned int out_line = oy * out->width() * out->channels;
+            unsigned int in_line = int(oy / sy) * this->width() * this->channels;
+
+            for (unsigned int ox = 0; ox < out->width(); ox++) {
+                unsigned int in_col = int(float(ox) / sx) * out->channels;
+                for (unsigned int ch = 0; ch < this->channels; ch++)
+                    out_pixels[out_line + ox * this->channels + ch] = in_pixels[in_line + in_col + ch];
             }
         }
+        this->update_pixels();
+        out->update_pixels();
 
         return out;
     }
@@ -429,7 +431,7 @@ namespace Pyro {
     Image *Image::resize_bilinear(unsigned int width, unsigned int height) {
         float sx = (float)width / (float)this->width();
         float sy = (float)height / (float)this->height();
-        
+
         Image *out = createimage(width, height, this->channels);
 
         unsigned char *out_pixels = (unsigned char *)out->get_data();
@@ -439,14 +441,14 @@ namespace Pyro {
             float in_y = (float)y / (float)sy;
             uint y1 = (uint)in_y;
             uint y2 = (uint)in_y + 1;
-            float y_lerp = in_y  - y1;
+            float y_lerp = in_y - y1;
             for(uint x = 0; x < width; x++) {
                 float in_x = (float)x / (float)sx;
                 uint x1 = (uint)in_x;
                 uint x2 = (uint)in_x + 1;
                 float x_lerp = in_x - x1;
 
-                for(unsigned int ch = 0; ch < this->channels; ch++) {
+                for (unsigned int ch = 0; ch < this->channels; ch++) {
                     unsigned char q11 = in_pixels[y1 * this->width() * this->channels + x1 * this->channels + ch];
                     unsigned char q12 = in_pixels[y2 * this->width() * this->channels + x1 * this->channels + ch];
                     unsigned char q21 = in_pixels[y1 * this->width() * this->channels + x2 * this->channels + ch];
