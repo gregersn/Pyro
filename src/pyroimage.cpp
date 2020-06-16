@@ -7,7 +7,44 @@
 #include <png.h>
 #include <string.h>
 
-namespace Pyro {
+#define ALPHA(x) ((x & 0xff000000) >> 24)
+#define RED(x) ((x & 0xff0000) >> 16)
+#define GREEN(x) ((x & 0xff00) >> 8)
+#define BLUE(x) ((x & 0xff))
+
+
+namespace Pyro
+{
+
+    uint32_t multiply_alpha(uint32_t c) {
+        return int(BLUE(c) * ALPHA(c) / 255) |
+               (int(GREEN(c) * ALPHA(c) / 255) << 8) |
+               (int(RED(c) * ALPHA(c) / 255) << 16) |
+               (ALPHA(c) << 24);
+    }
+
+    // Blend functions
+    uint32_t aoverb(uint32_t a, uint32_t b) {
+        /*
+        *   Straight alpha
+        *   (source.RGB * source.A) +  (dest.RGB * (1 - source.A))
+        * 
+        *   Premultiplied alpha:
+        *   source.RGB + (dest.RGB * (1 - source.A)))
+        * 
+        */
+        a = multiply_alpha(a);
+        b = multiply_alpha(b);
+
+        uint32_t out =
+            int(ALPHA(a) + ALPHA(b) * (1.0 - ALPHA(a) / 255.0)) << 24 |
+            int(RED(a) + RED(b) * (1.0 - ALPHA(a) / 255.0)) << 16 |
+            int(GREEN(a) + GREEN(b) * (1.0 - ALPHA(a) / 255.0)) << 8 |
+            int(BLUE(a) + BLUE(b) * (1.0 - ALPHA(a) / 255.0));
+        
+        return out;
+    }
+
     // Public functions
 
     Image::Image(const Image& in) {
@@ -27,11 +64,10 @@ namespace Pyro {
         this->_width = width;
         this->_height = height;
         this->channels = channels;
-        this->data = ::operator new(width * height * sizeof(unsigned char) * this->channels);
-
+        this->data = ::operator new(width *height * sizeof(unsigned char) * this->channels);
     }
 
-    Image & Image::operator=(const Image &in) {
+    Image& Image::operator=(const Image& in) {
         if(this == &in) {
             return *this;
         }
@@ -50,7 +86,6 @@ namespace Pyro {
 
         return *this;
     }
-
 
     Image::~Image() {
         if(this->cache != nullptr) {
@@ -207,21 +242,20 @@ namespace Pyro {
         png_write_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR, NULL);
         fclose(fp);
         png_destroy_write_struct(&png_ptr, &info_ptr);
-
     }
 
     // Pixel access functions
     void *Image::get_pre_multiplied_data() {
         if(this->cache == nullptr) {
-            this->cache = malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);            
+            this->cache = malloc(this->_width * this->_height * sizeof(unsigned char) * this->channels);
             unsigned char *cache = (unsigned char *)this->cache;
             unsigned char *source = this->load_bytes();
-            
+
             for(unsigned int i = 0; i < this->_width * this->_height * 4; i += 4) {
                 cache[i] = source[i] * source[i + 3] / 255;
                 cache[i + 1] = source[i + 1] * source[i + 3] / 255;
                 cache[i + 2] = source[i + 2] * source[i + 3] / 255;
-                cache[i + 3] = source[i + 3];        
+                cache[i + 3] = source[i + 3];
             }
         }
         return this->cache;
@@ -250,7 +284,7 @@ namespace Pyro {
         }*/
     }
 
-    unsigned int Image::operator[] (unsigned int index) {
+    unsigned int Image::operator[](unsigned int index) {
         if(index < this->_width * this->_height) {
             return (this->load_pixels())[index];
         }
@@ -277,7 +311,7 @@ namespace Pyro {
 
     Image* Image::get(unsigned int x, unsigned int y, unsigned int width, unsigned int height) {
         Image *out = createimage(width, height, this->channels);
-        for(unsigned int ty = 0; ty < height; ty++){
+        for(unsigned int ty = 0; ty < height; ty++) {
             for(unsigned int tx = 0; tx < width; tx++) {
                 unsigned int pos = (y + ty) * this->_width + (x + tx);
                 unsigned int pixel = this->load_pixels()[pos];
@@ -292,7 +326,6 @@ namespace Pyro {
             unsigned int *pixels = this->load_pixels();
             pixels[y * this->width() + x] = c;
         }
-        
     }
 
     void Image::set(int x, int y, Image *img) {
@@ -305,7 +338,7 @@ namespace Pyro {
                 int ax = x + sx;
                 if(ax >= 0 && ax < int(this->width()) && ay >= 0 && ay < int(this->height()))
                 {
-                    pixels[ay * this->width() + ax] = inpixels[sy * img->width() + sx];
+                    pixels[ay * this->width() + ax] = aoverb(inpixels[sy * img->width() + sx], pixels[ay * this->width() + ax]);
                 }
             }
         }
@@ -313,7 +346,7 @@ namespace Pyro {
 
     void Image::set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c) {
         unsigned int *pixels = this->load_pixels();
-        for(uint  iy = 0; iy < height; iy++) {
+        for(uint iy = 0; iy < height; iy++) {
             uint ay = y + iy;
             for(uint ix = 0; ix < width; ix++) {
                 uint ax = x + ix;
@@ -322,6 +355,27 @@ namespace Pyro {
                 }
             }
         }
+        this->update_pixels();
+    }
+
+    void Image::mask(Image *mask) {
+        if(this->channels == 1 || this->channels == 3) {
+            throw;
+        }
+        if(this->width() != mask->width() || this->height() != mask->height()) {
+            throw;
+        }
+        uint mask_stride = mask->channels;
+        uint stride = this->channels;
+
+        u_char *mask_data = mask->load_bytes();
+        u_char *data = this->load_bytes();
+
+        for(uint i = 0; i < this->width() * this->height(); i++) {
+            data[i * stride + (this->channels - 1)] = mask_data[i * mask_stride + (mask->channels - 1)];
+        }
+
+        mask->update_pixels();
         this->update_pixels();
     }
 
@@ -361,7 +415,6 @@ namespace Pyro {
                         out_p[outpp + 3] = 255;
                     }
                 }
-
             }
         }
 
@@ -378,7 +431,6 @@ namespace Pyro {
                     out_p[outpp] = in_p[inpp];
                     out_p[outpp + 1] = in_p[inpp + 1];
                     out_p[outpp + 2] = in_p[inpp + 2];
-
                 }
             }
         }
@@ -412,13 +464,13 @@ namespace Pyro {
         unsigned char *out_pixels = out->load_bytes();
         unsigned char *in_pixels = this->load_bytes();
 
-        for (unsigned int oy = 0; oy < out->height(); oy++) {
+        for(unsigned int oy = 0; oy < out->height(); oy++) {
             unsigned int out_line = oy * out->width() * out->channels;
             unsigned int in_line = int(oy / sy) * this->width() * this->channels;
 
-            for (unsigned int ox = 0; ox < out->width(); ox++) {
+            for(unsigned int ox = 0; ox < out->width(); ox++) {
                 unsigned int in_col = int(float(ox) / sx) * out->channels;
-                for (unsigned int ch = 0; ch < this->channels; ch++)
+                for(unsigned int ch = 0; ch < this->channels; ch++)
                     out_pixels[out_line + ox * this->channels + ch] = in_pixels[in_line + in_col + ch];
             }
         }
@@ -448,7 +500,7 @@ namespace Pyro {
                 uint x2 = (uint)in_x + 1;
                 float x_lerp = in_x - x1;
 
-                for (unsigned int ch = 0; ch < this->channels; ch++) {
+                for(unsigned int ch = 0; ch < this->channels; ch++) {
                     unsigned char q11 = in_pixels[y1 * this->width() * this->channels + x1 * this->channels + ch];
                     unsigned char q12 = in_pixels[y2 * this->width() * this->channels + x1 * this->channels + ch];
                     unsigned char q21 = in_pixels[y1 * this->width() * this->channels + x2 * this->channels + ch];
@@ -467,7 +519,6 @@ namespace Pyro {
         return out;
     }
 
-
     // Utility functions
 
     Image* createimage(unsigned int width, unsigned int height) {
@@ -481,4 +532,4 @@ namespace Pyro {
     Image* createimage(unsigned int width, unsigned int height, int channels, unsigned int dpi) {
         return new Image(width, height, channels, dpi);
     }
-}
+} // namespace Pyro
