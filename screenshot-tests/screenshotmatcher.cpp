@@ -28,7 +28,7 @@ bool ImageMatch::match(std::string const& filename) const {
     }
 
     // Check if same format
-    if(actual->channels != input->channels) {
+    if(actual->channels() != input->channels()) {
         delete(actual);
         delete(input);
         FAIL_CHECK("Screenshots does not have the same channels");
@@ -41,7 +41,7 @@ bool ImageMatch::match(std::string const& filename) const {
     uint8_t *input_pixels = input->load_bytes();
     bool result = true;
 
-    for(unsigned int i = 0; i < input->width() * input->height() * input->channels; i++) {
+    for(unsigned int i = 0; i < input->width() * input->height() * input->channels(); i++) {
         if(actual_pixels[i] != input_pixels[i]) {
             // TODO: Create a diff
             result = false;

@@ -1,11 +1,11 @@
 #include <pyro/pyrographics_cairo.h>
 
 namespace Pyro {
-    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) : Graphics(width, height, channels, dpi) {
+    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Graphics(width, height, format, 1) {
         this->surface = cairo_image_surface_create_for_data(this->load_bytes(),
                                                             CAIRO_FORMAT_ARGB32,
                                                             this->width(), this->height(),
-                                                            this->width() * this->channels);
+                                                            this->width() * 4);
         this->cr = cairo_create(this->surface);
 
 
@@ -94,19 +94,19 @@ namespace Pyro {
 
     void GraphicsCairo::image_impl(Image *img, float x, float y) {
         cairo_surface_t *src = nullptr;
-        if(img->channels == 4) {
+        if(img->channels() == 4) {
             src = cairo_image_surface_create_for_data(
                 (unsigned char *)img->get_pre_multiplied_data(), CAIRO_FORMAT_ARGB32,
                 img->width(), img->height(), img->width() * 4);
         }
-        if(img->channels == 3) {
+        if(img->channels() == 3) {
             src = cairo_image_surface_create_for_data(
-                (unsigned char*)img->convert(4)->get_data(), CAIRO_FORMAT_RGB24,
+                (unsigned char*)img->convert(ARGB)->get_data(), CAIRO_FORMAT_RGB24,
                 img->width(), img->height(), img->width() * 4);
         }
-        if(img->channels == 1) {
+        if(img->channels() == 1) {
             src = cairo_image_surface_create_for_data(
-                (unsigned char*)img->convert(4)->get_data(), CAIRO_FORMAT_RGB24,
+                (unsigned char*)img->convert(ARGB)->get_data(), CAIRO_FORMAT_RGB24,
                 img->width(), img->height(), img->width() * 4);
         }
 

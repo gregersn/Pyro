@@ -16,7 +16,7 @@ SCENARIO("Image can be converted to different depths")
             Pyro::Image *img2 = img->convert(Pyro::RGB);
             THEN(" the new depth will be 3")
             {
-                REQUIRE(img2->channels == 3);
+                REQUIRE(img2->channels() == 3);
                 img2->save(current_folder + filename);
                 delete img2;
 
@@ -30,7 +30,7 @@ SCENARIO("Image can be converted to different depths")
             Pyro::Image *img2 = img->convert(Pyro::GRAY);
             THEN(" the new depth will be 1")
             {
-                REQUIRE(img2->channels == 1);
+                REQUIRE(img2->channels() == 1);
                 img2->save(current_folder + filename);
                 delete img2;
 
@@ -50,7 +50,7 @@ SCENARIO("Image can be converted to different depths")
             Pyro::Image *img2 = img->convert(Pyro::ARGB);
             THEN(" the new depth will be 4")
             {
-                REQUIRE(img2->channels == 4);
+                REQUIRE(img2->channels() == 4);
             }
         }
 
@@ -59,7 +59,7 @@ SCENARIO("Image can be converted to different depths")
             Pyro::Image *img2 = img->convert(Pyro::GRAY);
             THEN(" the new depth will be 1")
             {
-                REQUIRE(img2->channels == 1);
+                REQUIRE(img2->channels() == 1);
             }
         }
     }
@@ -73,7 +73,7 @@ SCENARIO("Image can be converted to different depths")
             Pyro::Image *img2 = img->convert(Pyro::ARGB);
             THEN(" the new depth will be 4")
             {
-                REQUIRE(img2->channels == 4);
+                REQUIRE(img2->channels() == 4);
             }
         }
 
@@ -82,7 +82,7 @@ SCENARIO("Image can be converted to different depths")
             Pyro::Image *img2 = img->convert(Pyro::RGB);
             THEN(" the new depth will be 3")
             {
-                REQUIRE(img2->channels == 3);
+                REQUIRE(img2->channels() == 3);
             }
         }
     }

@@ -33,14 +33,14 @@ namespace Pyro {
     const int BEVEL = 9;
     // Already defined const int ROUND;
 
-    const int HSB = 1;
-    const int HSBA = 2;
-    const int RGB = 3;
-    const int RGBA = 4;
-
     const int GRAY = 1;
     const int GRAYALPHA = 2;
-    const int ARGB = 4;
+    const int RGB = 3;
+    const int RGBA = 4;
+    const int ARGB = 5;
+    const int HSB = 6;
+    const int HSBA = 7;
+    const int ALPHA = 8;
 
 }
 
