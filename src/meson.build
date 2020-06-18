@@ -14,7 +14,7 @@ pyro_sources = ['pyro.cpp',
 pyrolib = shared_library('pyro', 
                          pyro_sources, 
                           include_directories: inc_dir,
-                          dependencies: [libpng_dep, cairo_dep, sdl_dep, catch2.get_variable('catch2_dep')],
+                          dependencies: [libpng_dep, cairo_dep, sdl_dep, catch2.get_variable('catch2_dep'), libjpeg_dep],
                           install: true,
                           
         cpp_args: '-Weffc++')

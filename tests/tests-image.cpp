@@ -111,7 +111,7 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
     }
 
     SECTION("load an image from a different folder") {
-        Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
+        Pyro::Image *img = Pyro::Image::load("../tests/ducks.jpg");
         REQUIRE(img != nullptr);
         REQUIRE(img->width() == 512);
         REQUIRE(img->height() == 512);
