@@ -23,11 +23,11 @@ TEST_CASE("images can be composited") {
         unsigned char *data = b->load_bytes();
         for(uint y = 0; y < b->height(); y++) {
             for(uint x = 0; x < b->width(); x++) {
-                data[y * b->width() * b->channels + x * b->channels + 0] = 0;
-                data[y * b->width() * b->channels + x * b->channels + 1] = 0;
-                data[y * b->width() * b->channels + x * b->channels + 2] = 0;
+                data[y * b->width() * b->channels() + x * b->channels() + 0] = 0;
+                data[y * b->width() * b->channels() + x * b->channels() + 1] = 0;
+                data[y * b->width() * b->channels() + x * b->channels() + 2] = 0;
 
-                data[y * b->width() * b->channels + x * b->channels + 3] = x * 255 / b->width();
+                data[y * b->width() * b->channels() + x * b->channels() + 3] = x * 255 / b->width();
             }
         }
         b->update_pixels();
@@ -45,9 +45,9 @@ TEST_CASE("Images can mask each other") {
         std::string filename = "image_single_channel_mask.png";
 
         Pyro::Image *a = Pyro::Image::load(actual_folder + "test_image.png");
-        Pyro::Image *b = Pyro::createimage(a->width(), a->height(), 1);
+        Pyro::Image *b = Pyro::createimage(a->width(), a->height(), Pyro::GRAY);
 
-        u_char *mask_pixels = b->load_bytes();
+        u_int32_t *mask_pixels = b->load_pixels();
         for(uint y = 0; y < b->height(); y++) {
             for(uint x = 0; x < b->width(); x++) {
                 mask_pixels[y * b->width() + x] = x | y;

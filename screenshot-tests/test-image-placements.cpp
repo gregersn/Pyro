@@ -51,7 +51,7 @@ TEST_CASE("Place images with different channel count") {
         std::string filename = "image_place_4ch.png";
 
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png");
-        REQUIRE(img->channels == 4);
+        REQUIRE(img->channels() == 4);
 
         Pyro::Graphics *p = Pyro::create(img->width(), img->height(), testmode);
         p->imagemode(Pyro::CORNER);
@@ -66,7 +66,7 @@ TEST_CASE("Place images with different channel count") {
     SECTION("3 channels") {
         std::string filename = "image_place_3ch.png";
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png")->convert(Pyro::RGB);
-        REQUIRE(img->channels == 3);
+        REQUIRE(img->channels() == 3);
 
         Pyro::Graphics *p = Pyro::create(img->width(), img->height(), testmode);
         p->imagemode(Pyro::CORNER);
@@ -82,7 +82,7 @@ TEST_CASE("Place images with different channel count") {
     SECTION("1 channel") {
         std::string filename = "image_place_1ch.png";
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png")->convert(Pyro::GRAY);
-        REQUIRE(img->channels == 1);
+        REQUIRE(img->channels() == 1);
 
         Pyro::Graphics *p = Pyro::create(img->width(), img->height(), testmode);
         p->imagemode(Pyro::CORNER);

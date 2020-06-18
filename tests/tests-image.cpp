@@ -8,6 +8,38 @@ unsigned int pack(unsigned char r, unsigned char g, unsigned char b, unsigned ch
 }
 
 TEST_CASE( "Images are saved and loaded correctly", "[image]") {
+    SECTION("Load RGBA PNG") {
+        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        
+        uint32_t c = 0;
+
+        // White opaque        
+        c = img->get(0, 0);
+        REQUIRE(c == 0xffffffff);
+        
+        // Black opaque        
+        c = img->get(1, 0);
+        REQUIRE(c == 0xff000000);
+        
+        // Transparent   
+        c = img->get(6, 0);
+        REQUIRE(c == 0x00000000);
+        
+        // Red opaque
+        c = img->get(7, 0);
+        REQUIRE(c == 0xffff0000);
+
+        // Blue Opaque
+        c = img->get(0, 7);
+        REQUIRE(c == 0xff0000ff);
+
+        // Green opaque
+        c = img->get(7, 7);
+        REQUIRE(c == 0xff00ff00);
+
+
+    }
+
     SECTION("saving an image and loading it gives same colors back") {
         Pyro::Image *img = Pyro::Image::create(1, 1);
 
@@ -124,7 +156,9 @@ TEST_CASE("PNG files can be loaded and saved") {
         REQUIRE(img != nullptr);
         REQUIRE(img->width() == 512);
         REQUIRE(img->height() == 512);
-        REQUIRE(img->channels == 3);
+        REQUIRE(img->channels() == 3);
+
+        img->save("lennaut.png");
 
         SECTION("Check pixels") {
             REQUIRE(img->get(0, 0) == pack(226, 137, 125, 255));
@@ -167,7 +201,7 @@ TEST_CASE("PNG files can be loaded and saved") {
                 REQUIRE(pixels[1024 + i] == (i | i << 16 | i << 8 | i << 24));
             }
             delete img;
-            remove("savepng_gradient_test.png");
+            //remove("savepng_gradient_test.png");
         }
     }
 }
@@ -254,7 +288,7 @@ SCENARIO("Image can be created with a given size and depth") {
         THEN(" width is 400, height is 300 and depth is 4") {
             REQUIRE(img->width() == 400);
             REQUIRE(img->height() == 300);
-            REQUIRE(img->channels == 4);
+            REQUIRE(img->channels() == 4);
         }
         delete img;
     }
@@ -264,7 +298,7 @@ SCENARIO("Image can be created with a given size and depth") {
         THEN(" width is 300, height is 400 and depth is 3") {
             REQUIRE(img->width() == 300);
             REQUIRE(img->height() == 400);
-            REQUIRE(img->channels == 3);
+            REQUIRE(img->channels() == 3);
         }
         delete img;
     }
@@ -274,7 +308,7 @@ SCENARIO("Image can be created with a given size and depth") {
         THEN(" width is 180, height is 200 and depth is 4") {
             REQUIRE(img->width() == 180);
             REQUIRE(img->height() == 200);
-            REQUIRE(img->channels == 4);
+            REQUIRE(img->channels() == 4);
         }
         delete img;
     }
@@ -285,7 +319,7 @@ TEST_CASE("Image can be created in different formats", "[image]") {
 
     SECTION("Create single channel image") {
         Pyro::Image *img = Pyro::createimage(300, 200, Pyro::GRAY);
-        REQUIRE(img->channels == 1);
+        REQUIRE(img->channels() == 1);
         REQUIRE(img->width() == 300);
         REQUIRE(img->height() == 200);
 
@@ -294,7 +328,7 @@ TEST_CASE("Image can be created in different formats", "[image]") {
         delete img;
 
         img = Pyro::Image::load(filename);
-        REQUIRE(img->channels == 1);
+        REQUIRE(img->channels() == 1);
         REQUIRE(img->width() == 300);
         REQUIRE(img->height() == 200);
 
@@ -302,7 +336,7 @@ TEST_CASE("Image can be created in different formats", "[image]") {
 
     SECTION("Create RGB image") {
         Pyro::Image *img = Pyro::createimage(300, 200, Pyro::RGB);
-        REQUIRE(img->channels == 3);
+        REQUIRE(img->channels() == 3);
         REQUIRE(img->width() == 300);
         REQUIRE(img->height() == 200);
 
@@ -311,7 +345,7 @@ TEST_CASE("Image can be created in different formats", "[image]") {
         delete img;
 
         img = Pyro::Image::load(filename);
-        REQUIRE(img->channels == 3);
+        REQUIRE(img->channels() == 3);
         REQUIRE(img->width() == 300);
         REQUIRE(img->height() == 200);
 
@@ -319,7 +353,7 @@ TEST_CASE("Image can be created in different formats", "[image]") {
 
     SECTION("Create ARGB image") {
         Pyro::Image *img = Pyro::createimage(300, 200, Pyro::ARGB);
-        REQUIRE(img->channels == 4);
+        REQUIRE(img->channels() == 4);
         REQUIRE(img->width() == 300);
         REQUIRE(img->height() == 200);
 
@@ -328,7 +362,7 @@ TEST_CASE("Image can be created in different formats", "[image]") {
         delete img;
 
         img = Pyro::Image::load(filename);
-        REQUIRE(img->channels == 4);
+        REQUIRE(img->channels() == 4);
         REQUIRE(img->width() == 300);
         REQUIRE(img->height() == 200);
 

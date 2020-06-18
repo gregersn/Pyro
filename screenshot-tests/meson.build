@@ -1,6 +1,7 @@
 test_sources = ['tests-main.cpp',
                 'test-image.cpp',
                 'test-image-composition.cpp',
+                'test-image-blend.cpp',
                 'test-image-placements.cpp',
                 'test-image-resize.cpp',
                 'test-lines.cpp',

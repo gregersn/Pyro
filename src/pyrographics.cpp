@@ -8,8 +8,8 @@
 #include <cstring>
 
 namespace Pyro {
-    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) :
-    Image(width, height, channels, dpi) {
+    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) :
+    Image(width, height, format, 1) {
         this->smooth();
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);
         this->stroke(0.0f, 0.0f, 0.0f, 1.0f);    
@@ -26,12 +26,12 @@ namespace Pyro {
         switch(mode) {
                 case GraphicsMode::CAIRO:
                 default:
-                    return new GraphicsCairo(width, height, 4, dpi);
+                    return new GraphicsCairo(width, height, ARGB, 1);
         }
     }
 
     Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode){
-        return create(width, height, mode, 72);
+        return create(width, height, mode, 1);
     }
 
     Graphics *Graphics::create(unsigned int width, unsigned int height){

@@ -209,7 +209,7 @@ TEST_CASE("Save and load images") {
         uint32_t p = pg->get(1, 1);
         uint32_t q = img->get(1, 1);
 
-        REQUIRE(img->channels == 4);
+        REQUIRE(img->channels() == 4);
         REQUIRE(img->width() == 4);
         REQUIRE(img->height() == 4);
 

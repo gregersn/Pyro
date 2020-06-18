@@ -2,6 +2,7 @@
 #define PYROIMAGE_H
 
 #include <string>
+#include "pyroconstants.h"
 
 namespace Pyro {
     enum FILETYPE {
@@ -10,27 +11,49 @@ namespace Pyro {
     enum RESIZEMETHOD {
         NEAREST, BILINEAR
     };
+
+    enum BLENDMODE {
+        BLEND, ADD, SUBTRACT, LIGHTEST, DARKEST, DIFFERENCE, EXCLUSION, MULTIPLY, SCREEN, OVERLAY, HARD_LIGHT, SOFT_LIGHT, DODGE, BURN
+    };
     class Image {
         private:
             bool pixels_locked = false;
             void *cache = nullptr;
-            void *data = nullptr;
+            uint32_t *data = nullptr;
             unsigned int dpi =  72;
 
             Image *resize_nearest(unsigned int width, unsigned int height);
             Image *resize_bilinear(unsigned int width, unsigned int height);
 
+            bool intersect(int sx1, int sy1, int sx2, int sy2, int dx1, int dy1, int dx2, int dy2);
+            void blit_resize(Image *img, int srcX1, int srcY1, int srcX2, int srcY2,
+                             uint32_t *destpixels, int screenW, int screenH,
+                             int destX1, int destY1, int destX2,  int destY2,
+                             int mode);
+
         protected:
             unsigned int _width = 0;
             unsigned int _height = 0;
+            int _pixelwidth = 0;
+            int _pixelheight = 0;
+            unsigned int density = 1;
+            
+            bool modified = false;
+            int mx1 = 0, my1 = 0, mx2 = 0, my2 = 0;
 
         public:
-            unsigned int channels = 4;
+            unsigned int format = ARGB;
             unsigned int width() { return this->_width; };
             unsigned int height() { return this->_height; };
+            unsigned int channels();
 
             Image(const Image &in);
-            Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
+            Image();
+            Image(unsigned int width, unsigned int height);
+            Image(unsigned int width, unsigned int height, unsigned int format);
+            Image(unsigned int width, unsigned int height, unsigned int format, unsigned int factor);
+            void init(int width, int height, int format, int factor);
+
             Image & operator=(const Image &in);
             virtual ~Image();
 
@@ -52,15 +75,18 @@ namespace Pyro {
             uint32_t *load_pixels();
             uint8_t *load_bytes();
             void update_pixels();
+            void update_pixels(int x, int y, int w, int h);
             unsigned int operator[] (unsigned int);
             
             Image *get();
-            uint32_t get(unsigned int x, unsigned int y);
-            Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+            uint32_t get(int x, int y);
+            Image *get(int x, int y, int width, int height);
 
             void set(unsigned int x, unsigned int y, unsigned int c);
             void set(int x, int y, Image *img);
             void set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c);
+
+            void blend(Image *src, int sx, int sy, uint sw, uint sh, int dx, int dy, uint dw, uint dh, BLENDMODE mode);
 
             void mask(Image *mask);
 
@@ -68,11 +94,11 @@ namespace Pyro {
             Image *resize(unsigned int width, unsigned int height) { return this->resize(width, height, NEAREST); };
             Image *resize(unsigned int width, unsigned int height, RESIZEMETHOD method);
 
-            Image *convert(unsigned int channels);
+            Image *convert(unsigned int format);
     };
 
     Image *createimage(unsigned int width, unsigned int height);
-    Image *createimage(unsigned int width, unsigned int height, int channels);
-    Image *createimage(unsigned int width, unsigned int height, int channels, unsigned int dpi);
+    Image *createimage(unsigned int width, unsigned int height, int format);
+    Image *createimage(unsigned int width, unsigned int height, int format, unsigned int dpi);
 }
 #endif
