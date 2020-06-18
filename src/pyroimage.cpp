@@ -5,12 +5,41 @@
 #include <new>
 #include <unistd.h>
 #include <png.h>
-#include <string.h>
+#include <jpeglib.h>
+#include <setjmp.h>
+#include <algorithm>
+#include <cctype>
+#include <string>
+#include <cstring>
 
 #define ALPHA(x) ((x & 0xff000000) >> 24)
 #define RED(x) ((x & 0xff0000) >> 16)
 #define GREEN(x) ((x & 0xff00) >> 8)
 #define BLUE(x) ((x & 0xff))
+
+struct ErrorManager {
+    jpeg_error_mgr defaultErrorManager;
+    jmp_buf jumpBuffer;
+};
+
+void ErrorExit(j_common_ptr cinfo)
+{
+	// cinfo->err is actually a pointer to my_error_mgr.defaultErrorManager, since pub
+	// is the first element of my_error_mgr we can do a sneaky cast
+	ErrorManager* pErrorManager = (ErrorManager*) cinfo->err;
+	(*cinfo->err->output_message)(cinfo); // print error message (actually disabled below)
+	longjmp(pErrorManager->jumpBuffer, 1);
+}
+
+
+void OutputMessage(j_common_ptr cinfo)
+{
+	// disable error messages
+	/*char buffer[JMSG_LENGTH_MAX];
+	(*cinfo->err->format_message) (cinfo, buffer);
+	fprintf(stderr, "%s\n", buffer);*/
+}
+
 
 
 namespace Pyro
@@ -56,7 +85,7 @@ namespace Pyro
         this->data = nullptr;
         this->cache = nullptr;
         this->data = ::operator new(this->_width * this->_height * sizeof(unsigned char) * this->channels);
-        memcpy(this->get_data(), in.get_data(), this->_width * this->_height * sizeof(unsigned char) * this->channels);
+        std::memcpy(this->get_data(), in.get_data(), this->_width * this->_height * sizeof(unsigned char) * this->channels);
     }
 
     Image::Image(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi) {
@@ -106,6 +135,22 @@ namespace Pyro
         if(access(filename.c_str(), F_OK) == -1) {
             return nullptr;
         }
+
+        // Find file extension
+        // https://stackoverflow.com/a/51992/7097
+        std::string::size_type idx;
+        idx = filename.rfind('.');
+
+        if(idx != std::string::npos) {
+            std::string extension = filename.substr(idx+1);
+            std::transform(extension.begin(), extension.end(), extension.begin(),
+                    [](unsigned char c){ return std::tolower(c); });
+            
+            if(extension == "jpeg" || extension == "jpg") {
+                return loadJPEG(filename);
+            } 
+        } 
+
         return loadPNG(filename);
     }
 
@@ -164,6 +209,55 @@ namespace Pyro
         fclose(fp);
         return img;
     }
+
+    Image *Image::loadJPEG(const std::string &filename) 
+    {
+        jpeg_decompress_struct cinfo;
+        ErrorManager jerr;
+      
+        FILE *infile = fopen(filename.c_str(), "rb"); 
+        if(!infile) {
+            return nullptr;
+        }
+
+        cinfo.err = jpeg_std_error(&jerr.defaultErrorManager);
+        cinfo.out_color_space = JCS_EXT_RGB;
+        jerr.defaultErrorManager.error_exit = ErrorExit;
+        jerr.defaultErrorManager.output_message = OutputMessage;
+
+        if(setjmp(jerr.jumpBuffer)) {
+            jpeg_destroy_decompress(&cinfo);
+            fclose(infile);
+            return nullptr;
+        }
+
+        jpeg_create_decompress(&cinfo);
+        jpeg_stdio_src(&cinfo, infile);
+        jpeg_read_header(&cinfo, TRUE);
+
+        if(cinfo.num_components == 3) {
+            cinfo.out_color_space = JCS_EXT_BGR;
+        }
+
+        jpeg_start_decompress(&cinfo);
+
+        Image *img = new Image(cinfo.image_width, cinfo.image_height, cinfo.num_components, 72);
+        uint8_t *d = (uint8_t *)img->get_data();
+
+        while(cinfo.output_scanline < cinfo.image_height) {
+            uint8_t *p = d + cinfo.output_scanline * cinfo.image_width * cinfo.num_components;
+            jpeg_read_scanlines(&cinfo, &p, 1);
+        }
+
+        img->update_pixels();
+
+        jpeg_finish_decompress(&cinfo);
+        jpeg_destroy_decompress(&cinfo);
+        fclose(infile);
+
+        return img;
+    }
+
 
     void Image::save(const std::string &filename) {
         this->save(filename, this->dpi);

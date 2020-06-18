@@ -37,6 +37,7 @@ namespace Pyro {
             static Image *create(unsigned int width, unsigned int height);
             static Image *load(const std::string &filename);
             static Image *loadPNG(const std::string &filename);
+            static Image *loadJPEG(const std::string &filename);
 
             void save(const std::string &filename);
             void save(const std::string &filename, unsigned int dpi);
