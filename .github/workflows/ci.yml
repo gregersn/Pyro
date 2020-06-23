@@ -36,11 +36,23 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libsdl2-dev libpng-dev git-lfs
+
+          if [ "${{ matrix.compiler }}" = "gcc" ]; then
+            sudo apt-get install -y g++-${{ matrix.version }} g++-${{ matrix.version }}-multilib
+            echo "::set-env name=CC::gcc-${{ matrix.version }}"
+            echo "::set-env name=CXX::g++-${{ matrix.version }}"
+          else
+            sudo apt-get install -y clang-${{ matrix.version }} g++-multilib
+            echo "::set-env name=CC::clang-${{ matrix.version }}"
+            echo "::set-env name=CXX::clang++-${{ matrix.version }}"
+          fi
+          
+          sudo apt-get install libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev
           pip install meson ninja
       - name: Build project
-        run: meson setup build
+        run: |
+          meson setup build
+          ninja -C build
       - name: Run tests
         run: |
-          cd build
-          ninja test
+          ninja -C build test
