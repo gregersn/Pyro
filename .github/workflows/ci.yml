@@ -1,10 +1,30 @@
-name: Tests
+name: Build and test
 on: [push]
 
 jobs:
-  build:
-    name: Pyro build
-    runs-on: ubuntu-latest
+  ci:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        name: [
+          ubuntu-18.04-gcc-9,
+          ubuntu-18.04-clang-9
+        ]
+
+        include:
+          - name: ubuntu-18.04-gcc-9
+            os: ubuntu-18.04
+            compiler: gcc
+            version: "9"
+          
+          - name: ubuntu-18.04-clang-9
+            os: ubuntu-18.04
+            compiler: clang
+            version: "9"
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -15,9 +35,9 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: |
-          pip install meson ninja
           sudo apt-get update
           sudo apt-get install libsdl2-dev libpng-dev git-lfs
+          pip install meson ninja
       - name: Build project
         run: meson setup build
       - name: Run tests
