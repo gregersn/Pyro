@@ -806,8 +806,8 @@ namespace Pyro
             >> 15 & 0x0001FF00;
 
         return min((dst >> 24) + a, 0xFFu) << 24 |
-            (d_rb * d_a + (d_rb + (src & RB_MASK) - rb_sub) * s_a) >> 8 & RB_MASK |
-            (d_gn * d_a + (d_gn + s_gn            - gn_sub) * s_a) >> 8 & GN_MASK;
+            ((d_rb * d_a + (d_rb + (src & RB_MASK) - rb_sub) * s_a) >> 8 & RB_MASK) |
+            ((d_gn * d_a + (d_gn + s_gn            - gn_sub) * s_a) >> 8 & GN_MASK);
     }
 
     /**
@@ -842,8 +842,8 @@ namespace Pyro
             (0xFF00 - ((0x100 - d_b) * (BLUE_MASK - s_b) << 1)) >> 8;
 
         return min((dst >> 24) + a, 0xFFu) << 24 |
-            ((dst & RB_MASK) * d_a + ((r | b) & RB_MASK) * s_a) >> 8 & RB_MASK |
-            ((dst & GN_MASK) * d_a + (g       & GN_MASK) * s_a) >> 8 & GN_MASK;
+            (((dst & RB_MASK) * d_a + ((r | b) & RB_MASK) * s_a) >> 8 & RB_MASK) |
+            (((dst & GN_MASK) * d_a + (g       & GN_MASK) * s_a) >> 8 & GN_MASK);
     }
 
 
@@ -871,16 +871,16 @@ namespace Pyro
         int d_g1 = (d_g >> 8)  + (s_g1 < 0x7F ? 1 : 0);
         int d_b1 = d_b         + (s_b1 < 0x7F ? 1 : 0);
 
-        int r = (s_r1 * d_r >> 7) + 0xFF * d_r1 * (d_r1 + 1) -
-            ((s_r1 * d_r1 * d_r1) << 1) & RED_MASK;
-        int g = (s_g1 * d_g << 1) + 0xFF * d_g1 * (d_g1 + 1) -
-            ((s_g1 * d_g1 * d_g1) << 1) >> 8 & GREEN_MASK;
-        int b = (s_b1 * d_b << 9) + 0xFF * d_b1 * (d_b1 + 1) -
-            ((s_b1 * d_b1 * d_b1) << 1) >> 16;
+        int r = ((s_r1 * d_r >> 7) + 0xFF * d_r1 * (d_r1 + 1) -
+            ((s_r1 * d_r1 * d_r1) << 1)) & RED_MASK;
+        int g = ((s_g1 * d_g << 1) + 0xFF * d_g1 * (d_g1 + 1) -
+            ((s_g1 * d_g1 * d_g1) << 1)) >> 8 & GREEN_MASK;
+        int b = ((s_b1 * d_b << 9) + 0xFF * d_b1 * (d_b1 + 1) -
+            ((s_b1 * d_b1 * d_b1) << 1)) >> 16;
 
         return min((dst >> 24) + a, 0xFFu) << 24 |
-            ((dst & RB_MASK) * d_a + (r | b) * s_a) >> 8 & RB_MASK |
-            ((dst & GN_MASK) * d_a + g       * s_a) >> 8 & GN_MASK;
+            (((dst & RB_MASK) * d_a + (r | b) * s_a) >> 8 & RB_MASK) |
+            (((dst & GN_MASK) * d_a + g       * s_a) >> 8 & GN_MASK);
     }
 
 
@@ -905,8 +905,8 @@ namespace Pyro
             (g > 0xFF00 ? 0x00FF00 : (g & GREEN_MASK));
 
         return min((dst >> 24) + a, 0xFFu) << 24 |
-            ((dst & RB_MASK) * d_a + rb * s_a) >> 8 & RB_MASK |
-            ((dst & GN_MASK) * d_a + gn * s_a) >> 8 & GN_MASK;
+            (((dst & RB_MASK) * d_a + rb * s_a) >> 8 & RB_MASK) |
+            (((dst & GN_MASK) * d_a + gn * s_a) >> 8 & GN_MASK);
     }
 
 
@@ -931,8 +931,8 @@ namespace Pyro
             (g > 0xFF00 ? 0x00FF00 : (g & GREEN_MASK));
 
         return min((dst >> 24) + a, 0xFFu) << 24 |
-            ((dst & RB_MASK) * d_a + rb * s_a) >> 8 & RB_MASK |
-            ((dst & GN_MASK) * d_a + gn * s_a) >> 8 & GN_MASK;
+            (((dst & RB_MASK) * d_a + rb * s_a) >> 8 & RB_MASK) |
+            (((dst & GN_MASK) * d_a + gn * s_a) >> 8 & GN_MASK);
     }
 
     /* End BLEND FUNCTIONS */
