@@ -86,7 +86,7 @@ namespace Pyro {
             void set(int x, int y, Image *img);
             void set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c);
 
-            void blend(Image *src, int sx, int sy, uint sw, uint sh, int dx, int dy, uint dw, uint dh, BLENDMODE mode);
+            void blend(Image *src, int sx, int sy, unsigned int sw, unsigned int sh, int dx, int dy, unsigned int dw, unsigned int dh, BLENDMODE mode);
 
             void mask(Image *mask);
 

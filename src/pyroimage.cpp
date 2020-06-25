@@ -6,7 +6,6 @@
 #include <setjmp.h>
 #include <cstring>
 #include <unistd.h>
-#include <filesystem>
 #include <algorithm>
 #include <png.h>
 
@@ -36,6 +35,19 @@ void OutputMessage(j_common_ptr cinfo)
 	/*char buffer[JMSG_LENGTH_MAX];
 	(*cinfo->err->format_message) (cinfo, buffer);
 	fprintf(stderr, "%s\n", buffer);*/
+}
+
+std::string get_extension(std::string filename) {
+            // Find file extension
+        // https://stackoverflow.com/a/51992/7097
+        std::string::size_type idx;
+        idx = filename.rfind('.');
+
+        if(idx != std::string::npos) {
+            std::string extension = filename.substr(idx);
+            return extension;
+        } 
+        return std::string("");
 }
 
 namespace Pyro
@@ -185,7 +197,7 @@ namespace Pyro
             return nullptr;
         }
 
-        std::string extension = std::filesystem::path(filename).extension();
+        std::string extension = get_extension(filename); 
         std::transform(extension.begin(), extension.end(), extension.begin(),
                 [](unsigned char c){ return std::tolower(c); });
             
@@ -394,7 +406,7 @@ namespace Pyro
         png_bytep row_pointers[this->height()];
 
         uint8_t *converted_data = nullptr;
-        uint stride = this->width();
+        unsigned int stride = this->width();
         switch(this->format) {
             case GRAY:
                 converted_data = (uint8_t *)::operator new(this->_pixelwidth * this->_pixelheight * sizeof(uint8_t));
@@ -544,9 +556,9 @@ namespace Pyro
         unsigned int *pixels = this->load_pixels();
         unsigned int *inpixels = img->load_pixels();
 
-        for(uint sy = 0; sy < img->height(); sy++) {
+        for(unsigned int sy = 0; sy < img->height(); sy++) {
             int ay = y + sy;
-            for(uint sx = 0; sx < img->width(); sx++) {
+            for(unsigned int sx = 0; sx < img->width(); sx++) {
                 int ax = x + sx;
                 if(ax >= 0 && ax < int(this->width()) && ay >= 0 && ay < int(this->height()))
                 {
@@ -558,10 +570,10 @@ namespace Pyro
 
     void Image::set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c) {
         unsigned int *pixels = this->load_pixels();
-        for(uint iy = 0; iy < height; iy++) {
-            uint ay = y + iy;
-            for(uint ix = 0; ix < width; ix++) {
-                uint ax = x + ix;
+        for(unsigned int iy = 0; iy < height; iy++) {
+            unsigned int ay = y + iy;
+            for(unsigned int ix = 0; ix < width; ix++) {
+                unsigned int ax = x + ix;
                 if(ax < this->width() && ay < this->height()) {
                     pixels[ay * this->width() + ax] = c;
                 }
@@ -587,11 +599,11 @@ namespace Pyro
     }
 
     uint32_t blend_add_pin(uint32_t dst, uint32_t src) {
-        uint a = ALPHA(src);
-        uint s_a = a + (a >= 0x7F ? 1 : 0);
+        unsigned int a = ALPHA(src);
+        unsigned int s_a = a + (a >= 0x7F ? 1 : 0);
 
-        uint rb = (dst & RB_MASK) + ((src & RB_MASK) * s_a >> 8 & RB_MASK);
-        uint gn = (dst & GN_MASK) + ((src & GN_MASK) * s_a >> 8);
+        unsigned int rb = (dst & RB_MASK) + ((src & RB_MASK) * s_a >> 8 & RB_MASK);
+        unsigned int gn = (dst & GN_MASK) + ((src & GN_MASK) * s_a >> 8);
 
         return min((dst >> 24) + a, 0xFFu) << 24 |
             min(rb & 0xFFFF0000, RED_MASK)   |
@@ -611,10 +623,10 @@ namespace Pyro
         int d_g = GREEN(dst);
         int d_b = BLUE(dst);
 
-        uint o_a = (min(ALPHA(dst) + a, 0xFFu) << 24);
-        uint o_r = (max(d_r - s_r, 0) & 255) << 16;
-        uint o_g = (max(d_g - s_g, 0) & 255) << 8;
-        uint o_b = (max(d_b - s_b, 0) & 255); 
+        unsigned int o_a = (min(ALPHA(dst) + a, 0xFFu) << 24);
+        unsigned int o_r = (max(d_r - s_r, 0) & 255) << 16;
+        unsigned int o_g = (max(d_g - s_g, 0) & 255) << 8;
+        unsigned int o_b = (max(d_b - s_b, 0) & 255); 
 
         return o_a | o_r | o_g | o_b;
     }
@@ -671,9 +683,9 @@ namespace Pyro
         uint32_t s_a = a + (a >= 0x7F ? 1 : 0);
         uint32_t d_a = 0x100 - s_a;
 
-        uint32_t r = abs((dst & RED_MASK)   - (src & RED_MASK));
-        uint32_t b = abs((dst & BLUE_MASK)  - (src & BLUE_MASK));
-        uint32_t g = abs((dst & GREEN_MASK) - (src & GREEN_MASK));
+        uint32_t r = abs(int((dst & RED_MASK)   - (src & RED_MASK)));
+        uint32_t b = abs(int((dst & BLUE_MASK)  - (src & BLUE_MASK)));
+        uint32_t g = abs(int((dst & GREEN_MASK) - (src & GREEN_MASK)));
 
         uint32_t rb = (r < 0 ? -r : r) |
                 (b < 0 ? -b : b);
@@ -940,8 +952,8 @@ namespace Pyro
 
 
     void Image::blend(Image *src, 
-                      int sx, int sy, uint sw, uint sh,
-                      int dx, int dy, uint dw, uint dh, BLENDMODE mode) {
+                      int sx, int sy, unsigned int sw, unsigned int sh,
+                      int dx, int dy, unsigned int dw, unsigned int dh, BLENDMODE mode) {
         
         int sx2 = sx + sw;
         int sy2 = sy + sh;
@@ -1177,7 +1189,7 @@ namespace Pyro
         uint32_t *mask_data = mask->load_pixels();
         uint32_t *data = this->load_pixels();
 
-        for(uint i = 0; i < this->width() * this->height(); i++) {
+        for(unsigned int i = 0; i < this->width() * this->height(); i++) {
             data[i] = (data[i] & 0xffffff) | (BLUE(mask_data[i]) << 24);
         }
 
@@ -1267,15 +1279,15 @@ namespace Pyro
         unsigned char *out_pixels = (unsigned char *)out->get_data();
         unsigned char *in_pixels = (unsigned char *)this->get_data();
 
-        for(uint y = 0; y < height; y++) {
+        for(unsigned int y = 0; y < height; y++) {
             float in_y = (float)y / (float)sy;
-            uint y1 = (uint)in_y;
-            uint y2 = (uint)in_y + 1;
+            unsigned int y1 = (uint)in_y;
+            unsigned int y2 = (uint)in_y + 1;
             float y_lerp = in_y - y1;
-            for(uint x = 0; x < width; x++) {
+            for(unsigned int x = 0; x < width; x++) {
                 float in_x = (float)x / (float)sx;
-                uint x1 = (uint)in_x;
-                uint x2 = (uint)in_x + 1;
+                unsigned int x1 = (uint)in_x;
+                unsigned int x2 = (uint)in_x + 1;
                 float x_lerp = in_x - x1;
 
                 for(unsigned int ch = 0; ch < 4; ch++) {
