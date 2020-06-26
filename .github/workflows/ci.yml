@@ -56,3 +56,17 @@ jobs:
       - name: Run tests
         run: |
           ninja -C build test
+      
+      - name: Upload current screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: screenshots-${{ matrix.name}}
+          path: ./build/current
+
+      - name: Upload actual screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: screenshots-${{ matrix.name}}
+          path: ./screenshot-tests/actual
