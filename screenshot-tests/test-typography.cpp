@@ -6,9 +6,12 @@ TEST_CASE("Write text") {
     std::string filename = "";
     SECTION("Simple strings") {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        Pyro::Font *fnt = Pyro::create_font("../fonts/Orkney Bold.otf", 12);
+        
         filename ="typography_simple_string.png";
         
         p->background(192);
+        p->textfont(fnt);
         p->textsize(32);
         p->text("word", 10, 30); 
         p->fill(0, 102, 153);

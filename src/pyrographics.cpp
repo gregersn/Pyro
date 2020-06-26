@@ -263,6 +263,10 @@ namespace Pyro {
         this->text_size = size;
     }
 
+    void Graphics::textfont(Font * font) {
+        this->textfont_impl(font);
+    }
+
     void Graphics::text(std::string text, float x, float y) {
         this->text_impl(text, x, y);
     }

@@ -3,6 +3,7 @@ project('Pyro', 'cpp',
         license: 'GPLv3',
         default_options: ['cpp_std=c++17'])
 
+freetype_dep = dependency('freetype2')
 libjpeg_dep = dependency('libjpeg')
 libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
