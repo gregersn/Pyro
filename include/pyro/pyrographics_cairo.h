@@ -4,6 +4,7 @@
 #include "pyrographics.h"
 
 #include <cairo/cairo.h>
+#include <cairo/cairo-ft.h>
 
 
 namespace Pyro {
@@ -11,6 +12,7 @@ namespace Pyro {
         cairo_surface_t *surface = nullptr;
         cairo_t *cr = nullptr;
 
+        cairo_font_face_t *font = nullptr;
 
         public:
             GraphicsCairo(const GraphicsCairo &in);
@@ -38,6 +40,7 @@ namespace Pyro {
             void strokejoin(int join);
 
             void text_impl(std::string text, float x, float y);
+            void textfont_impl(Font *font);
     };
 }
 

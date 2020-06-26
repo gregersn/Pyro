@@ -12,6 +12,10 @@ namespace Pyro {
     }
 
     GraphicsCairo::~GraphicsCairo() {
+        if(this->font != nullptr) {
+            cairo_font_face_destroy(this->font);
+            this->font = nullptr;
+        }
         cairo_destroy(this->cr);
         cairo_surface_destroy(this->surface);
 
@@ -216,9 +220,20 @@ namespace Pyro {
                               this->fill_color.b,
                               this->fill_color.a);
         
+        if(this->font != nullptr) {
+            cairo_set_font_face(this->cr, this->font);
+        }
         cairo_set_font_size(this->cr, this->text_size);
         cairo_move_to(this->cr, x, y);
         cairo_show_text(this->cr, text.c_str());
 
+    }
+
+    void GraphicsCairo::textfont_impl(Font *font) {
+        if(this->font != nullptr) {
+            cairo_font_face_destroy(this->font);
+            this->font = nullptr;
+        }
+        this->font = cairo_ft_font_face_create_for_ft_face(font->get_ft_face(), 0);
     }
 }
