@@ -47,7 +47,7 @@ def test_createimage():
 
 class ResizeTests(unittest.TestCase):
     def setUp(self):
-        self.img = pyro.Image.load('../tests/Lenna.png')
+        self.img = pyro.Image.load('../tests/TestPixels_RGB.png')
 
     def test_resize(self):
         img = self.img
@@ -72,7 +72,7 @@ class ResizeTests(unittest.TestCase):
 
 class PixelTests(unittest.TestCase):
     def setUp(self):
-        self.img = pyro.Image.load('../tests/Lenna.png')
+        self.img = pyro.Image.load('../tests/TestPixels_RGB.png')
 
     def test_get(self):
         pixel = self.img.get(0, 0)
@@ -143,7 +143,7 @@ class ImageTests(unittest.TestCase):
         assert pixels[0, 0, 0] == 128
 
     def test_load(self):
-        img = pyro.Image.load('../tests/Lenna.png')
+        img = pyro.Image.load('../tests/TestPixels_RGB.png')
         assert img.width() == 512
         assert img.height() == 512
 
@@ -161,7 +161,7 @@ class ImageTests(unittest.TestCase):
         self.assertEqual("RGBA", i.mode)
 
     # def test_getchannels(self):
-    #     img = pyro.Image.load('examples/Lenna.png')
+    #     img = pyro.Image.load('examples/TestPixels_RGB.png')
 
     #     channels = img.get_channels()
 

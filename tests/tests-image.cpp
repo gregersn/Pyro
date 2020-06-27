@@ -152,19 +152,17 @@ TEST_CASE( "Images are saved and loaded correctly", "[image]") {
 
 TEST_CASE("PNG files can be loaded and saved") {
     SECTION("Load a test image") {
-        Pyro::Image *img = Pyro::Image::loadPNG("../tests/Lenna.png");
+        Pyro::Image *img = Pyro::Image::loadPNG("../tests/TestPixels_RGB.png");
         REQUIRE(img != nullptr);
-        REQUIRE(img->width() == 512);
-        REQUIRE(img->height() == 512);
+        REQUIRE(img->width() == 8);
+        REQUIRE(img->height() == 8);
         REQUIRE(img->channels() == 3);
 
-        img->save("lennaut.png");
-
         SECTION("Check pixels") {
-            REQUIRE(img->get(0, 0) == pack(226, 137, 125, 255));
-            REQUIRE(img->get(img->width() - 1, 0) == pack(200, 99, 90, 255));
-            REQUIRE(img->get(0, img->height() - 1) == pack(82, 22, 57, 255));
-            REQUIRE(img->get(img->width() - 1 , img->height() - 1) == pack(185, 74, 81, 255));
+            REQUIRE(img->get(0, 0) == pack(255, 255, 255, 255));
+            REQUIRE(img->get(img->width() - 1, 0) == pack(255, 0, 0, 255));
+            REQUIRE(img->get(0, img->height() - 1) == pack(0, 0, 255, 255));
+            REQUIRE(img->get(img->width() - 1 , img->height() - 1) == pack(0, 255, 0, 255));
         }
     }
 
@@ -240,7 +238,7 @@ TEST_CASE("Images can be resized") {
     }
 
     SECTION("Resize a loaded image with different methods") {
-        Pyro::Image *img = Pyro::Image::load("../tests/Lenna.png");
+        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels_RGB.png");
         REQUIRE(img != nullptr);
 
         SECTION("Nearest neighbor scale down") {
