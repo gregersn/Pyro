@@ -12,7 +12,7 @@ namespace Pyro {
             
             unsigned int width();
             unsigned int height();
-            unsigned int channels;
+            unsigned int channels();
 
             static Image *load(const char *);
             Image *loadimage(const char *);

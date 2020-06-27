@@ -6,7 +6,7 @@ build-backend = "sipbuild.api"
 name = "pyro"
 
 [tool.sip.bindings.pyro]
-include-dirs = ["../include", "/usr/local/lib/python3.8/site-packages/numpy/core/include/"]
+include-dirs = ["../include", "/usr/local/lib/python3.8/site-packages/numpy/core/include/", "/usr/include/freetype2"]
 library-dirs = ["../build/src"]
 builder-settings = ["-std=c++17"]
 headers = ["pyro.h"]

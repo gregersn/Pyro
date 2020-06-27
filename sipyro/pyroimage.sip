@@ -20,7 +20,7 @@ namespace Pyro {
             SIP_PYOBJECT load_pixels();
             %MethodCode
                 import_array();
-                npy_intp dims[] = {sipCpp->height(), sipCpp->width(), sipCpp->channels};
+                npy_intp dims[] = {sipCpp->height(), sipCpp->width(), sipCpp->channels()};
                 unsigned char *data = (unsigned char*)sipCpp->get_data();
                 
                 sipRes = PyArray_SimpleNewFromData(3,
@@ -32,7 +32,7 @@ namespace Pyro {
             SIP_PYOBJECT load_bytes();
             %MethodCode
                 import_array();
-                npy_intp dims[] = {sipCpp->height(), sipCpp->width(), sipCpp->channels};
+                npy_intp dims[] = {sipCpp->height(), sipCpp->width(), sipCpp->channels()};
                 unsigned char *data = (unsigned char*)sipCpp->get_data();
                 
                 sipRes = PyArray_SimpleNewFromData(3,
