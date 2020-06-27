@@ -38,7 +38,7 @@ TEST_CASE("Create test image") {
 }
 
 int main( int argc, char* argv[] ) {
-    const int direrr = system("mkdir -p ./current");
+    const int direrr = system("mkdir -p ../screenshots/current");
     if(direrr == -1) {
         exit(1);
     }

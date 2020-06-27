@@ -3,7 +3,7 @@ build
 builddir/
 lib/*
 output/
-screenshot-tests/current/
+screenshots/current/
 
 # Ignore executables
 bin/*
