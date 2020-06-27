@@ -7,18 +7,20 @@
 This library is made for use in my own artistic practise, and comes with no guarnatees of quality.
 It is heavly influenced by [Processing](https://processing.org/), but at the time has no functionality for real time graphics and no 3D graphics functionality.
 
-It's primary use is for generating still images with 2D graphics, and functionality is implemented as I need it. 
+It's primary use is for generating still images with 2D graphics, and functionality is implemented as I need it.
 
 The state of the whole thing is not really userfriendly at the moment, but hopefully that will improve in the future.
 
 ## Dependencies
 
-| Library   | Version | License          |
-| --------- | ------- | ---------------- |
-| Cairo     | 1.14.x  | LGPL/MPL         |
-| SDL       | 2.x     | zlib             |
-| libpng    | 1.6.37  | PNG Reference Library License version 2 |       
-| Catch2    | 2.9     | BSL-1.0          |
+| Library                                              | Version | License                                 |
+| ---------------------------------------------------- | ------- | --------------------------------------- |
+| [Cairo](https://www.cairographics.org/)              | 1.14.x  | LGPL/MPL                                |
+| [Freetype 2](https://www.freetype.org/)              | 2.10.1  | Freetype project License                |
+| [SDL](https://www.libsdl.org/)                       | 2.x     | zlib                                    |
+| [libjpeg-turbo](https://libjpeg-turbo.org/)          | 2.0.3   |                                         |
+| [libpng](http://www.libpng.org/pub/png/libpng.html)  | 1.6.37  | PNG Reference Library License version 2 |
+| [Catch2](https://github.com/catchorg/Catch2)         | 2.9     | BSL-1.0                                 |
 
 ## Building
 
@@ -77,8 +79,26 @@ If you run `make install` at the moment, it is just doing some dumb stuff to get
 You can then compile and link a file with something like:
 `g++ -MMD -MP -lpyro -std=c++17 somefile.cpp`
 
+## Python bindings
+
+Bindings between this library and Python can be compiled using [SIP](https://riverbankcomputing.com/software/sip).
+Last tested with SIP 5.2.0, bindings can be compiled doing
+
+```
+cd sipyro
+./build.sh
+```
+
+after building the native library.
+
 ## Todo
 
 - Write a better install target
 - Make a configure script?
 - Write some abstraction to make possible different backends for rendering
+
+## Included resources
+
+`fonts/Orkney *.otf` is used under the OFL license.
+
+`tests/alley.jpg` and `tests/ducks.jpg` is copyrighted by Greger Stolt Nilsen, used with permission as test data for this library, and can only be distributed as such.
