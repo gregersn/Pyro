@@ -18,6 +18,6 @@ TEST_CASE("Write text") {
 
         p->save(current_folder + filename);
         delete p;
-        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename, 4.02942e-05));
     }
 }

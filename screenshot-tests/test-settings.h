@@ -10,9 +10,11 @@ constexpr static inline Pyro::GraphicsMode testmode = Pyro::GraphicsMode::CAIRO;
 
 class ImageMatch : public Catch::MatcherBase<std::string> {
     std::string actual_file;
+    float tolerance = 0.0f;
 
 public:
     ImageMatch(std::string actual) : actual_file(actual) {};
+    ImageMatch(std::string actual, float tolerance) : actual_file(actual), tolerance(tolerance) {};
     bool match(std::string const& filename) const override;
     virtual std::string describe() const override;
 };
@@ -21,6 +23,8 @@ inline ImageMatch LooksLike(std::string actual) {
     return ImageMatch(actual);
 }
 
-
+inline ImageMatch LooksLike(std::string actual, float tolerance) {
+    return ImageMatch(actual, tolerance);
+}
 
 #endif 
