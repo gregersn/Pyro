@@ -1,5 +1,7 @@
 # Pyro graphics library
 
+![Build and test](https://github.com/gregersn/Pyro/workflows/Build%20and%20test/badge.svg?branch=master)
+
 ## Graphics library used for generation of images
 
 This library is made for use in my own artistic practise, and comes with no guarnatees of quality.
