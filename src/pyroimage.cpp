@@ -6,6 +6,7 @@
 #include <setjmp.h>
 #include <cstring>
 #include <unistd.h>
+#include <iostream>
 #include <algorithm>
 #include <png.h>
 
@@ -194,6 +195,7 @@ namespace Pyro
 
     Image* Image::load(const std::string &filename) {
         if(access(filename.c_str(), F_OK) == -1) {
+            std::cerr << "File not accessible: " << filename << "\n";
             return nullptr;
         }
 
@@ -1306,6 +1308,38 @@ namespace Pyro
 
         out->update_pixels();
         this->update_pixels();
+        return out;
+    }
+
+    Image * Image::rotate(float angle) {
+        double ca = cos(-angle);
+        double sa = sin(-angle); 
+        int new_width = ceil(abs(this->_pixelwidth * sin(angle)) + abs(this->_pixelheight * cos(angle))) + 1;
+        int new_height = ceil(abs(this->_pixelwidth * cos(angle)) + abs(this->_pixelheight * sin(angle))) + 1;
+
+
+        float hw = (new_width - 1) / 2.0;
+        float hh = (new_height - 1) / 2.0;
+
+        Image *out = new Image(new_width, new_height, ARGB);
+        uint32_t *pixels = out->load_pixels();
+        for(int y = 0; y < out->_pixelheight; y++) {
+            for(int x = 0; x < out->_pixelwidth; x++) {
+                int sx = round(((x - hw) * ca - (y - hh) * sa) + hw);
+                int sy = round(((x - hw) * sa + (y - hh) * ca) + hh);
+
+                if((sx < 0 )|| (sx >= this->_pixelwidth) || (sy < 0) || (sy >= this->_pixelheight))
+                    pixels[y * out->_pixelwidth + x] = 0;
+                else
+                    pixels[y * out->_pixelwidth + x] = this->get(sx, sy);
+
+            }
+        }
+
+
+        out->update_pixels();
+
+
         return out;
     }
 

@@ -87,3 +87,59 @@ SCENARIO("Image can be converted to different depths")
         }
     }
 }
+
+TEST_CASE("Images can be transformed") {
+    SECTION("Rotation PI radians") {
+        std::string filename = "image_rotate_PI.png";
+
+        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *rotated = img->rotate(Pyro::PI);
+        rotated->save(current_folder + filename);
+
+        delete img;
+        delete rotated;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        
+    }
+
+    SECTION("Rotation PI / 2.0 radians") {
+        std::string filename = "image_rotate_HALF_PI.png";
+
+        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *rotated = img->rotate(Pyro::HALF_PI);
+        rotated->save(current_folder + filename);
+
+        delete img;
+        delete rotated;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        
+    }
+
+    SECTION("Rotation PI / 4.0 radians") {
+        std::string filename = "image_rotate_QUARTER_PI.png";
+
+        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *rotated = img->rotate(Pyro::QUARTER_PI);
+        rotated->save(current_folder + filename);
+
+        delete img;
+        delete rotated;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        
+    }
+
+    SECTION("Rotation 1 radians") {
+        std::string filename = "image_rotate_1.png";
+
+        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *rotated = img->rotate(1.0);
+        rotated->save(current_folder + filename);
+
+        delete img;
+        delete rotated;
+        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        
+    }
+
+
+}
