@@ -97,6 +97,9 @@ namespace Pyro {
             Image *convert(unsigned int format);
 
             Image *rotate(float angle);
+            Image *rotate(float angle, RESIZEMETHOD method);
+            Image *rotate_nearest(float angle);
+            Image *rotate_bilinear(float angle);
     };
 
     Image *createimage(unsigned int width, unsigned int height);

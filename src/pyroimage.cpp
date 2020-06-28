@@ -1314,7 +1314,31 @@ namespace Pyro
         return out;
     }
 
+    uint32_t lerp_color(uint32_t a, uint32_t b, float t) {
+        return lerp(ALPHA(a), ALPHA(b), t) << 24 |
+                lerp(RED(a), RED(b), t) << 16 |
+                lerp(GREEN(a), GREEN(b), t) << 8 |
+                lerp(BLUE(a), BLUE(b), t);
+    }
+
     Image * Image::rotate(float angle) {
+        return this->rotate(angle, RESIZEMETHOD::BILINEAR);
+    }
+
+    Image * Image::rotate(float angle, RESIZEMETHOD method) {
+        switch(method) {
+            case RESIZEMETHOD::NEAREST:
+            return this->rotate_nearest(angle);
+            break;
+            case RESIZEMETHOD::BILINEAR:
+            default:
+            return this->rotate_bilinear(angle);
+            break;
+        }
+    }
+
+
+    Image * Image::rotate_nearest(float angle) {
         double ca = cos(-angle);
         double sa = sin(-angle); 
         int new_width = ceil(abs(this->_pixelwidth * sin(angle)) + abs(this->_pixelheight * cos(angle))) + 1;
@@ -1331,10 +1355,46 @@ namespace Pyro
                 int sx = round(((x - hw) * ca - (y - hh) * sa) + hw);
                 int sy = round(((x - hw) * sa + (y - hh) * ca) + hh);
 
-                if((sx < 0 )|| (sx >= this->_pixelwidth) || (sy < 0) || (sy >= this->_pixelheight))
-                    pixels[y * out->_pixelwidth + x] = 0;
-                else
-                    pixels[y * out->_pixelwidth + x] = this->get(sx, sy);
+                pixels[y * out->_pixelwidth + x] = this->get(sx, sy);
+
+            }
+        }
+
+        out->update_pixels();
+
+        return out;
+    }
+
+    Image * Image::rotate_bilinear(float angle) {
+        double ca = cos(-angle);
+        double sa = sin(-angle); 
+        int new_width = ceil(abs(this->_pixelwidth * sin(angle)) + abs(this->_pixelheight * cos(angle))) + 1;
+        int new_height = ceil(abs(this->_pixelwidth * cos(angle)) + abs(this->_pixelheight * sin(angle))) + 1;
+
+
+        float hw = (new_width - 1) / 2.0;
+        float hh = (new_height - 1) / 2.0;
+
+        Image *out = new Image(new_width, new_height, ARGB);
+        uint32_t *pixels = out->load_pixels();
+        for(int y = 0; y < out->_pixelheight; y++) {
+            for(int x = 0; x < out->_pixelwidth; x++) {
+                float sx = ((x - hw) * ca - (y - hh) * sa) + hw;
+                float sy = ((x - hw) * sa + (y - hh) * ca) + hh;
+
+                int y1 = floor(sy);
+                int y2 = ceil(sy);
+                float y_lerp = sy - y1;
+
+                int x1 = floor(sx);
+                int x2 = ceil(sx);
+                float x_lerp = sx - x1;
+
+                pixels[y * out->_pixelwidth + x] = lerp_color(
+                                                        lerp_color(this->get(x1, y1), this->get(x2, y1), x_lerp),
+                                                        lerp_color(this->get(x1, y2), this->get(x2, y2), x_lerp),
+                                                        y_lerp);
+                //pixels[y * out->_pixelwidth + x] = this->get(x1, y1);
 
             }
         }
