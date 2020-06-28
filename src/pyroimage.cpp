@@ -516,6 +516,9 @@ namespace Pyro
     }
 
     uint32_t Image::get(int x, int y) {
+        if(x < 0 || y < 0 || x >= this->_pixelwidth || y >= this->_pixelheight)
+            return 0;
+    
         switch(format) {
             case GRAY:
                 return data[y * _pixelwidth + x] | 0xff;
