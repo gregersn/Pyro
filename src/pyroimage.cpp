@@ -1321,11 +1321,11 @@ namespace Pyro
                 lerp(BLUE(a), BLUE(b), t);
     }
 
-    Image * Image::rotate(float angle) {
+    Image * Image::rotate(double angle) {
         return this->rotate(angle, RESIZEMETHOD::BILINEAR);
     }
 
-    Image * Image::rotate(float angle, RESIZEMETHOD method) {
+    Image * Image::rotate(double angle, RESIZEMETHOD method) {
         switch(method) {
             case RESIZEMETHOD::NEAREST:
             return this->rotate_nearest(angle);
@@ -1338,7 +1338,7 @@ namespace Pyro
     }
 
 
-    Image * Image::rotate_nearest(float angle) {
+    Image * Image::rotate_nearest(double angle) {
         double ca = cos(-angle);
         double sa = sin(-angle); 
         int new_width = ceil(abs(this->_pixelwidth * sin(angle)) + abs(this->_pixelheight * cos(angle))) + 1;
@@ -1365,11 +1365,11 @@ namespace Pyro
         return out;
     }
 
-    Image * Image::rotate_bilinear(float angle) {
+    Image * Image::rotate_bilinear(double angle) {
         double ca = cos(-angle);
         double sa = sin(-angle); 
-        int new_width = ceil(abs(this->_pixelwidth * sin(angle)) + abs(this->_pixelheight * cos(angle))) + 1;
-        int new_height = ceil(abs(this->_pixelwidth * cos(angle)) + abs(this->_pixelheight * sin(angle))) + 1;
+        int new_width = round(std::abs(this->_pixelwidth * sin(angle)) + std::abs(this->_pixelheight * cos(angle)));
+        int new_height = round(std::abs(this->_pixelwidth * cos(angle)) + std::abs(this->_pixelheight * sin(angle)));
 
 
         float hw = (new_width - 1) / 2.0;

@@ -16,13 +16,14 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
+            "setupCommands": [{
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            }],
+            "osx": {
+                "MIMode": "lldb"
+            }
         },
         {
             "name": "Debug unit tests",
@@ -35,13 +36,11 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
+            "setupCommands": [{
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            }]
         }
 
     ]
