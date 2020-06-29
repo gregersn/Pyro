@@ -506,7 +506,8 @@ namespace Pyro
 
     unsigned int Image::operator[](unsigned int index) {
         if(index < this->_width * this->_height) {
-            return (this->load_pixels())[index];
+            //return (this->load_pixels())[index];
+            return this->data[index];
         }
         throw;
     }

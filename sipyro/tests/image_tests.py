@@ -38,11 +38,11 @@ def compare_pixels(a, b):
     return True
 
 
-def test_createimage():
-    img = pyro.createimage(320, 240, pyro.RGB)
-    assert img.width() == 320
-    assert img.height() == 240
-    # assert img.mode() == pyro.RGB
+# def test_createimage():
+#    img = pyro.createimage(320, 240, pyro.RGB)
+#    assert img.width() == 320
+#    assert img.height() == 240
+#    # assert img.mode() == pyro.RGB
 
 
 class ResizeTests(unittest.TestCase):
@@ -77,19 +77,19 @@ class PixelTests(unittest.TestCase):
     def test_get(self):
         pixel = self.img.get(0, 0)
         assert pixel is not None
-        assert compare_pixels(pixel, (226, 137, 125, 255))
+        assert compare_pixels(pixel, (255, 255, 255, 255))
 
-        pixel = self.img.get(511, 0)
+        pixel = self.img.get(7, 0)
         assert pixel is not None
-        assert compare_pixels(pixel, (200, 99, 90, 255))
+        assert compare_pixels(pixel, (255, 0, 0, 255))
 
-        pixel = self.img.get(511, 511)
+        pixel = self.img.get(7, 7)
         assert pixel is not None
-        assert compare_pixels(pixel, (185, 74, 81, 255))
+        assert compare_pixels(pixel, (0, 255, 0, 255))
 
-        pixel = self.img.get(0, 511)
+        pixel = self.img.get(0, 7)
         assert pixel is not None
-        assert compare_pixels(pixel, (82, 22, 57, 255))
+        assert compare_pixels(pixel, (0, 0, 255, 255))
 
     def test_get_area(self):
         """
@@ -110,13 +110,13 @@ class PixelTests(unittest.TestCase):
         assert compare_pixels(pixel, (82, 22, 57, 255))
         """
         pixels = self.img.get(0, 0, 3, 2)
+
         assert pixels.height() == 2
         assert pixels.width() == 3
-
-        assert compare_pixels(pixels[0], (226, 137, 125, 255))
-        assert compare_pixels(pixels[1], (226, 137, 125, 255))
-        assert compare_pixels(pixels[pixels.width()], (226, 137, 125, 255))
-        assert compare_pixels(pixels[pixels.width() + 1], (226, 137, 125, 255))
+        assert compare_pixels(pixels.get(0, 0), (255, 255, 255, 255))
+        assert compare_pixels(pixels[1], (0, 0, 0, 255))
+        assert compare_pixels(pixels[pixels.width()], (255, 255, 255, 255))
+        assert compare_pixels(pixels[pixels.width() + 1], (0, 0, 32, 0))
 
 
 class ImageTests(unittest.TestCase):
@@ -131,7 +131,7 @@ class ImageTests(unittest.TestCase):
         assert img.load_pixels() is not None
         assert img.load_pixels().shape[0] == 11
         assert img.load_pixels().shape[1] == 10
-        assert img.load_pixels().shape[2] == 3
+        assert img.load_pixels().shape[2] == 4
         assert img.load_pixels().dtype == np.uint8
 
         pixels = img.load_pixels()
@@ -144,13 +144,13 @@ class ImageTests(unittest.TestCase):
 
     def test_load(self):
         img = pyro.Image.load('../tests/TestPixels_RGB.png')
-        assert img.width() == 512
-        assert img.height() == 512
+        assert img.width() == 8
+        assert img.height() == 8
 
         pixels = img.load_pixels()
-        assert pixels.shape[0] == 512
-        assert pixels.shape[1] == 512
-        assert pixels.shape[2] == 3
+        assert pixels.shape[0] == 8
+        assert pixels.shape[1] == 8
+        assert pixels.shape[2] == 4
         assert pixels.dtype == np.uint8, ("Pixels dtype %s" % pixels.dtype)
 
     def test_create_save_load(self):

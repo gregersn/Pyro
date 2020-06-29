@@ -70,14 +70,14 @@
         "PYTHONPATH": "${workspaceFolder}/sipyro/build/pyro",
         "LD_LIBRARY_PATH": "${workspaceFolder}/build/src"
     },
-    "python.testing.cwd": "${workspaceFolder}/sipyro",
-    "python.testing.pytestArgs": [
-        "tests"
-    ],
-    "python.testing.promptToConfigure": false,
     "python.testing.unittestEnabled": false,
-    "python.testing.nosetestsEnabled": false,
-    "python.testing.pytestEnabled": true,
+    "python.testing.nosetestsEnabled": true,
+    "python.testing.pytestEnabled": false,
     "C_Cpp.errorSquiggles": "Enabled",
     "mesonbuild.buildFolder": "build",
+    "python.testing.cwd": "${workspaceFolder}/sipyro",
+    "python.testing.nosetestArgs": [
+        "sipyro"
+    ],
+    "python.envFile": "${workspaceFolder}/sipyro/.env"
 }

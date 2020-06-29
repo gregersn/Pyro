@@ -30,7 +30,7 @@ class DrawTests(unittest.TestCase):
 
                 p.rect(50, 50, w, h)
 
-                c = p.get_channels()
+                c = p.load_pixels()
 
                 t = np.where(c[:, :, 0] > 0)
                 assert len(t[0]) == w * h, len(t[0])
