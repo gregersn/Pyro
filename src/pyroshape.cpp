@@ -32,6 +32,7 @@ namespace Pyro {
     }
 
     void Shape::begin() {
+        this->contours.clear();
          this->points.clear();
          this->outpoints.clear();
     }
