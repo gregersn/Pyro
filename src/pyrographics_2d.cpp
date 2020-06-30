@@ -16,15 +16,6 @@ namespace Pyro {
         return ((a&255) << 24) | (color & 0xffffff);
     }
 
-    uint32_t multiply_alpha(uint32_t color) {
-        float a = ((color & 0xff000000) >> 24) / 255.0f;
-        float r = std::clamp(((color & 0xff0000) >> 16) / 255.0f * a, 0.0f, 1.0f);
-        float g = std::clamp(((color & 0xff00) >> 8) / 255.0f * a, 0.0f, 1.0f);
-        float b = std::clamp(((color & 0xff) >> 0) / 255.0f * a , 0.0f, 1.0f);
-
-        return ((uint)(a * 255) << 24) | ((uint)(r * 255) << 16) | ((uint)(g * 255) << 8) | (uint)(b * 255);
-    }
-
     uint32_t a_over_b(uint32_t a, uint32_t b) {
         Color ca = Color::from_uint(a);
         Color cb = Color::from_uint(b);
@@ -68,10 +59,11 @@ namespace Pyro {
     // Shapes
     void Graphics2D::background(float r, float g, float b, float a) {
         uint32_t color = color_pack(r, g, b, a);
-        uint32_t *data = (uint32_t *)this->data;
+        uint32_t *data = this->load_pixels();
         for(uint64_t i = 0; i < this->width() * this->height(); i++) {
             data[i] = color;
         }
+        this->update_pixels();
     }
 
     void Graphics2D::line(float x0, float y0, float x1, float y1) {
@@ -100,8 +92,8 @@ namespace Pyro {
         color = set_alpha(color, (uint)(brightness * 255));
         uint32_t a = color;
 
-        uint32_t b = ((uint32_t *)this->data)[y * this->_width + x];
-        ((uint32_t *)this->data)[y * this->_width + x] = a_over_b(a, b);
+        uint32_t b = this->load_pixels()[y * this->_width + x];
+        this->load_pixels()[y * this->_width + x] = a_over_b(a, b);
     }
 
     void Graphics2D::draw_line(float x0, float y0, float x1, float y1) {
