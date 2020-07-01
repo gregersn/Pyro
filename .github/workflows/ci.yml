@@ -17,7 +17,8 @@ jobs:
         name: [
           ubuntu-18.04-gcc-9,
           ubuntu-18.04-clang-9,
-          ubuntu-20.04-gcc-9
+          ubuntu-20.04-gcc-9,
+          macos-latest-xcode,
         ]
 
         include:
@@ -36,6 +37,11 @@ jobs:
             compiler: gcc
             version: "9"
           
+          - name: macos-latest-xcode
+            os: macos-latest
+            compiler: xcode
+            version: "11"
+          
     steps:
       - uses: actions/checkout@v2
         with:
@@ -44,7 +50,9 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.7
-      - name: Install dependencies
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
 
@@ -60,9 +68,31 @@ jobs:
           
           sudo apt-get install libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev
           pip install meson ninja
+      
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          pip3 install meson ninja
+          brew install freetype libjpeg-turbo cairo libpng sdl2 pkg-config
+
+          if [ "${{ matrix.compiler }}" = "gcc" ]; then
+            brew install gcc@${{ matrix.version }}
+            echo "::set-env name=CC::gcc-${{ matrix.version }}"
+            echo "::set-env name=CXX::g++-${{ matrix.version }}"
+          else
+            ls -ls /Applications/
+            sudo xcode-select -switch /Applications/Xcode_${{ matrix.version }}.app
+            echo "::set-env name=CC::clang"
+            echo "::set-env name=CXX::clang++"
+          fi
+
       - name: Build project
         run: |
-          meson setup build
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            ./configure_mac.sh
+          else
+            meson setup build
+          fi
           ninja -C build
       - name: Run tests
         run: |
