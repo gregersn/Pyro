@@ -5,6 +5,12 @@
 namespace Pyro {
     static OpenSimplexNoise noiseimpl;
     static bool noise_init = false;
+
+    void noiseseed(long seed) {
+        noiseimpl = OpenSimplexNoise(seed);
+        noise_init = true;
+    }
+
     double noise(double x, double y, double z, double w) {
         if(!noise_init) {
             noiseimpl = OpenSimplexNoise(123456789L);

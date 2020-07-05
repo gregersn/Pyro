@@ -57,6 +57,7 @@ class TestColors(unittest.TestCase):
         u = pyro.Color.fto32(1.0, 0.0, 1.0, 0.5)
         assert u == 0x7fff00ff
 
+    """
     def test_hsb_2_rgb(self):
         c = pyro.Color.hsba(0.0, 0.0, 0.0, 1.0)
 
@@ -71,3 +72,4 @@ class TestColors(unittest.TestCase):
         self.assertAlmostEqual(c.g, 0.0)
         self.assertAlmostEqual(c.b, 0.0)
         self.assertAlmostEqual(c.a, 1.0)
+    """

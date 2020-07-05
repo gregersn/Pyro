@@ -11,6 +11,7 @@ from __future__ import division
 # from nose.tools import assert_raises
 
 import pyro 
+import unittest
 
 # def test_init():
 #     assert pyro_noise.SINCOS_PRECISION == 0.5
@@ -21,45 +22,47 @@ import pyro
 
 #     assert len(pyro_noise.COS_LUT) == 720
 
-def test_noise():
-    y = 0.0
-    x = 0.0
-    for y in range(0, 1000):
-        for x in range(0, 1000):
-            result = pyro.noise(x / 30, y / 30)
-            assert result >= 0
-            assert result < 1
+class NoiseTests(unittest.TestCase):
+    def test_noise(self):
+        y = 0.0
+        x = 0.0
+        for y in range(0, 1000):
+            for x in range(0, 1000):
+                result = pyro.noise(x / 30, y / 30)
+                self.assertGreaterEqual(result, 0)
+                self.assertLess(result, 1)
 
 
-def test_noise_seed():
-    pyro.noise_seed(99)
-    # assert len(pyro_noise.perlin) == 0
-    # assert pyro_noise.perlinRandom is not None
+    def test_noise_seed(self):
+        pyro.noiseseed(99)
+        # assert len(pyro_noise.perlin) == 0
+        # assert pyro_noise.perlinRandom is not None
 
-    resultA = []
-    t = 0
-    for i in range(5):
-        resultA.append(pyro.noise(t))
-        t += 0.01
+        resultA = []
+        t = 0
+        for i in range(5):
+            resultA.append(pyro.noise(t, 0.0))
+            t += 0.01
 
-    pyro.noise_seed(99)
+        pyro.noiseseed(99)
 
-    # assert len(pyro_noise.perlin) == 0
-    # assert pyro_noise.perlinRandom is not None
+        # assert len(pyro_noise.perlin) == 0
+        # assert pyro_noise.perlinRandom is not None
 
-    t = 0
-    resultB = []
-    for i in range(5):
-        resultB.append(pyro.noise(t))
-        t += 0.01
+        t = 0
+        resultB = []
+        for i in range(5):
+            resultB.append(pyro.noise(t, 0.0))
+            t += 0.01
 
-    for v in resultA:
-        assert v < 1
-        assert v > 0
+        for v in resultA:
+            self.assertLess(v, 1)
+            self.assertGreater(v, 0)
 
-    for v in resultB:
-        assert v < 1
-        assert v > 0
+        for v in resultB:
+            self.assertLess(v, 1)
+            self.assertGreater(v, 0)
 
-    for i in range(5):
-        assert resultA[i] == resultB[i], "results not equal %r: %r %s" % (i, resultA[i], resultB[i])
+
+        for i in range(5):
+            self.assertEqual(resultA[i], resultB[i], "results not equal %r: %r %s" % (i, resultA[i], resultB[i]))
