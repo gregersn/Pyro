@@ -9,6 +9,7 @@
 %Include pyrovector.sip
 %Include pyroimage.sip
 %Include pyrographics.sip
+%Include pyrosdl.sip
 
 %HideNamespace(name=Pyro)
 %ModuleCode
@@ -46,6 +47,11 @@ namespace Pyro {
 
     void fill(Color c);
     void stroke(Color c);
+    void stroke(int c);
+    void stroke(int c, int a);
+    void stroke(int r, int g, int b);
+    void stroke(int r, int g, int b, int a);
+
 
     void point(float x, float y);
     void line(float x0, float y0, float x1, float y1);
@@ -64,4 +70,6 @@ namespace Pyro {
     double noise(double x, double y, double z);
     double noise(double x, double y, double z, double w);
     void noiseseed(long seed);
+
+    
 };
