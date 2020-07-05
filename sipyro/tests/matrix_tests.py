@@ -15,7 +15,7 @@ import numpy.testing as npt
 
 from nose.tools import assert_raises
 
-
+"""
 def test_init():
     t = pyro_matrix.Transform2D()
 
@@ -181,3 +181,4 @@ def test_push_pop():
     # Do a stack underflow(?) test
     assert_raises(BufferError,
                   t.pop)
+"""
