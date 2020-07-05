@@ -20,6 +20,7 @@ sipyro/sippyrocmodule.cpp
 sipyro/sippyroPyro.cpp
 sipyro/sipAPIpyro.h
 sipyro/Makefile
+sipyro/nosetests.xml
 libpyro.so
 
 # Ignore subprojects files
@@ -30,3 +31,4 @@ subprojects/*/
 .pytest_cache/
 .mypy_cache/
 __pycache__/
+.noseids
