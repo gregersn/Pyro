@@ -242,9 +242,9 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 		if (inSum <= 1) { //We're inside the tetrahedron (3-Simplex) at (0,0,0)
 			
 			//Determine which two of (0,0,1), (0,1,0), (1,0,0) are closest.
-			uint8_t aPoint = 0x01;
+			int8_t aPoint = 0x01;
 			double aScore = xins;
-			uint8_t bPoint = 0x02;
+			int8_t bPoint = 0x02;
 			double bScore = yins;
 			if (aScore >= bScore && zins > bScore) {
 				bScore = zins;
@@ -258,7 +258,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			//This depends on the closest two tetrahedral vertices, including (0,0,0)
 			double wins = 1 - inSum;
 			if (wins > aScore || wins > bScore) { //(0,0,0) is one of the closest two tetrahedral vertices.
-				uint8_t c = (bScore > aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
+				int8_t c = (bScore > aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
 				
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsb - 1;
@@ -295,7 +295,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					dz_ext0 = dz_ext1 = dz0 - 1;
 				}
 			} else { //(0,0,0) is not one of the closest two tetrahedral vertices.
-				uint8_t c = (uint8_t)(aPoint | bPoint); //Our two extra vertices are determined by the closest two.
+				int8_t c = (int8_t)(aPoint | bPoint); //Our two extra vertices are determined by the closest two.
 				
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsb;
@@ -370,9 +370,9 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 		} else if (inSum >= 2) { //We're inside the tetrahedron (3-Simplex) at (1,1,1)
 		
 			//Determine which two tetrahedral vertices are the closest, out of (1,1,0), (1,0,1), (0,1,1) but not (1,1,1).
-			uint8_t aPoint = 0x06;
+			int8_t aPoint = 0x06;
 			double aScore = xins;
-			uint8_t bPoint = 0x05;
+			int8_t bPoint = 0x05;
 			double bScore = yins;
 			if (aScore <= bScore && zins < bScore) {
 				bScore = zins;
@@ -386,7 +386,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			//This depends on the closest two tetrahedral vertices, including (1,1,1)
 			double wins = 3 - inSum;
 			if (wins < aScore || wins < bScore) { //(1,1,1) is one of the closest two tetrahedral vertices.
-				uint8_t c = (bScore < aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
+				int8_t c = (bScore < aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
 				
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsb + 2;
@@ -423,7 +423,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					dz_ext0 = dz_ext1 = dz0 - 3 * SQUISH_CONSTANT_3D;
 				}
 			} else { //(1,1,1) is not one of the closest two tetrahedral vertices.
-				uint8_t c = (uint8_t)(aPoint & bPoint); //Our two extra vertices are determined by the closest two.
+				int8_t c = (int8_t)(aPoint & bPoint); //Our two extra vertices are determined by the closest two.
 				
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsb + 1;
@@ -500,10 +500,10 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			}
 		} else { //We're inside the octahedron (Rectified 3-Simplex) in between.
 			double aScore;
-			uint8_t aPoint;
+			int8_t aPoint;
 			bool aIsFurtherSide;
 			double bScore;
-			uint8_t bPoint;
+			int8_t bPoint;
 			bool bIsFurtherSide;
 
 			//Decide between point (0,0,1) and (1,1,0) as closest
@@ -569,7 +569,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					zsv_ext0 = zsb + 1;
 
 					//Other extra point is based on the shared axis.
-					uint8_t c = (uint8_t)(aPoint & bPoint);
+					int8_t c = (int8_t)(aPoint & bPoint);
 					if ((c & 0x01) != 0) {
 						dx_ext1 = dx0 - 2 - 2 * SQUISH_CONSTANT_3D;
 						dy_ext1 = dy0 - 2 * SQUISH_CONSTANT_3D;
@@ -603,7 +603,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					zsv_ext0 = zsb;
 
 					//Other extra point is based on the omitted axis.
-					uint8_t c = (uint8_t)(aPoint | bPoint);
+					int8_t c = (int8_t)(aPoint | bPoint);
 					if ((c & 0x01) == 0) {
 						dx_ext1 = dx0 + 1 - SQUISH_CONSTANT_3D;
 						dy_ext1 = dy0 - 1 - SQUISH_CONSTANT_3D;
@@ -628,7 +628,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					}
 				}
 			} else { //One point on (0,0,0) side, one point on (1,1,1) side
-				uint8_t c1, c2;
+				int8_t c1, c2;
 				if (aIsFurtherSide) {
 					c1 = aPoint;
 					c2 = bPoint;
@@ -810,9 +810,9 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 		if (inSum <= 1) { //We're inside the pentachoron (4-Simplex) at (0,0,0,0)
 
 			//Determine which two of (0,0,0,1), (0,0,1,0), (0,1,0,0), (1,0,0,0) are closest.
-			uint8_t aPoint = 0x01;
+			int8_t aPoint = 0x01;
 			double aScore = xins;
-			uint8_t bPoint = 0x02;
+			int8_t bPoint = 0x02;
 			double bScore = yins;
 			if (aScore >= bScore && zins > bScore) {
 				bScore = zins;
@@ -833,7 +833,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			//This depends on the closest two pentachoron vertices, including (0,0,0,0)
 			double uins = 1 - inSum;
 			if (uins > aScore || uins > bScore) { //(0,0,0,0) is one of the closest two pentachoron vertices.
-				uint8_t c = (bScore > aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
+				int8_t c = (bScore > aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsb - 1;
 					xsv_ext1 = xsv_ext2 = xsb;
@@ -889,7 +889,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					dw_ext0 = dw_ext1 = dw_ext2 = dw0 - 1;
 				}
 			} else { //(0,0,0,0) is not one of the closest two pentachoron vertices.
-				uint8_t c = (uint8_t)(aPoint | bPoint); //Our three extra vertices are determined by the closest two.
+				int8_t c = (int8_t)(aPoint | bPoint); //Our three extra vertices are determined by the closest two.
 				
 				if ((c & 0x01) == 0) {
 					xsv_ext0 = xsv_ext2 = xsb;
@@ -1002,9 +1002,9 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			}
 		} else if (inSum >= 3) { //We're inside the pentachoron (4-Simplex) at (1,1,1,1)
 			//Determine which two of (1,1,1,0), (1,1,0,1), (1,0,1,1), (0,1,1,1) are closest.
-			uint8_t aPoint = 0x0E;
+			int8_t aPoint = 0x0E;
 			double aScore = xins;
-			uint8_t bPoint = 0x0D;
+			int8_t bPoint = 0x0D;
 			double bScore = yins;
 			if (aScore <= bScore && zins < bScore) {
 				bScore = zins;
@@ -1025,7 +1025,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			//This depends on the closest two pentachoron vertices, including (0,0,0,0)
 			double uins = 4 - inSum;
 			if (uins < aScore || uins < bScore) { //(1,1,1,1) is one of the closest two pentachoron vertices.
-				uint8_t c = (bScore < aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
+				int8_t c = (bScore < aScore ? bPoint : aPoint); //Our other closest vertex is the closest out of a and b.
 				
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsb + 2;
@@ -1082,7 +1082,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					dw_ext0 = dw_ext1 = dw_ext2 = dw0 - 4 * SQUISH_CONSTANT_4D;
 				}
 			} else { //(1,1,1,1) is not one of the closest two pentachoron vertices.
-				uint8_t c = (uint8_t)(aPoint & bPoint); //Our three extra vertices are determined by the closest two.
+				int8_t c = (int8_t)(aPoint & bPoint); //Our three extra vertices are determined by the closest two.
 				
 				if ((c & 0x01) != 0) {
 					xsv_ext0 = xsv_ext2 = xsb + 1;
@@ -1199,10 +1199,10 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			}
 		} else if (inSum <= 2) { //We're inside the first dispentachoron (Rectified 4-Simplex)
 			double aScore;
-			uint8_t aPoint;
+			int8_t aPoint;
 			bool aIsBiggerSide = true;
 			double bScore;
-			uint8_t bPoint;
+			int8_t bPoint;
 			bool bIsBiggerSide = true;
 			
 			//Decide between (1,1,0,0) and (0,0,1,1)
@@ -1295,8 +1295,8 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			//Where each of the two closest points are determines how the extra three vertices are calculated.
 			if (aIsBiggerSide == bIsBiggerSide) {
 				if (aIsBiggerSide) { //Both closest points on the bigger side
-					uint8_t c1 = (uint8_t)(aPoint | bPoint);
-					uint8_t c2 = (uint8_t)(aPoint & bPoint);
+					int8_t c1 = (int8_t)(aPoint | bPoint);
+					int8_t c2 = (int8_t)(aPoint & bPoint);
 					if ((c1 & 0x01) == 0) {
 						xsv_ext0 = xsb;
 						xsv_ext1 = xsb - 1;
@@ -1376,7 +1376,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					dw_ext2 = dw0;
 					
 					//Other two points are based on the omitted axes.
-					uint8_t c = (uint8_t)(aPoint | bPoint);
+					int8_t c = (int8_t)(aPoint | bPoint);
 					
 					if ((c & 0x01) == 0) {
 						xsv_ext0 = xsb - 1;
@@ -1433,7 +1433,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					
 				}
 			} else { //One point on each "side"
-				uint8_t c1, c2;
+				int8_t c1, c2;
 				if (aIsBiggerSide) {
 					c1 = aPoint;
 					c2 = bPoint;
@@ -1628,10 +1628,10 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			}
 		} else { //We're inside the second dispentachoron (Rectified 4-Simplex)
 			double aScore;
-			uint8_t aPoint;
+			int8_t aPoint;
 			bool aIsBiggerSide = true;
 			double bScore;
-			uint8_t bPoint;
+			int8_t bPoint;
 			bool bIsBiggerSide = true;
 			
 			//Decide between (0,0,1,1) and (1,1,0,0)
@@ -1724,8 +1724,8 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 			//Where each of the two closest points are determines how the extra three vertices are calculated.
 			if (aIsBiggerSide == bIsBiggerSide) {
 				if (aIsBiggerSide) { //Both closest points on the bigger side
-					uint8_t c1 = (uint8_t)(aPoint & bPoint);
-					uint8_t c2 = (uint8_t)(aPoint | bPoint);
+					int8_t c1 = (int8_t)(aPoint & bPoint);
+					int8_t c2 = (int8_t)(aPoint | bPoint);
 					
 					//Two contributions are permutations of (0,0,0,1) and (0,0,0,2) based on c1
 					xsv_ext0 = xsv_ext1 = xsb;
@@ -1796,7 +1796,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					dw_ext2 = dw0 - 1 - 4 * SQUISH_CONSTANT_4D;
 					
 					//Other two points are based on the shared axes.
-					uint8_t c = (uint8_t)(aPoint & bPoint);
+					int8_t c = (int8_t)(aPoint & bPoint);
 					
 					if ((c & 0x01) != 0) {
 						xsv_ext0 = xsb + 2;
@@ -1852,7 +1852,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 					}
 				}
 			} else { //One point on each "side"
-				uint8_t c1, c2;
+				int8_t c1, c2;
 				if (aIsBiggerSide) {
 					c1 = aPoint;
 					c2 = bPoint;

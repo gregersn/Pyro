@@ -51,8 +51,8 @@ class OpenSimplexNoise {
 	private:
         static const double constexpr STRETCH_CONSTANT_2D = -0.211324865405187;    //(1/Math.sqrt(2+1)-1)/2;
         static const double constexpr SQUISH_CONSTANT_2D = 0.366025403784439;      //(Math.sqrt(2+1)-1)/2;
-        static const double constexpr STRETCH_CONSTANT_3D = -1.0 / 6;              //(1/Math.sqrt(3+1)-1)/3;
-        static const double constexpr SQUISH_CONSTANT_3D = 1.0 / 3;                //(Math.sqrt(3+1)-1)/3;
+        static const double constexpr STRETCH_CONSTANT_3D = -1.0 / 6.0;              //(1/Math.sqrt(3+1)-1)/3;
+        static const double constexpr SQUISH_CONSTANT_3D = 1.0 / 3.0;                //(Math.sqrt(3+1)-1)/3;
         static const double constexpr STRETCH_CONSTANT_4D = -0.138196601125011;    //(1/Math.sqrt(4+1)-1)/4;
         static const double constexpr SQUISH_CONSTANT_4D = 0.309016994374947;      //(Math.sqrt(4+1)-1)/4;
         
