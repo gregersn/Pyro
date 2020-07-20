@@ -37,16 +37,23 @@ namespace Pyro {
     void nostroke();
     void nofill();
 
-    void background(Color c);
+    void background(Color c /Constrained/);
 
     void background(int c);
     void background(int c, int a);
+    void background(int r, int g, int b);
+    void background(int r, int g, int b, int a);
 
     void smooth();
     void nosmooth();
 
-    void fill(Color c);
-    void stroke(Color c);
+    void fill(Color c /Constrained/);
+    void fill(int c);
+    void fill(int c, int a);
+    void fill(int r, int g, int b);
+    void fill(int r, int g, int b, int a);
+
+    void stroke(Color c /Constrained/);
     void stroke(int c);
     void stroke(int c, int a);
     void stroke(int r, int g, int b);
