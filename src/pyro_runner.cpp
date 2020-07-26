@@ -1,5 +1,6 @@
 #include "pyro/pyro_runner.h"
 #include "pyro/pyro_sdl.h"
+#include "pyro/pyro_glfw.h"
 #include "pyro/pyro.h"
 #include <iostream>
 
@@ -12,7 +13,7 @@ namespace Pyro {
     void init() {
         running = true;
         looping = true;
-        runner = new SDLRunner(width, height);
+        runner = new GLFWRunner(width, height);
         runner->init();
     }
 
