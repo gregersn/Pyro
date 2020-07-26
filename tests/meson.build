@@ -12,7 +12,7 @@ test_sources = ['tests-main.cpp',
 testexe = executable('unit-tests', test_sources,
                      include_directories: inc_dir,
                      link_with: pyrolib,
-                     dependencies: [freetype_dep, catch2.get_variable('catch2_dep')],
+                     dependencies: [catch2.get_variable('catch2_dep')],
                      install: false)
 
 

@@ -1,5 +1,5 @@
 #include <pyro/pyrographics_cairo.h>
-
+#include <pyro/pyrofont_impl.h>
 namespace Pyro {
     GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Graphics(width, height, format, 1) {
         this->surface = cairo_image_surface_create_for_data(this->load_bytes(),
@@ -234,6 +234,6 @@ namespace Pyro {
             cairo_font_face_destroy(this->font);
             this->font = nullptr;
         }
-        this->font = cairo_ft_font_face_create_for_ft_face(font->get_ft_face(), 0);
+        this->font = cairo_ft_font_face_create_for_ft_face(font->impl->get_ft_face(), 0);
     }
 }
