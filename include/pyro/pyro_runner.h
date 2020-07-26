@@ -2,6 +2,10 @@
 #define PYRO_RUNNER_H
 
 namespace Pyro {
+    enum RUNNER {
+        SDL, GLFW
+    };
+
     class Runner {
     public:
         Runner() : running(true) {};
@@ -17,10 +21,11 @@ namespace Pyro {
     };
     extern unsigned int framecount;
 
-    void init();
+    void init(RUNNER _r);
     void update();
     void quit();
     void run(void (*setup)(), void (*draw)());
+    void run(void (*setup)(), void (*draw)(), RUNNER runner);
     void noloop();
     void loop();
 

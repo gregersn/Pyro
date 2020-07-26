@@ -10,10 +10,18 @@ namespace Pyro {
     bool running;
     bool looping;
 
-    void init() {
+    void init(RUNNER _r) {
         running = true;
         looping = true;
-        runner = new GLFWRunner(width, height);
+        switch(_r) {
+            case RUNNER::GLFW:
+                runner = new GLFWRunner(width, height);
+            break;
+            case RUNNER::SDL:
+            default:
+                runner = new SDLRunner(width, height);
+            break;
+        }
         runner->init();
     }
 
@@ -36,8 +44,12 @@ namespace Pyro {
     }
 
     void run(void (*setup)(), void (*draw)()) {
+        run(setup, draw, RUNNER::SDL);
+    }
+
+    void run(void (*setup)(), void (*draw)(), RUNNER runner) {
         setup();
-        init();
+        init(runner);
         while(running) {
             if(looping) {
                 pushmatrix();

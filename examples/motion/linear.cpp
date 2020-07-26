@@ -23,6 +23,6 @@ void draw()
 }
 
 int main(int argc, char **argv) {
-    run(setup, draw);
+    run(setup, draw, RUNNER::GLFW);
     return 0;
 }
