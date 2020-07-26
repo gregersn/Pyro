@@ -10,7 +10,7 @@
 #include "pyrovector.h"
 #include "pyrographics.h"
 #include "pyronoise.h"
-#include "pyro_sdl.h"
+#include "pyro_runner.h"
 
 namespace Pyro {
     enum class Unit {

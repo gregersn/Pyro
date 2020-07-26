@@ -1,4 +1,5 @@
 pyro_sources = ['pyro.cpp',
+                'pyro_runner.cpp',
                 'pyro_sdl.cpp',
                 'pyrocolor.cpp', 
                 'pyrofont.cpp',

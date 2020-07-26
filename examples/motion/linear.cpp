@@ -1,4 +1,4 @@
-#include <pyro/pyro_sdl.h>
+#include <pyro/pyro.h>
 
 using namespace Pyro;
 

@@ -5,7 +5,8 @@
 #include <SDL2/SDL.h>
 
 namespace Pyro {
-    class PyroRunner {
+    class SDLRunner : public Runner {
+        protected:
         SDL_Window *win = nullptr;
         SDL_Renderer *ren = nullptr;
         SDL_Texture *tex = nullptr;
@@ -18,30 +19,15 @@ namespace Pyro {
         unsigned int height;
 
         public:
-            PyroRunner();
-            PyroRunner(const PyroRunner &in);
-            PyroRunner(unsigned int width, unsigned int height);
-            PyroRunner & operator=(const PyroRunner &in);
-            ~PyroRunner();
+            SDLRunner();
+            SDLRunner(const SDLRunner &in);
+            SDLRunner(unsigned int width, unsigned int height);
+            SDLRunner & operator=(const SDLRunner &in);
+            ~SDLRunner();
             int update();
             int quit();
             int init();
-            bool running;
     };
-
-    extern unsigned int framecount;
-
-    void init();
-    void update();
-    void quit();
-    void run(void (*setup)(), void (*draw)());
-    void noloop();
-    void loop();
-
-    extern bool running;
-    extern PyroRunner *pyro;
-
 }
-
 
 #endif
