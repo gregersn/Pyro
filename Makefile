@@ -14,7 +14,7 @@ DEPS := $(OBJECTS:.o=.d)
 
 # -g Produce debugging information in the operating system's native format
 CXXFLAGS = -Wall -std=c++17 -I include
-LDFLAGS = -L.
+LDFLAGS = -L. -L./build/src
 LDLIBS = -lpyro
 
 PYRO_CXXFLAGS := -g -Wall `pkg-config --cflags cairo sdl2` -std=c++17 -I include -fPIC

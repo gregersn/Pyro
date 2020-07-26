@@ -2,21 +2,22 @@
 #include <iostream>
 
 namespace Pyro {
-    PyroRunner::PyroRunner() : width(640), height(480), running(true) {
+    SDLRunner::SDLRunner() : Runner(), width(640), height(480){
     }
 
-    PyroRunner::PyroRunner(unsigned int width, unsigned int height) : width(width), height(height), running(true) {
+    SDLRunner::SDLRunner(unsigned int width, unsigned int height) : Runner(), width(width), height(height) {
     }
 
-    PyroRunner::~PyroRunner() {
+    SDLRunner::~SDLRunner() {
 
     }
 
-    int PyroRunner::init() {
+    int SDLRunner::init() {
         if(SDL_Init(SDL_INIT_VIDEO) != 0) {
             std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
             return 1;
         }
+        std::cout << "SDL initialized\n";
         open_window();
         create_renderer();
         create_texture();
@@ -24,7 +25,7 @@ namespace Pyro {
         return 0;
     }
 
-    int PyroRunner::open_window() {
+    int SDLRunner::open_window() {
         win = SDL_CreateWindow("Pyro",
                             SDL_WINDOWPOS_UNDEFINED,
                             SDL_WINDOWPOS_UNDEFINED,
@@ -40,7 +41,7 @@ namespace Pyro {
         return 0;
     }
 
-    int PyroRunner::create_renderer() {
+    int SDLRunner::create_renderer() {
     ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
         if(ren == nullptr) {
             SDL_DestroyWindow(win);
@@ -51,7 +52,7 @@ namespace Pyro {
         return 0;
     }
 
-    int PyroRunner::create_texture() {
+    int SDLRunner::create_texture() {
         tex = SDL_CreateTexture(ren,
                                 SDL_PIXELFORMAT_ARGB8888, 
                                 SDL_TEXTUREACCESS_STREAMING,
@@ -66,7 +67,7 @@ namespace Pyro {
         return 0;
     }
 
-    int PyroRunner::update() {
+    int SDLRunner::update() {
         SDL_UpdateTexture(tex, NULL, pg->get_data(), width * sizeof(uint32_t));
         SDL_Event e;
         SDL_RenderClear(ren);
@@ -88,7 +89,7 @@ namespace Pyro {
         return 0;
     }
 
-    int PyroRunner::quit() {
+    int SDLRunner::quit() {
         SDL_DestroyTexture(tex);
         SDL_DestroyRenderer(ren);
         SDL_DestroyWindow(win);
@@ -96,48 +97,4 @@ namespace Pyro {
         return 0;
     }
 
-    unsigned int framecount = 0;
-    PyroRunner *runner = nullptr;
-    bool running;
-    bool looping;
-
-    void init() {
-        running = true;
-        looping = true;
-        runner = new PyroRunner(width, height);
-        runner->init();
-    }
-
-    void update() {
-        runner->update();
-        running = runner->running;
-        framecount++;
-    }
-
-    void quit() {
-        runner->quit();
-    }
-
-    void loop() {
-        looping = true;
-    }
-
-    void noloop() {
-        looping = false;
-    }
-
-    void run(void (*setup)(), void (*draw)()) {
-        setup();
-        init();
-        while(running) {
-            if(looping) {
-                pushmatrix();
-                draw();
-                popmatrix();
-            }
-            update();
-        }
-        quit();
-
-    }
 }
