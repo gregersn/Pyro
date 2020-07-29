@@ -10,6 +10,7 @@ cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
 glfw_dep = dependency('glfw3')
 gl_dep = dependency('gl')
+vulkan_dep = dependency('vulkan')
 
 catch2 = subproject('catch2')
 

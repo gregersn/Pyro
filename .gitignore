@@ -32,3 +32,5 @@ subprojects/*/
 .mypy_cache/
 __pycache__/
 .noseids
+
+shaders/*.spv

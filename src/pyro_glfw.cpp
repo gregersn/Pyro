@@ -19,6 +19,7 @@ namespace Pyro {
         }
         std::cout << "GLFW initialized\n";
         open_window();
+        this->engine = new VulkanEngine(win, width, height);
         create_renderer();
         create_texture();
 
@@ -26,8 +27,10 @@ namespace Pyro {
     }
 
     int GLFWRunner::open_window() {
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         win = glfwCreateWindow(this->width, this->height,
-                            "Pyro", NULL, NULL);
+                            "Pyro", nullptr, nullptr);
 
         if(!win) {
             std::cout << "GLFW_CreateWindow Error: " << std::endl;
@@ -48,16 +51,25 @@ namespace Pyro {
     }
 
     int GLFWRunner::update() {
+        this->engine->draw_frame();
+
         if(glfwWindowShouldClose(win)) {
             this->running = false;
+            this->engine->shutdown();
+            return 0;
         }
-        glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(win);
         glfwPollEvents();
         return 0;
     }
 
     int GLFWRunner::quit() {
+        std::cout << "Quitting" << std::endl;
+        if(this->engine != nullptr) {
+            std::cout << "Cleaning up" << std::endl;
+            this->engine->clean_up();
+        }
+        glfwDestroyWindow(win);
         glfwTerminate();
         return 0;
     }
