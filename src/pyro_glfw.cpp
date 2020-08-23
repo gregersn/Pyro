@@ -19,10 +19,23 @@ namespace Pyro {
         }
         std::cout << "GLFW initialized\n";
         open_window();
+        glfwSetKeyCallback(win, glfw_key_callback);
         create_renderer();
         create_texture();
 
         return 0;
+    }
+
+    void GLFWRunner::glfw_key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+        switch(action) {
+            case GLFW_PRESS:
+                keydown(key);
+            break;
+            case GLFW_RELEASE:
+            case GLFW_REPEAT:
+            default:
+            break;
+        }
     }
 
     int GLFWRunner::open_window() {
@@ -58,6 +71,11 @@ namespace Pyro {
     }
 
     int GLFWRunner::quit() {
+        glfwSetWindowShouldClose(win, true);
+        return 0;
+    }
+
+    int GLFWRunner::deinit() {
         glfwTerminate();
         return 0;
     }

@@ -16,6 +16,8 @@ namespace Pyro {
         unsigned int width;
         unsigned int height;
 
+        static void glfw_key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
+
         public:
             GLFWRunner();
             GLFWRunner(const GLFWRunner &in);
@@ -25,6 +27,7 @@ namespace Pyro {
             int update();
             int quit();
             int init();
+            int deinit();
     };
 }
 

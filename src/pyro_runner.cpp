@@ -31,6 +31,10 @@ namespace Pyro {
         framecount++;
     }
 
+    void deinit() {
+        runner->deinit();
+    }
+
     void quit() {
         runner->quit();
     }
@@ -47,6 +51,14 @@ namespace Pyro {
         run(setup, draw, RUNNER::SDL);
     }
 
+    void keydown(int key) {
+        if(key == KEYBOARD_ESCAPE) {
+            runner->quit();
+            return;
+        }
+        std::cout << "Key pressed " << static_cast<int>(key) << std::endl;
+    }
+
     void run(void (*setup)(), void (*draw)(), RUNNER runner) {
         setup();
         init(runner);
@@ -58,7 +70,7 @@ namespace Pyro {
             }
             update();
         }
-        quit();
+        deinit();
 
     }
 }

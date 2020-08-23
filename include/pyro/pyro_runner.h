@@ -6,6 +6,8 @@ namespace Pyro {
         SDL, GLFW
     };
 
+    #define KEYBOARD_ESCAPE 256
+
     class Runner {
     public:
         Runner() : running(true) {};
@@ -16,6 +18,7 @@ namespace Pyro {
 
         virtual int update() { throw; return 0; };
         virtual int quit() { throw; return 0; };
+        virtual int deinit() { throw; return 0; };
         virtual int init() { throw; return 0; };
         bool running;
     };
@@ -28,6 +31,8 @@ namespace Pyro {
     void run(void (*setup)(), void (*draw)(), RUNNER runner);
     void noloop();
     void loop();
+
+    void keydown(int key);
 
     extern bool running;
     extern Runner *pyro;
