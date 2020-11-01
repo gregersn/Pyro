@@ -20,6 +20,8 @@ namespace Pyro {
 %End
     double random(double range);
     double random(double low, double high);
+    void randomseed(unsigned int seed);
+
     float radians(float degrees);
     float degrees(float radian);
 
