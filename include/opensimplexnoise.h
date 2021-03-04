@@ -46,6 +46,7 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 #define OPENSIMPLEXNOISE_H
 
 #include <array>
+#include <cstdint>
 
 class OpenSimplexNoise {
 	private:

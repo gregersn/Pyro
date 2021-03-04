@@ -63,7 +63,13 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "bit": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "list": "cpp",
+        "ranges": "cpp",
+        "stop_token": "cpp",
+        "__nullptr": "cpp"
     },
     "python.pythonPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {
