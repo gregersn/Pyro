@@ -2,9 +2,9 @@ name: Build and test
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   ci:
@@ -14,19 +14,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name: [
-          ubuntu-18.04-gcc-9,
-          ubuntu-18.04-clang-9,
-          ubuntu-20.04-gcc-9,
-          macos-latest-xcode,
-        ]
+        name:
+          [
+            ubuntu-18.04-gcc-9,
+            ubuntu-18.04-clang-9,
+            ubuntu-20.04-gcc-9,
+            macos-latest-xcode,
+          ]
 
         include:
           - name: ubuntu-18.04-gcc-9
             os: ubuntu-18.04
             compiler: gcc
             version: "9"
-          
+
           - name: ubuntu-18.04-clang-9
             os: ubuntu-18.04
             compiler: clang
@@ -36,20 +37,20 @@ jobs:
             os: ubuntu-20.04
             compiler: gcc
             version: "9"
-          
+
           - name: macos-latest-xcode
             os: macos-latest
             compiler: xcode
             version: "12"
-          
+
     steps:
       - uses: actions/checkout@v2
         with:
-          lfs: 'true'
+          lfs: "true"
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: 3.7
+          python-version: "3.8"
 
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
@@ -65,10 +66,10 @@ jobs:
             echo "name=CC::clang-${{ matrix.version }}" >> $GITHUB_ENV
             echo "name=CXX::clang++-${{ matrix.version }}" >> $GITHUB_ENV
           fi
-          
+
           sudo apt-get install libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev
           pip install meson ninja
-      
+
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
@@ -97,7 +98,7 @@ jobs:
       - name: Run tests
         run: |
           ninja -C build test
-      
+
       - name: Upload screenshots
         uses: actions/upload-artifact@v2
         if: failure()
