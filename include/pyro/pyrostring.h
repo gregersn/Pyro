@@ -2,7 +2,8 @@
 #define PYRO_STRING_H
 
 #include <string>
-namespace Pyro {
+namespace Pyro
+{
     std::string nf(uint64_t number, uint64_t digits);
 }
 #endif

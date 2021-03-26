@@ -4,7 +4,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-namespace Pyro {
+namespace Pyro
+{
     const double PI = M_PI;
     const double TWO_PI = PI * 2.0;
     const double HALF_PI = PI / 2.0;
@@ -22,7 +23,7 @@ namespace Pyro {
     const int CORNERS = 1;
     const int CENTER = 2;
     const int RADIUS = 3;
-    
+
     // Stroke caps
     const int ROUND = 5;
     const int SQUARE = 6;

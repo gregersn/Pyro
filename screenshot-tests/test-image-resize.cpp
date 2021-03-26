@@ -3,12 +3,15 @@
 
 #include "pyro/pyroimage.h"
 
-TEST_CASE("Images can be resized") {
-    SECTION("Resize a loaded image with different methods") {
+TEST_CASE("Images can be resized")
+{
+    SECTION("Resize a loaded image with different methods")
+    {
         Pyro::Image *img = Pyro::Image::load("../tests/ducks.jpg");
         REQUIRE(img != nullptr);
 
-        SECTION("Nearest neighbor scale up") {
+        SECTION("Nearest neighbor scale up")
+        {
             Pyro::Image *img2 = img->resize(600, 600, Pyro::NEAREST);
             std::string filename = "image_resize_scale_up_nn_loaded.png";
 
@@ -21,11 +24,10 @@ TEST_CASE("Images can be resized") {
             delete img;
 
             CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        }
 
-        }      
-
-
-        SECTION("Nearest neighbor scale down") {
+        SECTION("Nearest neighbor scale down")
+        {
             Pyro::Image *img2 = img->resize(400, 400, Pyro::NEAREST);
             std::string filename = "image_resize_scale_down_nn_loaded.png";
 
@@ -38,11 +40,10 @@ TEST_CASE("Images can be resized") {
             delete img;
 
             CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-        }      
+        }
 
-
-
-        SECTION("Bilinear scale up") {
+        SECTION("Bilinear scale up")
+        {
             Pyro::Image *img2 = img->resize(600, 600, Pyro::BILINEAR);
             std::string filename = "image_resize_scale_up_bi_loaded.png";
 
@@ -55,10 +56,10 @@ TEST_CASE("Images can be resized") {
             delete img;
 
             CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-
         }
 
-        SECTION("Bilinear scale down") {
+        SECTION("Bilinear scale down")
+        {
             Pyro::Image *img2 = img->resize(400, 400, Pyro::BILINEAR);
             std::string filename = "image_resize_scale_down_bi_loaded.png";
 
@@ -71,8 +72,6 @@ TEST_CASE("Images can be resized") {
             delete img;
 
             CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-
         }
-
     }
 }

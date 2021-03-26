@@ -3,42 +3,51 @@
 #include "pyro/pyro.h"
 #include <iostream>
 
-namespace Pyro {
+namespace Pyro
+{
     unsigned int framecount = 0;
     Runner *runner = nullptr;
     bool running;
     bool looping;
 
-    void init() {
+    void init()
+    {
         running = true;
         looping = true;
         runner = new SDLRunner(width, height);
         runner->init();
     }
 
-    void update() {
+    void update()
+    {
         runner->update();
         running = runner->running;
         framecount++;
     }
 
-    void quit() {
+    void quit()
+    {
         runner->quit();
     }
 
-    void loop() {
+    void loop()
+    {
         looping = true;
     }
 
-    void noloop() {
+    void noloop()
+    {
         looping = false;
     }
 
-    void run(void (*setup)(), void (*draw)()) {
+    void run(void (*setup)(), void (*draw)())
+    {
         setup();
         init();
-        while(running) {
-            if(looping) {
+        while (running)
+        {
+            if (looping)
+            {
                 pushmatrix();
                 draw();
                 popmatrix();
@@ -46,6 +55,5 @@ namespace Pyro {
             update();
         }
         quit();
-
     }
 }

@@ -2,12 +2,14 @@
 #include "test-settings.h"
 #include "pyro/pyrographics.h"
 
-TEST_CASE("Test Rect", "[shapes") {
+TEST_CASE("Test Rect", "[shapes")
+{
     std::string filename = "";
 
-    SECTION("Corner drawing") {
+    SECTION("Corner drawing")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(250, 250, testmode);
-        filename ="shape_rect_corner.png";
+        filename = "shape_rect_corner.png";
         p->nofill();
         p->stroke(0.0f, 1.0f);
         p->rect(10, 10, 100, 100);
@@ -19,7 +21,7 @@ TEST_CASE("Test Rect", "[shapes") {
         p->stroke(0.0f, 1.0f);
         p->fill(0.0f, 1.0f, 0.0f, 1.0f);
         p->rect(10, 120, 100, 100);
-        
+
         p->nostroke();
         p->nofill();
         p->rect(120, 120, 100, 100);
@@ -27,12 +29,12 @@ TEST_CASE("Test Rect", "[shapes") {
         p->save(current_folder + filename);
         delete p;
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-
     }
 
-    SECTION("Center drawing") {
+    SECTION("Center drawing")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(250, 250, testmode);
-        std::string filename ="shape_rect_center.png";
+        std::string filename = "shape_rect_center.png";
         p->rectmode(Pyro::CENTER);
         p->nofill();
         p->stroke(0.0f, 1.0f);
@@ -45,22 +47,22 @@ TEST_CASE("Test Rect", "[shapes") {
         p->stroke(0.0f, 1.0f);
         p->fill(0.0f, 0.0f, 1.0f, 1.0f);
         p->rect(60, 170, 100, 100);
-        
+
         p->nostroke();
         p->nofill();
-        p->rect(170, 170, 100, 100);      
+        p->rect(170, 170, 100, 100);
 
         p->save(current_folder + filename);
         delete p;
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-
-
 }
 
-TEST_CASE("Draw shapes", "[shapes]") {
+TEST_CASE("Draw shapes", "[shapes]")
+{
     Pyro::Graphics *p = Pyro::Graphics::create(128, 128, testmode);
-    SECTION("Draw triangle") {
+    SECTION("Draw triangle")
+    {
         std::string filename = "shape_triangle.png";
         p->background(192);
         p->nostroke();
@@ -70,7 +72,8 @@ TEST_CASE("Draw shapes", "[shapes]") {
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
 
-    SECTION("Draw circle") {
+    SECTION("Draw circle")
+    {
         std::string filename = "shape_circle.png";
         p->background(192);
         p->nostroke();
@@ -80,7 +83,8 @@ TEST_CASE("Draw shapes", "[shapes]") {
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
 
-    SECTION("Draw ellipse") {
+    SECTION("Draw ellipse")
+    {
         std::string filename = "shape_ellipse.png";
         p->background(192);
         p->nostroke();
@@ -93,18 +97,22 @@ TEST_CASE("Draw shapes", "[shapes]") {
     delete p;
 }
 
-TEST_CASE("Variable side count ellipses", "[shapes]") {
+TEST_CASE("Variable side count ellipses", "[shapes]")
+{
     Pyro::Graphics *p = Pyro::Graphics::create(512, 512, testmode);
-    SECTION("Draw ellipses with n siders") {
+    SECTION("Draw ellipses with n siders")
+    {
         std::string filename = "shape_n_ellipses.png";
         p->background(192);
         p->fill(255, 64, 128);
         p->ellipsemode(Pyro::CENTER);
 
-        for(uint y = 0; y < 4; y++) {
+        for (uint y = 0; y < 4; y++)
+        {
             p->pushmatrix();
-            for(uint x = 0; x < 4; x++) {
-                p->ellipse(512 / 8, 512 / 8, 500 / 4, 500 / 4, (y * 4) + x  + 3);
+            for (uint x = 0; x < 4; x++)
+            {
+                p->ellipse(512 / 8, 512 / 8, 500 / 4, 500 / 4, (y * 4) + x + 3);
                 p->translate(512 / 4, 0);
             }
             p->popmatrix();
@@ -116,9 +124,11 @@ TEST_CASE("Variable side count ellipses", "[shapes]") {
     delete p;
 }
 
-TEST_CASE("Complex shapes", "[shapes]") {
+TEST_CASE("Complex shapes", "[shapes]")
+{
     Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
-    SECTION("Draw shape with hole") {
+    SECTION("Draw shape with hole")
+    {
         std::string filename = "shape_multi_contour.png";
         p->translate(50, 50);
         p->stroke(255, 0, 0);
@@ -139,7 +149,6 @@ TEST_CASE("Complex shapes", "[shapes]") {
 
         p->save(current_folder + filename);
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-
     }
     delete p;
 }

@@ -2,11 +2,13 @@
 #include "test-settings.h"
 #include "pyro/pyro.h"
 
-TEST_CASE("Place image full screen") {
+TEST_CASE("Place image full screen")
+{
     std::string filename = "image_place_default.png";
 
     Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png");
-    if(img == nullptr) {
+    if (img == nullptr)
+    {
         FAIL_CHECK("Test image does not exist");
         return;
     }
@@ -22,11 +24,13 @@ TEST_CASE("Place image full screen") {
     CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
 }
 
-TEST_CASE("Place image 50% at center rotated 45 degrees") {
+TEST_CASE("Place image 50% at center rotated 45 degrees")
+{
     std::string filename = "image_place_scaled_rotated.png";
 
     Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png");
-    if(img == nullptr) {
+    if (img == nullptr)
+    {
         FAIL_CHECK("Test image does not exist");
         return;
     }
@@ -39,15 +43,17 @@ TEST_CASE("Place image 50% at center rotated 45 degrees") {
     p->image(img, 0, 0);
 
     p->save(current_folder + filename);
-    
+
     delete img;
     delete p;
 
     CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
 }
 
-TEST_CASE("Place images with different channel count") {
-    SECTION("4 channels") {
+TEST_CASE("Place images with different channel count")
+{
+    SECTION("4 channels")
+    {
         std::string filename = "image_place_4ch.png";
 
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png");
@@ -63,7 +69,8 @@ TEST_CASE("Place images with different channel count") {
         delete img;
     }
 
-    SECTION("3 channels") {
+    SECTION("3 channels")
+    {
         std::string filename = "image_place_3ch.png";
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png")->convert(Pyro::RGB);
         REQUIRE(img->channels() == 3);
@@ -76,10 +83,10 @@ TEST_CASE("Place images with different channel count") {
 
         delete p;
         delete img;
-
     }
 
-    SECTION("1 channel") {
+    SECTION("1 channel")
+    {
         std::string filename = "image_place_1ch.png";
         Pyro::Image *img = Pyro::Image::load(actual_folder + "test_image.png")->convert(Pyro::GRAY);
         REQUIRE(img->channels() == 1);
@@ -92,6 +99,5 @@ TEST_CASE("Place images with different channel count") {
 
         delete p;
         delete img;
-
     }
 }

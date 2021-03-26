@@ -12,9 +12,14 @@
 #include "pyronoise.h"
 #include "pyro_runner.h"
 
-namespace Pyro {
-    enum class Unit {
-        px, cm, mm, in
+namespace Pyro
+{
+    enum class Unit
+    {
+        px,
+        cm,
+        mm,
+        in
     };
 
     extern Graphics *pg; // Graphics context
@@ -22,11 +27,13 @@ namespace Pyro {
     extern unsigned int height;
     extern uint32_t *pixels;
 
-    inline Graphics *create(unsigned int width, unsigned int height) {
+    inline Graphics *create(unsigned int width, unsigned int height)
+    {
         return Graphics::create(width, height);
     }
 
-    inline Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode) {
+    inline Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode)
+    {
         return Graphics::create(width, height, mode);
     }
 

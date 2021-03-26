@@ -1,7 +1,8 @@
 #ifndef PYRONOISE_H
 #define PYRONOISE_H
 
-namespace Pyro {
+namespace Pyro
+{
     void noiseseed(long seed);
     double noise(double x, double y);
     double noise(double x, double y, double z);
