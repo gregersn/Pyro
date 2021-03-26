@@ -3,6 +3,7 @@ test_sources = [
                 'test-fonts.cpp',
                 'test-graphics.cpp',
                 'test-image.cpp',
+                'test-graphics-gsn.cpp',
                 'test-math.cpp',
                 'test-noise.cpp',
                 'test-pyro.cpp',

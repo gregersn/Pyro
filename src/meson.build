@@ -15,6 +15,7 @@ pyro_sources = ['pyro.cpp',
                 'noise.cpp',
                 'string.cpp',
                 'transformer.cpp',
+                'pyrographics_gsn.cpp',
                 'opensimplexnoise.cpp']
 
 pyro = library(meson.project_name(), 

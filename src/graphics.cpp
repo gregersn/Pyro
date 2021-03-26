@@ -4,6 +4,7 @@
 #include "pyro/graphics.h"
 #include "pyro/graphics_cairo.h"
 #include "pyro/utils.h"
+#include "pyro/pyrographics_gsn.h"
 
 #include <iostream>
 #include <cstring>
@@ -30,6 +31,8 @@ namespace Pyro
 
         switch (mode)
         {
+        case GraphicsMode::GSN:
+            return new GraphicsGSN(width, height, ARGB, 1);
         case GraphicsMode::CAIRO:
         default:
             return new GraphicsCairo(width, height, ARGB, dpi, unit);
