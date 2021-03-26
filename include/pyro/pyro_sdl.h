@@ -4,9 +4,11 @@
 #include "pyro/pyro.h"
 #include <SDL2/SDL.h>
 
-namespace Pyro {
-    class SDLRunner : public Runner {
-        protected:
+namespace Pyro
+{
+    class SDLRunner : public Runner
+    {
+    protected:
         SDL_Window *win = nullptr;
         SDL_Renderer *ren = nullptr;
         SDL_Texture *tex = nullptr;
@@ -18,15 +20,15 @@ namespace Pyro {
         unsigned int width;
         unsigned int height;
 
-        public:
-            SDLRunner();
-            SDLRunner(const SDLRunner &in);
-            SDLRunner(unsigned int width, unsigned int height);
-            SDLRunner & operator=(const SDLRunner &in);
-            ~SDLRunner();
-            int update();
-            int quit();
-            int init();
+    public:
+        SDLRunner();
+        SDLRunner(const SDLRunner &in);
+        SDLRunner(unsigned int width, unsigned int height);
+        SDLRunner &operator=(const SDLRunner &in);
+        ~SDLRunner();
+        int update();
+        int quit();
+        int init();
     };
 }
 

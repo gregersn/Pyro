@@ -5,12 +5,13 @@
 
 #include "pyro/pyro.h"
 
-TEST_CASE("Create test image") {
+TEST_CASE("Create test image")
+{
     std::string filename = "test_image.png";
     Pyro::Graphics *p = Pyro::create(128, 128, testmode);
 
     p->nostroke();
-    
+
     p->fill(1.0f, 0.0f, 0.0f, 1.0f);
     p->rect(0, 0, p->width() / 2.0f, p->height() / 2.0f);
 
@@ -37,12 +38,14 @@ TEST_CASE("Create test image") {
     CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
 }
 
-int main( int argc, char* argv[] ) {
+int main(int argc, char *argv[])
+{
     const int direrr = system("mkdir -p ../screenshots/current");
-    if(direrr == -1) {
+    if (direrr == -1)
+    {
         exit(1);
     }
 
-    int result = Catch::Session().run( argc, argv );
+    int result = Catch::Session().run(argc, argv);
     return result;
 }

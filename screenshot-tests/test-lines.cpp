@@ -2,27 +2,30 @@
 #include "test-settings.h"
 #include "pyro/pyrographics.h"
 
-TEST_CASE("Draw line", "[strokes]") {
+TEST_CASE("Draw line", "[strokes]")
+{
     Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
 
-    SECTION("Stroke weight") {
+    SECTION("Stroke weight")
+    {
         std::string filename = "stroke_weight.png";
         p->background(192);
 
-        p->strokeweight(.5);  //  Thin
+        p->strokeweight(.5); //  Thin
         p->line(20, 15, 80, 15);
-        p->strokeweight(1);  // Default
+        p->strokeweight(1); // Default
         p->line(20, 25, 80, 25);
-        p->strokeweight(4);  // Thicker
+        p->strokeweight(4); // Thicker
         p->line(20, 45, 80, 45);
-        p->strokeweight(10);  // Beastly
+        p->strokeweight(10); // Beastly
         p->line(20, 75, 80, 75);
 
         p->save(current_folder + filename);
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
 
-    SECTION("Stroke cap") {
+    SECTION("Stroke cap")
+    {
         std::string filename = "stroke_cap.png";
         p->background(192);
 
@@ -36,10 +39,10 @@ TEST_CASE("Draw line", "[strokes]") {
 
         p->save(current_folder + filename);
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-
     }
 
-    SECTION("Stroke join") {
+    SECTION("Stroke join")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 300, testmode);
 
         std::string filename = "stroke_join.png";
@@ -83,35 +86,37 @@ TEST_CASE("Draw line", "[strokes]") {
     delete p;
 }
 
-TEST_CASE("Test curve", "[shapes]") {
-    SECTION("Draw with curvevertex()") {
+TEST_CASE("Test curve", "[shapes]")
+{
+    SECTION("Draw with curvevertex()")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
         std::string filename = "shape_curve_vertex.png";
         p->background(192);
         p->nofill();
         p->beginshape();
-        p->curvevertex(84,  91);
-        p->curvevertex(84,  91);
-        p->curvevertex(68,  19);
-        p->curvevertex(21,  17);
+        p->curvevertex(84, 91);
+        p->curvevertex(84, 91);
+        p->curvevertex(68, 19);
+        p->curvevertex(21, 17);
         p->curvevertex(32, 100);
         p->curvevertex(32, 100);
         p->endshape();
         p->save(current_folder + filename);
         delete p;
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
-
     }
 
-    SECTION("Draw with curve()") {
+    SECTION("Draw with curve()")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
         std::string filename = "shape_curve.png";
         p->background(192);
         p->nofill();
         p->stroke(255, 102, 0);
         p->curve(5, 26, 5, 26, 73, 24, 73, 61);
-        p->stroke(0); 
-        p->curve(5, 26, 73, 24, 73, 61, 15, 65); 
+        p->stroke(0);
+        p->curve(5, 26, 73, 24, 73, 61, 15, 65);
         p->stroke(255, 102, 0);
         p->curve(73, 24, 73, 61, 15, 65, 15, 65);
 
@@ -119,12 +124,13 @@ TEST_CASE("Test curve", "[shapes]") {
         delete p;
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-
 }
 
-TEST_CASE("Bezier curve", "[shapes]") {
+TEST_CASE("Bezier curve", "[shapes]")
+{
     std::string filename = "";
-    SECTION("Draw with beziervertex()") {
+    SECTION("Draw with beziervertex()")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
         std::string filename = "shape_curve_bezier_vertex.png";
         p->background(192);
@@ -138,7 +144,8 @@ TEST_CASE("Bezier curve", "[shapes]") {
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
 
-    SECTION("Draw with bezier()") {
+    SECTION("Draw with bezier()")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 200, testmode);
         std::string filename = "shape_curve_bezier.png";
         p->background(192);

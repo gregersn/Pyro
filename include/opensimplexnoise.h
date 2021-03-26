@@ -48,40 +48,40 @@ Source: https://gist.github.com/KdotJPG/b1270127455a94ac5d19
 #include <array>
 #include <cstdint>
 
-class OpenSimplexNoise {
-	private:
-        static const double constexpr STRETCH_CONSTANT_2D = -0.211324865405187;    //(1/Math.sqrt(2+1)-1)/2;
-        static const double constexpr SQUISH_CONSTANT_2D = 0.366025403784439;      //(Math.sqrt(2+1)-1)/2;
-        static const double constexpr STRETCH_CONSTANT_3D = -1.0 / 6.0;              //(1/Math.sqrt(3+1)-1)/3;
-        static const double constexpr SQUISH_CONSTANT_3D = 1.0 / 3.0;                //(Math.sqrt(3+1)-1)/3;
-        static const double constexpr STRETCH_CONSTANT_4D = -0.138196601125011;    //(1/Math.sqrt(4+1)-1)/4;
-        static const double constexpr SQUISH_CONSTANT_4D = 0.309016994374947;      //(Math.sqrt(4+1)-1)/4;
-        
-        static const double constexpr NORM_CONSTANT_2D = 47;
-        static const double constexpr NORM_CONSTANT_3D = 103;
-        static const double constexpr NORM_CONSTANT_4D = 30;
-        
-        static const long DEFAULT_SEED = 0;
-        
-        std::array<int16_t, 256> permGradIndex3D;
-        std::array<int16_t, 256> perm;
+class OpenSimplexNoise
+{
+private:
+    static const double constexpr STRETCH_CONSTANT_2D = -0.211324865405187; //(1/Math.sqrt(2+1)-1)/2;
+    static const double constexpr SQUISH_CONSTANT_2D = 0.366025403784439;   //(Math.sqrt(2+1)-1)/2;
+    static const double constexpr STRETCH_CONSTANT_3D = -1.0 / 6.0;         //(1/Math.sqrt(3+1)-1)/3;
+    static const double constexpr SQUISH_CONSTANT_3D = 1.0 / 3.0;           //(Math.sqrt(3+1)-1)/3;
+    static const double constexpr STRETCH_CONSTANT_4D = -0.138196601125011; //(1/Math.sqrt(4+1)-1)/4;
+    static const double constexpr SQUISH_CONSTANT_4D = 0.309016994374947;   //(Math.sqrt(4+1)-1)/4;
 
-        double extrapolate(int xsb, int ysb, double dx, double dy);
-        double extrapolate(int xsb, int ysb, int zsb, double dx, double dy, double dz);
-        double extrapolate(int xsb, int ysb, int zsb, int wsb, double dx, double dy, double dz, double dw);
-        static int fastFloor(double x);
-        static const std::array<int8_t, 16> gradients2D;
-        static const std::array<int8_t, 72> gradients3D;
-        static const std::array<int8_t, 256> gradients4D;
+    static const double constexpr NORM_CONSTANT_2D = 47;
+    static const double constexpr NORM_CONSTANT_3D = 103;
+    static const double constexpr NORM_CONSTANT_4D = 30;
 
+    static const long DEFAULT_SEED = 0;
 
-    public:
-        OpenSimplexNoise() : OpenSimplexNoise(DEFAULT_SEED) {};
-        OpenSimplexNoise(std::array<int16_t, 256> perm);
-        OpenSimplexNoise(long seed);
-        ~OpenSimplexNoise();
-        double eval(double x, double y);
-        double eval(double x, double y, double z);
-        double eval(double x, double y, double z, double w);
+    std::array<int16_t, 256> permGradIndex3D;
+    std::array<int16_t, 256> perm;
+
+    double extrapolate(int xsb, int ysb, double dx, double dy);
+    double extrapolate(int xsb, int ysb, int zsb, double dx, double dy, double dz);
+    double extrapolate(int xsb, int ysb, int zsb, int wsb, double dx, double dy, double dz, double dw);
+    static int fastFloor(double x);
+    static const std::array<int8_t, 16> gradients2D;
+    static const std::array<int8_t, 72> gradients3D;
+    static const std::array<int8_t, 256> gradients4D;
+
+public:
+    OpenSimplexNoise() : OpenSimplexNoise(DEFAULT_SEED){};
+    OpenSimplexNoise(std::array<int16_t, 256> perm);
+    OpenSimplexNoise(long seed);
+    ~OpenSimplexNoise();
+    double eval(double x, double y);
+    double eval(double x, double y, double z);
+    double eval(double x, double y, double z, double w);
 };
 #endif

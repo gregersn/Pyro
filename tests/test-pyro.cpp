@@ -2,14 +2,18 @@
 
 #include <pyro/pyro.h>
 
-TEST_CASE("The library can be initialized", "[setup]") {
-    SECTION("using size()") {
+TEST_CASE("The library can be initialized", "[setup]")
+{
+    SECTION("using size()")
+    {
         REQUIRE_NOTHROW(Pyro::size(100, 100));
     }
 }
 
-TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]") {
-    SECTION("using pixels sets absolute size") {
+TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]")
+{
+    SECTION("using pixels sets absolute size")
+    {
         unsigned int width = 500;
         unsigned int height = 250;
         Pyro::size(width, height);
@@ -17,7 +21,8 @@ TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]") {
         REQUIRE(height == Pyro::height);
     }
 
-    SECTION("using inches calculates the right size") {
+    SECTION("using inches calculates the right size")
+    {
         unsigned int inwidth = 10;
         unsigned int inheight = 10;
         unsigned int dpi = 1;
@@ -29,7 +34,8 @@ TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]") {
         REQUIRE(pheight == Pyro::height);
     }
 
-    SECTION("using centimeters calculates the right size") {
+    SECTION("using centimeters calculates the right size")
+    {
         unsigned int cmwidth = 254;
         unsigned int cmheight = 254;
         unsigned int dpi = 2;
@@ -41,7 +47,8 @@ TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]") {
         REQUIRE(pheight == Pyro::height);
     }
 
-    SECTION("using millimeters calculates the right size") {
+    SECTION("using millimeters calculates the right size")
+    {
         unsigned int cmwidth = 2540;
         unsigned int cmheight = 2540;
         unsigned int dpi = 2;
@@ -52,5 +59,4 @@ TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]") {
         REQUIRE(pwidth == Pyro::width);
         REQUIRE(pheight == Pyro::height);
     }
-
 }

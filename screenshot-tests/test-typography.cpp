@@ -2,18 +2,20 @@
 #include "test-settings.h"
 #include "pyro/pyrographics.h"
 
-TEST_CASE("Write text") {
+TEST_CASE("Write text")
+{
     std::string filename = "";
-    SECTION("Simple strings") {
+    SECTION("Simple strings")
+    {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
         Pyro::Font *fnt = Pyro::create_font("../fonts/Orkney Bold.otf", 12);
-        
-        filename ="typography_simple_string.png";
-        
+
+        filename = "typography_simple_string.png";
+
         p->background(192);
         p->textfont(fnt);
         p->textsize(32);
-        p->text("word", 10, 30); 
+        p->text("word", 10, 30);
         p->fill(0, 102, 153);
         p->text("word", 10, 60);
         p->fill(0, 102, 153, 51);

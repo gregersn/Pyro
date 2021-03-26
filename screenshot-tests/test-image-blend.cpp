@@ -3,8 +3,10 @@
 
 #include "pyro/pyroimage.h"
 
-TEST_CASE("Blend modes") {
-    SECTION("BLEND") {
+TEST_CASE("Blend modes")
+{
+    SECTION("BLEND")
+    {
         std::string filename = "image_blend_BLEND.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -17,7 +19,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("ADD") {
+    SECTION("ADD")
+    {
         std::string filename = "image_blend_ADD.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -30,7 +33,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("SUBTRACT") {
+    SECTION("SUBTRACT")
+    {
         std::string filename = "image_blend_SUBTRACT.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -43,7 +47,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("LIGHTEST") {
+    SECTION("LIGHTEST")
+    {
         std::string filename = "image_blend_LIGHTEST.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -56,7 +61,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("DARKEST") {
+    SECTION("DARKEST")
+    {
         std::string filename = "image_blend_DARKEST.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -69,7 +75,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("DIFFERENCE") {
+    SECTION("DIFFERENCE")
+    {
         std::string filename = "image_blend_DIFFERENCE.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -82,7 +89,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("EXCLUSION") {
+    SECTION("EXCLUSION")
+    {
         std::string filename = "image_blend_EXCLUSION.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -95,7 +103,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("MULTIPLY") {
+    SECTION("MULTIPLY")
+    {
         std::string filename = "image_blend_MULTIPLY.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -108,7 +117,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("SCREEN") {
+    SECTION("SCREEN")
+    {
         std::string filename = "image_blend_SCREEN.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -121,7 +131,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("OVERLAY") {
+    SECTION("OVERLAY")
+    {
         std::string filename = "image_blend_OVERLAY.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -134,7 +145,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("HARD_LIGHT") {
+    SECTION("HARD_LIGHT")
+    {
         std::string filename = "image_blend_HARD_LIGHT.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -147,7 +159,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("SOFT_LIGHT") {
+    SECTION("SOFT_LIGHT")
+    {
         std::string filename = "image_blend_SOFT_LIGHT.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -160,7 +173,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("DODGE") {
+    SECTION("DODGE")
+    {
         std::string filename = "image_blend_DODGE.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
@@ -173,7 +187,8 @@ TEST_CASE("Blend modes") {
 
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
-    SECTION("BURN") {
+    SECTION("BURN")
+    {
         std::string filename = "image_blend_BURN.png";
 
         Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");

@@ -3,16 +3,19 @@
 #include "pyro/pyronoise.h"
 #include "pyro/pyro.h"
 
-TEST_CASE("Test noise") {
+TEST_CASE("Test noise")
+{
     std::string filename = "noise_2d.png";
     Pyro::Image *img = Pyro::Image::create(128, 128);
     unsigned int *pixels = img->load_pixels();
 
-    for(uint y = 0; y < 128; y++) {
-        for(uint x = 0; x < 128; x++) {
+    for (uint y = 0; y < 128; y++)
+    {
+        for (uint x = 0; x < 128; x++)
+        {
             double v = Pyro::noise(x * 0.1, y * 0.1);
             REQUIRE(v >= 0.0);
-           pixels[y * 128 + x] = 0xff000000 | (uint8_t)((v) * 255);
+            pixels[y * 128 + x] = 0xff000000 | (uint8_t)((v)*255);
         }
     }
 
