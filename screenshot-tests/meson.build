@@ -6,6 +6,7 @@ test_sources = [
                 'test-image-placements.cpp',
                 'test-image-resize.cpp',
                 'test-lines.cpp',
+                'test-lines_gsn.cpp',
                 'test-noise.cpp',
                 'test-shapes.cpp',
                 'test-typography.cpp',
