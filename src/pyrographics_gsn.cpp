@@ -66,19 +66,40 @@ namespace Pyro
         if (!this->stroke_enable)
             return;
 
-        if (x0 > x1)
+        float dx = x1 - x0;
+        float dy = y1 - y0;
+
+        if (abs(dx) > abs(dy))
         {
-            std::swap(x0, x1);
-            std::swap(y0, y1);
+            if (x0 > x1)
+            {
+                std::swap(x0, x1);
+                std::swap(y0, y1);
+            }
+
+            float a = dy / dx;
+            float y = y0;
+
+            for (float x = x0; x <= x1; x++)
+            {
+                this->set(int(x), int(y), this->stroke_color.to_uint());
+                y += a;
+            }
         }
-
-        float a = (y1 - y0) / (x1 - x0);
-        float y = y0;
-
-        for (float x = x0; x <= x1; x++)
+        else
         {
-            this->set(int(x), int(y), 0xff000000);
-            y += a;
+            if (y0 > y1)
+            {
+                std::swap(x0, x1);
+                std::swap(y0, y1);
+            }
+            float a = dx / dy;
+            float x = x0;
+            for (float y = y0; y <= y1; y++)
+            {
+                this->set(int(x), int(y), this->stroke_color.to_uint());
+                x += a;
+            }
         }
     }
 }
