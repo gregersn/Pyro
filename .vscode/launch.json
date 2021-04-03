@@ -5,7 +5,7 @@
             "name": "Debug screenshot tests",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/screenshot-tests/screenshot-tests",
+            "program": "${workspaceFolder}/build/meson-out/screenshot-tests",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build/",
