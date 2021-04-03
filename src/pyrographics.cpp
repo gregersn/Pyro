@@ -47,6 +47,32 @@ namespace Pyro
         return create(width, height, GraphicsMode::CAIRO);
     }
 
+    // Coordinates
+    void Graphics::translate(float x, float y)
+    {
+        this->transformer.translate(x, y);
+    }
+
+    void Graphics::rotate(float a)
+    {
+        this->transformer.rotate(a);
+    }
+
+    void Graphics::scale(float sx, float sy)
+    {
+        this->transformer.scale(sx, sy);
+    }
+
+    void Graphics::pushmatrix()
+    {
+        this->transformer.pushmatrix();
+    }
+
+    void Graphics::popmatrix()
+    {
+        this->transformer.popmatrix();
+    }
+
     void Graphics::point(float x, float y)
     {
         this->line(x, y, x + 1, y + 1);
