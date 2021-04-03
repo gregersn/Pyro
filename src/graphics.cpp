@@ -46,6 +46,50 @@ namespace Pyro
         x = unit2pixels(x, unit, this->get_dpi());
         y = unit2pixels(y, unit, this->get_dpi());
 
+<<<<<<< HEAD:src/graphics.cpp
+||||||| parent of 64dcb18 (Add transformer to base class.):src/pyrographics.cpp
+    Graphics *Graphics::create(unsigned int width, unsigned int height)
+    {
+        return create(width, height, GraphicsMode::CAIRO);
+    }
+
+    void Graphics::point(float x, float y)
+    {
+=======
+    Graphics *Graphics::create(unsigned int width, unsigned int height)
+    {
+        return create(width, height, GraphicsMode::CAIRO);
+    }
+
+    // Coordinates
+    void Graphics::translate(float x, float y)
+    {
+        this->transformer.translate(x, y);
+    }
+
+    void Graphics::rotate(float a)
+    {
+        this->transformer.rotate(a);
+    }
+
+    void Graphics::scale(float sx, float sy)
+    {
+        this->transformer.scale(sx, sy);
+    }
+
+    void Graphics::pushmatrix()
+    {
+        this->transformer.pushmatrix();
+    }
+
+    void Graphics::popmatrix()
+    {
+        this->transformer.popmatrix();
+    }
+
+    void Graphics::point(float x, float y)
+    {
+>>>>>>> 64dcb18 (Add transformer to base class.):src/pyrographics.cpp
         this->line(x, y, x + 1, y + 1);
     }
 
