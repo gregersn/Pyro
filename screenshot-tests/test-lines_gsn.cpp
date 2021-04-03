@@ -8,7 +8,7 @@ TEST_CASE("GSN Draw line", "[strokes]")
 
     SECTION("Straight lines")
     {
-        std::string filename = "stroke_straight_lines_gsn.png";
+        std::string filename = "gsn_stroke_straight_lines.png";
         p->background(192);
 
         p->line(100, 0, 0, 100);
@@ -20,7 +20,7 @@ TEST_CASE("GSN Draw line", "[strokes]")
 
     SECTION("Stroke weight")
     {
-        std::string filename = "stroke_weight_gsn.png";
+        std::string filename = "gsn_stroke_weight.png";
         p->background(192);
 
         p->strokeweight(.5); //  Thin
@@ -38,7 +38,7 @@ TEST_CASE("GSN Draw line", "[strokes]")
 
     SECTION("Stroke cap")
     {
-        std::string filename = "stroke_cap_gsn.png";
+        std::string filename = "gsn_stroke_cap.png";
         p->background(192);
 
         p->strokeweight(12.0);
@@ -57,7 +57,7 @@ TEST_CASE("GSN Draw line", "[strokes]")
     {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 300, Pyro::GraphicsMode::GSN);
 
-        std::string filename = "stroke_join_gsn.png";
+        std::string filename = "gsn_stroke_join.png";
         p->background(192);
 
         p->nofill();
@@ -103,7 +103,7 @@ TEST_CASE("GSN Test curve", "[shapes]")
     SECTION("Draw with curvevertex()")
     {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, Pyro::GraphicsMode::GSN);
-        std::string filename = "shape_curve_vertex_gsn.png";
+        std::string filename = "gsn_shape_curve_vertex.png";
         p->background(192);
         p->nofill();
         p->beginshape();
@@ -122,7 +122,7 @@ TEST_CASE("GSN Test curve", "[shapes]")
     SECTION("Draw with curve()")
     {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, Pyro::GraphicsMode::GSN);
-        std::string filename = "shape_curve_gsn.png";
+        std::string filename = "gsn_shape_curve.png";
         p->background(192);
         p->nofill();
         p->stroke(255, 102, 0);
@@ -144,7 +144,7 @@ TEST_CASE("GSN Bezier curve", "[shapes]")
     SECTION("Draw with beziervertex()")
     {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, Pyro::GraphicsMode::GSN);
-        std::string filename = "shape_curve_bezier_vertex_gsn.png";
+        std::string filename = "gsn_shape_curve_bezier_vertex.png";
         p->background(192);
         p->nofill();
         p->beginshape();
@@ -159,7 +159,7 @@ TEST_CASE("GSN Bezier curve", "[shapes]")
     SECTION("Draw with bezier()")
     {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 200, Pyro::GraphicsMode::GSN);
-        std::string filename = "shape_curve_bezier_gsn.png";
+        std::string filename = "gsn_shape_curve_bezier.png";
         p->background(192);
         p->nofill();
 

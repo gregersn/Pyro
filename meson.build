@@ -8,6 +8,7 @@ libjpeg_dep = dependency('libjpeg')
 libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
+eigen = dependency('eigen3')
 
 catch2 = subproject('catch2')
 
