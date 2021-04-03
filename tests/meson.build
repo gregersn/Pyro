@@ -9,8 +9,8 @@ test_sources = [
                 'test-pyro.cpp',
                 'test-vector.cpp',
                 'test-string.cpp',
-                'test-transformer2d.cpp',
-                'test-shape.cpp']
+                'test-shape.cpp',
+                'test-transformer2d.cpp']
 
 catch2 = subproject('catch2', default_options: 'tests=false')
 

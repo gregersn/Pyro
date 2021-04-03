@@ -80,6 +80,7 @@ TEST_CASE("GSN Stroke can be set", "[graphics-gsn]")
 
     SECTION("Set red stroke")
     {
+        pg->background(0, 0);
         pg->nofill();
         pg->nosmooth();
         pg->stroke(1.0f, 0.0f, 0.0f, 1.0f);

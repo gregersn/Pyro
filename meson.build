@@ -10,7 +10,6 @@ libjpeg_dep = dependency('libjpeg')
 libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
-eigen_dep = dependency('eigen3')
 
 eigen_dep = subproject('eigen').get_variable('eigen_dep')
 

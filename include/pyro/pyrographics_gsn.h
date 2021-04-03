@@ -2,11 +2,16 @@
 #define PYROGRAPHICS_GSN_H
 
 #include "pyrographics.h"
+#include "pyrotransformer.h"
 
 namespace Pyro
 {
     class GraphicsGSN : public Graphics
     {
+    private:
+        Transformer2D transformer;
+        void draw_line(float x0, float y0, float x1, float y1);
+
     public:
         GraphicsGSN(const GraphicsGSN &in);
         GraphicsGSN(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);

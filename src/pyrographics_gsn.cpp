@@ -63,6 +63,13 @@ namespace Pyro
 
     void GraphicsGSN::line(float x0, float y0, float x1, float y1)
     {
+        Pyro::Vector a = this->transformer.apply(Pyro::Vector(x0, y0));
+        Pyro::Vector b = this->transformer.apply(Pyro::Vector(x1, y1));
+        this->draw_line(a.x, a.y, b.x, b.y);
+    }
+
+    void GraphicsGSN::draw_line(float x0, float y0, float x1, float y1)
+    {
         if (!this->stroke_enable)
             return;
 
