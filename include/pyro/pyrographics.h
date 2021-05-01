@@ -6,6 +6,7 @@
 #include "pyroimage.h"
 #include "pyroshape.h"
 #include "pyrofont.h"
+#include "pyrotransformer.h"
 
 namespace Pyro
 {
@@ -45,6 +46,7 @@ namespace Pyro
         float text_size = 16.0f;
 
         Shape _shape = Shape();
+        Transformer2D transformer;
 
     public:
         Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
@@ -102,11 +104,11 @@ namespace Pyro
         virtual void nosmooth();
 
         // Transformation
-        virtual void translate(float x, float){};
-        virtual void rotate(float a){};
-        virtual void scale(float sx, float sy){};
-        virtual void pushmatrix(){};
-        virtual void popmatrix(){};
+        virtual void translate(float x, float);
+        virtual void rotate(float a);
+        virtual void scale(float sx, float sy);
+        virtual void pushmatrix();
+        virtual void popmatrix();
 
         // Drawing functions
         inline void background(Color c) { this->background(c.r, c.g, c.b, c.a); };

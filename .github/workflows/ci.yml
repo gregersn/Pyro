@@ -67,14 +67,14 @@ jobs:
             echo "name=CXX::clang++-${{ matrix.version }}" >> $GITHUB_ENV
           fi
 
-          sudo apt-get install libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev
+          sudo apt-get install libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev libeigen3-dev
           pip install meson ninja
 
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
           pip3 install meson ninja
-          brew install freetype libjpeg-turbo cairo libpng sdl2 pkg-config
+          brew install freetype libjpeg-turbo cairo libpng sdl2 pkg-config eigen
 
           if [ "${{ matrix.compiler }}" = "gcc" ]; then
             brew install gcc@${{ matrix.version }}
