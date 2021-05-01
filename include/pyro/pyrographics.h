@@ -26,7 +26,8 @@ namespace Pyro
 
     enum class GraphicsMode
     {
-        CAIRO
+        CAIRO,
+        RAYLIB
     };
 
     class Graphics : public Image

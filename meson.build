@@ -5,9 +5,12 @@ project('Pyro', 'cpp',
 
 freetype_dep = dependency('freetype2')
 libjpeg_dep = dependency('libjpeg')
+raylib_dep = dependency('raylib')
 libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
+gl_dep = dependency('gl')
+glfw_dep = dependency('glfw3')
 
 catch2 = subproject('catch2')
 

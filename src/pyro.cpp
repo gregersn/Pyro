@@ -1,4 +1,4 @@
-#include <pyro/pyro.h>
+#include "pyro/pyro.h"
 #include <cstdlib>
 
 namespace Pyro
@@ -51,7 +51,7 @@ namespace Pyro
         }
         width = w;
         height = h;
-        pg = Graphics::create(width, height);
+        pg = Graphics::create(width, height, Pyro::GraphicsMode::RAYLIB);
     }
 
     void loadpixels()

@@ -1,5 +1,6 @@
 #include "pyro/pyro_runner.h"
 #include "pyro/pyro_sdl.h"
+#include "pyro/pyro_ray.h"
 #include "pyro/pyro.h"
 #include <iostream>
 
@@ -12,9 +13,26 @@ namespace Pyro
 
     void init()
     {
+        init(Pyro::GraphicsMode::CAIRO);
+    }
+
+    void init(Pyro::GraphicsMode mode)
+    {
         running = true;
         looping = true;
-        runner = new SDLRunner(width, height);
+        switch (mode)
+        {
+        case Pyro::GraphicsMode::RAYLIB:
+            std::cout << "Adding a rayrunner\n";
+            runner = new RayRunner(width, height);
+            break;
+
+        case Pyro::GraphicsMode::CAIRO:
+        default:
+            std::cout << "Adding SDL runner\n";
+            runner = new SDLRunner(width, height);
+            break;
+        }
         runner->init();
     }
 
@@ -40,17 +58,34 @@ namespace Pyro
         looping = false;
     }
 
+    void predraw()
+    {
+        runner->predraw();
+        pushmatrix();
+    }
+
+    void postdraw()
+    {
+        popmatrix();
+        runner->postdraw();
+    }
+
     void run(void (*setup)(), void (*draw)())
     {
+        run(setup, draw, Pyro::GraphicsMode::CAIRO);
+    }
+
+    void run(void (*setup)(), void (*draw)(), Pyro::GraphicsMode mode)
+    {
         setup();
-        init();
+        init(mode);
         while (running)
         {
             if (looping)
             {
-                pushmatrix();
+                predraw();
                 draw();
-                popmatrix();
+                postdraw();
             }
             update();
         }

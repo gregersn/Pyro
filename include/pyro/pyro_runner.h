@@ -1,6 +1,7 @@
 #ifndef PYRO_RUNNER_H
 #define PYRO_RUNNER_H
 
+#include "pyro.h"
 namespace Pyro
 {
     class Runner
@@ -27,13 +28,20 @@ namespace Pyro
             throw;
             return 0;
         };
+
+        virtual void predraw(){};
+        virtual void postdraw(){};
         bool running;
     };
     extern unsigned int framecount;
 
+    void init(Pyro::GraphicsMode mode);
     void init();
     void update();
     void quit();
+    void predraw();
+    void postdraw();
+    void run(void (*setup)(), void (*draw)(), Pyro::GraphicsMode mode);
     void run(void (*setup)(), void (*draw)());
     void noloop();
     void loop();

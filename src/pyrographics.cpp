@@ -3,6 +3,7 @@
 
 #include <pyro/pyrographics.h>
 #include <pyro/pyrographics_cairo.h>
+#include <pyro/pyrographics_raylib.h>
 
 #include <iostream>
 #include <cstring>
@@ -28,6 +29,8 @@ namespace Pyro
     {
         switch (mode)
         {
+        case GraphicsMode::RAYLIB:
+            return new GraphicsRaylib(width, height, ARGB, 1);
         case GraphicsMode::CAIRO:
         default:
             return new GraphicsCairo(width, height, ARGB, 1);

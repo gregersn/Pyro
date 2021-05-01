@@ -1,5 +1,5 @@
-#include <pyro/pyro_sdl.h>
 #include <iostream>
+#include "pyro/pyro_sdl.h"
 
 namespace Pyro
 {
