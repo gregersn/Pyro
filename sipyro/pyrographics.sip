@@ -42,6 +42,8 @@ namespace Pyro {
             void nostroke();
             void nofill();
             void strokeweight(float w); 
+            void strokecap(int cap);
+            void strokejoin(int join);
             void colormode(int mode);
 
             void stroke(float c);
