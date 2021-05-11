@@ -51,6 +51,7 @@ namespace Pyro {
             void stroke(float r, float g, float b);
             void stroke(float r, float g, float b, float a);
 
+            void fill(Color c /Constrained/);
             void fill(float c);
             void fill(float c, float a);
             void fill(float r, float g, float b);
