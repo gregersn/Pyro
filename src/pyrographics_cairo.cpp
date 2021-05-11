@@ -88,19 +88,19 @@ namespace Pyro
         }
         if (this->fill_enable)
         {
-            cairo_set_source_rgba(this->cr, this->fill_color.r,
-                                  this->fill_color.g,
-                                  this->fill_color.b,
-                                  this->fill_color.a);
+            cairo_set_source_rgba(this->cr, this->fill_color.r(),
+                                  this->fill_color.g(),
+                                  this->fill_color.b(),
+                                  this->fill_color.a());
             cairo_fill_preserve(this->cr);
         }
 
         if (this->stroke_enable)
         {
-            cairo_set_source_rgba(this->cr, this->stroke_color.r,
-                                  this->stroke_color.g,
-                                  this->stroke_color.b,
-                                  this->stroke_color.a);
+            cairo_set_source_rgba(this->cr, this->stroke_color.r(),
+                                  this->stroke_color.g(),
+                                  this->stroke_color.b(),
+                                  this->stroke_color.a());
             cairo_stroke(this->cr);
         }
 
@@ -170,10 +170,10 @@ namespace Pyro
             cairo_line_to(this->cr, x1, y1);
             cairo_set_line_width(this->cr, this->stroke_weight);
             cairo_set_source_rgba(this->cr,
-                                  this->stroke_color.r,
-                                  this->stroke_color.g,
-                                  this->stroke_color.b,
-                                  this->stroke_color.a);
+                                  this->stroke_color.r(),
+                                  this->stroke_color.g(),
+                                  this->stroke_color.b(),
+                                  this->stroke_color.a());
             cairo_stroke(this->cr);
         }
     }
@@ -252,10 +252,10 @@ namespace Pyro
     void GraphicsCairo::text_impl(std::string text, float x, float y)
     {
         cairo_set_source_rgba(this->cr,
-                              this->fill_color.r,
-                              this->fill_color.g,
-                              this->fill_color.b,
-                              this->fill_color.a);
+                              this->fill_color.r(),
+                              this->fill_color.g(),
+                              this->fill_color.b(),
+                              this->fill_color.a());
 
         if (this->font != nullptr)
         {

@@ -6,10 +6,12 @@ namespace Pyro {
 %End
     class Color {
         public:
-            float r;
-            float g;
-            float b;
-            float a;
+            float r();
+            float g();
+            float b();
+            float a();
+
+            void lightness(float l);
             Color(const std::string /Constrained/);
             Color(float);
             Color(float v, float a);

@@ -11,11 +11,26 @@ namespace Pyro
 {
     class Color
     {
+    private:
+        float _hue = 0.0f;
+        float _saturation = 0.0f;
+        float _lightness = 0.0f;
+        float _red = 0.0f;
+        float _green = 0.0f;
+        float _blue = 0.0f;
+        float _alpha = 0.0f;
+
+        bool dirty_hsl = true;
+        bool dirty_rgb = false;
+
+        void update_hsl();
+        void update_rgb();
+
     public:
-        float r = 0.0f;
-        float g = 0.0f;
-        float b = 0.0f;
-        float a = 0.0f;
+        float r();
+        float g();
+        float b();
+        float a();
 
         int mode = Pyro::RGBA;
 
@@ -32,57 +47,57 @@ namespace Pyro
         {
             if (color.length() == 7)
             {
-                this->a = 1.0f;
+                this->_alpha = 1.0f;
                 unsigned int t_c = std::stoul(color.substr(1, 7), nullptr, 16);
-                this->r = ((t_c & 0xff0000) >> 16) / 255.0f;
-                this->g = ((t_c & 0xff00) >> 8) / 255.0f;
-                this->b = ((t_c & 0xff)) / 255.0f;
+                this->_red = ((t_c & 0xff0000) >> 16) / 255.0f;
+                this->_green = ((t_c & 0xff00) >> 8) / 255.0f;
+                this->_blue = ((t_c & 0xff)) / 255.0f;
             }
         }
         Color(float v)
         {
-            this->r = v;
-            this->g = v;
-            this->b = v;
-            this->a = 1.0f;
+            this->_red = v;
+            this->_green = v;
+            this->_blue = v;
+            this->_alpha = 1.0f;
         }
         Color(float v, float a)
         {
-            this->r = v;
-            this->g = v;
-            this->b = v;
-            this->a = a;
+            this->_red = v;
+            this->_green = v;
+            this->_blue = v;
+            this->_alpha = a;
         }
         Color(float r, float g, float b)
         {
-            this->r = r;
-            this->g = g;
-            this->b = b;
-            this->a = 1.0f;
+            this->_red = r;
+            this->_green = g;
+            this->_blue = b;
+            this->_alpha = 1.0f;
         }
 
         Color(float r, float g, float b, float a)
         {
-            this->r = r;
-            this->g = g;
-            this->b = b;
-            this->a = a;
+            this->_red = r;
+            this->_green = g;
+            this->_blue = b;
+            this->_alpha = a;
         }
 
         Color(unsigned int r, unsigned int g, unsigned int b)
         {
-            this->r = r / 255.0f;
-            this->g = g / 255.0f;
-            this->b = b / 255.0f;
-            this->a = 1.0f;
+            this->_red = r / 255.0f;
+            this->_green = g / 255.0f;
+            this->_blue = b / 255.0f;
+            this->_alpha = 1.0f;
         }
 
         Color(uint r, uint g, uint b, uint a)
         {
-            this->r = r / 255.0f;
-            this->g = g / 255.0f;
-            this->b = b / 255.0f;
-            this->a = a / 255.0f;
+            this->_red = r / 255.0f;
+            this->_green = g / 255.0f;
+            this->_blue = b / 255.0f;
+            this->_alpha = a / 255.0f;
         }
 
         static Color from_uint(uint32_t c)
@@ -102,10 +117,10 @@ namespace Pyro
         uint32_t to_uint()
         {
             return (
-                (uint)(this->a * 255) << 24 |
-                (uint)(this->r * 255) << 16 |
-                (uint)(this->g * 255) << 8 |
-                (uint)(this->b * 255));
+                (uint)(this->_alpha * 255) << 24 |
+                (uint)(this->_red * 255) << 16 |
+                (uint)(this->_green * 255) << 8 |
+                (uint)(this->_blue * 255));
         }
 
         static uint32_t fto32(float r, float g, float b, float a)
@@ -119,13 +134,19 @@ namespace Pyro
 
         Color lerp(Color other, float t)
         {
-            return Color(Pyro::lerp(this->r, other.r, t),
-                         Pyro::lerp(this->g, other.g, t),
-                         Pyro::lerp(this->b, other.b, t),
-                         Pyro::lerp(this->a, other.a, t));
+            return Color(Pyro::lerp(this->_red, other.r(), t),
+                         Pyro::lerp(this->_green, other.g(), t),
+                         Pyro::lerp(this->_blue, other.b(), t),
+                         Pyro::lerp(this->_alpha, other.a(), t));
         }
 
         void set(float a, float b, float c, float d);
+
+        float hue();
+        float saturation();
+        float lightness();
+
+        void lightness(float l);
     };
 
     class Palette

@@ -69,7 +69,9 @@
         "list": "cpp",
         "ranges": "cpp",
         "stop_token": "cpp",
-        "__nullptr": "cpp"
+        "__nullptr": "cpp",
+        "__atomic_generated": "cpp",
+        "__threading_support": "cpp"
     },
     "python.pythonPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {
