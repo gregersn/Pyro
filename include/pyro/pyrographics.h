@@ -72,7 +72,7 @@ namespace Pyro
             this->fill_color.colormode(mode);
         };
 
-        inline void fill(Color c) { this->fill(c.r, c.g, c.b, c.a); };
+        inline void fill(Color c) { this->fill(c.r(), c.g(), c.b(), c.a()); };
 
         inline void fill(float c) { this->fill(c, c, c, 1.0); };
         inline void fill(float c, float a) { this->fill(c, c, c, a); };
@@ -84,7 +84,7 @@ namespace Pyro
         void fill(int r, int g, int b);
         void fill(int r, int g, int b, int a);
 
-        inline void stroke(Color c) { this->stroke(c.r, c.g, c.b, c.a); };
+        inline void stroke(Color c) { this->stroke(c.r(), c.g(), c.b(), c.a()); };
 
         inline void stroke(float c) { this->stroke(c, c, c, 1.0); };
         inline void stroke(float c, float a) { this->stroke(c, c, c, a); };
@@ -111,7 +111,7 @@ namespace Pyro
         virtual void popmatrix();
 
         // Drawing functions
-        inline void background(Color c) { this->background(c.r, c.g, c.b, c.a); };
+        inline void background(Color c) { this->background(c.r(), c.g(), c.b(), c.a()); };
         inline void background(int c) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, 1.0f); };
         inline void background(int c, int a) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
         inline void background(int r, int g, int b) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); };
