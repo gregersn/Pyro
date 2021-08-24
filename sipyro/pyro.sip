@@ -1,5 +1,4 @@
 %Module(name=pyro, call_super_init=True)
-%DefaultSupertype sip.simplewrapper
 
 %DefaultEncoding "UTF-8"
 %Include pyroconstants.sip
