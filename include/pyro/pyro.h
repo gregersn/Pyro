@@ -14,14 +14,6 @@
 
 namespace Pyro
 {
-    enum class Unit
-    {
-        px,
-        cm,
-        mm,
-        in
-    };
-
     extern Graphics *pg; // Graphics context
     extern unsigned int width;
     extern unsigned int height;
@@ -80,7 +72,7 @@ namespace Pyro
     inline void stroke(int c, int a = 255) { pg->stroke(c, a); };
     inline void stroke(int r, int g, int b, int a = 255) { pg->stroke(r, g, b, a); };
 
-    inline void strokeweight(float w) { pg->strokeweight(w); };
+    inline void strokeweight(float w, Unit unit = Unit::px) { pg->strokeweight(w, unit); };
 
     inline void beginshape() { pg->beginshape(); };
     inline void endshape() { pg->endshape(); };

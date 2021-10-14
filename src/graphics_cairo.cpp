@@ -2,12 +2,12 @@
 #include "pyro/font_impl.h"
 namespace Pyro
 {
-    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Graphics(width, height, format, 1)
+    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Graphics(width, height, format, dpi)
     {
         this->surface = cairo_image_surface_create_for_data(this->load_bytes(),
                                                             CAIRO_FORMAT_ARGB32,
-                                                            this->width(), this->height(),
-                                                            this->width() * 4);
+                                                            this->_pixelwidth, this->_pixelheight,
+                                                            this->_pixelwidth * 4);
         this->cr = cairo_create(this->surface);
     }
 
@@ -57,7 +57,7 @@ namespace Pyro
         }
     }
 
-    void GraphicsCairo::shape(Shape s, float x, float y)
+    void GraphicsCairo::shape(Shape s, float x, float y, Unit unit)
     {
         cairo_save(this->cr);
         cairo_new_path(this->cr);
@@ -136,7 +136,7 @@ namespace Pyro
             cairo_surface_destroy(src);
         }
     }
-    void GraphicsCairo::translate(float x, float y)
+    void GraphicsCairo::translate(float x, float y, Unit unit)
     {
         cairo_translate(this->cr, x, y);
     }
@@ -161,7 +161,7 @@ namespace Pyro
         cairo_restore(this->cr);
     }
 
-    void GraphicsCairo::line(float x0, float y0, float x1, float y1)
+    void GraphicsCairo::line(float x0, float y0, float x1, float y1, Unit unit)
     {
         if (this->stroke_enable)
         {
@@ -194,7 +194,7 @@ namespace Pyro
 
     void GraphicsCairo::background(float r, float g, float b, float a)
     {
-        Graphics::background(r, g, b, a); //memset(this->data, 0, this->width() * this->height() * 4);
+        Graphics::background(r, g, b, a); //memset(this->data, 0, this->_pixelwidth * this->_pixelheight * 4);
         cairo_set_source_rgba(this->cr, r, g, b, a);
         cairo_paint(this->cr);
     }
@@ -249,7 +249,7 @@ namespace Pyro
 
     // Typography
 
-    void GraphicsCairo::text_impl(std::string text, float x, float y)
+    void GraphicsCairo::text_impl(std::string text, float x, float y, Unit unit)
     {
         cairo_set_source_rgba(this->cr,
                               this->fill_color.r(),

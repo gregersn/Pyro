@@ -1,4 +1,4 @@
-%Module(name=pyro, call_super_init=True)
+%Module(name=pyro, call_super_init=True, keyword_arguments="All")
 
 %DefaultEncoding "UTF-8"
 %Include constants.sip

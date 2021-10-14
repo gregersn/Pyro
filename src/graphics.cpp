@@ -3,13 +3,14 @@
 
 #include "pyro/graphics.h"
 #include "pyro/graphics_cairo.h"
+#include "pyro/utils.h"
 
 #include <iostream>
 #include <cstring>
 
 namespace Pyro
 {
-    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Image(width, height, format, 1)
+    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Image(width, height, format, 1, dpi)
     {
         this->smooth();
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);
@@ -24,24 +25,33 @@ namespace Pyro
     {
     }
 
-    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi)
+    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi, Unit unit)
     {
+
+        width = unit2pixels(width, unit, dpi);
+        height = unit2pixels(height, unit, dpi);
         switch (mode)
         {
         case GraphicsMode::CAIRO:
         default:
-            return new GraphicsCairo(width, height, ARGB, 1);
+            return new GraphicsCairo(width, height, ARGB, dpi);
         }
     }
 
-    void Graphics::point(float x, float y)
+    void Graphics::point(float x, float y, Unit unit)
     {
+        x = unit2pixels(x, unit, this->get_dpi());
+        y = unit2pixels(y, unit, this->get_dpi());
+
         this->line(x, y, x + 1, y + 1);
     }
 
     // Coordinates
-    void Graphics::translate(float x, float y)
+    void Graphics::translate(float x, float y, Unit unit)
     {
+        x = unit2pixels(x, unit, this->get_dpi());
+        y = unit2pixels(y, unit, this->get_dpi());
+
         this->transformer.translate(x, y);
     }
 
@@ -81,7 +91,7 @@ namespace Pyro
             uint32_t d32;
         } u32 = {.d32 = c.to_uint()};
 
-        size_t count = this->width() * this->height();
+        size_t count = this->_pixelwidth * this->_pixelheight;
         while (count--)
         {
             *buf++ = u32.d8[0];
@@ -113,8 +123,15 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2)
+    void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2, Unit unit)
     {
+        x0 = unit2pixels(x0, unit, this->get_dpi());
+        y0 = unit2pixels(y0, unit, this->get_dpi());
+        x1 = unit2pixels(x1, unit, this->get_dpi());
+        y1 = unit2pixels(y1, unit, this->get_dpi());
+        x2 = unit2pixels(x2, unit, this->get_dpi());
+        y2 = unit2pixels(y2, unit, this->get_dpi());
+
         Shape s = Shape();
         s.begin();
         s.vertex(x0, y0);
@@ -124,8 +141,13 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::rect(float a, float b, float c, float d)
+    void Graphics::rect(float a, float b, float c, float d, Unit unit)
     {
+        a = unit2pixels(a, unit, this->get_dpi());
+        b = unit2pixels(b, unit, this->get_dpi());
+        c = unit2pixels(c, unit, this->get_dpi());
+        d = unit2pixels(d, unit, this->get_dpi());
+
         if (this->_rect_mode == CENTER)
         {
             a -= c / 2.0f;
@@ -142,8 +164,17 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
+    void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
     {
+        x0 = unit2pixels(x0, unit, this->get_dpi());
+        y0 = unit2pixels(y0, unit, this->get_dpi());
+        x1 = unit2pixels(x1, unit, this->get_dpi());
+        y1 = unit2pixels(y1, unit, this->get_dpi());
+        x2 = unit2pixels(x2, unit, this->get_dpi());
+        y2 = unit2pixels(y2, unit, this->get_dpi());
+        x3 = unit2pixels(x3, unit, this->get_dpi());
+        y3 = unit2pixels(y3, unit, this->get_dpi());
+
         Shape s = Shape();
         s.begin();
         s.curvevertex(x0, y0);
@@ -154,8 +185,17 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
+    void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
     {
+        x0 = unit2pixels(x0, unit, this->get_dpi());
+        y0 = unit2pixels(y0, unit, this->get_dpi());
+        x1 = unit2pixels(x1, unit, this->get_dpi());
+        y1 = unit2pixels(y1, unit, this->get_dpi());
+        x2 = unit2pixels(x2, unit, this->get_dpi());
+        y2 = unit2pixels(y2, unit, this->get_dpi());
+        x3 = unit2pixels(x3, unit, this->get_dpi());
+        y3 = unit2pixels(y3, unit, this->get_dpi());
+
         Shape s = Shape();
         s.begin();
         s.vertex(x0, y0);
@@ -176,8 +216,17 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
+    void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
     {
+        x0 = unit2pixels(x0, unit, this->get_dpi());
+        y0 = unit2pixels(y0, unit, this->get_dpi());
+        x1 = unit2pixels(x1, unit, this->get_dpi());
+        y1 = unit2pixels(y1, unit, this->get_dpi());
+        x2 = unit2pixels(x2, unit, this->get_dpi());
+        y2 = unit2pixels(y2, unit, this->get_dpi());
+        x3 = unit2pixels(x3, unit, this->get_dpi());
+        y3 = unit2pixels(y3, unit, this->get_dpi());
+
         Shape s = Shape();
         s.begin();
         s.vertex(x0, y0);
@@ -190,8 +239,13 @@ namespace Pyro
 
     void Graphics::arc(float x, float y,
                        float w, float h,
-                       float start, float end, int mode)
+                       float start, float end, int mode, Unit unit)
     {
+        x = unit2pixels(x, unit, this->get_dpi());
+        y = unit2pixels(y, unit, this->get_dpi());
+        w = unit2pixels(w, unit, this->get_dpi());
+        h = unit2pixels(h, unit, this->get_dpi());
+
         Shape s = Shape();
         s.begin();
         if (end < start)
@@ -217,11 +271,15 @@ namespace Pyro
         this->shape(s, x, y);
     }
 
-    void Graphics::ellipse(float x, float y, float w, float h, unsigned int segments)
+    void Graphics::ellipse(float x, float y, float w, float h, unsigned int segments, Unit unit)
     {
         Shape s = Shape();
         s.begin();
         float da = M_PI / (segments / 2.0f);
+        x = unit2pixels(x, unit, this->get_dpi());
+        y = unit2pixels(y, unit, this->get_dpi());
+        w = unit2pixels(w, unit, this->get_dpi());
+        h = unit2pixels(h, unit, this->get_dpi());
         for (unsigned int i = 0; i < segments; i++)
         {
             s.vertex(cos(i * da) * w / 2.0f + x,
@@ -290,9 +348,10 @@ namespace Pyro
         this->_smooth = false;
     }
 
-    void Graphics::strokeweight(float w)
+    void Graphics::strokeweight(float w, Unit unit)
     {
-        this->stroke_weight = w;
+        unsigned int dpi = this->get_dpi();
+        this->stroke_weight = unit2pixels(w, unit, dpi);
     }
 
     void Graphics::strokecap(int cap)
@@ -305,7 +364,7 @@ namespace Pyro
 
     // Typography
 
-    void Graphics::textsize(float size)
+    void Graphics::textsize(float size, Unit unit)
     {
         this->text_size = size;
     }
@@ -315,8 +374,8 @@ namespace Pyro
         this->textfont_impl(font);
     }
 
-    void Graphics::text(std::string text, float x, float y)
+    void Graphics::text(std::string text, float x, float y, Unit unit)
     {
-        this->text_impl(text, x, y);
+        this->text_impl(text, unit2pixels(x, unit, this->get_dpi()), unit2pixels(y, unit, this->get_dpi()));
     }
 }

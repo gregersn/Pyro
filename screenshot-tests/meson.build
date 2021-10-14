@@ -8,6 +8,7 @@ test_sources = ['test-main.cpp',
                 'test-noise.cpp',
                 'test-shapes.cpp',
                 'test-typography.cpp',
+                'test-resolution.cpp',
                 'screenshotmatcher.cpp']
 
 testexe = executable('screenshot-tests', test_sources,

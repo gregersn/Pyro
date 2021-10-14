@@ -400,6 +400,21 @@ TEST_CASE("Image can be created in different formats", "[image]")
     remove(filename);
 }
 
+SCENARIO("Images can have DPI set", "[image]")
+{
+    GIVEN("A newly created image") {
+        Pyro::Image *img = Pyro::createimage(400, 300, Pyro::ARGB, 144);
+        img->save("/tmp/400_300_144.png");
+        delete img;
+        WHEN("Loaded back") {
+            img = Pyro::Image::load("/tmp/400_300_144.png");
+            THEN("DPI still matches") {
+                REQUIRE(img->get_dpi() == 144);
+            }
+        }
+    }
+}
+
 SCENARIO("Images can be resized proportionally", "[image]")
 {
     GIVEN("An image that is 400x300")
