@@ -52,9 +52,12 @@ namespace Pyro
         Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
         virtual ~Graphics();
 
-        static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO, unsigned int dpi = 72);
+        static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO, unsigned int dpi = 72, Unit unit = Unit::px);
 
-        void imagemode(int mode) { this->_image_mode = mode; };
+        void imagemode(int mode)
+        {
+            this->_image_mode = mode;
+        };
         void image(Image *img, float x, float y);
         virtual void image_impl(Image *img, float x, float y){};
         inline Image *loadimage(std::string filename) { return Image::load(filename); };
@@ -88,7 +91,7 @@ namespace Pyro
         void stroke(int c, int a = 255);
         void stroke(int r, int g, int b, int a = 255);
 
-        void strokeweight(float w);
+        void strokeweight(float w, Unit unit = Unit::px);
         virtual void strokecap(int cap);
         virtual void strokejoin(int join);
 
@@ -96,7 +99,7 @@ namespace Pyro
         virtual void nosmooth();
 
         // Transformation
-        virtual void translate(float x, float);
+        virtual void translate(float x, float, Unit unit = Unit::px);
         virtual void rotate(float a);
         virtual void scale(float sx, float sy);
         virtual void pushmatrix();
@@ -110,47 +113,47 @@ namespace Pyro
         inline void background(float c, float a = 1.0) { this->background(c, c, c, a); };
         virtual void background(float r, float g, float b, float a = 1.0);
 
-        virtual void shape(Shape s, float x, float y){};
+        virtual void shape(Shape s, float x, float y, Unit unit = Unit::px){};
 
         void beginshape() { this->_shape.begin(); };
         void begincontour() { this->_shape.begincontour(); };
         void endcontour() { this->_shape.endcontour(); };
         void vertex(Vector v) { this->_shape.vertex(v.x, v.y); };
-        void vertex(float x, float y) { this->_shape.vertex(x, y); };
-        void curvevertex(float x, float y) { this->_shape.curvevertex(x, y); };
-        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { this->_shape.beziervertex(x2, y2, x3, y3, x4, y4); }
+        void vertex(float x, float y, Unit unit = Unit::px) { this->_shape.vertex(x, y); };
+        void curvevertex(float x, float y, Unit unit = Unit::px) { this->_shape.curvevertex(x, y); };
+        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4, Unit unit = Unit::px) { this->_shape.beziervertex(x2, y2, x3, y3, x4, y4, unit); }
         void endshape(int close);
         inline void endshape() { endshape(0); };
 
         // Primitive shapes
-        void point(float x, float y);
-        virtual void line(float x0, float y0, float x1, float y1){};
-        void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
-        void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
+        void point(float x, float y, Unit unit = Unit::px);
+        virtual void line(float x0, float y0, float x1, float y1, Unit unit = Unit::px){};
+        void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::px);
+        void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::px);
 
         void triangle(Vector a, Vector b, Vector c);
-        void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
+        void triangle(float x0, float y0, float x1, float y1, float x2, float y2, Unit unit = Unit::px);
 
         void rectmode(int mode) { this->_rect_mode = mode; };
-        void rect(float a, float b, float c, float d);
+        void rect(float a, float b, float c, float d, Unit unit = Unit::px);
 
         void quad(Vector a, Vector b, Vector c, Vector d);
-        void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
+        void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::px);
 
-        void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN);
+        void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN, Unit unit = Unit::px);
 
         void ellipsemode(int mode) { this->_ellipse_mode = mode; };
-        void ellipse(float x, float y, float w, float h, unsigned int segments);
-        void ellipse(float x, float y, float r, unsigned int segments) { this->ellipse(x, y, r, r, segments); };
+        void ellipse(float x, float y, float w, float h, unsigned int segments, Unit unit = Unit::px);
+        void ellipse(float x, float y, float r, unsigned int segments, Unit unit = Unit::px) { this->ellipse(x, y, r, r, segments, unit); };
 
         // Typography
 
-        void textsize(float size);
-        void text(std::string text, float x, float y);
+        void textsize(float size, Unit unit = Unit::px);
+        void text(std::string text, float x, float y, Unit unit = Unit::px);
         void textfont(Font *font);
 
         virtual void textfont_impl(Font *font){};
-        virtual void text_impl(std::string text, float x, float y){};
+        virtual void text_impl(std::string text, float x, float y, Unit unit = Unit::px){};
     };
 };
 

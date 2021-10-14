@@ -43,6 +43,14 @@ namespace Pyro
     const int HSBA = 7;
     const int ALPHA = 8;
 
+    enum class Unit
+    {
+        px,
+        cm,
+        mm,
+        in
+    };
+
 }
 
 #endif

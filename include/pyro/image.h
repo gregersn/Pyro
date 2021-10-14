@@ -48,9 +48,9 @@ namespace Pyro
 
         bool intersect(int sx1, int sy1, int sx2, int sy2, int dx1, int dy1, int dx2, int dy2);
         void blit_resize(Image *img, int srcX1, int srcY1, int srcX2, int srcY2,
-                         uint32_t *destpixels, int screenW, int screenH,
+                         uint32_t *destpixels, unsigned int screenW, unsigned int screenH,
                          int destX1, int destY1, int destX2, int destY2,
-                         int mode);
+                         unsigned int mode);
 
     protected:
         unsigned int _pixelwidth = 0;
@@ -68,8 +68,8 @@ namespace Pyro
 
         Image(const Image &in);
         Image();
-        Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1);
-        void init(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1);
+        Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::px);
+        void init(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::px);
 
         Image &operator=(const Image &in);
         virtual ~Image();
@@ -84,6 +84,8 @@ namespace Pyro
 
         void savePNG(const std::string &filename) { this->savePNG(filename, this->dpi); };
         void savePNG(const std::string &filename, unsigned int dpi);
+
+        unsigned int get_dpi() { return this->dpi; }
 
         // Pixel access
         void *get_data() const { return this->data; };
@@ -116,6 +118,6 @@ namespace Pyro
         Image *rotate_bilinear(double angle);
     };
 
-    Image *createimage(unsigned int width, unsigned int height, int format = RGB, unsigned int dpi = 72);
+    Image *createimage(unsigned int width, unsigned int height, int format = RGB, unsigned int dpi = 72, Unit unit = Unit::px);
 }
 #endif

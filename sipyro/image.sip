@@ -44,6 +44,6 @@ namespace Pyro {
             Image *resize(unsigned int sx, unsigned int sy);
 
     };
-    Image *createimage(unsigned int width, unsigned int height, unsigned int format = Pyro::RGB, unsigned int dpi = 72);
+    Image *createimage(unsigned int width, unsigned int height, int format = Pyro::RGB, unsigned int dpi = 72, Unit unit = Pyro::Unit::px);
 
 };
