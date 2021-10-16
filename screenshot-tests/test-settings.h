@@ -4,8 +4,8 @@
 #include <catch2/catch.hpp>
 #include "pyro/pyro.h"
 
-static inline std::string const actual_folder = "../screenshots/expected/";
-static inline std::string const current_folder = "../screenshots/current/";
+static inline std::string const actual_folder = "./screenshots/expected/";
+static inline std::string const current_folder = "./screenshots/current/";
 constexpr static inline Pyro::GraphicsMode testmode = Pyro::GraphicsMode::CAIRO;
 
 class ImageMatch : public Catch::MatcherBase<std::string>

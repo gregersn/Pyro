@@ -9,8 +9,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_BLEND.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::BLEND);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -23,8 +23,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_ADD.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::ADD);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -37,8 +37,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_SUBTRACT.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::SUBTRACT);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -51,8 +51,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_LIGHTEST.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::LIGHTEST);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -65,8 +65,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_DARKEST.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::DARKEST);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -79,8 +79,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_DIFFERENCE.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::DIFFERENCE);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -93,8 +93,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_EXCLUSION.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::EXCLUSION);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -107,8 +107,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_MULTIPLY.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::MULTIPLY);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -121,8 +121,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_SCREEN.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::SCREEN);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -135,8 +135,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_OVERLAY.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::OVERLAY);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -149,8 +149,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_HARD_LIGHT.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::HARD_LIGHT);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -163,8 +163,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_SOFT_LIGHT.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::SOFT_LIGHT);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -177,8 +177,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_DODGE.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::DODGE);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);
@@ -191,8 +191,8 @@ TEST_CASE("Blend modes")
     {
         std::string filename = "image_blend_BURN.png";
 
-        Pyro::Image *a = Pyro::Image::load("../tests/ducks.jpg");
-        Pyro::Image *b = Pyro::Image::load("../tests/alley.jpg");
+        Pyro::Image *a = Pyro::Image::load("./tests/ducks.jpg");
+        Pyro::Image *b = Pyro::Image::load("./tests/alley.jpg");
 
         a->blend(b, 0, 0, 150, 512, 0, 0, 150, 512, Pyro::BLENDMODE::BURN);
         a->blend(b, 0, 0, 150, 512, 512 - 150, 0, 150, 512, Pyro::BLENDMODE::BLEND);

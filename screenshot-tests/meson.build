@@ -16,7 +16,7 @@ testexe = executable('screenshot-tests', test_sources,
                      dependencies: [catch2.get_variable('catch2_dep')],
                      install: false)
 
-test('Screenshots', testexe)
+test('Screenshots', testexe, workdir: meson.source_root())
 
 run_target('update_screenshots',
         command: './update_screenshots.sh')

@@ -7,7 +7,7 @@ TEST_CASE("Images can be resized")
 {
     SECTION("Resize a loaded image with different methods")
     {
-        Pyro::Image *img = Pyro::Image::load("../tests/ducks.jpg");
+        Pyro::Image *img = Pyro::Image::load("./tests/ducks.jpg");
         REQUIRE(img != nullptr);
 
         SECTION("Nearest neighbor scale up")

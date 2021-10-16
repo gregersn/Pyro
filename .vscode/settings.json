@@ -87,5 +87,6 @@
     "python.testing.nosetestArgs": [
         "sipyro"
     ],
-    "python.envFile": "${workspaceFolder}/sipyro/.env"
+    "python.envFile": "${workspaceFolder}/sipyro/.env",
+    "testMate.cpp.test.workingDirectory": "${workspaceFolder}"
 }

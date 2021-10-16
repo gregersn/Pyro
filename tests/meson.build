@@ -16,4 +16,4 @@ testexe = executable('unit-tests', test_sources,
                      install: false)
 
 
-test('Unittests', testexe)
+test('Unittests', testexe, workdir: meson.source_root())

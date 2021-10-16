@@ -12,7 +12,7 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
 {
     SECTION("Load RGBA PNG")
     {
-        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *img = Pyro::Image::load("./tests/TestPixels.png");
 
         uint32_t c = 0;
 
@@ -126,13 +126,13 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
                 pixels[1024 + i] = i | i << 16 | i << 8 | i << 24;
             }
 
-            img->save("gradient_test.png");
+            img->save("/tmp/gradient_test.png");
             delete img;
         }
 
         SECTION("Load the image back in")
         {
-            Pyro::Image *img = Pyro::Image::load("gradient_test.png");
+            Pyro::Image *img = Pyro::Image::load("/tmp/gradient_test.png");
 
             unsigned int *pixels = img->load_pixels();
             REQUIRE(pixels != nullptr);
@@ -153,7 +153,7 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
 
     SECTION("load an image from a different folder")
     {
-        Pyro::Image *img = Pyro::Image::load("../tests/ducks.jpg");
+        Pyro::Image *img = Pyro::Image::load("./tests/ducks.jpg");
         REQUIRE(img != nullptr);
         REQUIRE(img->width() == 512);
         REQUIRE(img->height() == 512);
@@ -164,7 +164,7 @@ TEST_CASE("PNG files can be loaded and saved")
 {
     SECTION("Load a test image")
     {
-        Pyro::Image *img = Pyro::Image::loadPNG("../tests/TestPixels_RGB.png");
+        Pyro::Image *img = Pyro::Image::loadPNG("./tests/TestPixels_RGB.png");
         REQUIRE(img != nullptr);
         REQUIRE(img->width() == 8);
         REQUIRE(img->height() == 8);
@@ -196,13 +196,13 @@ TEST_CASE("PNG files can be loaded and saved")
                 pixels[1024 + i] = i | i << 16 | i << 8 | i << 24;
             }
 
-            img->savePNG("savepng_gradient_test.png");
+            img->savePNG("/tmp/savepng_gradient_test.png");
             delete img;
         }
 
         SECTION("Load the image back in")
         {
-            Pyro::Image *img = Pyro::Image::loadPNG("savepng_gradient_test.png");
+            Pyro::Image *img = Pyro::Image::loadPNG("/tmp/savepng_gradient_test.png");
 
             unsigned int *pixels = img->load_pixels();
             REQUIRE(pixels != nullptr);
@@ -260,7 +260,7 @@ TEST_CASE("Images can be resized")
 
     SECTION("Resize a loaded image with different methods")
     {
-        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels_RGB.png");
+        Pyro::Image *img = Pyro::Image::load("./tests/TestPixels_RGB.png");
         REQUIRE(img != nullptr);
 
         SECTION("Nearest neighbor scale down")
@@ -297,7 +297,7 @@ TEST_CASE("Images can be resized")
             REQUIRE(img2->height() == 400);
 
             REQUIRE((img2->get(0, 0) & 0xff000000) == 0xff000000);
-            img2->save("bilinear_downscale.png");
+            img2->save("/tmp/bilinear_downscale.png");
             delete img2;
             delete img;
         }

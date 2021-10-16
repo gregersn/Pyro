@@ -94,7 +94,7 @@ TEST_CASE("Images can be transformed")
     {
         std::string filename = "image_rotate_PI.png";
 
-        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *img = Pyro::Image::load("./tests/TestPixels.png");
         Pyro::Image *rotated = img->rotate(Pyro::PI);
         rotated->save(current_folder + filename);
 
@@ -107,7 +107,7 @@ TEST_CASE("Images can be transformed")
     {
         std::string filename = "image_rotate_HALF_PI.png";
 
-        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *img = Pyro::Image::load("./tests/TestPixels.png");
         Pyro::Image *rotated = img->rotate(Pyro::HALF_PI);
         rotated->save(current_folder + filename);
 
@@ -120,7 +120,7 @@ TEST_CASE("Images can be transformed")
     {
         std::string filename = "image_rotate_QUARTER_PI.png";
 
-        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *img = Pyro::Image::load("./tests/TestPixels.png");
         Pyro::Image *rotated = img->rotate(Pyro::QUARTER_PI);
         rotated->save(current_folder + filename);
 
@@ -133,7 +133,7 @@ TEST_CASE("Images can be transformed")
     {
         std::string filename = "image_rotate_1.png";
 
-        Pyro::Image *img = Pyro::Image::load("../tests/TestPixels.png");
+        Pyro::Image *img = Pyro::Image::load("./tests/TestPixels.png");
         Pyro::Image *rotated = img->rotate(1.0);
         rotated->save(current_folder + filename);
 
