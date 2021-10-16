@@ -28,10 +28,8 @@ namespace Pyro {
             void pushmatrix();
             void popmatrix();
 
-            void background(float c);
-            void background(float c, float a);
-            void background(float r, float g, float b);
-            void background(float r, float g, float b, float a);
+            void background(float c, float a = 1.0);
+            void background(float r, float g, float b, float a = 1.0);
 
             unsigned int get(unsigned int x, unsigned int y);
             void set(unsigned int x, unsigned int y, unsigned int c);
@@ -46,16 +44,12 @@ namespace Pyro {
             void strokejoin(int join);
             void colormode(int mode);
 
-            void stroke(float c);
-            void stroke(float c, float a);
-            void stroke(float r, float g, float b);
-            void stroke(float r, float g, float b, float a);
+            void stroke(float c, float a = 1.0);
+            void stroke(float r, float g, float b, float a = 1.0);
 
             void fill(Color c /Constrained/);
-            void fill(float c);
-            void fill(float c, float a);
-            void fill(float r, float g, float b);
-            void fill(float r, float g, float b, float a);
+            void fill(float c, float a = 1.0);
+            void fill(float r, float g, float b, float a = 1.0);
 
             void line(float x0, float y0, float x1, float y1);
             void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
