@@ -8,7 +8,7 @@ TEST_CASE("Write text")
     SECTION("Simple strings")
     {
         Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
-        Pyro::Font *fnt = Pyro::create_font("../fonts/Orkney Bold.otf", 12);
+        Pyro::Font *fnt = Pyro::create_font("./fonts/Orkney Bold.otf", 12);
 
         filename = "typography_simple_string.png";
 
