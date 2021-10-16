@@ -27,21 +27,20 @@ The state of the whole thing is not really userfriendly at the moment, but hopef
 Using [Meson](https://mesonbuild.com/)
 
 ```bash
-meson builddir
-cd builddir
-ninja
+meson build
+ninja -C build
 ```
 
 ## Install
 
 ```bash
-ninja install
+ninja -C build install
 ```
 
 ## Run tests
 
 ```bash
-ninja test
+ninja -C build test
 ```
 
 ## Build an example
@@ -82,11 +81,10 @@ You can then compile and link a file with something like:
 ## Python bindings
 
 Bindings between this library and Python can be compiled using [SIP](https://riverbankcomputing.com/software/sip).
-Last tested with SIP 5.2.0, bindings can be compiled doing
+Last tested with SIP 6.3.1, bindings can be compiled doing
 
 ```
-cd sipyro
-./build.sh
+./build_bindings.sh
 ```
 
 after building the native library.
