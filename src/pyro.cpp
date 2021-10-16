@@ -35,11 +35,9 @@ namespace Pyro
             break;
         }
 
-        return size((unsigned int)width * multiplier, (unsigned int)height * multiplier);
-    }
+        unsigned int w = (unsigned int)width * multiplier;
+        unsigned int h = (unsigned int)height * multiplier;
 
-    void size(unsigned int w, unsigned int h)
-    {
         if (pg == nullptr)
         {
             std::atexit(exit);
@@ -49,8 +47,8 @@ namespace Pyro
         {
             delete pg;
         }
-        width = w;
-        height = h;
+        Pyro::width = w;
+        Pyro::height = h;
         pg = Graphics::create(width, height);
     }
 

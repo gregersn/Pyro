@@ -162,10 +162,8 @@ namespace Pyro
         Color operator[](const unsigned int index);
     };
 
-    uint32_t color(unsigned int gray);
-    uint32_t color(unsigned int gray, unsigned int alpha);
-    uint32_t color(unsigned int r, unsigned int g, unsigned int b);
-    uint32_t color(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
+    uint32_t color(unsigned int gray, unsigned int alpha = 255);
+    uint32_t color(unsigned int r, unsigned int g, unsigned int b, unsigned int a = 255);
 
 }
 

@@ -78,7 +78,7 @@ TEST_CASE("Draw shapes", "[shapes]")
         p->background(192);
         p->nostroke();
         p->fill(64, 64, 255);
-        p->ellipse(p->width() / 2, p->height() / 2, 60, 64);
+        p->ellipse(p->width() / 2, p->height() / 2, 60.f, 64);
         p->save(current_folder + filename);
         CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
     }
