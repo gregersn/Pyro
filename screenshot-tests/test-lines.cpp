@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 #include "test-settings.h"
-#include "pyro/pyrographics.h"
+#include "pyro/graphics.h"
 
 TEST_CASE("Draw line", "[strokes]")
 {

@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include <pyro/pyro.h>
+#include "pyro/pyro.h"
 
 TEST_CASE("Noise values", "[noise]")
 {

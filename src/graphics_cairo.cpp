@@ -1,5 +1,5 @@
-#include <pyro/pyrographics_cairo.h>
-#include <pyro/pyrofont_impl.h>
+#include "pyro/graphics_cairo.h"
+#include "pyro/font_impl.h"
 namespace Pyro
 {
     GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Graphics(width, height, format, 1)

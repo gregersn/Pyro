@@ -1,8 +1,8 @@
 #include <catch2/catch.hpp>
 #include "test-settings.h"
 
-#include "pyro/pyroimage.h"
-#include "pyro/pyroconstants.h"
+#include "pyro/image.h"
+#include "pyro/constants.h"
 
 SCENARIO("Image can be converted to different depths")
 {

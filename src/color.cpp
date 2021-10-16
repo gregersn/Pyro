@@ -1,5 +1,5 @@
-#include <pyro/pyroconstants.h>
-#include <pyro/pyrocolor.h>
+#include "pyro/constants.h"
+#include "pyro/color.h"
 
 namespace Pyro
 {

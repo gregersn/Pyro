@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include <pyro/pyrocolor.h>
+#include "pyro/color.h"
 
 TEST_CASE("Color objects", "[color]")
 {

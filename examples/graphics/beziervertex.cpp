@@ -1,8 +1,9 @@
-#include <pyro/pyro.h>
+#include "pyro/pyro.h"
 
 using namespace Pyro;
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     size(100, 200);
     background(192);
 

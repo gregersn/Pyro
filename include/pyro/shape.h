@@ -2,8 +2,8 @@
 #define PYROSHAPE_H
 
 #include <vector>
-#include "pyrovector.h"
-#include "pyroconstants.h"
+#include "vector.h"
+#include "constants.h"
 
 namespace Pyro
 {

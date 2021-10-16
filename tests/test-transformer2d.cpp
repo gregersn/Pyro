@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
-#include <pyro/pyrotransformer.h>
-#include <pyro/pyro.h>
+#include "pyro/transformer.h"
+#include "pyro/pyro.h"
 
 using namespace Pyro;
 

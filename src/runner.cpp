@@ -1,5 +1,5 @@
-#include "pyro/pyro_runner.h"
-#include "pyro/pyro_sdl.h"
+#include "pyro/runner.h"
+#include "pyro/sdl.h"
 #include "pyro/pyro.h"
 #include <iostream>
 

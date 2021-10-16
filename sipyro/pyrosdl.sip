@@ -2,7 +2,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyro_sdl.h>
+#include "pyro/sdl.h"
 #include <Python.h>
 #include <stdio.h>
 %End

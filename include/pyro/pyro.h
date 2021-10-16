@@ -1,16 +1,16 @@
 #ifndef PYRO_H
 #define PYRO_H
 
-#include "pyroconstants.h"
-#include "pyrostring.h"
-#include "pyromath.h"
-#include "pyrocolor.h"
-#include "pyroimage.h"
-#include "pyroshape.h"
-#include "pyrovector.h"
-#include "pyrographics.h"
-#include "pyronoise.h"
-#include "pyro_runner.h"
+#include "constants.h"
+#include "string.h"
+#include "math.h"
+#include "color.h"
+#include "image.h"
+#include "shape.h"
+#include "vector.h"
+#include "graphics.h"
+#include "noise.h"
+#include "runner.h"
 
 namespace Pyro
 {

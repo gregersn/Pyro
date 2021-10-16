@@ -1,7 +1,7 @@
 #include <catch2/catch.hpp>
 
-#include "pyro/pyroimage.h"
-#include "pyro/pyroconstants.h"
+#include "pyro/image.h"
+#include "pyro/constants.h"
 
 unsigned int pack(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {

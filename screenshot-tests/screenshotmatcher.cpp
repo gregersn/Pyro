@@ -1,7 +1,7 @@
 #include <sstream>
 #include <iostream>
 #include <unistd.h>
-#include "pyro/pyroimage.h"
+#include "pyro/image.h"
 #include "test-settings.h"
 
 bool ImageMatch::match(std::string const &filename) const

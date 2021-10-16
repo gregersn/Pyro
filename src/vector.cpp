@@ -1,5 +1,5 @@
-#include <pyro/pyrovector.h>
-#include <pyro/pyromath.h>
+#include "pyro/vector.h"
+#include "pyro/math.h"
 #include <cmath>
 
 namespace Pyro

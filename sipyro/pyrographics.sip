@@ -2,7 +2,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyrographics.h>
+#include "pyro/graphics.h"
 #include <Python.h>
 %End
     class Graphics : public Pyro::Image {

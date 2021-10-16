@@ -1,7 +1,7 @@
 #ifndef PYROGRAPHICS_CAIRO_H
 #define PYROGRAPHICS_CAIRO_H
 
-#include "pyrographics.h"
+#include "graphics.h"
 
 #include <cairo/cairo.h>
 #include <cairo/cairo-ft.h>

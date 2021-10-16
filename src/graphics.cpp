@@ -1,8 +1,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include <pyro/pyrographics.h>
-#include <pyro/pyrographics_cairo.h>
+#include "pyro/graphics.h"
+#include "pyro/graphics_cairo.h"
 
 #include <iostream>
 #include <cstring>

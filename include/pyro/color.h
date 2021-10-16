@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include <pyro/pyroconstants.h>
-#include <pyro/pyromath.h>
+#include "constants.h"
+#include "math.h"
 
 namespace Pyro
 {
