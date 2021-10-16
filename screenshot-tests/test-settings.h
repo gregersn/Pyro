@@ -2,7 +2,7 @@
 #define SCREENSHOT_SETTINGS_H
 #include <string>
 #include <catch2/catch.hpp>
-#include <pyro/pyro.h>
+#include "pyro/pyro.h"
 
 static inline std::string const actual_folder = "../screenshots/expected/";
 static inline std::string const current_folder = "../screenshots/current/";

@@ -2,7 +2,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyroconstants.h>
+#include "pyro/constants.h"
 %End
     const double PI;
     const double TWO_PI;

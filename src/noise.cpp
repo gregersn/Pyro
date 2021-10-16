@@ -1,4 +1,4 @@
-#include "pyro/pyronoise.h"
+#include "pyro/noise.h"
 
 #include "opensimplexnoise.h"
 

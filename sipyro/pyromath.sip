@@ -16,7 +16,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyromath.h>
+#include "pyro/math.h"
 %End
     double random(double range);
     double random(double low, double high);

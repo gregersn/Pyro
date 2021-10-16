@@ -2,7 +2,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyrovector.h>
+#include "pyro/vector.h"
 %End
 
     class Vector {

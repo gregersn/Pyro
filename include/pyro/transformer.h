@@ -2,7 +2,7 @@
 #define PYRO_TRANSFORMER_H
 
 #include <vector>
-#include <pyro/pyrovector.h>
+#include "vector.h"
 #include <eigen3/Eigen/Geometry>
 
 namespace Pyro

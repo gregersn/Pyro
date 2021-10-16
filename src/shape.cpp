@@ -1,5 +1,5 @@
-#include <pyro/pyroshape.h>
-#include <pyro/pyromath.h>
+#include "pyro/shape.h"
+#include "pyro/math.h"
 
 #include <iostream>
 #include <cassert>

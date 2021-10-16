@@ -1,5 +1,5 @@
-#include "pyro/pyrofont.h"
-#include "pyro/pyrofont_impl.h"
+#include "pyro/font.h"
+#include "pyro/font_impl.h"
 
 namespace Pyro
 {

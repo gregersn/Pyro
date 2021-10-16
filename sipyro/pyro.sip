@@ -12,8 +12,8 @@
 
 %HideNamespace(name=Pyro)
 %ModuleCode
-#include <pyro/pyro.h>
-#include <pyro/pyroshape.h>
+#include "pyro/pyro.h"
+#include "pyro/shape.h"
 %End
 
 namespace Pyro {

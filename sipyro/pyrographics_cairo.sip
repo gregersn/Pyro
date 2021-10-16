@@ -2,8 +2,8 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyrographics.h>
-#include <pyro/pyrographics_cairo.h>
+#include "pyro/graphics.h"
+#include "pyro/graphics_cairo.h"
 %End
 {
     

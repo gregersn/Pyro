@@ -1,6 +1,6 @@
-#include "pyro/pyroimage.h"
-#include "pyro/pyrocolor.h"
-#include "pyro/pyroconstants.h"
+#include "pyro/image.h"
+#include "pyro/color.h"
+#include "pyro/constants.h"
 
 #include <jpeglib.h>
 #include <setjmp.h>
@@ -219,7 +219,8 @@ namespace Pyro
 
         std::string extension = get_extension(filename);
         std::transform(extension.begin(), extension.end(), extension.begin(),
-                       [](unsigned char c) { return std::tolower(c); });
+                       [](unsigned char c)
+                       { return std::tolower(c); });
 
         if (extension == ".jpeg" || extension == ".jpg")
         {
@@ -1183,7 +1184,8 @@ namespace Pyro
         uint32_t cUL, cLL, cUR, cLR;
         uint32_t r, g, b, a;
 
-        auto filter_new_scanline = [&]() {
+        auto filter_new_scanline = [&]()
+        {
             sX = srcxoffset;
             fracV = srcyoffset & PREC_MAXVAL;
             ifV = PREC_MAXVAL - fracV + 1;
@@ -1191,7 +1193,8 @@ namespace Pyro
             v2 = min((srcyoffset >> PRECISIONB) + 1, ih1) * iw;
         };
 
-        auto filter_bilinear = [&]() {
+        auto filter_bilinear = [&]()
+        {
             fracU = sX & PREC_MAXVAL;
             ifU = PREC_MAXVAL - fracU + 1;
             ul = (ifU * ifV) >> PRECISIONB;

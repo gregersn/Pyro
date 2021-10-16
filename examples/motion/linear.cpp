@@ -1,4 +1,4 @@
-#include <pyro/pyro.h>
+#include "pyro/pyro.h"
 
 using namespace Pyro;
 
@@ -22,7 +22,8 @@ void draw()
     }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     run(setup, draw);
     return 0;
 }

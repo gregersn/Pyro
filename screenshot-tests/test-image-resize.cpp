@@ -1,7 +1,7 @@
 #include <catch2/catch.hpp>
 #include "test-settings.h"
 
-#include "pyro/pyroimage.h"
+#include "pyro/image.h"
 
 TEST_CASE("Images can be resized")
 {

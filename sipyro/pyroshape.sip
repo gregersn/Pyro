@@ -2,7 +2,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyroshape.h>
+#include "pyro/shape.h"
 %End
     void curveresolution(unsigned int res);
     class Shape;

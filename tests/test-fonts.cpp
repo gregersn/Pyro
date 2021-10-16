@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include "pyro/pyrofont.h"
+#include "pyro/font.h"
 
 TEST_CASE("Load a font")
 {

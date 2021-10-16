@@ -2,7 +2,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyroimage.h>
+#include "pyro/image.h"
 #include <Python.h>
 #include <numpy/ndarrayobject.h>
 %End

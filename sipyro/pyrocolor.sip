@@ -2,7 +2,7 @@
 
 namespace Pyro {
 %TypeHeaderCode
-#include <pyro/pyrocolor.h>
+#include "pyro/color.h"
 %End
     class Color {
         public:

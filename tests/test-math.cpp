@@ -1,7 +1,7 @@
 #include <catch2/catch.hpp>
 
-#include <pyro/pyroconstants.h>
-#include <pyro/pyromath.h>
+#include "pyro/constants.h"
+#include "pyro/math.h"
 
 TEST_CASE("Random generation seems sane", "[random]")
 {

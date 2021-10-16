@@ -1,4 +1,4 @@
-#include "pyro/pyrostring.h"
+#include "pyro/string.h"
 
 #include <algorithm>
 

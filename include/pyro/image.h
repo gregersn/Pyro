@@ -2,7 +2,7 @@
 #define PYROIMAGE_H
 
 #include <string>
-#include "pyroconstants.h"
+#include "constants.h"
 
 namespace Pyro
 {

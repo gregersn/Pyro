@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 #include "test-settings.h"
-#include "pyro/pyronoise.h"
+#include "pyro/noise.h"
 #include "pyro/pyro.h"
 
 TEST_CASE("Test noise")

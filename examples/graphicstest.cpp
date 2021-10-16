@@ -1,8 +1,9 @@
-#include <pyro/pyro.h>
+#include "pyro/pyro.h"
 
 using namespace Pyro;
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     size(640, 360);
 
     background(0);
@@ -20,7 +21,7 @@ int main(int argc, char **argv) {
     ellipse(252, 144, 72, 72);
 
     fill(204);
-    triangle(288, 18, 351, 360, 288, 360); 
+    triangle(288, 18, 351, 360, 288, 360);
 
     fill(255);
     arc(479, 300, 280, 280, M_PI, M_PI * 2);

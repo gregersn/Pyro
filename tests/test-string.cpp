@@ -1,6 +1,6 @@
 #include <catch2/catch.hpp>
 
-#include "pyro/pyrostring.h"
+#include "pyro/string.h"
 
 TEST_CASE("A number can be zero padded to certain string length")
 {
