@@ -1,12 +1,12 @@
-test_sources = ['tests-main.cpp',
+test_sources = ['test-main.cpp',
                 'test-color.cpp',
                 'test-fonts.cpp',
                 'test-graphics.cpp',
-                'tests-image.cpp',
+                'test-image.cpp',
                 'test-math.cpp',
                 'test-noise.cpp',
                 'test-pyro.cpp',
-                'tests-vector.cpp',
+                'test-vector.cpp',
                 'test-string.cpp']
 
 testexe = executable('unit-tests', test_sources,
