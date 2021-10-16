@@ -32,8 +32,13 @@ namespace Pyro {
     const int BEVEL;
 
 
-    const int HSB;
-    const int HSBA;
+    const int GRAY;
+    const int GRAYALPHA;
     const int RGB;
     const int RGBA;
+    const int ARGB;
+    const int HSB;
+    const int HSBA;
+    const int ALPHA;
+
 };

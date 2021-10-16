@@ -72,10 +72,8 @@ namespace Pyro
 
         inline void fill(Color c) { this->fill(c.r(), c.g(), c.b(), c.a()); };
 
-        inline void fill(float c) { this->fill(c, c, c, 1.0); };
-        inline void fill(float c, float a) { this->fill(c, c, c, a); };
-        inline void fill(float r, float g, float b) { this->fill(r, g, b, 1.0); };
-        void fill(float r, float g, float b, float a);
+        inline void fill(float c, float a = 1.0) { this->fill(c, c, c, a); };
+        void fill(float r, float g, float b, float a = 1.0);
 
         void fill(int c, int a = 255);
         void fill(int r, int g, int b, int a = 255);

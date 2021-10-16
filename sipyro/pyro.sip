@@ -1,14 +1,14 @@
 %Module(name=pyro, call_super_init=True)
 
 %DefaultEncoding "UTF-8"
-%Include pyroconstants.sip
-%Include pyromath.sip
-%Include pyrocolor.sip
-%Include pyroshape.sip
-%Include pyrovector.sip
-%Include pyroimage.sip
-%Include pyrographics.sip
-%Include pyrosdl.sip
+%Include constants.sip
+%Include math.sip
+%Include color.sip
+%Include shape.sip
+%Include vector.sip
+%Include image.sip
+%Include graphics.sip
+%Include sdl.sip
 
 %HideNamespace(name=Pyro)
 %ModuleCode
@@ -24,39 +24,31 @@ namespace Pyro {
 
     Graphics *create(unsigned int width, unsigned int height);
 
-    void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi);
-    void size(unsigned int width, unsigned int height);
-
-    unsigned int color(unsigned int r, unsigned int g, unsigned int b);
-    unsigned int color(unsigned int r, unsigned int g, unsigned int b, unsigned int a);
+    void size(unsigned int width, unsigned int height, Unit unit = Pyro::Unit::px, unsigned int dpi = 72);
 
     void save(const char *file);
     void save(const char *file, unsigned int dpi);
+
+    unsigned int color(unsigned int r, unsigned int g, unsigned int b, unsigned int a = 255);
 
     void nostroke();
     void nofill();
 
     void background(Color c /Constrained/);
 
-    void background(int c);
-    void background(int c, int a);
-    void background(int r, int g, int b);
-    void background(int r, int g, int b, int a);
+    void background(int c, int a = 255);
+    void background(int r, int g, int b, int a = 255);
 
     void smooth();
     void nosmooth();
 
     void fill(Color c /Constrained/);
-    void fill(int c);
-    void fill(int c, int a);
-    void fill(int r, int g, int b);
-    void fill(int r, int g, int b, int a);
+    void fill(int c, int a = 255);
+    void fill(int r, int g, int b, int a = 255);
 
     void stroke(Color c /Constrained/);
-    void stroke(int c);
-    void stroke(int c, int a);
-    void stroke(int r, int g, int b);
-    void stroke(int r, int g, int b, int a);
+    void stroke(int c, int a = 255);
+    void stroke(int r, int g, int b, int a = 255);
 
 
     void point(float x, float y);
