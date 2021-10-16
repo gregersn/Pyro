@@ -70,9 +70,7 @@ namespace Pyro
 
         Image(const Image &in);
         Image();
-        Image(unsigned int width, unsigned int height);
-        Image(unsigned int width, unsigned int height, unsigned int format);
-        Image(unsigned int width, unsigned int height, unsigned int format, unsigned int factor);
+        Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1);
         void init(int width, int height, int format, int factor);
 
         Image &operator=(const Image &in);
@@ -111,19 +109,15 @@ namespace Pyro
         void mask(Image *mask);
 
         // Image manipulation functions
-        Image *resize(unsigned int width, unsigned int height) { return this->resize(width, height, NEAREST); };
-        Image *resize(unsigned int width, unsigned int height, RESIZEMETHOD method);
+        Image *resize(unsigned int width, unsigned int height, RESIZEMETHOD method = RESIZEMETHOD::NEAREST);
 
         Image *convert(unsigned int format);
 
-        Image *rotate(double angle);
-        Image *rotate(double angle, RESIZEMETHOD method);
+        Image *rotate(double angle, RESIZEMETHOD method = RESIZEMETHOD::BILINEAR);
         Image *rotate_nearest(double angle);
         Image *rotate_bilinear(double angle);
     };
 
-    Image *createimage(unsigned int width, unsigned int height);
-    Image *createimage(unsigned int width, unsigned int height, int format);
-    Image *createimage(unsigned int width, unsigned int height, int format, unsigned int dpi);
+    Image *createimage(unsigned int width, unsigned int height, int format = RGB, unsigned int dpi = 72);
 }
 #endif

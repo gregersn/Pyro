@@ -38,8 +38,7 @@ namespace Pyro
     }
 
     // Initialize the library with this.
-    void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi);
-    void size(unsigned int width, unsigned int height);
+    void size(unsigned int width, unsigned int height, Unit unit = Unit::px, unsigned int dpi = 72);
 
     inline void save(const char *file) { pg->save(file); };
     inline void save(const char *file, unsigned int dpi) { pg->save(file, dpi); };
@@ -54,15 +53,11 @@ namespace Pyro
     // Drawing functions
     inline void background(Color c) { pg->background(c); };
 
-    inline void background(int c) { pg->background(c / 255.0f, c / 255.0f, c / 255.0f, 1.0f); };
-    inline void background(int c, int a) { pg->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
-    inline void background(int r, int g, int b) { pg->background(r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); };
-    inline void background(int r, int g, int b, int a) { pg->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); };
+    inline void background(int c, int a = 255) { pg->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
+    inline void background(int r, int g, int b, int a = 255) { pg->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); };
 
-    inline void background(float c) { pg->background(c, c, c, 1.0); };
-    inline void background(float c, float a) { pg->background(c, c, c, a); };
-    inline void background(float r, float g, float b) { pg->background(r, g, b, 1.0); };
-    inline void background(float r, float g, float b, float a) { pg->background(r, g, b, a); };
+    inline void background(float c, float a = 1.0) { pg->background(c, c, c, a); };
+    inline void background(float r, float g, float b, float a = 1.0) { pg->background(r, g, b, a); };
 
     inline void smooth() { pg->smooth(); };
     inline void nosmooth() { pg->nosmooth(); };
@@ -71,27 +66,19 @@ namespace Pyro
 
     inline void fill(Color c) { pg->fill(c); };
 
-    inline void fill(float c) { pg->fill(c, c, c, 1.0); };
-    inline void fill(float c, float a) { pg->fill(c, c, c, a); };
-    inline void fill(float r, float g, float b) { pg->fill(r, g, b, 1.0); };
-    inline void fill(float r, float g, float b, float a) { pg->fill(r, g, b, a); };
+    inline void fill(float c, float a = 1.0) { pg->fill(c, c, c, a); };
+    inline void fill(float r, float g, float b, float a = 1.0) { pg->fill(r, g, b, a); };
 
-    inline void fill(int c) { pg->fill(c); };
-    inline void fill(int c, int a) { pg->fill(c, a); };
-    inline void fill(int r, int g, int b) { pg->fill(r, g, b); };
-    inline void fill(int r, int g, int b, int a) { pg->fill(r, g, b, a); };
+    inline void fill(int c, int a = 255) { pg->fill(c, a); };
+    inline void fill(int r, int g, int b, int a = 255) { pg->fill(r, g, b, a); };
 
     inline void stroke(Color c) { pg->stroke(c); };
 
-    inline void stroke(float c) { pg->stroke(c, c, c, 1.0); };
-    inline void stroke(float c, float a) { pg->stroke(c, c, c, a); };
-    inline void stroke(float r, float g, float b) { pg->stroke(r, g, b, 1.0); };
-    inline void stroke(float r, float g, float b, float a) { pg->stroke(r, g, b, a); };
+    inline void stroke(float c, float a = 1.0) { pg->stroke(c, c, c, a); };
+    inline void stroke(float r, float g, float b, float a = 1.0) { pg->stroke(r, g, b, a); };
 
-    inline void stroke(int c) { pg->stroke(c); };
-    inline void stroke(int c, int a) { pg->stroke(c, a); };
-    inline void stroke(int r, int g, int b) { pg->stroke(r, g, b); };
-    inline void stroke(int r, int g, int b, int a) { pg->stroke(r, g, b, a); };
+    inline void stroke(int c, int a = 255) { pg->stroke(c, a); };
+    inline void stroke(int r, int g, int b, int a = 255) { pg->stroke(r, g, b, a); };
 
     inline void strokeweight(float w) { pg->strokeweight(w); };
 
@@ -108,8 +95,7 @@ namespace Pyro
     inline void rect(float a, float b, float c, float d) { pg->rect(a, b, c, d); };
     inline void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->quad(x0, y0, x1, y1, x2, y2, x3, y3); };
 
-    inline void arc(float a, float b, float c, float d, float start, float end, int mode) { pg->arc(a, b, c, d, start, end); };
-    inline void arc(float a, float b, float c, float d, float start, float end) { arc(a, b, c, d, start, end, OPEN); };
+    inline void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN) { pg->arc(a, b, c, d, start, end, mode); };
 
     inline void ellipse(float x, float y, float w, float h, unsigned int segments = 32) { pg->ellipse(x, y, w, h, segments); };
     inline void circle(float x, float y, float r, unsigned int segments = 32) { ellipse(x, y, r, r, segments); };

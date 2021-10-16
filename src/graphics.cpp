@@ -34,16 +34,6 @@ namespace Pyro
         }
     }
 
-    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode)
-    {
-        return create(width, height, mode, 1);
-    }
-
-    Graphics *Graphics::create(unsigned int width, unsigned int height)
-    {
-        return create(width, height, GraphicsMode::CAIRO);
-    }
-
     void Graphics::point(float x, float y)
     {
         this->line(x, y, x + 1, y + 1);
@@ -256,19 +246,9 @@ namespace Pyro
                      a / 255.0f);
     }
 
-    void Graphics::stroke(int c)
-    {
-        this->stroke(c, c, c, 255);
-    }
-
     void Graphics::stroke(int c, int a)
     {
         this->stroke(c, c, c, a);
-    }
-
-    void Graphics::stroke(int r, int g, int b)
-    {
-        this->stroke(r, g, b, 255);
     }
 
     void Graphics::fill(float r, float g, float b, float a)
@@ -288,16 +268,6 @@ namespace Pyro
     void Graphics::fill(int c, int a)
     {
         this->fill(c, c, c, a);
-    }
-
-    void Graphics::fill(int r, int g, int b)
-    {
-        this->fill(r, g, b, 255);
-    }
-
-    void Graphics::fill(int c)
-    {
-        this->fill(c, c, c, 255);
     }
 
     void Graphics::nostroke()

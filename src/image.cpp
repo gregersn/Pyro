@@ -123,14 +123,6 @@ namespace Pyro
         density = 1;
     }
 
-    Image::Image(unsigned int width, unsigned int height)
-    {
-        init(width, height, RGB, 1);
-    }
-    Image::Image(unsigned int width, unsigned int height, unsigned int format)
-    {
-        init(width, height, format, 1);
-    }
     Image::Image(unsigned int width, unsigned int height, unsigned int format, unsigned int factor)
     {
         init(width, height, format, factor);
@@ -1472,11 +1464,6 @@ namespace Pyro
                lerp(BLUE(a), BLUE(b), t);
     }
 
-    Image *Image::rotate(double angle)
-    {
-        return this->rotate(angle, RESIZEMETHOD::BILINEAR);
-    }
-
     Image *Image::rotate(double angle, RESIZEMETHOD method)
     {
         switch (method)
@@ -1560,17 +1547,6 @@ namespace Pyro
     }
 
     // Utility functions
-
-    Image *createimage(unsigned int width, unsigned int height)
-    {
-        return new Image(width, height, ARGB, 1);
-    }
-
-    Image *createimage(unsigned int width, unsigned int height, int format)
-    {
-        return new Image(width, height, format, 1);
-    }
-
     Image *createimage(unsigned int width, unsigned int height, int format, unsigned int dpi)
     {
         return new Image(width, height, format, 1);

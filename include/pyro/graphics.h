@@ -52,9 +52,7 @@ namespace Pyro
         Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
         virtual ~Graphics();
 
-        static Graphics *create(unsigned int width, unsigned int height);
-        static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode);
-        static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi);
+        static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO, unsigned int dpi = 72);
 
         void imagemode(int mode) { this->_image_mode = mode; };
         void image(Image *img, float x, float y);
@@ -79,10 +77,8 @@ namespace Pyro
         inline void fill(float r, float g, float b) { this->fill(r, g, b, 1.0); };
         void fill(float r, float g, float b, float a);
 
-        void fill(int c);
-        void fill(int c, int a);
-        void fill(int r, int g, int b);
-        void fill(int r, int g, int b, int a);
+        void fill(int c, int a = 255);
+        void fill(int r, int g, int b, int a = 255);
 
         inline void stroke(Color c) { this->stroke(c.r(), c.g(), c.b(), c.a()); };
 
@@ -91,10 +87,8 @@ namespace Pyro
         inline void stroke(float r, float g, float b) { this->stroke(r, g, b, 1.0); };
         void stroke(float r, float g, float b, float a);
 
-        void stroke(int c);
-        void stroke(int c, int a);
-        void stroke(int r, int g, int b);
-        void stroke(int r, int g, int b, int a);
+        void stroke(int c, int a = 255);
+        void stroke(int r, int g, int b, int a = 255);
 
         void strokeweight(float w);
         virtual void strokecap(int cap);
@@ -112,15 +106,11 @@ namespace Pyro
 
         // Drawing functions
         inline void background(Color c) { this->background(c.r(), c.g(), c.b(), c.a()); };
-        inline void background(int c) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, 1.0f); };
-        inline void background(int c, int a) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
-        inline void background(int r, int g, int b) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, 1.0f); };
-        inline void background(int r, int g, int b, int a) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); };
+        inline void background(int c, int a = 255) { this->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
+        inline void background(int r, int g, int b, int a = 255) { this->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); };
 
-        inline void background(float c) { this->background(c, c, c, 1.0); };
-        inline void background(float c, float a) { this->background(c, c, c, a); };
-        inline void background(float r, float g, float b) { this->background(r, g, b, 1.0f); };
-        virtual void background(float r, float g, float b, float a);
+        inline void background(float c, float a = 1.0) { this->background(c, c, c, a); };
+        virtual void background(float r, float g, float b, float a = 1.0);
 
         virtual void shape(Shape s, float x, float y){};
 
@@ -149,8 +139,7 @@ namespace Pyro
         void quad(Vector a, Vector b, Vector c, Vector d);
         void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
-        void arc(float a, float b, float c, float d, float start, float end) { this->arc(a, b, c, d, start, end, OPEN); };
-        void arc(float a, float b, float c, float d, float start, float end, int mode);
+        void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN);
 
         void ellipsemode(int mode) { this->_ellipse_mode = mode; };
         void ellipse(float x, float y, float w, float h, unsigned int segments);

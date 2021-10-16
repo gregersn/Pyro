@@ -14,8 +14,7 @@ namespace Pyro
         float z;
 
         Vector();
-        Vector(float x, float y);
-        Vector(float x, float y, float z);
+        Vector(float x, float y, float z = 0.0f);
 
         static Vector random2d();
         static Vector random3d();
