@@ -53,10 +53,8 @@ namespace Pyro
                          int mode);
 
     protected:
-        unsigned int _width = 0;
-        unsigned int _height = 0;
-        int _pixelwidth = 0;
-        int _pixelheight = 0;
+        unsigned int _pixelwidth = 0;
+        unsigned int _pixelheight = 0;
         unsigned int density = 1;
 
         bool modified = false;
@@ -64,14 +62,14 @@ namespace Pyro
 
     public:
         unsigned int format = ARGB;
-        unsigned int width() { return this->_width; };
-        unsigned int height() { return this->_height; };
+        unsigned int width() { return this->_pixelwidth; };
+        unsigned int height() { return this->_pixelheight; };
         unsigned int channels();
 
         Image(const Image &in);
         Image();
         Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1);
-        void init(int width, int height, int format, int factor);
+        void init(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1);
 
         Image &operator=(const Image &in);
         virtual ~Image();
@@ -97,7 +95,7 @@ namespace Pyro
         unsigned int operator[](unsigned int);
 
         Image *get();
-        uint32_t get(int x, int y);
+        uint32_t get(unsigned int x, unsigned int y);
         Image *get(int x, int y, int width, int height);
 
         void set(unsigned int x, unsigned int y, unsigned int c);

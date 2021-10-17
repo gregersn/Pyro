@@ -104,8 +104,6 @@ namespace Pyro
 
     Image::Image(const Image &in)
     {
-        this->_width = in._width;
-        this->_height = in._height;
         this->_pixelheight = in._pixelheight;
         this->_pixelwidth = in._pixelwidth;
         this->dpi = in.dpi;
@@ -128,12 +126,10 @@ namespace Pyro
         init(width, height, format, factor);
     }
 
-    void Image::init(int width, int height, int format, int factor)
+    void Image::init(unsigned int width, unsigned int height, unsigned int format, unsigned int factor)
     {
         this->dpi = 72;
         this->density = factor;
-        this->_width = width;
-        this->_height = height;
         this->format = format;
         this->_pixelwidth = width * factor;
         this->_pixelheight = height * factor;
@@ -150,8 +146,8 @@ namespace Pyro
         if (this->get_data() != nullptr)
             ::operator delete(this->get_data());
 
-        this->_width = in._width;
-        this->_height = in._height;
+        this->_pixelwidth = in._pixelwidth;
+        this->_pixelheight = in._pixelheight;
         this->dpi = in.dpi;
         this->pixels_locked = false;
         this->format = in.format;
@@ -455,7 +451,7 @@ namespace Pyro
         {
         case GRAY:
             converted_data = (uint8_t *)::operator new(this->_pixelwidth *this->_pixelheight * sizeof(uint8_t));
-            for (int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
+            for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
             {
                 converted_data[i] = BLUE(this->data[i]);
             }
@@ -463,7 +459,7 @@ namespace Pyro
             break;
         case RGB:
             converted_data = (uint8_t *)::operator new(this->_pixelwidth *this->_pixelheight * sizeof(uint8_t) * 3);
-            for (int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
+            for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
             {
                 converted_data[i * 3] = BLUE(this->data[i]);
                 converted_data[i * 3 + 1] = GREEN(this->data[i]);
@@ -497,11 +493,11 @@ namespace Pyro
     {
         if (this->cache == nullptr)
         {
-            this->cache = malloc(this->_width * this->_height * sizeof(unsigned char) * this->format);
+            this->cache = malloc(this->_pixelwidth * this->_pixelheight * sizeof(unsigned char) * this->format);
             unsigned char *cache = (unsigned char *)this->cache;
             unsigned char *source = this->load_bytes();
 
-            for (unsigned int i = 0; i < this->_width * this->_height * 4; i += 4)
+            for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight * 4; i += 4)
             {
                 cache[i] = source[i] * source[i + 3] / 255;
                 cache[i + 1] = source[i + 1] * source[i + 3] / 255;
@@ -536,15 +532,24 @@ namespace Pyro
 
     void Image::update_pixels(int x, int y, int w, int h)
     {
+        if (x < 0)
+            x = 0;
+        if (y < 0)
+            y = 0;
+
+        if (w < 0)
+            w = 0;
+        if (h < 0)
+            h = 0;
         int x2 = x + w;
         int y2 = y + h;
 
         if (!modified)
         {
             mx1 = max(0, x);
-            mx2 = min(_pixelwidth, x2);
+            mx2 = x2 < 0 ? _pixelwidth : min(_pixelwidth, (unsigned int)(x2));
             my1 = max(0, y);
-            my2 = min(_pixelheight, y2);
+            my2 = y2 < 0 ? _pixelheight : min(_pixelheight, (unsigned int)(y2));
             modified = true;
         }
         else
@@ -552,26 +557,26 @@ namespace Pyro
             if (x < mx1)
                 mx1 = max(0, x);
             if (x > mx2)
-                mx2 = min(_pixelwidth, x);
+                mx2 = min(_pixelwidth, (unsigned int)(x));
             if (y < my1)
                 my1 = max(0, y);
             if (y > my2)
-                my2 = min(_pixelheight, y);
+                my2 = min(_pixelheight, (unsigned int)(y));
 
             if (x2 < mx1)
                 mx1 = max(0, x2);
             if (x2 > mx2)
-                mx2 = min(_pixelwidth, x2);
+                mx2 = min(_pixelwidth, (unsigned int)(x2));
             if (y2 < my1)
                 my1 = max(0, y2);
             if (y2 > my2)
-                my2 = min(_pixelheight, y2);
+                my2 = min(_pixelheight, (unsigned int)(y2));
         }
     }
 
     unsigned int Image::operator[](unsigned int index)
     {
-        if (index < this->_width * this->_height)
+        if (index < this->_pixelwidth * this->_pixelheight)
         {
             //return (this->load_pixels())[index];
             return this->data[index];
@@ -584,7 +589,7 @@ namespace Pyro
         return this->get(0, 0, this->width(), this->height());
     }
 
-    uint32_t Image::get(int x, int y)
+    uint32_t Image::get(unsigned int x, unsigned int y)
     {
         if (x < 0 || y < 0 || x >= this->_pixelwidth || y >= this->_pixelheight)
             return 0;
@@ -613,7 +618,7 @@ namespace Pyro
         {
             for (int tx = 0; tx < width; tx++)
             {
-                unsigned int pos = (y + ty) * this->_width + (x + tx);
+                unsigned int pos = (y + ty) * this->_pixelwidth + (x + tx);
                 uint32_t pixel = src_data[pos];
                 dst_data[ty * width * +tx] = pixel;
             }
@@ -644,7 +649,7 @@ namespace Pyro
             for (unsigned int sx = 0; sx < img->width(); sx++)
             {
                 int ax = x + sx;
-                if (ax >= 0 && ax < int(this->width()) && ay >= 0 && ay < int(this->height()))
+                if (ax >= 0 && (unsigned int)(ax) < this->width() && ay >= 0 && (unsigned int)(ay) < this->height())
                 {
                     pixels[ay * this->width() + ax] = aoverb(inpixels[sy * img->width() + sx], pixels[ay * this->width() + ax]);
                 }
@@ -1122,13 +1127,13 @@ namespace Pyro
 
         srcX1 = max(0, srcX1);
         srcY1 = max(0, srcY1);
-        srcX2 = min(img->_pixelwidth, srcX2);
-        srcY2 = min(img->_pixelheight, srcY2);
+        srcX2 = srcX2 < 0 ? 0 : min(img->_pixelwidth, (unsigned int)(srcX2));
+        srcY2 = srcY2 < 0 ? 0 : min(img->_pixelheight, (unsigned int)(srcY2));
 
-        int srcW = srcX2 - srcX1;
-        int srcH = srcY2 - srcY1;
-        int destW = destX2 - destX1;
-        int destH = destY2 - destY1;
+        unsigned int srcW = srcX2 - srcX1;
+        unsigned int srcH = srcY2 - srcY1;
+        unsigned int destW = destX2 - destX1;
+        unsigned int destH = destY2 - destY1;
 
         bool smooth = true;
 
@@ -1141,13 +1146,13 @@ namespace Pyro
         if (destW <= 0 || destH <= 0 ||
             srcW <= 0 || srcH <= 0 ||
             destX1 >= screenW || destY1 >= screenH ||
-            srcX1 >= img->_pixelwidth || srcY1 >= img->_pixelheight)
+            (unsigned int)(srcX1) >= img->_pixelwidth || (unsigned int)(srcY1) >= img->_pixelheight)
         {
             return;
         }
 
-        int64_t dx = (int)(srcW / (float)destW * PRECISIONF);
-        int64_t dy = (int)(srcH / (float)destH * PRECISIONF);
+        uint64_t dx = (srcW / (float)destW * PRECISIONF);
+        uint64_t dy = (srcH / (float)destH * PRECISIONF);
 
         if (destX1 < 0)
         {
@@ -1161,8 +1166,8 @@ namespace Pyro
             destY1 = 0;
         }
 
-        destW = min(destW, screenW - destX1);
-        destH = min(destH, screenH - destY1);
+        destW = min(destW, (unsigned int)(screenW - destX1));
+        destH = min(destH, (unsigned int)(screenH - destY1));
 
         int64_t destoffset = destY1 * screenW + destX1;
         uint32_t *srcbuffer = img->load_pixels();
@@ -1279,10 +1284,10 @@ namespace Pyro
             iw1 = img->_pixelwidth - 1;
             ih1 = img->_pixelheight - 1;
 
-            for (int y = 0; y < destH; y++)
+            for (unsigned int y = 0; y < destH; y++)
             {
                 filter_new_scanline();
-                for (int x = 0; x < destW; x++)
+                for (unsigned int x = 0; x < destW; x++)
                 {
                     destpixels[destoffset + x] = blend_function(destpixels[destoffset + x],
                                                                 filter_bilinear());
@@ -1330,7 +1335,7 @@ namespace Pyro
         uint32_t *out_p = out->load_pixels();
         uint32_t *in_p = this->load_pixels();
 
-        for (int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
+        for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
         {
             if (this->format == GRAY)
             {
@@ -1490,9 +1495,9 @@ namespace Pyro
 
         Image *out = new Image(new_width, new_height, ARGB);
         uint32_t *pixels = out->load_pixels();
-        for (int y = 0; y < out->_pixelheight; y++)
+        for (unsigned int y = 0; y < out->_pixelheight; y++)
         {
-            for (int x = 0; x < out->_pixelwidth; x++)
+            for (unsigned int x = 0; x < out->_pixelwidth; x++)
             {
                 int sx = round(((x - hw) * ca - (y - hh) * sa) + hw);
                 int sy = round(((x - hw) * sa + (y - hh) * ca) + hh);
@@ -1518,9 +1523,9 @@ namespace Pyro
 
         Image *out = new Image(new_width, new_height, ARGB);
         uint32_t *pixels = out->load_pixels();
-        for (int y = 0; y < out->_pixelheight; y++)
+        for (unsigned int y = 0; y < out->_pixelheight; y++)
         {
-            for (int x = 0; x < out->_pixelwidth; x++)
+            for (unsigned int x = 0; x < out->_pixelwidth; x++)
             {
                 float sx = ((x - hw) * ca - (y - hh) * sa) + hw;
                 float sy = ((x - hw) * sa + (y - hh) * ca) + hh;
