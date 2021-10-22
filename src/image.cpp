@@ -1147,7 +1147,7 @@ namespace Pyro
 
         if (destW <= 0 || destH <= 0 ||
             srcW <= 0 || srcH <= 0 ||
-            destX1 >= screenW || destY1 >= screenH ||
+            (destX1 > 0 && (unsigned int)(destX1) >= screenW) || (destY1 > 0 && (unsigned int)(destY1) >= screenH) ||
             (unsigned int)(srcX1) >= img->_pixelwidth || (unsigned int)(srcY1) >= img->_pixelheight)
         {
             return;
