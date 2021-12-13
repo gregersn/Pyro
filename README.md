@@ -20,7 +20,7 @@ The state of the whole thing is not really userfriendly at the moment, but hopef
 | [SDL](https://www.libsdl.org/)                       | 2.x     | zlib                                    |
 | [libjpeg-turbo](https://libjpeg-turbo.org/)          | 2.0.3   |                                         |
 | [libpng](http://www.libpng.org/pub/png/libpng.html)  | 1.6.37  | PNG Reference Library License version 2 |
-| [Catch2](https://github.com/catchorg/Catch2)         | 2.9     | BSL-1.0                                 |
+| [Catch2](https://github.com/catchorg/Catch2)         | 2.13.7-1     | BSL-1.0                                 |
 
 ## Building
 
