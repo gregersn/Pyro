@@ -19,6 +19,12 @@ namespace Pyro
     extern unsigned int height;
     extern uint32_t *pixels;
 
+    /**
+     * Create a graphics object
+     * 
+     * @param width The width of the canvas
+     * @param height The height of the canvas
+     */
     inline Graphics *create(unsigned int width, unsigned int height)
     {
         return Graphics::create(width, height);
@@ -93,6 +99,7 @@ namespace Pyro
     inline void circle(float x, float y, float r, unsigned int segments = 32) { ellipse(x, y, r, r, segments); };
 
     inline void translate(float x, float y) { pg->translate(x, y); };
+    inline void scale(float sx, float sy) { pg->scale(sx, sy); };
     inline void rotate(float a) { pg->rotate(a); };
     inline void pushmatrix() { pg->pushmatrix(); };
     inline void popmatrix() { pg->popmatrix(); };

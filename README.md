@@ -74,7 +74,7 @@ Some tests have been implemented using [Catch2](https://github.com/catchorg/Catc
 
 ## Installing
 
-If you run `make install` at the moment, it is just doing some dumb stuff to get it installed on Mac. 
+If you run `make install` at the moment, it is just doing some dumb stuff to get it installed on Mac.
 You can then compile and link a file with something like:
 `g++ -MMD -MP -lpyro -std=c++17 somefile.cpp`
 
@@ -83,7 +83,7 @@ You can then compile and link a file with something like:
 Bindings between this library and Python can be compiled using [SIP](https://riverbankcomputing.com/software/sip).
 Last tested with SIP 6.3.1, bindings can be compiled doing
 
-```
+```sh
 ./build_bindings.sh
 ```
 

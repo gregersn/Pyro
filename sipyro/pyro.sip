@@ -21,6 +21,7 @@ namespace Pyro {
 
     unsigned int width;
     unsigned int height;
+    Graphics *pg;
 
     Graphics *create(unsigned int width, unsigned int height);
 
@@ -50,6 +51,7 @@ namespace Pyro {
     void stroke(int c, int a = 255);
     void stroke(int r, int g, int b, int a = 255);
 
+    void strokeweight(float w, Unit unit = Pyro::Unit::px);
 
     void point(float x, float y);
     void line(float x0, float y0, float x1, float y1);
@@ -60,6 +62,7 @@ namespace Pyro {
     void ellipse(float x, float y, float w, float h, unsigned int segments = 32);
 
     void translate(float x, float y);
+    void scale(float sx, float sy);
     void rotate(float a);
     void pushmatrix();
     void popmatrix();
