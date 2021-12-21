@@ -36,6 +36,22 @@ TEST_CASE("Random generation seems sane", "[random]")
             REQUIRE(firsts[i] < 99);
         }
     }
+
+    SECTION("Test random number standard deviation")
+    {
+        unsigned int tests = 1000000;
+        double values[tests];
+        double sum = 0.0f;
+        for (uint i = 0; i < tests; i++)
+        {
+            values[i] = Pyro::random();
+            sum += values[i];
+        }
+
+        double mean = sum / tests;
+
+        REQUIRE(mean == Approx(.5).margin(.001));
+    }
 }
 
 TEST_CASE("Values can be...")

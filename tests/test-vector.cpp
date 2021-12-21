@@ -194,8 +194,21 @@ TEST_CASE("Vectors can be initialized in various ways", "[vector]")
 
     SECTION("Random 2D")
     {
-        Pyro::Vector v = Pyro::Vector::random2d();
-        REQUIRE(abs(v.mag() - 1.0f) < 0.00001f);
+        unsigned int tests = 1000000;
+        double values[tests];
+        double sum = 0.0f;
+        for (uint i = 0; i < tests; i++)
+        {
+
+            Pyro::Vector v = Pyro::Vector::random2d();
+            REQUIRE(abs(v.mag() - 1.0f) < 0.00001f);
+            values[i] = (v.heading() + M_PI);
+            sum += values[i];
+        }
+
+        double mean = sum / tests;
+
+        REQUIRE(mean == Approx(M_PI).margin(.01));
     }
 
     SECTION("Random 3D")
