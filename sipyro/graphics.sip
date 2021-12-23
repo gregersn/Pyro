@@ -61,6 +61,8 @@ namespace Pyro {
             void quad(Vector a, Vector b, Vector c, Vector d);
             void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
+            void arc(float a, float b, float c, float d, float start, float end, int mode = Pyro::OPEN, Pyro::Unit unit = Pyro::Unit::px);
+            
             void rectmode(int mode);
             void rect(float a, float b, float c, float d);
 
