@@ -35,6 +35,11 @@ namespace Pyro
         return Graphics::create(width, height, mode);
     }
 
+    inline Graphics *create(unsigned int width, unsigned int height, Unit unit = Unit::px, unsigned int dpi = 72)
+    {
+        return Graphics::create(width, height, GraphicsMode::CAIRO, dpi, unit);
+    }
+
     // Initialize the library with this.
     void size(unsigned int width, unsigned int height, Unit unit = Unit::px, unsigned int dpi = 72);
 

@@ -23,8 +23,7 @@ namespace Pyro {
     unsigned int height;
     Graphics *pg;
 
-    Graphics *create(unsigned int width, unsigned int height);
-
+    Graphics *create(unsigned int width, unsigned int height, Unit unit = Pyro::Unit::px, unsigned int dpi = 72);
     void size(unsigned int width, unsigned int height, Unit unit = Pyro::Unit::px, unsigned int dpi = 72);
 
     void save(const char *file);
