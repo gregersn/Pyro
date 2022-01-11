@@ -35,6 +35,11 @@ namespace Pyro {
             Vector operator- (const Vector &other) const;
             Vector operator/ (const float v) const;
             Vector operator* (const float v) const;
-            //bool operator==(const Vector &lhs, const Vector &rhs);
+            bool operator== (const Vector &rhs) const;
+            bool operator!= (const Vector &rhs) const;
+            bool operator< (const Vector &rhs) const;
+            bool operator> (const Vector &rhs) const;
+            bool operator<= (const Vector &rhs) const;
+            bool operator>= (const Vector &rhs) const;
     };
 };
