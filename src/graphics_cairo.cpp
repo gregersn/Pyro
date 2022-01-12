@@ -1,5 +1,6 @@
 #include "pyro/graphics_cairo.h"
 #include "pyro/font_impl.h"
+#include "pyro/utils.h"
 namespace Pyro
 {
     GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Graphics(width, height, format, dpi)
@@ -138,6 +139,12 @@ namespace Pyro
     }
     void GraphicsCairo::translate(float x, float y, Unit unit)
     {
+        if (unit == Unit::current)
+            unit = this->unit;
+
+        x = unit2pixels(x, unit, this->get_dpi());
+        y = unit2pixels(y, unit, this->get_dpi());
+
         cairo_translate(this->cr, x, y);
     }
 
@@ -165,6 +172,14 @@ namespace Pyro
     {
         if (this->stroke_enable)
         {
+            if (unit == Unit::current)
+                unit = this->unit;
+            x0 = unit2pixels(x0, unit, this->get_dpi());
+            y0 = unit2pixels(y0, unit, this->get_dpi());
+
+            x1 = unit2pixels(x1, unit, this->get_dpi());
+            y1 = unit2pixels(y1, unit, this->get_dpi());
+
             cairo_new_path(this->cr);
             cairo_move_to(this->cr, x0, y0);
             cairo_line_to(this->cr, x1, y1);

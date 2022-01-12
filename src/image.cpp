@@ -131,6 +131,7 @@ namespace Pyro
     {
         this->dpi = dpi;
         this->density = factor;
+        this->unit = unit;
         this->_pixelwidth = unit2pixels(width, unit, dpi) * factor;
         this->_pixelheight = unit2pixels(height, unit, dpi) * factor;
         this->format = format;

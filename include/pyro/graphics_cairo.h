@@ -24,15 +24,15 @@ namespace Pyro
 
         void blendmode(BlendMode mode);
 
-        void translate(float x, float, Unit unit = Unit::px);
+        void translate(float x, float, Unit unit = Unit::current);
         void rotate(float a);
         void scale(float sx, float sy);
         void pushmatrix();
         void popmatrix();
 
         void image_impl(Image *img, float x, float y);
-        void shape(Shape s, float x, float y, Unit unit = Unit::px);
-        void line(float x0, float y0, float x1, float y1, Unit unit = Unit::px);
+        void shape(Shape s, float x, float y, Unit unit = Unit::current);
+        void line(float x0, float y0, float x1, float y1, Unit unit = Unit::current);
         void ellipse(float x, float y, float w, float h, unsigned int segments);
         void background(float r, float g, float b, float a);
         void smooth();
@@ -40,7 +40,7 @@ namespace Pyro
         void strokecap(int cap);
         void strokejoin(int join);
 
-        void text_impl(std::string text, float x, float y, Unit unit = Unit::px);
+        void text_impl(std::string text, float x, float y, Unit unit = Unit::current);
         void textfont_impl(Font *font);
     };
 }

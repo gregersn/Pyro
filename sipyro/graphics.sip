@@ -22,7 +22,7 @@ namespace Pyro {
             void save(const char *filename, unsigned int dpi);
 
             // Transformation
-            void translate(float x, float);
+            void translate(float x, float, Unit unit = Pyro::Unit::current);
             void rotate(float a);
             void scale(float sx, float sy);
             void pushmatrix();
@@ -39,7 +39,7 @@ namespace Pyro {
 
             void nostroke();
             void nofill();
-            void strokeweight(float w); 
+            void strokeweight(float w, Unit unit = Pyro::Unit::current); 
             void strokecap(int cap);
             void strokejoin(int join);
             void colormode(int mode);
@@ -51,7 +51,7 @@ namespace Pyro {
             void fill(float c, float a = 1.0);
             void fill(float r, float g, float b, float a = 1.0);
 
-            void line(float x0, float y0, float x1, float y1);
+            void line(float x0, float y0, float x1, float y1, Unit unit = Pyro::Unit::current);
             void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
             void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
@@ -61,13 +61,13 @@ namespace Pyro {
             void quad(Vector a, Vector b, Vector c, Vector d);
             void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
-            void arc(float a, float b, float c, float d, float start, float end, int mode = Pyro::OPEN, Pyro::Unit unit = Pyro::Unit::px);
+            void arc(float a, float b, float c, float d, float start, float end, int mode = Pyro::OPEN, Pyro::Unit unit = Pyro::Unit::current);
             
             void rectmode(int mode);
             void rect(float a, float b, float c, float d);
 
             void ellipsemode(int mode);
-            void ellipse(float x, float y, float w, float h, unsigned int segments);
+            void ellipse(float x, float y, float w, float h, unsigned int segments, Unit unit = Pyro::Unit::current);
 
             void beginshape();
             void vertex(Vector v);

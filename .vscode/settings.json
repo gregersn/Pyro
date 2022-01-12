@@ -73,7 +73,10 @@
         "__atomic_generated": "cpp",
         "__threading_support": "cpp",
         "complex": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "hash_map": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     },
     "python.pythonPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {

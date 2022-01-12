@@ -65,6 +65,7 @@ namespace Pyro
         unsigned int width() { return this->_pixelwidth; };
         unsigned int height() { return this->_pixelheight; };
         unsigned int channels();
+        Unit unit = Unit::px;
 
         Image(const Image &in);
         Image();
