@@ -48,7 +48,8 @@ namespace Pyro
         px,
         cm,
         mm,
-        in
+        in,
+        current
     };
 
 }
