@@ -1,6 +1,7 @@
 # Ignore build and lib dirs
 build
 builddir/
+pybuild/
 lib/*
 output/
 screenshots/current/
@@ -11,7 +12,7 @@ bin/*
 # Ignore other artifacts
 # *.png
 sipyro/*.png
-sipyro/*.whl
+*.whl
 
 # Ignore mac specific files
 .DS_Store
