@@ -35,8 +35,8 @@ void OutputMessage(j_common_ptr cinfo)
 {
     // disable error messages
     /*char buffer[JMSG_LENGTH_MAX];
-	(*cinfo->err->format_message) (cinfo, buffer);
-	fprintf(stderr, "%s\n", buffer);*/
+    (*cinfo->err->format_message) (cinfo, buffer);
+    fprintf(stderr, "%s\n", buffer);*/
 }
 
 std::string get_extension(std::string filename)
@@ -82,13 +82,13 @@ namespace Pyro
     uint32_t aoverb(uint32_t a, uint32_t b)
     {
         /*
-        *   Straight alpha
-        *   (source.RGB * source.A) +  (dest.RGB * (1 - source.A))
-        * 
-        *   Premultiplied alpha:
-        *   source.RGB + (dest.RGB * (1 - source.A)))
-        * 
-        */
+         *   Straight alpha
+         *   (source.RGB * source.A) +  (dest.RGB * (1 - source.A))
+         *
+         *   Premultiplied alpha:
+         *   source.RGB + (dest.RGB * (1 - source.A)))
+         *
+         */
         a = multiply_alpha(a);
         b = multiply_alpha(b);
 
@@ -444,7 +444,7 @@ namespace Pyro
         int pixels_per_meter = int((dpi * 100.0) / 2.54);
         png_set_pHYs(png_ptr, info_ptr, pixels_per_meter, pixels_per_meter, PNG_RESOLUTION_METER);
 
-        //png_write_info(png_ptr, info_ptr);
+        // png_write_info(png_ptr, info_ptr);
 
         png_bytep row_pointers[this->_pixelheight];
 
@@ -484,8 +484,8 @@ namespace Pyro
         }
 
         png_set_rows(png_ptr, info_ptr, row_pointers);
-        //png_write_image(png_ptr, row_pointers);
-        //png_write_end(png_ptr, NULL);
+        // png_write_image(png_ptr, row_pointers);
+        // png_write_end(png_ptr, NULL);
         png_write_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR, NULL);
         fclose(fp);
         png_destroy_write_struct(&png_ptr, &info_ptr);
@@ -581,7 +581,7 @@ namespace Pyro
     {
         if (index < this->_pixelwidth * this->_pixelheight)
         {
-            //return (this->load_pixels())[index];
+            // return (this->load_pixels())[index];
             return this->data[index];
         }
         throw;
@@ -679,7 +679,7 @@ namespace Pyro
     }
 
     /*
-     * BLENDING FUNCTIONS 
+     * BLENDING FUNCTIONS
      */
 
     uint32_t blend_blend(uint32_t dst, uint32_t src)
@@ -798,9 +798,9 @@ namespace Pyro
     }
 
     /*
-    * Multiply
-    * O = DS
-    */
+     * Multiply
+     * O = DS
+     */
     uint32_t blend_multiply(uint32_t dst, uint32_t src)
     {
         uint32_t a = src >> 24;
@@ -1434,14 +1434,14 @@ namespace Pyro
         for (unsigned int y = 0; y < height; y++)
         {
             float in_y = (float)y / (float)sy;
-            unsigned int y1 = (uint)in_y;
-            unsigned int y2 = (uint)in_y + 1;
+            unsigned int y1 = (uint32_t)in_y;
+            unsigned int y2 = (uint32_t)in_y + 1;
             float y_lerp = in_y - y1;
             for (unsigned int x = 0; x < width; x++)
             {
                 float in_x = (float)x / (float)sx;
-                unsigned int x1 = (uint)in_x;
-                unsigned int x2 = (uint)in_x + 1;
+                unsigned int x1 = (uint32_t)in_x;
+                unsigned int x2 = (uint32_t)in_x + 1;
                 float x_lerp = in_x - x1;
 
                 for (unsigned int ch = 0; ch < 4; ch++)
@@ -1545,7 +1545,7 @@ namespace Pyro
                     lerp_color(this->get(x1, y1), this->get(x2, y1), x_lerp),
                     lerp_color(this->get(x1, y2), this->get(x2, y2), x_lerp),
                     y_lerp);
-                //pixels[y * out->_pixelwidth + x] = this->get(x1, y1);
+                // pixels[y * out->_pixelwidth + x] = this->get(x1, y1);
             }
         }
 

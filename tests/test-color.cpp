@@ -51,7 +51,7 @@ TEST_CASE("Color objects", "[color]")
 
     SECTION("Will initialize with four uint")
     {
-        Pyro::Color a = Pyro::Color(255, 0u, 0u, 255);
+        Pyro::Color a = Pyro::Color(255u, 0u, 0u, 255u);
         REQUIRE(a.r() == 1.0f);
         REQUIRE(a.g() == 0.0f);
         REQUIRE(a.b() == 0.0f);

@@ -9,12 +9,12 @@ namespace Pyro
 
     Vector Vector::random2d()
     {
-        return Vector::fromangle(Pyro::random(1.0f) * M_PIl * 2.0);
+        return Vector::fromangle(Pyro::random(1.0f) * M_PI * 2.0);
     }
 
     Vector Vector::random3d()
     {
-        float phi = Pyro::random(0.0f, 1.0f * M_PIl * 2.0);
+        float phi = Pyro::random(0.0f, 1.0f * M_PI * 2.0);
         float costheta = Pyro::random(-1.0f, 1.0f);
 
         float theta = acos(costheta);
