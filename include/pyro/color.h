@@ -92,7 +92,7 @@ namespace Pyro
             this->_alpha = 1.0f;
         }
 
-        Color(uint r, uint g, uint b, uint a)
+        Color(uint32_t r, uint32_t g, uint32_t b, uint32_t a)
         {
             this->_red = r / 255.0f;
             this->_green = g / 255.0f;
@@ -117,19 +117,19 @@ namespace Pyro
         uint32_t to_uint()
         {
             return (
-                (uint)(this->_alpha * 255) << 24 |
-                (uint)(this->_red * 255) << 16 |
-                (uint)(this->_green * 255) << 8 |
-                (uint)(this->_blue * 255));
+                (uint8_t)(this->_alpha * 255) << 24 |
+                (uint8_t)(this->_red * 255) << 16 |
+                (uint8_t)(this->_green * 255) << 8 |
+                (uint8_t)(this->_blue * 255));
         }
 
         static uint32_t fto32(float r, float g, float b, float a)
         {
             return (
-                (uint)(a * 255) << 24 |
-                (uint)(r * 255) << 16 |
-                (uint)(g * 255) << 8 |
-                (uint)(b * 255));
+                (uint8_t)(a * 255) << 24 |
+                (uint8_t)(r * 255) << 16 |
+                (uint8_t)(g * 255) << 8 |
+                (uint8_t)(b * 255));
         }
 
         Color lerp(Color other, float t)

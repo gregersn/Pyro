@@ -24,9 +24,9 @@ TEST_CASE("images can be composited")
         Pyro::Image *b = Pyro::Image::create(a->width(), a->height());
 
         unsigned char *data = b->load_bytes();
-        for (uint y = 0; y < b->height(); y++)
+        for (uint32_t y = 0; y < b->height(); y++)
         {
-            for (uint x = 0; x < b->width(); x++)
+            for (uint32_t x = 0; x < b->width(); x++)
             {
                 data[y * b->width() * b->channels() + x * b->channels() + 0] = 0;
                 data[y * b->width() * b->channels() + x * b->channels() + 1] = 0;
