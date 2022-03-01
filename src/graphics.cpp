@@ -80,6 +80,15 @@ namespace Pyro
         this->transformer.popmatrix();
     }
 
+    float Graphics::screen_x(float x, float y, float z)
+    {
+        return this->transformer.screen_x(x, y, z);
+    }
+    float Graphics::screen_y(float x, float y, float z)
+    {
+        return this->transformer.screen_y(x, y, z);
+    }
+
     void Graphics::endshape(int close)
     {
         this->_shape.end(close);

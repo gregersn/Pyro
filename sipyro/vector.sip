@@ -13,6 +13,18 @@ namespace Pyro {
             
             Vector();
             Vector(float x, float y, float z = 0.0f);
+            SIP_PYOBJECT __repr__() const /TypeHint="str"/;
+%MethodCode
+                PyObject *x = PyFloat_FromDouble(sipCpp->x);
+                PyObject *y = PyFloat_FromDouble(sipCpp->y);
+                PyObject *z = PyFloat_FromDouble(sipCpp->z);
+                
+                sipRes = PyUnicode_FromFormat("pyro.Vector(%R, %R, %R)", x, y, z);
+
+                Py_XDECREF(x);
+                Py_XDECREF(y);
+                Py_XDECREF(z);
+%End
             
             float dist(const Vector &other) const;
             float mag() const;

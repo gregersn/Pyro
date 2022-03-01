@@ -25,6 +25,14 @@ namespace Pyro
         Pyro::Vector apply(Pyro::Vector v);
 
         Eigen::Affine2d getcurrent() { return this->current; }
+
+        Pyro::Vector screen(Pyro::Vector v) { return this->apply(v); };
+
+        float screen_x(Pyro::Vector v) { return this->apply(v).x; };
+        float screen_x(float x, float y, float z = 0.0f) { return this->screen_x(Vector(x, y, z)); };
+        float screen_y(Pyro::Vector v) { return this->apply(v).y; };
+        float screen_y(float x, float y, float z = 0.0f) { return this->screen_y(Vector(x, y, z)); };
     };
+
 }
 #endif

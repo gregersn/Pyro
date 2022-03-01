@@ -102,3 +102,39 @@ TEST_CASE("Apply to Pyro Vector", "[transform]")
         REQUIRE(v.y == Approx(0.0).margin(0.00001));
     }
 }
+
+TEST_CASE("Get screen coordinates", "[transform]")
+{
+    SECTION("Simple translate")
+    {
+        Transformer2D t = Transformer2D();
+
+        REQUIRE(t.screen_x(0, 0, 0) == Approx(0.0));
+        REQUIRE(t.screen_x(0, 10, 0) == Approx(0.0));
+        REQUIRE(t.screen_x(0, 0, 10) == Approx(0.0));
+        REQUIRE(t.screen_x(4, 0, 0) == Approx(4.0));
+
+        REQUIRE(t.screen_y(0, 0, 0) == Approx(0.0));
+        REQUIRE(t.screen_y(0, 10, 0) == Approx(10.0));
+        REQUIRE(t.screen_y(0, 0, 10) == Approx(0.0));
+        REQUIRE(t.screen_y(4, 0, 0) == Approx(0.0));
+    }
+}
+
+TEST_CASE("Get screen coordinates from Pyro", "[transform]")
+{
+    SECTION("Simple translate")
+    {
+        Pyro::size(640, 480);
+
+        REQUIRE(Pyro::screen_x(0, 0, 0) == Approx(0.0));
+        REQUIRE(Pyro::screen_x(0, 10, 0) == Approx(0.0));
+        REQUIRE(Pyro::screen_x(0, 0, 10) == Approx(0.0));
+        REQUIRE(Pyro::screen_x(4, 0, 0) == Approx(4.0));
+
+        REQUIRE(Pyro::screen_y(0, 0, 0) == Approx(0.0));
+        REQUIRE(Pyro::screen_y(0, 10, 0) == Approx(10.0));
+        REQUIRE(Pyro::screen_y(0, 0, 10) == Approx(0.0));
+        REQUIRE(Pyro::screen_y(4, 0, 0) == Approx(0.0));
+    }
+}
