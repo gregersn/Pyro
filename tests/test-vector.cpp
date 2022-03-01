@@ -149,6 +149,11 @@ TEST_CASE("Vectors", "[vector]")
             REQUIRE(v.mag() == Approx(1.0f));
             REQUIRE(v.x == Approx(-1.0f));
             REQUIRE(v.y == Approx(0.0f).margin(.0000001f));
+
+            v = v.rotate(M_PI / 2.0);
+            REQUIRE(v.mag() == Approx(1.0f));
+            REQUIRE(v.x == Approx(0.0f).margin(.000001f));
+            REQUIRE(v.y == Approx(-1.0f).margin(.0000001f));
         }
     }
 }

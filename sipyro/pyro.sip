@@ -6,6 +6,7 @@
 %Include color.sip
 %Include shape.sip
 %Include vector.sip
+%Include transformer.sip
 %Include image.sip
 %Include graphics.sip
 %Include sdl.sip

@@ -21,7 +21,7 @@ namespace Pyro
 
     /**
      * Create a graphics object
-     * 
+     *
      * @param width The width of the canvas
      * @param height The height of the canvas
      */
@@ -108,6 +108,9 @@ namespace Pyro
     inline void rotate(float a) { pg->rotate(a); };
     inline void pushmatrix() { pg->pushmatrix(); };
     inline void popmatrix() { pg->popmatrix(); };
+
+    inline float screen_x(float x, float y, float z = 0.0f) { return pg->screen_x(x, y, z); }
+    inline float screen_y(float x, float y, float z = 0.0f) { return pg->screen_y(x, y, z); }
 } // namespace Pyro
 
 #endif // PYRO_H

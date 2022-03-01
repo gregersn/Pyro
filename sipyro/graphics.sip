@@ -64,7 +64,7 @@ namespace Pyro {
             void arc(float a, float b, float c, float d, float start, float end, int mode = Pyro::OPEN, Pyro::Unit unit = Pyro::Unit::current);
             
             void rectmode(int mode);
-            void rect(float a, float b, float c, float d);
+            void rect(float a, float b, float c, float d, Pyro::Unit unit = Pyro::Unit::current);
 
             void ellipsemode(int mode);
             void ellipse(float x, float y, float w, float h, unsigned int segments, Unit unit = Pyro::Unit::current);

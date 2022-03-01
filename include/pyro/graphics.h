@@ -104,6 +104,8 @@ namespace Pyro
         virtual void scale(float sx, float sy);
         virtual void pushmatrix();
         virtual void popmatrix();
+        virtual float screen_x(float x, float y, float z = 0.0f);
+        virtual float screen_y(float x, float y, float z = 0.0f);
 
         // Drawing functions
         inline void background(Color c)
