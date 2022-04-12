@@ -4,12 +4,16 @@
 
 namespace Pyro
 {
-    static OpenSimplexNoise noiseimpl;
+    static OpenSimplexNoise *noiseimpl;
     static bool noise_init = false;
 
-    void noiseseed(long seed)
+    void noiseseed(int64_t seed)
     {
-        noiseimpl = OpenSimplexNoise(seed);
+        if (noiseimpl != nullptr)
+        {
+            delete noiseimpl;
+        }
+        noiseimpl = new OpenSimplexNoise();
         noise_init = true;
     }
 
@@ -17,33 +21,33 @@ namespace Pyro
     {
         if (!noise_init)
         {
-            noiseimpl = OpenSimplexNoise(123456789L);
+            noiseimpl = new OpenSimplexNoise(123456789L);
             noise_init = true;
         }
 
-        return (noiseimpl.eval(x, y, z, w) + 1.0) / 2.0;
+        return (noiseimpl->eval(x, y, z, w) + 1.0) / 2.0;
     }
 
     double noise(double x, double y, double z)
     {
         if (!noise_init)
         {
-            noiseimpl = OpenSimplexNoise(123456789L);
+            noiseimpl = new OpenSimplexNoise(123456789L);
             noise_init = true;
         }
 
-        return (noiseimpl.eval(x, y, z) + 1.0) / 2.0;
+        return (noiseimpl->eval(x, y, z) + 1.0) / 2.0;
     }
 
     double noise(double x, double y)
     {
         if (!noise_init)
         {
-            noiseimpl = OpenSimplexNoise(123456789L);
+            noiseimpl = new OpenSimplexNoise(123456789L);
             noise_init = true;
         }
 
-        return (noiseimpl.eval(x, y) + 1.0) / 2.0;
+        return (noiseimpl->eval(x, y) + 1.0) / 2.0;
     }
 
     double noise(double x)
