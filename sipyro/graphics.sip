@@ -44,6 +44,7 @@ namespace Pyro {
             void strokejoin(int join);
             void colormode(int mode);
 
+            void stroke(Color c /Constrained/);
             void stroke(float c, float a = 1.0);
             void stroke(float r, float g, float b, float a = 1.0);
 
