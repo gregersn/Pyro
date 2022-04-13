@@ -18,7 +18,7 @@ namespace Pyro {
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
             unsigned int operator[] (unsigned int);
             SIP_PYOBJECT load_pixels();
-            %MethodCode
+%MethodCode
                 import_array();
                 npy_intp dims[] = {sipCpp->height(), sipCpp->width(), 4};
                 unsigned char *data = (unsigned char*)sipCpp->load_bytes();
@@ -27,10 +27,10 @@ namespace Pyro {
                                                    dims,
                                                    NPY_UINT8,
                                                    data);
-            %End
+%End
 
             SIP_PYOBJECT load_bytes();
-            %MethodCode
+%MethodCode
                 import_array();
                 npy_intp dims[] = {sipCpp->height(), sipCpp->width(), sipCpp->channels()};
                 unsigned char *data = (unsigned char*)sipCpp->get_data();
@@ -39,7 +39,7 @@ namespace Pyro {
                                                    dims,
                                                    NPY_UINT8,
                                                    data);
-            %End
+%End
 
             Image *resize(unsigned int sx, unsigned int sy);
 
