@@ -15,6 +15,7 @@
 %ModuleCode
 #include "pyro/pyro.h"
 #include "pyro/shape.h"
+#include "pyro/image.h"
 %End
 
 namespace Pyro {
@@ -46,6 +47,8 @@ namespace Pyro {
     void fill(Color c /Constrained/);
     void fill(int c, int a = 255);
     void fill(int r, int g, int b, int a = 255);
+
+    void blendmode(BlendMode mode);
 
     void stroke(Color c /Constrained/);
     void stroke(int c, int a = 255);

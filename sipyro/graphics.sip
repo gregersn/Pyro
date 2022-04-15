@@ -5,6 +5,20 @@ namespace Pyro {
 #include "pyro/graphics.h"
 #include <Python.h>
 %End
+    enum class BlendMode
+    {
+        ADD,
+        BLEND,
+        DARKEST,
+        DIFFERENCE,
+        EXCLUSION,
+        LIGHTEST,
+        MULTIPLY,
+        REPLACE,
+        SCREEN,
+        SUBTRACT
+    };
+
     class Graphics : public Pyro::Image {
         public:
             Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
