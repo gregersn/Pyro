@@ -62,7 +62,8 @@ namespace Pyro {
     void rect(float a, float b, float c, float d);
     float curvepoint(float p0, float p1, float p2, float p3, float t);
 
-    void ellipse(float x, float y, float w, float h, unsigned int segments = 32);
+    void ellipse(float x, float y, float w, float h, unsigned int segments = 32, Unit unit = Pyro::Unit::current);
+    void circle(float x, float y, float r, unsigned int segments = 32, Unit unit = Pyro::Unit::current);
 
     void translate(float x, float y, Unit unit = Pyro::Unit::current);
     void scale(float sx, float sy);
