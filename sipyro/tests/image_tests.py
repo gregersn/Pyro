@@ -15,10 +15,7 @@ import pyro
 
 
 def split_32bit(a: int):
-    return ((a & 0xff0000) >> 16,
-            (a & 0xff00) >> 8,
-            (a & 0xff),
-            (a & 0xff000000) >> 24)
+    return ((a & 0xff0000) >> 16, (a & 0xff00) >> 8, (a & 0xff), (a & 0xff000000) >> 24)
 
 
 def compare_pixels(a, b):
@@ -46,8 +43,9 @@ def compare_pixels(a, b):
 
 
 class ResizeTests(unittest.TestCase):
+
     def setUp(self):
-        self.img = pyro.Image.load('../tests/TestPixels_RGB.png')
+        self.img = pyro.Image.load('./tests/TestPixels_RGB.png')
 
     def test_resize(self):
         img = self.img
@@ -71,8 +69,9 @@ class ResizeTests(unittest.TestCase):
 
 
 class PixelTests(unittest.TestCase):
+
     def setUp(self):
-        self.img = pyro.Image.load('../tests/TestPixels_RGB.png')
+        self.img = pyro.Image.load('./tests/TestPixels_RGB.png')
 
     def test_get(self):
         pixel = self.img.get(0, 0)
@@ -91,7 +90,6 @@ class PixelTests(unittest.TestCase):
         assert pixel is not None
         assert compare_pixels(pixel, (0, 0, 255, 255))
 
-    
     """
     def test_get_area(self):
         pixels = self.img.get(0, 0, 3, 2)
@@ -106,6 +104,7 @@ class PixelTests(unittest.TestCase):
 
 
 class ImageTests(unittest.TestCase):
+
     def tearDown(self):
         if os.path.isfile('_test_image__.png'):
             os.unlink('_test_image__.png')
@@ -129,7 +128,7 @@ class ImageTests(unittest.TestCase):
         assert pixels[0, 0, 0] == 128
 
     def test_load(self):
-        img = pyro.Image.load('../tests/TestPixels_RGB.png')
+        img = pyro.Image.load('./tests/TestPixels_RGB.png')
         assert img.width() == 8
         assert img.height() == 8
 
