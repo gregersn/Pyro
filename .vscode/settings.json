@@ -80,7 +80,7 @@
     },
     "python.pythonPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {
-        "PYTHONPATH": "${workspaceFolder}/sipyro/build/pyro",
+        "PYTHONPATH": "${workspaceFolder}/pybuild/pyro/build/lib.linux-x86_64-3.9/",
         "LD_LIBRARY_PATH": "${workspaceFolder}/build/src"
     },
     "python.testing.unittestEnabled": false,
@@ -92,6 +92,6 @@
     "python.testing.nosetestArgs": [
         "sipyro"
     ],
-    "python.envFile": "${workspaceFolder}/sipyro/.env",
+    "python.envFile": "${workspaceFolder}/.env",
     "testMate.cpp.test.workingDirectory": "${workspaceFolder}"
 }

@@ -38,6 +38,9 @@ namespace Pyro {
 
     void background(Color c /Constrained/);
 
+    void background(float c /Constrained/, float a /Constrained/ = 1.0);
+    void background(float r /Constrained/, float g /Constrained/, float b /Constrained/, float a /Constrained/ = 1.0);
+
     void background(int c, int a = 255);
     void background(int r, int g, int b, int a = 255);
 
@@ -45,12 +48,20 @@ namespace Pyro {
     void nosmooth();
 
     void fill(Color c /Constrained/);
+
+    void fill(float c  /Constrained/, float a  /Constrained/ = 1.0);
+    void fill(float r /Constrained/, float g /Constrained/, float b /Constrained/, float a  /Constrained/ = 1.0);
+
     void fill(int c, int a = 255);
     void fill(int r, int g, int b, int a = 255);
 
     void blendmode(BlendMode mode);
 
     void stroke(Color c /Constrained/);
+
+    void stroke(float c  /Constrained/, float a  /Constrained/ = 1.0);
+    void stroke(float r /Constrained/, float g /Constrained/, float b /Constrained/, float a  /Constrained/ = 1.0);
+
     void stroke(int c, int a = 255);
     void stroke(int r, int g, int b, int a = 255);
 
