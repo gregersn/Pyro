@@ -59,12 +59,21 @@ namespace Pyro {
             void colormode(int mode);
 
             void stroke(Color c /Constrained/);
-            void stroke(float c, float a = 1.0);
-            void stroke(float r, float g, float b, float a = 1.0);
+
+            void stroke(float c  /Constrained/, float a  /Constrained/ = 1.0);
+            void stroke(float r /Constrained/, float g /Constrained/, float b /Constrained/, float a  /Constrained/ = 1.0);
+
+            void stroke(int c, int a = 255);
+            void stroke(int r, int g, int b, int a = 255);
+
 
             void fill(Color c /Constrained/);
-            void fill(float c, float a = 1.0);
-            void fill(float r, float g, float b, float a = 1.0);
+
+            void fill(float c  /Constrained/, float a  /Constrained/ = 1.0);
+            void fill(float r /Constrained/, float g /Constrained/, float b /Constrained/, float a  /Constrained/ = 1.0);
+
+            void fill(int c, int a = 255);
+            void fill(int r, int g, int b, int a = 255);
 
             void line(float x0, float y0, float x1, float y1, Unit unit = Pyro::Unit::current);
             void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
