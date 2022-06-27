@@ -3,6 +3,7 @@
 
 #include "pyro/graphics.h"
 #include "pyro/graphics_cairo.h"
+#include "pyro/graphics_pyro3d.h"
 #include "pyro/utils.h"
 
 #include <iostream>
@@ -32,6 +33,8 @@ namespace Pyro
         height = unit2pixels(height, unit, dpi);
         switch (mode)
         {
+        case GraphicsMode::PYRO3D:
+            return new GraphicsPyro3D(width, height, ARGB, dpi);
         case GraphicsMode::CAIRO:
         default:
             return new GraphicsCairo(width, height, ARGB, dpi);
