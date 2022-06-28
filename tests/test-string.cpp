@@ -2,7 +2,7 @@
 
 #include "pyro/string.h"
 
-TEST_CASE("A number can be zero padded to certain string length")
+TEST_CASE("A number can be zero padded to certain string length", "[string]")
 {
     SECTION("Padding single digit")
     {

@@ -147,7 +147,7 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
             }
             delete img;
 
-            //remove("gradient_test.png");
+            // remove("gradient_test.png");
         }
     }
 
@@ -160,7 +160,7 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
     }
 }
 
-TEST_CASE("PNG files can be loaded and saved")
+TEST_CASE("PNG files can be loaded and saved", "[image]")
 {
     SECTION("Load a test image")
     {
@@ -216,12 +216,12 @@ TEST_CASE("PNG files can be loaded and saved")
                 REQUIRE(pixels[1024 + i] == (i | i << 16 | i << 8 | i << 24));
             }
             delete img;
-            //remove("savepng_gradient_test.png");
+            // remove("savepng_gradient_test.png");
         }
     }
 }
 
-TEST_CASE("Images can be resized")
+TEST_CASE("Images can be resized", "[image]")
 {
     SECTION("resize a created image")
     {
@@ -304,7 +304,7 @@ TEST_CASE("Images can be resized")
     }
 }
 
-SCENARIO("Image can be created with a given size and depth")
+SCENARIO("Image can be created with a given size and depth", "[image]")
 {
     WHEN("Creating calling create with parameters 400, 300")
     {
@@ -402,13 +402,16 @@ TEST_CASE("Image can be created in different formats", "[image]")
 
 SCENARIO("Images can have DPI set", "[image]")
 {
-    GIVEN("A newly created image") {
+    GIVEN("A newly created image")
+    {
         Pyro::Image *img = Pyro::createimage(400, 300, Pyro::ARGB, 144);
         img->save("/tmp/400_300_144.png");
         delete img;
-        WHEN("Loaded back") {
+        WHEN("Loaded back")
+        {
             img = Pyro::Image::load("/tmp/400_300_144.png");
-            THEN("DPI still matches") {
+            THEN("DPI still matches")
+            {
                 REQUIRE(img->get_dpi() == 144);
             }
         }

@@ -203,7 +203,7 @@ TEST_CASE("Shapes can be drawn", "[graphics]")
     }
 }
 
-TEST_CASE("Select different color modes")
+TEST_CASE("Select different color modes", "[graphics]")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(3, 3);
 
@@ -220,7 +220,7 @@ TEST_CASE("Select different color modes")
     }
 }
 
-TEST_CASE("Save and load images")
+TEST_CASE("Save and load images", "[graphics]")
 {
     Pyro::Graphics *pg = Pyro::Graphics::create(4, 4);
     const char *filename = "__4x4_ARGB__.png";
