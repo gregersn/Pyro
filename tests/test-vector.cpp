@@ -2,7 +2,7 @@
 
 #include "pyro/vector.h"
 
-TEST_CASE("Vectors", "[vector]")
+TEST_CASE("Vector math", "[vector]")
 {
     Pyro::Vector a = Pyro::Vector(0.0f, 1.0f);
     Pyro::Vector b = Pyro::Vector(1.0f, 0.0f);
@@ -158,29 +158,32 @@ TEST_CASE("Vectors", "[vector]")
     }
 }
 
-TEST_CASE("Vectors have angle between them", "[vector]")
+TEST_CASE("Vector angles", "[vector]")
 {
-    float angle = Pyro::Vector(0.0f, 10.0f).angle(Pyro::Vector(10.0f, 0.0f));
-    REQUIRE(angle - (3.1415926 / 2.0f) < 0.0001f);
-    angle = Pyro::Vector(0.f, 10.f).angle(Pyro::Vector(0.f, 10.f));
-    REQUIRE(angle < 0.0001);
+    SECTION("Vectors have angle between them")
+    {
+        float angle = Pyro::Vector(0.0f, 10.0f).angle(Pyro::Vector(10.0f, 0.0f));
+        REQUIRE(angle - (3.1415926 / 2.0f) < 0.0001f);
+        angle = Pyro::Vector(0.f, 10.f).angle(Pyro::Vector(0.f, 10.f));
+        REQUIRE(angle < 0.0001);
 
-    angle = Pyro::Vector(0.f, -10.f).angle(Pyro::Vector(0.f, 10.f));
-    REQUIRE(angle - 3.1415926 < 0.0001f);
+        angle = Pyro::Vector(0.f, -10.f).angle(Pyro::Vector(0.f, 10.f));
+        REQUIRE(angle - 3.1415926 < 0.0001f);
 
-    angle = Pyro::Vector(0.f, 10.f).angle(Pyro::Vector(10.f, 10.f));
-    REQUIRE(angle - (3.1415926 / 4.) < 0.0001);
+        angle = Pyro::Vector(0.f, 10.f).angle(Pyro::Vector(10.f, 10.f));
+        REQUIRE(angle - (3.1415926 / 4.) < 0.0001);
+    }
+
+    SECTION("Vectors have a heading")
+    {
+        REQUIRE(Pyro::Vector(1.0f, 0.0f).heading() == 0.0f);
+        REQUIRE(Pyro::Vector(0.0f, 1.0f).heading() == Approx(M_PI_2));
+        REQUIRE(Pyro::Vector(-1.0f, 0.0f).heading() == Approx(M_PI));
+        REQUIRE(Pyro::Vector(0.0f, -1.0f).heading() == Approx(-M_PI_2));
+    }
 }
 
-TEST_CASE("Vectors have a heading", "[vector]")
-{
-    REQUIRE(Pyro::Vector(1.0f, 0.0f).heading() == 0.0f);
-    REQUIRE(Pyro::Vector(0.0f, 1.0f).heading() == Approx(M_PI_2));
-    REQUIRE(Pyro::Vector(-1.0f, 0.0f).heading() == Approx(M_PI));
-    REQUIRE(Pyro::Vector(0.0f, -1.0f).heading() == Approx(-M_PI_2));
-}
-
-TEST_CASE("Vectors can be initialized in various ways", "[vector]")
+TEST_CASE("Vector initialisation", "[vector]")
 {
     SECTION("Zero initialisation")
     {

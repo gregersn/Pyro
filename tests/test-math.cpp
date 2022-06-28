@@ -54,7 +54,7 @@ TEST_CASE("Random generation seems sane", "[random]")
     }
 }
 
-TEST_CASE("Values can be...")
+TEST_CASE("Values can be...", "[math]")
 {
     SECTION("constrained")
     {
@@ -63,7 +63,7 @@ TEST_CASE("Values can be...")
     }
 }
 
-TEST_CASE("We have functions that can...")
+TEST_CASE("We have functions that can...", "[math]")
 {
     SECTION("give min value")
     {
@@ -82,7 +82,7 @@ TEST_CASE("We have functions that can...")
     }
 }
 
-SCENARIO("Degrees can be converted to radians and back")
+SCENARIO("Degrees can be converted to radians and back", "[math]")
 {
     GIVEN("0 degrees")
     {

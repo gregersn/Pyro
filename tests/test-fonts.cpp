@@ -2,7 +2,7 @@
 
 #include "pyro/font.h"
 
-TEST_CASE("Load a font")
+TEST_CASE("Load a font", "[font]")
 {
     SECTION("Read single font")
     {
