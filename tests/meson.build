@@ -8,7 +8,8 @@ test_sources = ['test-main.cpp',
                 'test-pyro.cpp',
                 'test-vector.cpp',
                 'test-string.cpp',
-                'test-transformer2d.cpp']
+                'test-transformer2d.cpp',
+                'test-shape.cpp']
 
 testexe = executable('unit-tests', test_sources,
                      include_directories: inc_dir,
