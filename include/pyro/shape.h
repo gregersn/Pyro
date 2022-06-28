@@ -36,6 +36,8 @@ namespace Pyro
         Shape();
         ~Shape();
         void begin();
+        bool is_point_in_path(Vector p);
+        bool is_point_in_path(float x, float y);
         void end();
         void end(int close);
         void begincontour();
