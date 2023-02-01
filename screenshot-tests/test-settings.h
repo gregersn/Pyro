@@ -1,7 +1,9 @@
 #ifndef SCREENSHOT_SETTINGS_H
 #define SCREENSHOT_SETTINGS_H
 #include <string>
-#include <catch2/catch.hpp>
+#include <catch2/
+
+catch_test_macros.hpp>
 #include "pyro/pyro.h"
 
 static inline std::string const actual_folder = "./screenshots/expected/";

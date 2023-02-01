@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "vector.h"
-#include <eigen3/Eigen/Geometry>
+#include "Eigen/Geometry"
 
 namespace Pyro
 {
