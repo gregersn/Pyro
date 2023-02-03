@@ -16,27 +16,15 @@ jobs:
       matrix:
         name:
           [
-            ubuntu-18.04-gcc-9,
-            ubuntu-18.04-clang-9,
-            ubuntu-20.04-gcc-9,
+            ubuntu-22.04-gcc-12,
             macos-latest-xcode,
           ]
 
         include:
-          - name: ubuntu-18.04-gcc-9
-            os: ubuntu-18.04
+          - name: ubuntu-22.04-gcc-12
+            os: ubuntu-22.04
             compiler: gcc
-            version: "9"
-
-          - name: ubuntu-18.04-clang-9
-            os: ubuntu-18.04
-            compiler: clang
-            version: "9"
-
-          - name: ubuntu-20.04-gcc-9
-            os: ubuntu-20.04
-            compiler: gcc
-            version: "9"
+            version: "12"
 
           - name: macos-latest-xcode
             os: macos-latest
