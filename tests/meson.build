@@ -1,4 +1,4 @@
-test_sources = ['test-main.cpp',
+test_sources = [
                 'test-color.cpp',
                 'test-fonts.cpp',
                 'test-graphics.cpp',
@@ -14,7 +14,7 @@ test_sources = ['test-main.cpp',
 testexe = executable('unit-tests', test_sources,
                      include_directories: inc_dir,
                      link_with: pyrolib,
-                     dependencies: [catch2.get_variable('catch2_dep')],
+                     dependencies: [catch2.get_variable('catch2_with_main_dep')],
                      install: false)
 
 

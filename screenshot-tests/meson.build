@@ -1,4 +1,5 @@
-test_sources = ['test-main.cpp',
+test_sources = [
+                'test-main.cpp',
                 'test-image.cpp',
                 'test-image-composition.cpp',
                 'test-image-blend.cpp',
