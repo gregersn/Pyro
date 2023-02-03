@@ -1,7 +1,9 @@
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include "pyro/constants.h"
 #include "pyro/math.h"
+
+using Catch::Approx;
 
 TEST_CASE("Random generation seems sane", "[random]")
 {

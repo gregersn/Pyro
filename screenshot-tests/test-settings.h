@@ -1,14 +1,14 @@
 #ifndef SCREENSHOT_SETTINGS_H
 #define SCREENSHOT_SETTINGS_H
 #include <string>
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 #include "pyro/pyro.h"
 
 static inline std::string const actual_folder = "./screenshots/expected/";
 static inline std::string const current_folder = "./screenshots/current/";
 constexpr static inline Pyro::GraphicsMode testmode = Pyro::GraphicsMode::CAIRO;
 
-class ImageMatch : public Catch::MatcherBase<std::string>
+class ImageMatch : public Catch::Matchers::MatcherBase<std::string>
 {
     std::string actual_file;
     float tolerance = 0.0f;

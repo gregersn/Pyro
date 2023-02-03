@@ -1,4 +1,4 @@
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 #include "test-settings.h"
 
 SCENARIO("A color can be specified with various types")

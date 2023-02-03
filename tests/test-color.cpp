@@ -1,6 +1,8 @@
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include "pyro/color.h"
+
+using Catch::Approx;
 
 TEST_CASE("Color objects", "[color]")
 {

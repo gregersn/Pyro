@@ -1,6 +1,8 @@
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include "pyro/vector.h"
+
+using Catch::Approx;
 
 TEST_CASE("Vector math", "[vector]")
 {

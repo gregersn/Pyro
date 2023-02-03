@@ -1,8 +1,9 @@
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 #include "pyro/transformer.h"
 #include "pyro/pyro.h"
 
 using namespace Pyro;
+using Catch::Approx;
 
 TEST_CASE("Basic transformations", "[transformer]")
 {
