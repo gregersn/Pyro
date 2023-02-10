@@ -11,9 +11,9 @@ builder-factory = "sipbuild.setuptools_builder"
 sip-files-dir = "./sipyro"
 
 [tool.sip.bindings.pyro]
-extra-compile-args = ["-std=c++17"]
+extra-compile-args = ["-std=c++20"]
 headers = ["pyro.h"]
-include-dirs = ["./include", "/usr/local/include", "/usr/include/freetype2"]
+include-dirs = ["./include", "/usr/local/include", "/usr/include/freetype2", "/usr/local/lib/python3.10/site-packages/numpy/core/include/"]
 libraries = ["pyro"]
 library-dirs = ["./build/src"]
 pep484-pyi = true

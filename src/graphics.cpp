@@ -97,15 +97,15 @@ namespace Pyro
 
     void Graphics::background(float r, float g, float b, float a)
     {
-        Color c = Color(r, g, b, a);
-        char *buf = (char *)this->get_data();
+        Color c{Color(r, g, b, a)};
+        char *buf{(char *)this->get_data()};
         union
         {
             uint8_t d8[4];
             uint32_t d32;
         } u32 = {.d32 = c.to_uint()};
 
-        size_t count = this->_pixelwidth * this->_pixelheight;
+        size_t count{this->_pixelwidth * this->_pixelheight};
         while (count--)
         {
             *buf++ = u32.d8[0];
@@ -128,7 +128,7 @@ namespace Pyro
 
     void Graphics::triangle(Vector a, Vector b, Vector c)
     {
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         s.vertex(a);
         s.vertex(b);
@@ -149,7 +149,7 @@ namespace Pyro
         x2 = unit2pixels(x2, unit, this->get_dpi());
         y2 = unit2pixels(y2, unit, this->get_dpi());
 
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         s.vertex(x0, y0);
         s.vertex(x1, y1);
@@ -174,7 +174,7 @@ namespace Pyro
             b -= d / 2.0f;
         }
 
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         s.vertex(a, b);
         s.vertex(a + c, b);
@@ -198,7 +198,7 @@ namespace Pyro
         x3 = unit2pixels(x3, unit, this->get_dpi());
         y3 = unit2pixels(y3, unit, this->get_dpi());
 
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         s.curvevertex(x0, y0);
         s.curvevertex(x1, y1);
@@ -222,7 +222,7 @@ namespace Pyro
         x3 = unit2pixels(x3, unit, this->get_dpi());
         y3 = unit2pixels(y3, unit, this->get_dpi());
 
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         s.vertex(x0, y0);
         s.beziervertex(x1, y1, x2, y2, x3, y3);
@@ -232,7 +232,7 @@ namespace Pyro
 
     void Graphics::quad(Vector a, Vector b, Vector c, Vector d)
     {
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         s.vertex(a);
         s.vertex(b);
@@ -256,7 +256,7 @@ namespace Pyro
         x3 = unit2pixels(x3, unit, this->get_dpi());
         y3 = unit2pixels(y3, unit, this->get_dpi());
 
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         s.vertex(x0, y0);
         s.vertex(x1, y1);
@@ -278,16 +278,16 @@ namespace Pyro
         w = unit2pixels(w, unit, this->get_dpi());
         h = unit2pixels(h, unit, this->get_dpi());
 
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
         if (end < start)
         {
             end += TWO_PI;
         }
-        int steps = 32;
-        float da = (end - start) / (float)steps;
-        float a = start;
-        for (int i = 0; i < steps + 1; i++)
+        int steps{32};
+        float da{(end - start) / (float)steps};
+        float a{start};
+        for (int i{0}; i < steps + 1; i++)
         {
             a = start + i * da;
             s.vertex(cos(a) * w / 2.0f, sin(a) * h / 2.0f);

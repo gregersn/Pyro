@@ -27,12 +27,12 @@ namespace Pyro
 
     class Shape
     {
-        std::vector<std::vector<Pyro::Vector>> outpoints = std::vector<std::vector<Pyro::Vector>>();
-        std::vector<Pyro::t_shapepoint> points = std::vector<Pyro::t_shapepoint>();
-        std::vector<std::vector<Pyro::t_shapepoint>> contours = std::vector<std::vector<Pyro::t_shapepoint>>();
+        std::vector<std::vector<Pyro::Vector>> outpoints{std::vector<std::vector<Pyro::Vector>>()};
+        std::vector<Pyro::t_shapepoint> points{std::vector<Pyro::t_shapepoint>()};
+        std::vector<std::vector<Pyro::t_shapepoint>> contours{std::vector<std::vector<Pyro::t_shapepoint>>()};
 
     public:
-        int close = false;
+        int close{false};
         Shape();
         ~Shape();
         void begin();

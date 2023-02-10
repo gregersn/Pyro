@@ -57,6 +57,8 @@ namespace Pyro {
             void strokecap(int cap);
             void strokejoin(int join);
             void colormode(int mode);
+            void blendmode(BlendMode mode);
+
 
             void stroke(Color c /Constrained/);
 

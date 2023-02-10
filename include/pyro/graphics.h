@@ -32,20 +32,20 @@ namespace Pyro
     class Graphics : public Image
     {
     protected:
-        bool stroke_enable = true;
-        bool fill_enable = true;
+        bool stroke_enable{true};
+        bool fill_enable{true};
 
-        bool _smooth = true;
+        bool _smooth{true};
 
-        Color stroke_color = Color(0.0f, 1.0f);
-        Color fill_color = Color(1.0f, 1.0f);
-        int _rect_mode = Pyro::CORNER;
-        int _image_mode = Pyro::CORNER;
-        int _ellipse_mode = Pyro::CENTER;
-        float stroke_weight = 1.0f;
-        float text_size = 16.0f;
+        Color stroke_color{Color(0.0f, 1.0f)};
+        Color fill_color{Color(1.0f, 1.0f)};
+        int _rect_mode{Pyro::CORNER};
+        int _image_mode{Pyro::CORNER};
+        int _ellipse_mode{Pyro::CENTER};
+        float stroke_weight{1.0f};
+        float text_size{16.0f};
 
-        Shape _shape = Shape();
+        Shape _shape{Shape()};
         Transformer2D transformer;
 
     public:
@@ -60,7 +60,7 @@ namespace Pyro
         };
         void image(Image *img, float x, float y);
         virtual void image_impl(Image *img, float x, float y){};
-        inline Image *loadimage(std::string filename) { return Image::load(filename); };
+        Image *loadimage(std::string filename) { return Image::load(filename); };
 
         // Color functions
         void nostroke();
@@ -73,19 +73,19 @@ namespace Pyro
             this->fill_color.colormode(mode);
         };
 
-        inline void fill(Color c) { this->fill(c.r(), c.g(), c.b(), c.a()); };
+        void fill(Color c) { this->fill(c.r(), c.g(), c.b(), c.a()); };
 
-        inline void fill(float c, float a = 1.0) { this->fill(c, c, c, a); };
+        void fill(float c, float a = 1.0) { this->fill(c, c, c, a); };
         void fill(float r, float g, float b, float a = 1.0);
 
         void fill(int c, int a = 255);
         void fill(int r, int g, int b, int a = 255);
 
-        inline void stroke(Color c) { this->stroke(c.r(), c.g(), c.b(), c.a()); };
+        void stroke(Color c) { this->stroke(c.r(), c.g(), c.b(), c.a()); };
 
-        inline void stroke(float c) { this->stroke(c, c, c, 1.0); };
-        inline void stroke(float c, float a) { this->stroke(c, c, c, a); };
-        inline void stroke(float r, float g, float b) { this->stroke(r, g, b, 1.0); };
+        void stroke(float c) { this->stroke(c, c, c, 1.0); };
+        void stroke(float c, float a) { this->stroke(c, c, c, a); };
+        void stroke(float r, float g, float b) { this->stroke(r, g, b, 1.0); };
         void stroke(float r, float g, float b, float a);
 
         void stroke(int c, int a = 255);
@@ -108,20 +108,20 @@ namespace Pyro
         virtual float screen_y(float x, float y, float z = 0.0f);
 
         // Drawing functions
-        inline void background(Color c)
+        void background(Color c)
         {
             this->background(c.r(), c.g(), c.b(), c.a());
         };
-        inline void background(int c, int a = 255)
+        void background(int c, int a = 255)
         {
             this->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0);
         };
-        inline void background(int r, int g, int b, int a = 255)
+        void background(int r, int g, int b, int a = 255)
         {
             this->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f);
         };
 
-        inline void background(float c, float a = 1.0)
+        void background(float c, float a = 1.0)
         {
             this->background(c, c, c, a);
         };
@@ -158,7 +158,7 @@ namespace Pyro
             this->_shape.beziervertex(x2, y2, x3, y3, x4, y4, unit);
         }
         void endshape(int close);
-        inline void endshape()
+        void endshape()
         {
             endshape(0);
         };

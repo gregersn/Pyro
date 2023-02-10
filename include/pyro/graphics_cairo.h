@@ -10,10 +10,10 @@ namespace Pyro
 {
     class GraphicsCairo : public Graphics
     {
-        cairo_surface_t *surface = nullptr;
-        cairo_t *cr = nullptr;
+        cairo_surface_t *surface{nullptr};
+        cairo_t *cr{nullptr};
 
-        cairo_font_face_t *font = nullptr;
+        cairo_font_face_t *font{nullptr};
 
     public:
         GraphicsCairo(const GraphicsCairo &in);

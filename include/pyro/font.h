@@ -9,10 +9,10 @@ namespace Pyro
     class Font
     {
     private:
-        std::string filename = "";
+        std::string filename{""};
 
     public:
-        Font(std::string filename);
+        explicit Font(std::string filename);
         static Font *load(std::string filename);
         FontImpl *impl;
     };

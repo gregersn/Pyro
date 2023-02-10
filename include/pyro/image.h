@@ -39,34 +39,34 @@ namespace Pyro
     class Image
     {
     private:
-        bool pixels_locked = false;
-        void *cache = nullptr;
-        uint32_t *data = nullptr;
-        unsigned int dpi = 72;
+        bool pixels_locked{false};
+        void *cache{nullptr};
+        uint32_t *data{nullptr};
+        unsigned int dpi{72};
 
         Image *resize_nearest(unsigned int width, unsigned int height);
         Image *resize_bilinear(unsigned int width, unsigned int height);
 
         bool intersect(int sx1, int sy1, int sx2, int sy2, int dx1, int dy1, int dx2, int dy2);
         void blit_resize(Image *img, int srcX1, int srcY1, int srcX2, int srcY2,
-                         uint32_t *destpixels, unsigned int screenW, unsigned int screenH,
+                         uint32_t *destpixels, int screenW, int screenH,
                          int destX1, int destY1, int destX2, int destY2,
                          unsigned int mode);
 
     protected:
-        unsigned int _pixelwidth = 0;
-        unsigned int _pixelheight = 0;
-        unsigned int density = 1;
+        unsigned int _pixelwidth{0};
+        unsigned int _pixelheight{0};
+        unsigned int density{1};
 
-        bool modified = false;
-        int mx1 = 0, my1 = 0, mx2 = 0, my2 = 0;
+        bool modified{false};
+        int mx1{0}, my1{0}, mx2{0}, my2{0};
 
     public:
-        unsigned int format = ARGB;
+        unsigned int format{ARGB};
         unsigned int width() { return this->_pixelwidth; };
         unsigned int height() { return this->_pixelheight; };
         unsigned int channels();
-        Unit unit = Unit::px;
+        Unit unit{Unit::px};
 
         Image(const Image &in);
         Image();
@@ -99,7 +99,7 @@ namespace Pyro
         unsigned int operator[](unsigned int);
 
         Image *get();
-        uint32_t get(unsigned int x, unsigned int y);
+        uint32_t get(int x, int y);
         Image *get(int x, int y, int width, int height);
 
         void set(unsigned int x, unsigned int y, unsigned int c);

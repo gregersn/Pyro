@@ -24,12 +24,12 @@ namespace Pyro
     }
     void Color::hsba(float hue, float saturation, float brightness, float a)
     {
-        float C = brightness * saturation;
-        float Hp = hue * 6.0f;
-        float X = C * (1.0f - std::abs(fmod(Hp, 2.0f) - 1.0f));
-        float R1 = 0.0f;
-        float G1 = 0.0f;
-        float B1 = 0.0f;
+        float C{brightness * saturation};
+        float Hp{hue * 6.0f};
+        double X{C * (1.0f - std::abs(fmod(Hp, 2.0f) - 1.0f))};
+        float R1{0.0f};
+        float G1{0.0f};
+        float B1{0.0f};
 
         if (Hp <= 1)
         {
@@ -62,7 +62,7 @@ namespace Pyro
             B1 = X;
         }
 
-        float m = brightness - C;
+        float m{brightness - C};
 
         this->_red = R1 + m;
         this->_green = G1 + m;
@@ -74,8 +74,8 @@ namespace Pyro
     {
         if (this->dirty_hsl)
         {
-            float Xmax = max(max(this->_red, this->_green), this->_blue);
-            float Xmin = min(min(this->_red, this->_green), this->_blue);
+            float Xmax{max(max(this->_red, this->_green), this->_blue)};
+            float Xmin{min(min(this->_red, this->_green), this->_blue)};
 
             if (Xmax == Xmin)
             {
@@ -121,19 +121,19 @@ namespace Pyro
             }
             else
             {
-                float temp2;
+                float temp2{};
                 if (this->_lightness < 0.5)
                     temp2 = this->_lightness * (1.0 + this->_saturation);
                 else
                     temp2 = (this->_lightness + this->_saturation) - (this->_lightness * this->_saturation);
 
-                float temp1;
+                float temp1{};
                 temp1 = 2.0 * this->_lightness - temp2;
-                float tempr = this->_hue + 1.0 / 3.0;
+                float tempr{this->_hue + 1.0f / 3.0f};
                 if (tempr > 1)
                     tempr--;
-                float tempg = this->_hue;
-                float tempb = this->_hue - 1.0 / 3.0;
+                float tempg{this->_hue};
+                float tempb{this->_hue - 1.0f / 3.0f};
                 if (tempb < 0)
                     tempb++;
 
