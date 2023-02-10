@@ -9,9 +9,9 @@ namespace Pyro
     class SDLRunner : public Runner
     {
     protected:
-        SDL_Window *win = nullptr;
-        SDL_Renderer *ren = nullptr;
-        SDL_Texture *tex = nullptr;
+        SDL_Window *win{nullptr};
+        SDL_Renderer *ren{nullptr};
+        SDL_Texture *tex{nullptr};
 
         int open_window();
         int create_renderer();

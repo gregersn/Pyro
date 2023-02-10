@@ -13,6 +13,8 @@ test_sources = [
                 'test-colors.cpp',
                 'screenshotmatcher.cpp']
 
+catch2 = subproject('catch2')
+
 testexe = executable('screenshot-tests', test_sources,
                      include_directories: inc_dir,
                      link_with: pyrolib,

@@ -49,7 +49,7 @@ namespace Pyro
         }
         Pyro::width = w;
         Pyro::height = h;
-        pg = Graphics::create(width, height, GraphicsMode::CAIRO, dpi = dpi, unit = unit);
+        pg = Graphics::create(width, height, GraphicsMode::CAIRO, dpi, unit);
     }
 
     void loadpixels()

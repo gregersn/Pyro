@@ -10,11 +10,11 @@ namespace Pyro
     class FontImpl
     {
     private:
-        std::string filename = "";
-        FT_Face face = nullptr;
+        std::string filename{""};
+        FT_Face face{nullptr};
 
     public:
-        FontImpl(std::string filename);
+        explicit FontImpl(std::string filename);
         FT_Face get_ft_face() { return this->face; };
     };
 }

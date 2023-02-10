@@ -10,7 +10,7 @@ namespace Pyro
 
     Font *Font::load(std::string filename)
     {
-        Font *font = new Font(filename);
+        Font *font{new Font(filename)};
         return font;
     }
 

@@ -12,16 +12,16 @@ namespace Pyro
     class Color
     {
     private:
-        float _hue = 0.0f;
-        float _saturation = 0.0f;
-        float _lightness = 0.0f;
-        float _red = 0.0f;
-        float _green = 0.0f;
-        float _blue = 0.0f;
-        float _alpha = 0.0f;
+        float _hue{0.0f};
+        float _saturation{0.0f};
+        float _lightness{0.0f};
+        float _red{0.0f};
+        float _green{0.0f};
+        float _blue{0.0f};
+        float _alpha{0.0f};
 
-        bool dirty_hsl = true;
-        bool dirty_rgb = false;
+        bool dirty_hsl{true};
+        bool dirty_rgb{false};
 
         void update_hsl();
         void update_rgb();
@@ -32,7 +32,7 @@ namespace Pyro
         float b();
         float a();
 
-        int mode = Pyro::RGBA;
+        int mode{Pyro::RGBA};
 
         void colormode(int mode)
         {
@@ -43,18 +43,18 @@ namespace Pyro
         {
         }
 
-        Color(const std::string color)
+        explicit Color(std::string color)
         {
             if (color.length() == 7)
             {
                 this->_alpha = 1.0f;
-                unsigned int t_c = std::stoul(color.substr(1, 7), nullptr, 16);
+                long unsigned int t_c{std::stoul(color.substr(1, 7), nullptr, 16)};
                 this->_red = ((t_c & 0xff0000) >> 16) / 255.0f;
                 this->_green = ((t_c & 0xff00) >> 8) / 255.0f;
                 this->_blue = ((t_c & 0xff)) / 255.0f;
             }
         }
-        Color(float v)
+        explicit Color(float v)
         {
             this->_red = v;
             this->_green = v;
@@ -92,7 +92,7 @@ namespace Pyro
             this->_alpha = 1.0f;
         }
 
-        Color(uint32_t r, uint32_t g, uint32_t b, uint32_t a)
+        Color(unsigned int r, unsigned int g, unsigned int b, unsigned int a)
         {
             this->_red = r / 255.0f;
             this->_green = g / 255.0f;

@@ -67,11 +67,11 @@ namespace Pyro
 
         cairo_translate(this->cr, x, y);
 
-        for (size_t contour_index = 0; contour_index < s.getpoints().size(); contour_index++)
+        for (size_t contour_index{0}; contour_index < s.getpoints().size(); contour_index++)
         {
-            std::vector<Pyro::Vector> contour_points = s.getpoints()[contour_index];
+            std::vector<Pyro::Vector> contour_points{s.getpoints()[contour_index]};
 
-            for (size_t i = 0; i < contour_points.size(); i++)
+            for (size_t i{0}; i < contour_points.size(); i++)
             {
                 if (i == 0)
                 {
@@ -110,7 +110,7 @@ namespace Pyro
 
     void GraphicsCairo::image_impl(Image *img, float x, float y)
     {
-        cairo_surface_t *src = nullptr;
+        cairo_surface_t *src{nullptr};
         if (img->channels() == 4)
         {
             src = cairo_image_surface_create_for_data(
@@ -195,10 +195,10 @@ namespace Pyro
 
     void GraphicsCairo::ellipse(float x, float y, float w, float h, unsigned int segments)
     {
-        Shape s = Shape();
+        Shape s{Shape()};
         s.begin();
-        float da = M_PI / (segments / 2);
-        for (unsigned int i = 0; i < segments; i++)
+        double da{M_PI / (segments / 2)};
+        for (unsigned int i{0}; i < segments; i++)
         {
             s.vertex(cos(i * da) * w / 2, sin(i * da) * h / 2);
         }
@@ -209,7 +209,7 @@ namespace Pyro
 
     void GraphicsCairo::background(float r, float g, float b, float a)
     {
-        Graphics::background(r, g, b, a); //memset(this->data, 0, this->_pixelwidth * this->_pixelheight * 4);
+        Graphics::background(r, g, b, a); // memset(this->data, 0, this->_pixelwidth * this->_pixelheight * 4);
         cairo_set_source_rgba(this->cr, r, g, b, a);
         cairo_paint(this->cr);
     }

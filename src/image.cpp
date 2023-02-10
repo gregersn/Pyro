@@ -26,7 +26,7 @@ void ErrorExit(j_common_ptr cinfo)
 {
     // cinfo->err is actually a pointer to my_error_mgr.defaultErrorManager, since pub
     // is the first element of my_error_mgr we can do a sneaky cast
-    ErrorManager *pErrorManager = (ErrorManager *)cinfo->err;
+    ErrorManager *pErrorManager{(ErrorManager *)cinfo->err};
     (*cinfo->err->output_message)(cinfo); // print error message (actually disabled below)
     longjmp(pErrorManager->jumpBuffer, 1);
 }
@@ -57,18 +57,18 @@ std::string get_extension(std::string filename)
 namespace Pyro
 {
     // fixed point precision is limited to 15 bits!!
-    static const int64_t PRECISIONB = 15;
-    static const int64_t PRECISIONF = 1 << PRECISIONB;
-    static const int64_t PREC_MAXVAL = PRECISIONF - 1;
-    static const int64_t PREC_ALPHA_SHIFT = 24 - PRECISIONB;
-    static const int64_t PREC_RED_SHIFT = 16 - PRECISIONB;
-    static const uint32_t ALPHA_MASK = 0xff000000;
-    static const uint32_t RED_MASK = 0x00ff0000;
-    static const uint32_t GREEN_MASK = 0x0000ff00;
-    static const uint32_t BLUE_MASK = 0x000000ff;
+    static const int64_t PRECISIONB{15};
+    static const int64_t PRECISIONF{1 << PRECISIONB};
+    static const int64_t PREC_MAXVAL{PRECISIONF - 1};
+    static const int64_t PREC_ALPHA_SHIFT{24 - PRECISIONB};
+    static const int64_t PREC_RED_SHIFT{16 - PRECISIONB};
+    static const uint32_t ALPHA_MASK{0xff000000};
+    static const uint32_t RED_MASK{0x00ff0000};
+    static const uint32_t GREEN_MASK{0x0000ff00};
+    static const uint32_t BLUE_MASK{0x000000ff};
 
-    static const uint32_t RB_MASK = 0x00FF00FF;
-    static const uint32_t GN_MASK = 0x0000FF00;
+    static const uint32_t RB_MASK{0x00FF00FF};
+    static const uint32_t GN_MASK{0x0000FF00};
 
     uint32_t multiply_alpha(uint32_t c)
     {
@@ -237,12 +237,14 @@ namespace Pyro
         bool is_png = !png_sig_cmp(header, 0, number);
         if (!is_png)
         {
+            fclose(fp);
             return nullptr;
         }
 
         png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
         if (!png_ptr)
         {
+            fclose(fp);
             return nullptr;
         }
 
@@ -250,6 +252,7 @@ namespace Pyro
         if (!info_ptr)
         {
             png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+            fclose(fp);
             return nullptr;
         }
 
@@ -257,6 +260,7 @@ namespace Pyro
         if (!end_info)
         {
             png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
+            fclose(fp);
             return nullptr;
         }
 
@@ -398,6 +402,7 @@ namespace Pyro
         png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
         if (!png_ptr)
         {
+            fclose(fp);
             throw;
         }
 
@@ -405,12 +410,15 @@ namespace Pyro
         if (!info_ptr)
         {
             png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
+            fclose(fp);
             throw;
         }
 
         if (setjmp(png_jmpbuf(png_ptr)))
+        {
+            fclose(fp);
             throw;
-
+        }
         png_init_io(png_ptr, fp);
 
         int color_type = 0;
@@ -441,15 +449,15 @@ namespace Pyro
             PNG_INTERLACE_NONE,
             PNG_COMPRESSION_TYPE_DEFAULT,
             PNG_FILTER_TYPE_DEFAULT);
-        int pixels_per_meter = int((dpi * 100.0) / 2.54);
+        int pixels_per_meter{static_cast<int>((dpi * 100.0) / 2.54)};
         png_set_pHYs(png_ptr, info_ptr, pixels_per_meter, pixels_per_meter, PNG_RESOLUTION_METER);
 
         // png_write_info(png_ptr, info_ptr);
 
         png_bytep row_pointers[this->_pixelheight];
 
-        uint8_t *converted_data = nullptr;
-        unsigned int stride = this->_pixelwidth;
+        uint8_t *converted_data{nullptr};
+        unsigned int stride{this->_pixelwidth};
         switch (this->format)
         {
         case GRAY:
@@ -592,9 +600,9 @@ namespace Pyro
         return this->get(0, 0, this->_pixelwidth, this->_pixelheight);
     }
 
-    uint32_t Image::get(unsigned int x, unsigned int y)
+    uint32_t Image::get(int x, int y)
     {
-        if (x < 0 || y < 0 || x >= this->_pixelwidth || y >= this->_pixelheight)
+        if (x < 0 || y < 0 || static_cast<unsigned int>(x) >= this->_pixelwidth || static_cast<unsigned int>(y) >= this->_pixelheight)
             return 0;
 
         switch (format)
@@ -1123,7 +1131,7 @@ namespace Pyro
 
     void Image::blit_resize(Image *img,
                             int srcX1, int srcY1, int srcX2, int srcY2,
-                            uint32_t *destpixels, unsigned int screenW, unsigned int screenH,
+                            uint32_t *destpixels, int screenW, int screenH,
                             int destX1, int destY1, int destX2, int destY2,
                             unsigned int mode)
     {
@@ -1133,12 +1141,12 @@ namespace Pyro
         srcX2 = srcX2 < 0 ? 0 : min(img->_pixelwidth, (unsigned int)(srcX2));
         srcY2 = srcY2 < 0 ? 0 : min(img->_pixelheight, (unsigned int)(srcY2));
 
-        unsigned int srcW = srcX2 - srcX1;
-        unsigned int srcH = srcY2 - srcY1;
-        unsigned int destW = destX2 - destX1;
-        unsigned int destH = destY2 - destY1;
+        int srcW{srcX2 - srcX1};
+        int srcH{srcY2 - srcY1};
+        int destW{destX2 - destX1};
+        int destH{destY2 - destY1};
 
-        bool smooth = true;
+        bool smooth{true};
 
         if (!smooth)
         {
@@ -1148,14 +1156,14 @@ namespace Pyro
 
         if (destW <= 0 || destH <= 0 ||
             srcW <= 0 || srcH <= 0 ||
-            (destX1 > 0 && (unsigned int)(destX1) >= screenW) || (destY1 > 0 && (unsigned int)(destY1) >= screenH) ||
+            (destX1 > 0 && (destX1) >= screenW) || (destY1 > 0 && (destY1) >= screenH) ||
             (unsigned int)(srcX1) >= img->_pixelwidth || (unsigned int)(srcY1) >= img->_pixelheight)
         {
             return;
         }
 
-        uint64_t dx = (srcW / (float)destW * PRECISIONF);
-        uint64_t dy = (srcH / (float)destH * PRECISIONF);
+        float dx{(srcW / (float)destW * PRECISIONF)};
+        float dy{(srcH / (float)destH * PRECISIONF)};
 
         if (destX1 < 0)
         {
@@ -1169,16 +1177,16 @@ namespace Pyro
             destY1 = 0;
         }
 
-        destW = min(destW, (unsigned int)(screenW - destX1));
-        destH = min(destH, (unsigned int)(screenH - destY1));
+        destW = min(destW, screenW - destX1);
+        destH = min(destH, screenH - destY1);
 
-        int64_t destoffset = destY1 * screenW + destX1;
-        uint32_t *srcbuffer = img->load_pixels();
+        int64_t destoffset{destY1 * screenW + destX1};
+        uint32_t *srcbuffer{img->load_pixels()};
 
-        int64_t srcxoffset = destX1 < 0 ? -destX1 * dx : srcX1 * PRECISIONF;
-        int64_t srcyoffset = destY1 < 0 ? -destY1 * dy : srcY1 * PRECISIONF;
+        float srcxoffset{destX1 < 0 ? -destX1 * dx : srcX1 * PRECISIONF};
+        float srcyoffset{destY1 < 0 ? -destY1 * dy : srcY1 * PRECISIONF};
 
-        int64_t fracU, ifU, fracV, ifV, u1, u2, v1 = 0, v2 = 0, sX, iw, iw1, ih1;
+        int64_t fracU, ifU, fracV, ifV, u1, u2, v1{0}, v2{0}, sX, iw, iw1, ih1;
         int64_t ul, ll, ur, lr;
 
         uint32_t cUL, cLL, cUR, cLR;
@@ -1187,10 +1195,10 @@ namespace Pyro
         auto filter_new_scanline = [&]()
         {
             sX = srcxoffset;
-            fracV = srcyoffset & PREC_MAXVAL;
+            fracV = static_cast<unsigned int>(srcyoffset) & PREC_MAXVAL;
             ifV = PREC_MAXVAL - fracV + 1;
-            v1 = (srcyoffset >> PRECISIONB) * iw;
-            v2 = min((srcyoffset >> PRECISIONB) + 1, ih1) * iw;
+            v1 = (static_cast<unsigned int>(srcyoffset) >> PRECISIONB) * iw;
+            v2 = min((static_cast<unsigned int>(srcyoffset) >> PRECISIONB) + 1, ih1) * iw;
         };
 
         auto filter_bilinear = [&]()
@@ -1287,10 +1295,10 @@ namespace Pyro
             iw1 = img->_pixelwidth - 1;
             ih1 = img->_pixelheight - 1;
 
-            for (unsigned int y = 0; y < destH; y++)
+            for (int y{0}; y < destH; y++)
             {
                 filter_new_scanline();
-                for (unsigned int x = 0; x < destW; x++)
+                for (int x{0}; x < destW; x++)
                 {
                     destpixels[destoffset + x] = blend_function(destpixels[destoffset + x],
                                                                 filter_bilinear());

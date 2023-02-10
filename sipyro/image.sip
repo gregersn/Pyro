@@ -15,6 +15,7 @@ namespace Pyro {
             void save(const char *filename, unsigned int dpi);
 
             unsigned int get(unsigned int x, unsigned int y);
+            Image *get();
             Image *get(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
             unsigned int operator[] (unsigned int);
             SIP_PYOBJECT load_pixels();
@@ -40,6 +41,8 @@ namespace Pyro {
                                                    NPY_UINT8,
                                                    data);
 %End
+
+            void mask(Image *mask);
 
             Image *resize(unsigned int sx, unsigned int sy);
 
