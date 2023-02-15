@@ -19,7 +19,7 @@ namespace Pyro
         default:
             return value;
         }
-    }
+    };
 
     template <typename T>
     T pixels2unit(T value, Unit unit, unsigned int dpi = 72)
@@ -36,5 +36,5 @@ namespace Pyro
         default:
             return value;
         }
-    }
+    };
 }
