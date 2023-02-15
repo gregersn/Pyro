@@ -10,6 +10,7 @@
 %Include image.sip
 %Include graphics.sip
 %Include sdl.sip
+%Include utils.sip
 
 %HideNamespace(name=Pyro)
 %ModuleCode

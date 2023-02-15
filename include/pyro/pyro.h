@@ -11,6 +11,7 @@
 #include "graphics.h"
 #include "noise.h"
 #include "runner.h"
+#include "utils.h"
 
 namespace Pyro
 {
