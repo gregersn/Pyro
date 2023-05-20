@@ -2,6 +2,7 @@
 #define PYROIMAGE_H
 
 #include <string>
+#include <cstdint>
 #include "constants.h"
 
 namespace Pyro
