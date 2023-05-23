@@ -34,3 +34,7 @@ subprojects/*/
 .mypy_cache/
 __pycache__/
 .noseids
+
+.venv/
+
+*/*.egg-info
