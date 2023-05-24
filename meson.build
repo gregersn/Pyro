@@ -8,6 +8,7 @@ libjpeg_dep = dependency('libjpeg')
 libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
+eigen_dep = dependency('eigen3')
 
 inc_dir = include_directories('include')
 
