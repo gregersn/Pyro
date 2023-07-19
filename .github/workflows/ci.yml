@@ -17,7 +17,7 @@ jobs:
         name:
           [
             ubuntu-22.04-gcc-12,
-            macos-latest-xcode,
+            macos-13-xcode,
           ]
 
         include:
@@ -26,9 +26,9 @@ jobs:
             compiler: gcc
             version: "12"
 
-          - name: macos-latest-xcode
-            os: macos-latest
-            compiler: xcode
+          - name: macos-13-xcode
+            os: macos-13
+            compiler: gcc
             version: "13"
 
     steps:

@@ -57,10 +57,10 @@ namespace Pyro
 
     bool Shape::is_point_in_path(float x, float y)
     {
-        uint num = this->points.size();
-        uint j = num - 1;
+        int num = this->points.size();
+        int j = num - 1;
         bool c = false;
-        for (uint i = 0; i < num; i++)
+        for (int i = 0; i < num; i++)
         {
             if (((this->points[i].v.y > y) != (this->points[j].v.y > y)) &&
                 (x < this->points[i].v.x + (this->points[j].v.x - this->points[i].v.x) * (y - this->points[i].v.y) /
