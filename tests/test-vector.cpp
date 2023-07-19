@@ -207,7 +207,7 @@ TEST_CASE("Vector initialisation", "[vector]")
         unsigned int tests = 1000000;
         double values[tests];
         double sum = 0.0f;
-        for (uint i = 0; i < tests; i++)
+        for (unsigned int i = 0; i < tests; i++)
         {
 
             Pyro::Vector v = Pyro::Vector::random2d();

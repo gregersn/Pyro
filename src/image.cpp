@@ -1386,11 +1386,11 @@ namespace Pyro
     {
         if (width == 0)
         {
-            width = uint((float)this->_pixelwidth / ((float)this->_pixelheight / (float)height));
+            width = (unsigned int)((float)this->_pixelwidth / ((float)this->_pixelheight / (float)height));
         }
         else if (height == 0)
         {
-            height = uint((float)this->_pixelheight / ((float)this->_pixelwidth / (float)width));
+            height = (unsigned int)((float)this->_pixelheight / ((float)this->_pixelwidth / (float)width));
         }
         switch (method)
         {

@@ -10,6 +10,8 @@ cairo_dep = dependency('cairo')
 sdl_dep = dependency('sdl2')
 eigen_dep = dependency('eigen3')
 
+eigen_dep = subproject('eigen').get_variable('eigen_dep')
+
 inc_dir = include_directories('include')
 
 subdir('include')

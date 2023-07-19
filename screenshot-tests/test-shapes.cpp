@@ -2,7 +2,7 @@
 #include "test-settings.h"
 #include "pyro/graphics.h"
 
-TEST_CASE("Test Rect", "[shapes")
+TEST_CASE("Test Rect", "[shapes]")
 {
     std::string filename = "";
 
@@ -107,10 +107,10 @@ TEST_CASE("Variable side count ellipses", "[shapes]")
         p->fill(255, 64, 128);
         p->ellipsemode(Pyro::CENTER);
 
-        for (uint y = 0; y < 4; y++)
+        for (uint32_t y = 0; y < 4; y++)
         {
             p->pushmatrix();
-            for (uint x = 0; x < 4; x++)
+            for (uint32_t x = 0; x < 4; x++)
             {
                 p->ellipse(512 / 8, 512 / 8, 500 / 4, 500 / 4, (y * 4) + x + 3);
                 p->translate(512 / 4, 0);

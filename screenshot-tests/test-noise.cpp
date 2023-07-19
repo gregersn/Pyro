@@ -9,9 +9,9 @@ TEST_CASE("Test noise")
     Pyro::Image *img = Pyro::Image::create(128, 128);
     unsigned int *pixels = img->load_pixels();
 
-    for (uint y = 0; y < 128; y++)
+    for (uint32_t y = 0; y < 128; y++)
     {
-        for (uint x = 0; x < 128; x++)
+        for (uint32_t x = 0; x < 128; x++)
         {
             Pyro::noisedetail(1, 1.0);
             double v = Pyro::noise(x * 0.1, y * 0.1);
