@@ -51,10 +51,9 @@ namespace Pyro
     void updatepixels();
     inline void image(Image *img, float x, float y) { pg->image(img, x, y); };
 
-    inline void nostroke() { pg->nostroke(); };
-    inline void nofill() { pg->nofill(); };
-
     // Drawing functions
+
+    // **** COLOR ****
     inline void background(Color c) { pg->background(c); };
 
     inline void background(int c, int a = 255) { pg->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
@@ -63,26 +62,33 @@ namespace Pyro
     inline void background(float c, float a = 1.0) { pg->background(c, c, c, a); };
     inline void background(float r, float g, float b, float a = 1.0) { pg->background(r, g, b, a); };
 
-    inline void smooth() { pg->smooth(); };
-    inline void nosmooth() { pg->nosmooth(); };
-
-    inline void blendmode(BlendMode mode) { pg->blendmode(mode); };
+    // TODO: clear
+    // TODO: colormode
 
     inline void fill(Color c) { pg->fill(c); };
-
     inline void fill(float c, float a = 1.0) { pg->fill(c, c, c, a); };
     inline void fill(float r, float g, float b, float a = 1.0) { pg->fill(r, g, b, a); };
-
     inline void fill(int c, int a = 255) { pg->fill(c, a); };
     inline void fill(int r, int g, int b, int a = 255) { pg->fill(r, g, b, a); };
 
-    inline void stroke(Color c) { pg->stroke(c); };
+    inline void nofill() { pg->nofill(); };
+    inline void nostroke() { pg->nostroke(); };
 
+    inline void stroke(Color c) { pg->stroke(c); };
     inline void stroke(float c, float a = 1.0) { pg->stroke(c, c, c, a); };
     inline void stroke(float r, float g, float b, float a = 1.0) { pg->stroke(r, g, b, a); };
-
     inline void stroke(int c, int a = 255) { pg->stroke(c, a); };
     inline void stroke(int r, int g, int b, int a = 255) { pg->stroke(r, g, b, a); };
+    // **** /COLOR ****
+
+    // **** RENDERING ****
+    inline void blendmode(BlendMode mode) { pg->blendmode(mode); };
+    // TODO: clip
+
+    // **** /RENDERING ****
+
+    inline void smooth() { pg->smooth(); };
+    inline void nosmooth() { pg->nosmooth(); };
 
     inline void strokeweight(float w, Unit unit = Unit::current) { pg->strokeweight(w, unit); };
 
