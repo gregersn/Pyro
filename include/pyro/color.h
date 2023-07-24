@@ -162,8 +162,23 @@ namespace Pyro
         Color operator[](const unsigned int index);
     };
 
+    /* TODO:
+
+    alpha
+    blue
+    brightness
+    */
     uint32_t color(unsigned int gray, unsigned int alpha = 255);
     uint32_t color(unsigned int r, unsigned int g, unsigned int b, unsigned int a = 255);
+    /* TODO:
+
+    green
+    hue
+    lerpcolor
+    red
+    saturation
+
+    */
 
 }
 
