@@ -76,11 +76,13 @@
     "valarray": "cpp",
     "hash_map": "cpp",
     "queue": "cpp",
-    "stack": "cpp"
+    "stack": "cpp",
+    "alignedvector3": "cpp",
+    "openglsupport": "cpp"
   },
   "python.analysis.stubPath": "${workspaceFolder}/pybuild/pyro/",
   "terminal.integrated.env.linux": {
-    "PYTHONPATH": "${workspaceFolder}/pybuild/pyro/build/lib.linux-x86_64-3.11/:${workspaceFolder}/pybuild/pyro/",
+    "PYTHONPATH": "${workspaceFolder}/pybuild/pyro/build/lib.linux-x86_64-cpython-311/:${workspaceFolder}/pybuild/pyro/",
     "LD_LIBRARY_PATH": "${workspaceFolder}/build/src"
   },
   "terminal.integrated.env.osx": {
