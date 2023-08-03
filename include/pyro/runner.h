@@ -31,12 +31,13 @@ namespace Pyro
     };
     extern unsigned int framecount;
 
-    void init();
+    void init(bool headless = false);
     void update();
     void quit();
-    void run(void (*setup)(), void (*draw)());
+    void run(void (*setup)(), void (*draw)(), bool headless = false);
     void noloop();
     void loop();
+    void stop(); // End runner loop.
 
     extern bool running;
     extern Runner *pyro;

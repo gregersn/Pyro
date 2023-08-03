@@ -7,7 +7,7 @@ namespace Pyro
     {
     }
 
-    SDLRunner::SDLRunner(unsigned int width, unsigned int height) : Runner(), width(width), height(height)
+    SDLRunner::SDLRunner(unsigned int width, unsigned int height, bool headless) : Runner(), width(width), height(height), headless(headless)
     {
     }
 
@@ -17,15 +17,22 @@ namespace Pyro
 
     int SDLRunner::init()
     {
-        if (SDL_Init(SDL_INIT_VIDEO) != 0)
+        if (!headless)
         {
-            std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
-            return 1;
+            if (SDL_Init(SDL_INIT_VIDEO) != 0)
+            {
+                std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
+                return 1;
+            }
+            std::cout << "SDL initialized\n";
+            open_window();
+            create_renderer();
+            create_texture();
         }
-        std::cout << "SDL initialized\n";
-        open_window();
-        create_renderer();
-        create_texture();
+        else
+        {
+            std::cout << "Running in headless mode\n";
+        }
 
         return 0;
     }
@@ -94,12 +101,13 @@ namespace Pyro
             }
             if (e.type == SDL_KEYDOWN)
             {
-                this->running = false;
+                if (e.key.keysym.sym == SDLK_ESCAPE)
+                    this->running = false;
             }
 
             if (e.type == SDL_MOUSEBUTTONDOWN)
             {
-                this->running = false;
+                // this->running = false;
             }
         }
         return 0;
@@ -107,6 +115,8 @@ namespace Pyro
 
     int SDLRunner::quit()
     {
+        std::cout << "SDL runner quitting\n";
+        this->running = false;
         SDL_DestroyTexture(tex);
         SDL_DestroyRenderer(ren);
         SDL_DestroyWindow(win);

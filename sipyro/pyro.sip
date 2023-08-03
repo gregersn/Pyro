@@ -88,4 +88,7 @@ namespace Pyro {
     double noise(double x, double y, double z, double w);
     void noiseseed(long seed);
     void noisedetail(unsigned int lod, float falloff);
+
+    void noloop();
+    void stop();
     };

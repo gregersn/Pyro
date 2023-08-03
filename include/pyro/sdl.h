@@ -19,11 +19,12 @@ namespace Pyro
 
         unsigned int width;
         unsigned int height;
+        bool headless;
 
     public:
         SDLRunner();
         SDLRunner(const SDLRunner &in);
-        SDLRunner(unsigned int width, unsigned int height);
+        SDLRunner(unsigned int width, unsigned int height, bool headless = false);
         SDLRunner &operator=(const SDLRunner &in);
         ~SDLRunner();
         int update();
