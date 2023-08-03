@@ -9,25 +9,34 @@ namespace Pyro
     Runner *runner = nullptr;
     bool running;
     bool looping;
+    bool _headless;
 
-    void init()
+    void init(bool headless)
     {
         running = true;
         looping = true;
-        runner = new SDLRunner(width, height);
+        _headless = headless;
+        runner = new SDLRunner(width, height, _headless);
         runner->init();
     }
 
     void update()
     {
-        runner->update();
+        if (!_headless)
+            runner->update();
         running = runner->running;
         framecount++;
     }
 
     void quit()
     {
+        std::cout << "Quitting\n";
         runner->quit();
+    }
+
+    void stop()
+    {
+        runner->running = false;
     }
 
     void loop()
@@ -40,10 +49,14 @@ namespace Pyro
         looping = false;
     }
 
-    void run(void (*setup)(), void (*draw)())
+    void run(void (*setup)(), void (*draw)(), bool headless)
     {
+        std::cout << "Calling setup\n";
         setup();
-        init();
+        std::cout << "Calling init\n";
+        init(headless);
+
+        std::cout << "Starting run loop\n";
         while (running)
         {
             if (looping)
@@ -54,6 +67,7 @@ namespace Pyro
             }
             update();
         }
+        std::cout << "Exiting run loop\n";
         quit();
     }
 }

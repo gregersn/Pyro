@@ -7,7 +7,7 @@ namespace Pyro {
 #include <stdio.h>
 %End
     void init();
-    void run(SIP_PYCALLABLE setup, SIP_PYCALLABLE draw);
+    void run(SIP_PYCALLABLE setup, SIP_PYCALLABLE draw, bool headless);
 %MethodCode
 
         Py_XDECREF(pySetup_Handler);
@@ -18,7 +18,7 @@ namespace Pyro {
         pyDraw_Handler = a1;
         Py_INCREF(pyDraw_Handler);
 
-        Pyro::run(py_setup, py_draw);
+        Pyro::run(py_setup, py_draw, a2);
 
 %End
 
