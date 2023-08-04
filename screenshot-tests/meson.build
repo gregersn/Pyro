@@ -11,6 +11,7 @@ test_sources = [
                 'test-typography.cpp',
                 'test-resolution.cpp',
                 'test-colors.cpp',
+                'test-units.cpp',
                 'screenshotmatcher.cpp']
 
 catch2 = subproject('catch2')

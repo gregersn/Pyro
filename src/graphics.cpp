@@ -28,13 +28,11 @@ namespace Pyro
     Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi, Unit unit)
     {
 
-        width = unit2pixels(width, unit, dpi);
-        height = unit2pixels(height, unit, dpi);
         switch (mode)
         {
         case GraphicsMode::CAIRO:
         default:
-            return new GraphicsCairo(width, height, ARGB, dpi);
+            return new GraphicsCairo(width, height, ARGB, dpi, unit);
         }
     }
 

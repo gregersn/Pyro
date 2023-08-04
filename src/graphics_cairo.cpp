@@ -3,7 +3,7 @@
 #include "pyro/utils.h"
 namespace Pyro
 {
-    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi) : Graphics(width, height, format, dpi)
+    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi, Unit unit) : Graphics(width, height, format, dpi, unit)
     {
         this->surface = cairo_image_surface_create_for_data(this->load_bytes(),
                                                             CAIRO_FORMAT_ARGB32,
