@@ -17,7 +17,7 @@ namespace Pyro
 
     public:
         GraphicsCairo(const GraphicsCairo &in);
-        GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi);
+        GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi, Unit unit);
         ~GraphicsCairo();
 
         GraphicsCairo &operator=(const GraphicsCairo &in);
