@@ -28,8 +28,15 @@ namespace Pyro
             return 0;
         };
         bool running;
+        bool keypressed;
+        int key;
     };
     extern unsigned int framecount;
+    extern bool keypressed;
+    extern int key;
+
+    bool get_keypressed();
+    int get_key();
 
     void init(bool headless = false);
     void update();
