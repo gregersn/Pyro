@@ -95,19 +95,32 @@ namespace Pyro
 
         while (SDL_PollEvent(&e))
         {
-            if (e.type == SDL_QUIT)
+            switch (e.type)
             {
+            case SDL_QUIT:
                 this->running = false;
-            }
-            if (e.type == SDL_KEYDOWN)
-            {
+                break;
+
+            case SDL_KEYDOWN:
+                // std::cout << "Keydown" << std::endl;
+                this->keypressed = true;
+                this->key = e.key.keysym.sym;
                 if (e.key.keysym.sym == SDLK_ESCAPE)
                     this->running = false;
-            }
+                break;
 
-            if (e.type == SDL_MOUSEBUTTONDOWN)
-            {
+            case SDL_KEYUP:
+                // std::cout << "Keyup" << std::endl;
+                this->keypressed = false;
+                this->key = e.key.keysym.sym;
+                break;
+
+            case SDL_MOUSEBUTTONDOWN:
                 // this->running = false;
+                break;
+
+            default:
+                break;
             }
         }
         return 0;

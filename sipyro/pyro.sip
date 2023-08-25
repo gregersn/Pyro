@@ -1,4 +1,4 @@
-%Module(name=pyro, call_super_init=True, keyword_arguments="All")
+%Module(name=pyro, call_super_init=True, keyword_arguments="All", language="C++")
 
 %DefaultEncoding "UTF-8"
 %Include constants.sip
@@ -11,6 +11,7 @@
 %Include graphics.sip
 %Include sdl.sip
 %Include utils.sip
+%Include runner.sip
 
 %HideNamespace(name=Pyro)
 %ModuleCode

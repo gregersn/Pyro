@@ -13,7 +13,7 @@ OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 DEPS := $(OBJECTS:.o=.d)
 
 # -g Produce debugging information in the operating system's native format
-CXXFLAGS = -Wall -std=c++17 -I include
+CXXFLAGS = -Wall -std=c++17 -I include -I subprojects/eigen-3.4.0
 LDFLAGS = -L. -L./build/src
 LDLIBS = -lpyro
 

@@ -6,6 +6,9 @@
 namespace Pyro
 {
     unsigned int framecount = 0;
+    bool keypressed = false;
+    int key = -1;
+
     Runner *runner = nullptr;
     bool running;
     bool looping;
@@ -25,7 +28,19 @@ namespace Pyro
         if (!_headless)
             runner->update();
         running = runner->running;
+        key = runner->key;
+        keypressed = runner->keypressed;
         framecount++;
+    }
+
+    bool get_keypressed()
+    {
+        return keypressed;
+    }
+
+    int get_key()
+    {
+        return key;
     }
 
     void quit()
