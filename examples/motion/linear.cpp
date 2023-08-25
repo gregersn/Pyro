@@ -1,14 +1,22 @@
 #include "pyro/pyro.h"
+#include <iostream>
 
 using namespace Pyro;
 
 float a;
+
+void kb_keypressed()
+{
+    std::cout << " A key was pressed...." << std::endl;
+}
 
 void setup()
 {
     size(640, 360);
     stroke(255);
     a = height / 2;
+
+    set_keypressed(&kb_keypressed);
 }
 
 void draw()

@@ -3,11 +3,11 @@
 
 namespace Pyro
 {
-    SDLRunner::SDLRunner() : Runner(), width(640), height(480)
+    SDLRunner::SDLRunner() : Runner()
     {
     }
 
-    SDLRunner::SDLRunner(unsigned int width, unsigned int height, bool headless) : Runner(), width(width), height(height), headless(headless)
+    SDLRunner::SDLRunner(bool headless) : Runner(), headless(headless)
     {
     }
 
@@ -15,8 +15,11 @@ namespace Pyro
     {
     }
 
-    int SDLRunner::init()
+    int SDLRunner::init(unsigned int width, unsigned int height)
     {
+        this->width = width;
+        this->height = height;
+
         if (!headless)
         {
             if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -39,13 +42,13 @@ namespace Pyro
 
     int SDLRunner::open_window()
     {
-        win = SDL_CreateWindow("Pyro",
-                               SDL_WINDOWPOS_UNDEFINED,
-                               SDL_WINDOWPOS_UNDEFINED,
-                               this->width, this->height,
-                               SDL_WINDOW_OPENGL);
+        sdl_window = SDL_CreateWindow("Pyro",
+                                      SDL_WINDOWPOS_UNDEFINED,
+                                      SDL_WINDOWPOS_UNDEFINED,
+                                      this->width, this->height,
+                                      SDL_WINDOW_OPENGL);
 
-        if (win == nullptr)
+        if (sdl_window == nullptr)
         {
             std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
             SDL_Quit();
@@ -57,10 +60,10 @@ namespace Pyro
 
     int SDLRunner::create_renderer()
     {
-        ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-        if (ren == nullptr)
+        sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
+        if (sdl_renderer == nullptr)
         {
-            SDL_DestroyWindow(win);
+            SDL_DestroyWindow(sdl_window);
             std::cout << "SDL_CreateRenderer: " << SDL_GetError() << std::endl;
             SDL_Quit();
             return 1;
@@ -70,14 +73,14 @@ namespace Pyro
 
     int SDLRunner::create_texture()
     {
-        tex = SDL_CreateTexture(ren,
-                                SDL_PIXELFORMAT_ARGB8888,
-                                SDL_TEXTUREACCESS_STREAMING,
-                                this->width, this->height);
-        if (tex == nullptr)
+        sdl_texture = SDL_CreateTexture(sdl_renderer,
+                                        SDL_PIXELFORMAT_ARGB8888,
+                                        SDL_TEXTUREACCESS_STREAMING,
+                                        this->width, this->height);
+        if (sdl_texture == nullptr)
         {
-            SDL_DestroyRenderer(ren);
-            SDL_DestroyWindow(win);
+            SDL_DestroyRenderer(sdl_renderer);
+            SDL_DestroyWindow(sdl_window);
             std::cout << "SDL_CreateTexture Error: " << SDL_GetError() << std::endl;
             SDL_Quit();
             return 1;
@@ -87,11 +90,11 @@ namespace Pyro
 
     int SDLRunner::update()
     {
-        SDL_UpdateTexture(tex, NULL, pg->get_data(), width * sizeof(uint32_t));
+        SDL_UpdateTexture(sdl_texture, NULL, pg->get_data(), this->width * sizeof(uint32_t));
         SDL_Event e;
-        SDL_RenderClear(ren);
-        SDL_RenderCopy(ren, tex, NULL, NULL);
-        SDL_RenderPresent(ren);
+        SDL_RenderClear(sdl_renderer);
+        SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, NULL);
+        SDL_RenderPresent(sdl_renderer);
 
         while (SDL_PollEvent(&e))
         {
@@ -107,6 +110,11 @@ namespace Pyro
                 this->key = e.key.keysym.sym;
                 if (e.key.keysym.sym == SDLK_ESCAPE)
                     this->running = false;
+
+                if (this->keypressed_cb != nullptr)
+                {
+                    this->keypressed_cb();
+                }
                 break;
 
             case SDL_KEYUP:
@@ -130,9 +138,9 @@ namespace Pyro
     {
         std::cout << "SDL runner quitting\n";
         this->running = false;
-        SDL_DestroyTexture(tex);
-        SDL_DestroyRenderer(ren);
-        SDL_DestroyWindow(win);
+        SDL_DestroyTexture(sdl_texture);
+        SDL_DestroyRenderer(sdl_renderer);
+        SDL_DestroyWindow(sdl_window);
         SDL_Quit();
         return 0;
     }
