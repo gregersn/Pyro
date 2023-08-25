@@ -14,13 +14,17 @@ namespace Pyro
     bool looping;
     bool _headless;
 
-    void init(bool headless)
+    void presetup(bool headless)
+    {
+        _headless = headless;
+        runner = new SDLRunner(_headless);
+    }
+
+    void init(unsigned int width, unsigned int height)
     {
         running = true;
         looping = true;
-        _headless = headless;
-        runner = new SDLRunner(width, height, _headless);
-        runner->init();
+        runner->init(width, height);
     }
 
     void update()
@@ -41,6 +45,12 @@ namespace Pyro
     int get_key()
     {
         return key;
+    }
+
+    void set_keypressed(void (*keypressed)())
+    {
+        std::cout << "in set keypressed" << std::endl;
+        runner->set_keypressed(keypressed);
     }
 
     void quit()
@@ -66,10 +76,11 @@ namespace Pyro
 
     void run(void (*setup)(), void (*draw)(), bool headless)
     {
+        presetup(headless);
         std::cout << "Calling setup\n";
         setup();
         std::cout << "Calling init\n";
-        init(headless);
+        init(Pyro::width, Pyro::height);
 
         std::cout << "Starting run loop\n";
         while (running)
@@ -84,5 +95,14 @@ namespace Pyro
         }
         std::cout << "Exiting run loop\n";
         quit();
+    }
+
+    void Runner::set_keypressed(void (*keypressedkb)())
+    {
+        std::cout << "Setting keypressed in the runner" << std::endl;
+        std::cout << "Incoming value is: " << reinterpret_cast<void *>(keypressedkb) << std::endl;
+        this->keypressed_cb = keypressedkb;
+        std::cout << "Done setting" << std::endl;
+        // keypressedkb();
     }
 }

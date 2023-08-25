@@ -6,7 +6,7 @@ namespace Pyro {
 #include <Python.h>
 #include <stdio.h>
 %End
-    void init();
+    void init(unsigned int width, unsigned int height);
     void run(SIP_PYCALLABLE setup, SIP_PYCALLABLE draw, bool headless = false);
 %MethodCode
 

@@ -6,9 +6,9 @@ namespace Pyro
     class Runner
     {
     public:
+        void (*keypressed_cb)();
         Runner() : running(true){};
         Runner(const Runner &in){};
-        Runner(unsigned int width, unsigned int height) : running(true){};
         Runner &operator=(const Runner &in) { return *this; };
         virtual ~Runner(){};
 
@@ -22,7 +22,7 @@ namespace Pyro
             throw;
             return 0;
         };
-        virtual int init()
+        virtual int init(unsigned int width, unsigned int height)
         {
             throw;
             return 0;
@@ -30,6 +30,7 @@ namespace Pyro
         bool running;
         bool keypressed;
         int key;
+        void set_keypressed(void (*keypressed)());
     };
     extern unsigned int framecount;
     extern bool keypressed;
@@ -37,8 +38,10 @@ namespace Pyro
 
     bool get_keypressed();
     int get_key();
+    void set_keypressed(void (*keypressed)());
 
-    void init(bool headless = false);
+    void presetup(bool headless = false);
+    void init(unsigned int width, unsigned int height);
     void update();
     void quit();
     void run(void (*setup)(), void (*draw)(), bool headless = false);

@@ -5,11 +5,17 @@ import time
 a = 0
 
 
+def keypressed():
+    print("A key was pressed")
+
+
 def setup():
     global a
     pyro.size(640, 360)
     pyro.stroke(255)
     a = pyro.height / 2
+
+    pyro.set_keypressed(keypressed)
 
 
 def draw():
