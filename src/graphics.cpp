@@ -96,20 +96,13 @@ namespace Pyro
     void Graphics::background(float r, float g, float b, float a)
     {
         Color c{Color(r, g, b, a)};
-        char *buf{(char *)this->get_data()};
-        union
-        {
-            uint8_t d8[4];
-            uint32_t d32;
-        } u32 = {.d32 = c.to_uint()};
+        uint32_t *buf{(uint32_t *)this->get_data()};
+        uint32_t color = c.to_uint();
 
         size_t count{this->_pixelwidth * this->_pixelheight};
         while (count--)
         {
-            *buf++ = u32.d8[0];
-            *buf++ = u32.d8[1];
-            *buf++ = u32.d8[2];
-            *buf++ = u32.d8[3];
+            *buf++ = color;
         }
     }
 
