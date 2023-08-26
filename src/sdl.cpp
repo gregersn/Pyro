@@ -124,7 +124,20 @@ namespace Pyro
                 break;
 
             case SDL_MOUSEBUTTONDOWN:
-                // this->running = false;
+                this->mousepressed = true;
+                this->mousebutton = e.button.button;
+                break;
+
+            case SDL_MOUSEBUTTONUP:
+                this->mousepressed = false;
+                this->mousebutton = e.button.button;
+                break;
+
+            case SDL_MOUSEMOTION:
+                pmousex = mousex;
+                pmousey = mousey;
+                mousex = e.motion.x;
+                mousey = e.motion.y;
                 break;
 
             default:

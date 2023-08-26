@@ -28,17 +28,42 @@ namespace Pyro
             return 0;
         };
         bool running;
-        bool keypressed;
-        int key;
-        void set_keypressed(void (*keypressed)());
+
+        bool keypressed; // True if a key is pressed
+        int key;         // Value of key pressed
+
+        void set_keypressed(void (*keypressed)()); // Set callback for keypressed
+
+        bool mousepressed;
+        int mousebutton;
+        int mousex;  // Current horizontal coordinate of the mouse
+        int mousey;  // Current vertical coodrinate of the mouse
+        int pmousex; // Previous horizontal coordinate of the mouse
+        int pmousey; // Previous vertical coordinate of the mouse
     };
+
+    // State variables
     extern unsigned int framecount;
     extern bool keypressed;
     extern int key;
 
+    extern bool mousepressed;
+    extern int mousebutton;
+    extern int mousex;
+    extern int mousey;
+    extern int pmousex;
+    extern int pmousey;
+
     bool get_keypressed();
     int get_key();
     void set_keypressed(void (*keypressed)());
+
+    bool get_mousepressed();
+    int get_mousebutton();
+    int get_mousex();
+    int get_mousey();
+    int get_pmousex();
+    int get_pmousey();
 
     void presetup(bool headless = false);
     void init(unsigned int width, unsigned int height);
