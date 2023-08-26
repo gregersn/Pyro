@@ -9,6 +9,13 @@ namespace Pyro
     bool keypressed = false;
     int key = -1;
 
+    bool mousepressed = false;
+    int mousebutton = -1;
+    int mousex = 0;
+    int mousey = 0;
+    int pmousex = 0;
+    int pmousey = 0;
+
     Runner *runner = nullptr;
     bool running;
     bool looping;
@@ -34,6 +41,15 @@ namespace Pyro
         running = runner->running;
         key = runner->key;
         keypressed = runner->keypressed;
+
+        mousex = runner->mousex;
+        mousey = runner->mousey;
+        pmousex = runner->pmousex;
+        pmousey = runner->pmousey;
+
+        mousepressed = runner->mousepressed;
+        mousebutton = runner->mousebutton;
+
         framecount++;
     }
 
@@ -52,6 +68,21 @@ namespace Pyro
         std::cout << "in set keypressed" << std::endl;
         runner->set_keypressed(keypressed);
     }
+
+    bool get_mousepressed()
+    {
+        return mousepressed;
+    }
+
+    int get_mousebutton()
+    {
+        return mousebutton;
+    }
+
+    int get_mousex() { return mousex; }
+    int get_mousey() { return mousey; }
+    int get_pmousex() { return pmousex; }
+    int get_pmousey() { return pmousey; }
 
     void quit()
     {

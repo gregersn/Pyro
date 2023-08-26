@@ -6,6 +6,15 @@ namespace Pyro {
 %End
     bool get_keypressed();
     int get_key();
+
+    bool get_mousepressed();
+    int get_mousebutton();
+
+    int get_mousex();
+    int get_mousey();
+    int get_pmousex();
+    int get_pmousey();
+
     void set_keypressed(SIP_PYCALLABLE keypressed);
     %MethodCode
         Py_XDECREF(pyKeypressed_Handler);
