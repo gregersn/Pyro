@@ -11,7 +11,7 @@ test_sources = [
                 'test-transformer2d.cpp',
                 'test-shape.cpp']
 
-catch2 = subproject('catch2')
+catch2 = subproject('catch2', default_options: 'tests=false')
 
 testexe = executable('unit-tests', test_sources,
                      include_directories: inc_dir,
