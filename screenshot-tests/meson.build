@@ -14,7 +14,7 @@ test_sources = [
                 'test-units.cpp',
                 'screenshotmatcher.cpp']
 
-catch2 = subproject('catch2')
+catch2 = subproject('catch2', default_options: 'tests=false')
 
 testexe = executable('screenshot-tests', test_sources,
                      include_directories: inc_dir,
