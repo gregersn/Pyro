@@ -114,19 +114,19 @@ namespace Pyro
         if (img->channels() == 4)
         {
             src = cairo_image_surface_create_for_data(
-                (unsigned char *)img->get_pre_multiplied_data(), CAIRO_FORMAT_ARGB32,
+                static_cast<unsigned char *>(img->get_pre_multiplied_data()), CAIRO_FORMAT_ARGB32,
                 img->width(), img->height(), img->width() * 4);
         }
         if (img->channels() == 3)
         {
             src = cairo_image_surface_create_for_data(
-                (unsigned char *)img->convert(ARGB)->get_data(), CAIRO_FORMAT_RGB24,
+                static_cast<unsigned char *>(img->convert(ARGB)->get_data()), CAIRO_FORMAT_RGB24,
                 img->width(), img->height(), img->width() * 4);
         }
         if (img->channels() == 1)
         {
             src = cairo_image_surface_create_for_data(
-                (unsigned char *)img->convert(ARGB)->get_data(), CAIRO_FORMAT_RGB24,
+                static_cast<unsigned char *>(img->convert(ARGB)->get_data()), CAIRO_FORMAT_RGB24,
                 img->width(), img->height(), img->width() * 4);
         }
 
@@ -191,20 +191,6 @@ namespace Pyro
                                   this->stroke_color.a());
             cairo_stroke(this->cr);
         }
-    }
-
-    void GraphicsCairo::ellipse(float x, float y, float w, float h, unsigned int segments)
-    {
-        Shape s{Shape()};
-        s.begin();
-        double da{M_PI / (segments / 2)};
-        for (unsigned int i{0}; i < segments; i++)
-        {
-            s.vertex(cos(i * da) * w / 2, sin(i * da) * h / 2);
-        }
-        s.end(CLOSE);
-
-        this->shape(s, x, y);
     }
 
     void GraphicsCairo::background(float r, float g, float b, float a)

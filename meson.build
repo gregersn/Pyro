@@ -1,7 +1,7 @@
 project('Pyro', 'cpp',
         version: '0.0.1-alpha',
         license: 'GPLv3',
-        default_options: ['cpp_std=c++17'])
+        default_options: ['cpp_std=c++17', 'b_coverage=true'])
 
 freetype_dep = dependency('freetype2')
 libjpeg_dep = dependency('libjpeg')

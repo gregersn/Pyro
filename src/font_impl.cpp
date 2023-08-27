@@ -2,7 +2,7 @@
 
 namespace Pyro
 {
-    FontImpl::FontImpl(std::string filename) : filename(filename)
+    FontImpl::FontImpl(std::string const filename) : filename(filename)
     {
         FT_Library library;
         FT_Error error{FT_Init_FreeType(&library)};

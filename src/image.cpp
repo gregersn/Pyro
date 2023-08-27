@@ -269,53 +269,53 @@ namespace Pyro
         png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR, NULL);
         png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
 
-        unsigned int width = png_get_image_width(png_ptr, info_ptr);
-        unsigned int height = png_get_image_height(png_ptr, info_ptr);
-        unsigned int channels = png_get_channels(png_ptr, info_ptr);
+        unsigned int input_width = png_get_image_width(png_ptr, info_ptr);
+        unsigned int input_height = png_get_image_height(png_ptr, info_ptr);
+        unsigned int input_channels = png_get_channels(png_ptr, info_ptr);
         unsigned int dpi = png_get_pixels_per_inch(png_ptr, info_ptr);
 
         unsigned int format = ARGB;
-        if (channels == 4)
+        if (input_channels == 4)
         {
             format = ARGB;
         }
-        else if (channels == 3)
+        else if (input_channels == 3)
         {
             format = RGB;
         }
-        else if (channels == 2)
+        else if (input_channels == 2)
         {
             format = GRAYALPHA;
         }
-        else if (channels == 1)
+        else if (input_channels == 1)
         {
             format = ALPHA;
         }
-        Image *img = new Image(width, height, format, 1, dpi);
-        uint32_t *d = (uint32_t *)img->load_pixels();
+        Image *img = new Image(input_width, input_height, format, 1, dpi);
+        uint32_t *d = static_cast<uint32_t *>(img->load_pixels());
         uint32_t col = 0xffbada55;
-        for (unsigned int y = 0; y < height; y++)
+        for (unsigned int y = 0; y < input_height; y++)
         {
             png_bytep row = row_pointers[y];
-            unsigned int line = y * width;
+            unsigned int line = y * input_width;
 
-            for (unsigned int x = 0; x < width; x++)
+            for (unsigned int x = 0; x < input_width; x++)
             {
-                if (channels == 4)
+                if (input_channels == 4)
                 {
-                    col = (row[x * channels + 3] << 24) | (row[x * channels + 2] << 16) | (row[x * channels + 1] << 8) | (row[x * channels + 0]);
+                    col = (row[x * input_channels + 3] << 24) | (row[x * input_channels + 2] << 16) | (row[x * input_channels + 1] << 8) | (row[x * input_channels + 0]);
                 }
-                else if (channels == 3)
+                else if (input_channels == 3)
                 {
-                    col = 0xff000000 | (row[x * channels + 2] << 16) | (row[x * channels + 1] << 8) | (row[x * channels + 0]);
+                    col = 0xff000000 | (row[x * input_channels + 2] << 16) | (row[x * input_channels + 1] << 8) | (row[x * input_channels + 0]);
                 }
-                else if (channels == 2)
+                else if (input_channels == 2)
                 {
-                    col = (row[x * channels + 1] << 24) | (row[x * channels + 0] << 16) | (row[x * channels + 0] << 8) | (row[x * channels + 0]);
+                    col = (row[x * input_channels + 1] << 24) | (row[x * input_channels + 0] << 16) | (row[x * input_channels + 0] << 8) | (row[x * input_channels + 0]);
                 }
-                else if (channels == 1)
+                else if (input_channels == 1)
                 {
-                    col = 0xff000000 | (row[x * channels + 0] << 16) | (row[x * channels + 0] << 8) | (row[x * channels + 0]);
+                    col = 0xff000000 | (row[x * input_channels + 0] << 16) | (row[x * input_channels + 0] << 8) | (row[x * input_channels + 0]);
                 }
                 d[line + x] = col;
             }
@@ -360,7 +360,7 @@ namespace Pyro
         jpeg_start_decompress(&cinfo);
 
         Image *img = new Image(cinfo.image_width, cinfo.image_height, cinfo.num_components);
-        uint8_t *d = (uint8_t *)img->get_data();
+        uint8_t *d = static_cast<uint8_t *>(img->get_data());
 
         while (cinfo.output_scanline < cinfo.image_height)
         {
@@ -396,14 +396,14 @@ namespace Pyro
         FILE *fp = fopen(filename.c_str(), "wb");
         if (!fp)
         {
-            throw;
+            throw "Could not open file";
         }
 
         png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
         if (!png_ptr)
         {
             fclose(fp);
-            throw;
+            throw "Could not create struct";
         }
 
         png_infop info_ptr = png_create_info_struct(png_ptr);
@@ -411,13 +411,13 @@ namespace Pyro
         {
             png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
             fclose(fp);
-            throw;
+            throw "Could not read struct";
         }
 
         if (setjmp(png_jmpbuf(png_ptr)))
         {
             fclose(fp);
-            throw;
+            throw "Could not set jump point";
         }
         png_init_io(png_ptr, fp);
 
@@ -480,15 +480,15 @@ namespace Pyro
             break;
         case ARGB:
         default:
-            converted_data = (uint8_t *)this->get_data();
+            converted_data = static_cast<uint8_t *>(this->get_data());
             stride = this->_pixelwidth * 4;
             break;
         }
 
-        png_bytep data = (png_bytep)converted_data;
+        png_bytep input_data = (png_bytep)converted_data;
         for (unsigned int y = 0; y < this->_pixelheight; y++)
         {
-            row_pointers[y] = &(data[y * stride]);
+            row_pointers[y] = &(input_data[y * stride]);
         }
 
         png_set_rows(png_ptr, info_ptr, row_pointers);
@@ -505,15 +505,15 @@ namespace Pyro
         if (this->cache == nullptr)
         {
             this->cache = malloc(this->_pixelwidth * this->_pixelheight * sizeof(unsigned char) * this->format);
-            unsigned char *cache = (unsigned char *)this->cache;
+            unsigned char *source_cache = static_cast<unsigned char *>(this->cache);
             unsigned char *source = this->load_bytes();
 
             for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight * 4; i += 4)
             {
-                cache[i] = source[i] * source[i + 3] / 255;
-                cache[i + 1] = source[i + 1] * source[i + 3] / 255;
-                cache[i + 2] = source[i + 2] * source[i + 3] / 255;
-                cache[i + 3] = source[i + 3];
+                source_cache[i] = source[i] * source[i + 3] / 255;
+                source_cache[i + 1] = source[i + 1] * source[i + 3] / 255;
+                source_cache[i + 2] = source[i + 2] * source[i + 3] / 255;
+                source_cache[i + 3] = source[i + 3];
             }
         }
         return this->cache;
@@ -523,7 +523,7 @@ namespace Pyro
     {
         if (this->data == nullptr)
         {
-            throw;
+            throw "Null pointer exception in pixel data";
         }
         this->pixels_locked = true;
 
@@ -592,7 +592,7 @@ namespace Pyro
             // return (this->load_pixels())[index];
             return this->data[index];
         }
-        throw;
+        throw "Something not right!";
     }
 
     Image *Image::get()
@@ -616,7 +616,7 @@ namespace Pyro
         case ALPHA:
             return (data[y * this->_pixelwidth + x] << 24) | 0xffffff;
         }
-        throw;
+        throw "Unknown pixel format";
     }
 
     Image *Image::get(int x, int y, int width, int height)
@@ -792,9 +792,9 @@ namespace Pyro
         uint32_t s_a = a + (a >= 0x7F ? 1 : 0);
         uint32_t d_a = 0x100 - s_a;
 
-        uint32_t r = abs(int((dst & RED_MASK) - (src & RED_MASK)));
-        uint32_t b = abs(int((dst & BLUE_MASK) - (src & BLUE_MASK)));
-        uint32_t g = abs(int((dst & GREEN_MASK) - (src & GREEN_MASK)));
+        int32_t r = int((dst & RED_MASK) - (src & RED_MASK));
+        int32_t b = int((dst & BLUE_MASK) - (src & BLUE_MASK));
+        int32_t g = int((dst & GREEN_MASK) - (src & GREEN_MASK));
 
         uint32_t rb = (r < 0 ? -r : r) |
                       (b < 0 ? -b : b);
@@ -1069,12 +1069,12 @@ namespace Pyro
             {
                 blit_resize(get(sx, sy, sw, sh),
                             0, 0, sw, sh,
-                            (uint32_t *)this->get_data(), this->_pixelwidth, this->_pixelheight, dx, dy, dx2, dy2, mode);
+                            static_cast<uint32_t *>(this->get_data()), this->_pixelwidth, this->_pixelheight, dx, dy, dx2, dy2, mode);
             }
             else
             {
                 blit_resize(src, sx, sy, sx2, sy2,
-                            (uint32_t *)this->get_data(), this->_pixelwidth, this->_pixelheight,
+                            static_cast<uint32_t *>(this->get_data()), this->_pixelwidth, this->_pixelheight,
                             dx, dy, dx2, dy2, mode);
             }
         }
@@ -1181,7 +1181,7 @@ namespace Pyro
         destH = min(destH, screenH - destY1);
 
         int64_t destoffset{destY1 * screenW + destX1};
-        uint32_t *srcbuffer{img->load_pixels()};
+        uint32_t const *srcbuffer{img->load_pixels()};
 
         float srcxoffset{destX1 < 0 ? -destX1 * dx : srcX1 * PRECISIONF};
         float srcyoffset{destY1 < 0 ? -destY1 * dy : srcY1 * PRECISIONF};
@@ -1317,18 +1317,18 @@ namespace Pyro
     {
         if (this->format == 1 || this->format == 3)
         {
-            throw;
+            throw "Image format can not be masked";
         }
         if (this->_pixelwidth != mask->_pixelwidth || this->_pixelheight != mask->_pixelheight)
         {
-            throw;
+            throw "Wrong mask size";
         }
         uint32_t *mask_data = mask->load_pixels();
-        uint32_t *data = this->load_pixels();
+        uint32_t *pixel_data = this->load_pixels();
 
         for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
         {
-            data[i] = (data[i] & 0xffffff) | (BLUE(mask_data[i]) << 24);
+            pixel_data[i] = (pixel_data[i] & 0xffffff) | (BLUE(mask_data[i]) << 24);
         }
 
         mask->update_pixels();
@@ -1436,8 +1436,8 @@ namespace Pyro
 
         Image *out = createimage(width, height, this->format);
 
-        unsigned char *out_pixels = (unsigned char *)out->get_data();
-        unsigned char *in_pixels = (unsigned char *)this->get_data();
+        unsigned char *out_pixels = static_cast<unsigned char *>(out->get_data());
+        unsigned char *in_pixels = static_cast<unsigned char *>(this->get_data());
 
         for (unsigned int y = 0; y < height; y++)
         {

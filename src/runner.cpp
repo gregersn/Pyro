@@ -5,18 +5,18 @@
 
 namespace Pyro
 {
-    unsigned int framecount = 0;
-    bool keypressed = false;
-    int key = -1;
+    unsigned int framecount{};
+    bool keypressed{};
+    int key{-1};
 
-    bool mousepressed = false;
-    int mousebutton = -1;
-    int mousex = 0;
-    int mousey = 0;
-    int pmousex = 0;
-    int pmousey = 0;
+    bool mousepressed{};
+    int mousebutton{-1};
+    int mousex{};
+    int mousey{};
+    int pmousex{};
+    int pmousey{};
 
-    Runner *runner = nullptr;
+    Runner *runner{};
     bool running;
     bool looping;
     bool _headless;
@@ -77,6 +77,11 @@ namespace Pyro
     int get_mousebutton()
     {
         return mousebutton;
+    }
+
+    int get_framecount()
+    {
+        return framecount;
     }
 
     int get_mousex() { return mousex; }

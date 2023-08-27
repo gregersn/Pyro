@@ -22,26 +22,25 @@ namespace Pyro
 
         GraphicsCairo &operator=(const GraphicsCairo &in);
 
-        void blendmode(BlendMode mode);
+        void blendmode(BlendMode mode) override;
 
-        void translate(float x, float, Unit unit = Unit::current);
-        void rotate(float a);
-        void scale(float sx, float sy);
-        void pushmatrix();
-        void popmatrix();
+        void translate(float x, float, Unit unit = Unit::current) override;
+        void rotate(float a) override;
+        void scale(float sx, float sy) override;
+        void pushmatrix() override;
+        void popmatrix() override;
 
-        void image_impl(Image *img, float x, float y);
-        void shape(Shape s, float x, float y, Unit unit = Unit::current);
-        void line(float x0, float y0, float x1, float y1, Unit unit = Unit::current);
-        void ellipse(float x, float y, float w, float h, unsigned int segments);
-        void background(float r, float g, float b, float a);
-        void smooth();
-        void nosmooth();
-        void strokecap(int cap);
-        void strokejoin(int join);
+        void image_impl(Image *img, float x, float y) override;
+        void shape(Shape s, float x, float y, Unit unit = Unit::current) override;
+        void line(float x0, float y0, float x1, float y1, Unit unit = Unit::current) override;
+        void background(float r, float g, float b, float a) override;
+        void smooth() override;
+        void nosmooth() override;
+        void strokecap(int cap) override;
+        void strokejoin(int join) override;
 
-        void text_impl(std::string text, float x, float y, Unit unit = Unit::current);
-        void textfont_impl(Font *font);
+        void text_impl(std::string text, float x, float y, Unit unit = Unit::current) override;
+        void textfont_impl(Font *font) override;
     };
 }
 

@@ -102,9 +102,9 @@ namespace Pyro
         if (other.x == 0 && other.y == 0 && other.z == 0)
             return 0.0f;
 
-        float dot = this->dot(other);
+        float dotv = this->dot(other);
         float mags = this->mag() * other.mag();
-        return acos(dot / mags);
+        return acos(dotv / mags);
     }
 
     Vector Vector::div(float v) const

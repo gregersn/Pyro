@@ -4,6 +4,9 @@ namespace Pyro {
 %TypeHeaderCode
 #include "pyro/runner.h"
 %End
+
+    int get_framecount();
+    
     bool get_keypressed();
     int get_key();
 

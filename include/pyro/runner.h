@@ -6,7 +6,7 @@ namespace Pyro
     class Runner
     {
     public:
-        void (*keypressed_cb)();
+        void (*keypressed_cb)(){};
         Runner() : running(true){};
         Runner(const Runner &in){};
         Runner &operator=(const Runner &in) { return *this; };
@@ -14,32 +14,29 @@ namespace Pyro
 
         virtual int update()
         {
-            throw;
             return 0;
         };
         virtual int quit()
         {
-            throw;
             return 0;
         };
         virtual int init(unsigned int width, unsigned int height)
         {
-            throw;
             return 0;
         };
-        bool running;
+        bool running{};
 
-        bool keypressed; // True if a key is pressed
-        int key;         // Value of key pressed
+        bool keypressed{}; // True if a key is pressed
+        int key{-1};       // Value of key pressed
 
         void set_keypressed(void (*keypressed)()); // Set callback for keypressed
 
-        bool mousepressed;
-        int mousebutton;
-        int mousex;  // Current horizontal coordinate of the mouse
-        int mousey;  // Current vertical coodrinate of the mouse
-        int pmousex; // Previous horizontal coordinate of the mouse
-        int pmousey; // Previous vertical coordinate of the mouse
+        bool mousepressed{};
+        int mousebutton{-1};
+        int mousex{};  // Current horizontal coordinate of the mouse
+        int mousey{};  // Current vertical coodrinate of the mouse
+        int pmousex{}; // Previous horizontal coordinate of the mouse
+        int pmousey{}; // Previous vertical coordinate of the mouse
     };
 
     // State variables
@@ -53,6 +50,8 @@ namespace Pyro
     extern int mousey;
     extern int pmousex;
     extern int pmousey;
+
+    int get_framecount();
 
     bool get_keypressed();
     int get_key();

@@ -26,5 +26,8 @@ def draw():
     if a < 0:
         a = pyro.height
 
+    if pyro.get_mousepressed():
+        print(pyro.get_mousex(), pyro.get_mousey())
+
 
 pyro.run(setup, draw)

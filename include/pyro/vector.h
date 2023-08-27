@@ -83,7 +83,7 @@ namespace Pyro
 
         bool operator<(const Vector &rhs) const
         {
-            return (this->x < rhs.x - __DBL_EPSILON__ || (abs(this->x - rhs.x) < __DBL_EPSILON__ and this->y < rhs.y - __DBL_EPSILON__));
+            return (this->x < rhs.x - __DBL_EPSILON__ || (std::abs(this->x - rhs.x) < __DBL_EPSILON__ and this->y < rhs.y - __DBL_EPSILON__));
         }
 
         bool operator!=(const Vector &rhs) const

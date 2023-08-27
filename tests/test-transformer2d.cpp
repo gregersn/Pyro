@@ -139,3 +139,26 @@ TEST_CASE("Get screen coordinates from Pyro", "[transform]")
         REQUIRE(Pyro::screen_y(4, 0, 0) == Approx(0.0));
     }
 }
+
+TEST_CASE("Push and pop matrix", "[transform]")
+{
+    SECTION("Push/pop")
+    {
+        Transformer2D t = Transformer2D();
+        t.pushmatrix();
+        t.translate(2, 4);
+        t.popmatrix();
+
+        REQUIRE(t.getcurrent()(0, 0) == 1);
+        REQUIRE(t.getcurrent()(0, 1) == 0);
+        REQUIRE(t.getcurrent()(0, 2) == 0);
+
+        REQUIRE(t.getcurrent()(1, 0) == 0);
+        REQUIRE(t.getcurrent()(1, 1) == 1);
+        REQUIRE(t.getcurrent()(1, 2) == 0);
+
+        REQUIRE(t.getcurrent()(2, 0) == 0);
+        REQUIRE(t.getcurrent()(2, 1) == 0);
+        REQUIRE(t.getcurrent()(2, 2) == 1);
+    }
+}

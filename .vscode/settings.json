@@ -98,5 +98,16 @@
   "python.testing.nosetestArgs": [
     "sipyro"
   ],
-  "testMate.cpp.test.workingDirectory": "${workspaceFolder}"
+  "testMate.cpp.test.workingDirectory": "${workspaceFolder}",
+  "c-cpp-flylint.cppcheck.standard": [
+    "c++20",
+    "c++14"
+  ],
+  "c-cpp-flylint.includePaths": [
+    "include",
+    "subprojects/eigen-3.4.0"
+  ],
+  "c-cpp-flylint.clang.enable": false,
+  "c-cpp-flylint.flawfinder.enable": false,
+  "c-cpp-flylint.cppcheck.enable": true
 }

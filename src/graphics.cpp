@@ -97,12 +97,12 @@ namespace Pyro
     {
         Color c{Color(r, g, b, a)};
         uint32_t *buf{(uint32_t *)this->get_data()};
-        uint32_t color = c.to_uint();
+        uint32_t bg_color = c.to_uint();
 
         size_t count{this->_pixelwidth * this->_pixelheight};
         while (count--)
         {
-            *buf++ = color;
+            *buf++ = bg_color;
         }
     }
 
