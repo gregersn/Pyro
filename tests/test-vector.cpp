@@ -81,6 +81,14 @@ TEST_CASE("Vector math", "[vector]")
             REQUIRE(v3.y == 1);
             REQUIRE(v3.z == 0.5);
         }
+
+        SECTION("Cross product")
+        {
+            Pyro::Vector res = Pyro::Vector(3, -3, 1).cross(Pyro::Vector(4, 9, 2));
+            REQUIRE(res.x == -15);
+            REQUIRE(res.y == -2);
+            REQUIRE(res.z == 39);
+        }
     }
 
     SECTION("Properties")
@@ -174,6 +182,12 @@ TEST_CASE("Vector angles", "[vector]")
 
         angle = Pyro::Vector(0.f, 10.f).angle(Pyro::Vector(10.f, 10.f));
         REQUIRE(angle - (3.1415926 / 4.) < 0.0001);
+
+        angle = Pyro::Vector(1.0, 2.0).angle(Pyro::Vector(0.0, 0.0));
+        REQUIRE(angle == 0.0f);
+
+        angle = Pyro::Vector(0.0, 0.0).angle(Pyro::Vector(2.0, 1.0));
+        REQUIRE(angle == 0.0f);
     }
 
     SECTION("Vectors have a heading")
