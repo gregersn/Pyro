@@ -80,11 +80,11 @@ namespace Pyro
 
         for (size_t contour_iterator = 0; contour_iterator < this->contours.size(); contour_iterator++)
         {
-            std::vector<t_shapepoint> points = this->contours[contour_iterator];
+            std::vector<t_shapepoint> _points = this->contours[contour_iterator];
             std::vector<Pyro::Vector> contour = std::vector<Pyro::Vector>();
-            for (unsigned int curveiterator = 0; curveiterator < points.size(); curveiterator++)
+            for (unsigned int curveiterator = 0; curveiterator < _points.size(); curveiterator++)
             {
-                auto point = points[curveiterator];
+                auto point = _points[curveiterator];
                 if (point.type == PointType::curvevertex)
                 {
                     if (curveiterator < 1)
@@ -92,13 +92,13 @@ namespace Pyro
                         continue;
                     }
 
-                    if ((curveiterator + 2) >= points.size())
+                    if ((curveiterator + 2) >= _points.size())
                     {
                         continue;
                     }
-                    auto p0 = points[curveiterator - 1];
-                    auto p2 = points[curveiterator + 1];
-                    auto p3 = points[curveiterator + 2];
+                    auto p0 = _points[curveiterator - 1];
+                    auto p2 = _points[curveiterator + 1];
+                    auto p3 = _points[curveiterator + 2];
 
                     for (unsigned int i = 0; i < curve_resolution + 1; i++)
                     {
@@ -116,15 +116,15 @@ namespace Pyro
                         continue;
                     }
 
-                    if ((curveiterator + 2) > points.size())
+                    if ((curveiterator + 2) > _points.size())
                     {
                         std::cerr << "Missing following vertices\n";
                         continue;
                     }
 
-                    auto p0 = points[curveiterator - 1];
-                    auto p2 = points[curveiterator + 1];
-                    auto p3 = points[curveiterator + 2];
+                    auto p0 = _points[curveiterator - 1];
+                    auto p2 = _points[curveiterator + 1];
+                    auto p3 = _points[curveiterator + 2];
 
                     for (unsigned int i = 1; i < curve_resolution + 1; i++)
                     {

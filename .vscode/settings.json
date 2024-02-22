@@ -107,7 +107,10 @@
     "include",
     "subprojects/eigen-3.4.0"
   ],
+  "c-cpp-flylint.cppcheck.force": true,
   "c-cpp-flylint.clang.enable": false,
   "c-cpp-flylint.flawfinder.enable": false,
-  "c-cpp-flylint.cppcheck.enable": true
+  "c-cpp-flylint.cppcheck.enable": true,
+  "c-cpp-flylint.flexelint.enable": false,
+  "c-cpp-flylint.lizard.enable": false,
 }

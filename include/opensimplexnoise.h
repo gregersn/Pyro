@@ -3,8 +3,8 @@
  * by Kurt Spencer
  * Converted to C++ in 2020
  * by Greger Stolt Nilsen
- * 
- * 
+ *
+ *
  * v1.1 (October 5, 2014)
  * - Added 2D and 4D implementations.
  * - Proper gradient sets for all dimensions, from a
@@ -15,7 +15,7 @@
  * - Changed seed-based constructor to be independent
  *   of any particular randomization library, so results
  *   will be the same when ported to other languages.
- * 
+ *
  * This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -77,8 +77,8 @@ private:
 
 public:
     OpenSimplexNoise() : OpenSimplexNoise(DEFAULT_SEED){};
-    OpenSimplexNoise(std::array<int16_t, 256> perm);
-    OpenSimplexNoise(long seed);
+    explicit OpenSimplexNoise(std::array<int16_t, 256> perm);
+    explicit OpenSimplexNoise(long seed);
     ~OpenSimplexNoise();
     double eval(double x, double y);
     double eval(double x, double y, double z);

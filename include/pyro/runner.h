@@ -9,7 +9,7 @@ namespace Pyro
         void (*keypressed_cb)(){};
         Runner() : running(true){};
         Runner(const Runner &in){};
-        Runner &operator=(const Runner &in) { return *this; };
+        // Runner &operator=(const Runner &in) { return *this; };
         virtual ~Runner(){};
 
         virtual int update()

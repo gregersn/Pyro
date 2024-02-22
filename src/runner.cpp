@@ -2,6 +2,7 @@
 #include "pyro/sdl.h"
 #include "pyro/pyro.h"
 #include <iostream>
+#include <memory>
 
 namespace Pyro
 {
@@ -16,7 +17,7 @@ namespace Pyro
     int pmousex{};
     int pmousey{};
 
-    Runner *runner{};
+    std::unique_ptr<Runner> runner{};
     bool running;
     bool looping;
     bool _headless;
@@ -24,7 +25,7 @@ namespace Pyro
     void presetup(bool headless)
     {
         _headless = headless;
-        runner = new SDLRunner(_headless);
+        runner = std::make_unique<SDLRunner>(_headless);
     }
 
     void init(unsigned int width, unsigned int height)
