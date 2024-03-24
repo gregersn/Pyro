@@ -19,6 +19,8 @@ subdir('src')
 subdir('tests')
 subdir('screenshot-tests')
 
+libpyro_dep = declare_dependency(include_directories: inc_dir, link_with: pyrolib)
+
 pkg_mod = import('pkgconfig')
 pkg_mod.generate(libraries: pyrolib,
                  version: '0.0.1-alpha',

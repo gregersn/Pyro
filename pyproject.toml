@@ -9,6 +9,7 @@ name = "pyro"
 build-dir = "./pybuild"
 builder-factory = "sipbuild.setuptools_builder"
 sip-files-dir = "./sipyro"
+abi-version = "13.1"
 
 [tool.sip.bindings.pyro]
 extra-compile-args = ["-std=c++20"]
