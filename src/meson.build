@@ -1,3 +1,5 @@
+cpp_args = ['-Wall', '-Wextra', '-Wpedantic',]
+
 pyro_sources = ['pyro.cpp',
                 'runner.cpp',
                 'sdl.cpp',
@@ -19,4 +21,5 @@ pyrolib = library('pyro',
                   pyro_sources, 
                   include_directories: inc_dir,
                   dependencies: [libpng_dep, cairo_dep, libjpeg_dep, freetype_dep, sdl_dep, eigen_dep],
+                  cpp_args: cpp_args,
                   install: false)

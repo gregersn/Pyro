@@ -454,7 +454,7 @@ namespace Pyro
 
         // png_write_info(png_ptr, info_ptr);
 
-        png_bytep row_pointers[this->_pixelheight];
+        std::vector<png_bytep> row_pointers;
 
         uint8_t *converted_data{nullptr};
         unsigned int stride{this->_pixelwidth};
@@ -488,10 +488,10 @@ namespace Pyro
         png_bytep data = (png_bytep)converted_data;
         for (unsigned int y = 0; y < this->_pixelheight; y++)
         {
-            row_pointers[y] = &(data[y * stride]);
+            row_pointers.push_back(&(data[y * stride]));
         }
 
-        png_set_rows(png_ptr, info_ptr, row_pointers);
+        png_set_rows(png_ptr, info_ptr, &row_pointers[0]);
         // png_write_image(png_ptr, row_pointers);
         // png_write_end(png_ptr, NULL);
         png_write_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR, NULL);
@@ -796,9 +796,9 @@ namespace Pyro
         uint32_t b = abs(int((dst & BLUE_MASK) - (src & BLUE_MASK)));
         uint32_t g = abs(int((dst & GREEN_MASK) - (src & GREEN_MASK)));
 
-        uint32_t rb = (r < 0 ? -r : r) |
-                      (b < 0 ? -b : b);
-        uint32_t gn = (g < 0 ? -g : g);
+        uint32_t rb = r |
+                      b;
+        uint32_t gn = g;
 
         return min((dst >> 24) + a, 0xFFu) << 24 |
                (((dst & RB_MASK) * d_a + rb * s_a) >> 8 & RB_MASK) |

@@ -106,13 +106,14 @@ namespace Pyro
             return !this->operator<(rhs);
         }
 
-        Vector &operator=(const Vector &rhs)
+        // Removed 2024-04-01, not needed? Gives a lot of warnings.
+        /*Vector &operator=(const Vector &rhs)
         {
             this->x = rhs.x;
             this->y = rhs.y;
             this->z = rhs.z;
             return *this;
-        }
+        }*/
 
         float dist(const Vector &other) const;
         float dot(const Vector &other) const;
