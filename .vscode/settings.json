@@ -95,8 +95,6 @@
   "C_Cpp.errorSquiggles": "enabled",
   "mesonbuild.buildFolder": "build",
   "python.testing.cwd": "${workspaceFolder}/sipyro",
-  "python.testing.nosetestArgs": [
-    "sipyro"
-  ],
+  "python.testing.nosetestArgs": ["sipyro"],
   "testMate.cpp.test.workingDirectory": "${workspaceFolder}"
 }
