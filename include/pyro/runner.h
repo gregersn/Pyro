@@ -1,12 +1,14 @@
 #ifndef PYRO_RUNNER_H
 #define PYRO_RUNNER_H
 
+#include <functional>
+
 namespace Pyro
 {
     class Runner
     {
     public:
-        void (*keypressed_cb)();
+        std::function<void(void)> keypressed_cb{nullptr};
         Runner() : running(true){};
         Runner(const Runner &in){};
         Runner &operator=(const Runner &in) { return *this; };
@@ -32,7 +34,7 @@ namespace Pyro
         bool keypressed; // True if a key is pressed
         int key;         // Value of key pressed
 
-        void set_keypressed(void (*keypressed)()); // Set callback for keypressed
+        void set_keypressed(const std::function<void(void)> keypressed); // Set callback for keypressed
 
         bool mousepressed;
         int mousebutton;
@@ -56,7 +58,7 @@ namespace Pyro
 
     bool get_keypressed();
     int get_key();
-    void set_keypressed(void (*keypressed)());
+    void set_keypressed(std::function<void(void)> keypressed);
 
     bool get_mousepressed();
     int get_mousebutton();
@@ -69,7 +71,7 @@ namespace Pyro
     void init(unsigned int width, unsigned int height);
     void update();
     void quit();
-    void run(void (*setup)(), void (*draw)(), bool headless = false);
+    void run(const std::function<void(void)> &setup, const std::function<void(void)> &draw, bool headless = false);
     void noloop();
     void loop();
     void stop(); // End runner loop.
