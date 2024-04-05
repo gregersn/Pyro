@@ -17,9 +17,10 @@ pyro_sources = ['pyro.cpp',
                 'transformer.cpp',
                 'opensimplexnoise.cpp']
 
-pyro = library('pyro', 
-                  pyro_sources, 
+pyro = library(meson.project_name(), 
+                  pyro_sources,
+                  install: true, 
+                  cpp_args: cpp_args,
                   include_directories: inc,
                   dependencies: [libpng_dep, cairo_dep, libjpeg_dep, freetype_dep, sdl_dep, eigen_dep],
-                  cpp_args: cpp_args,
-                  install: true)
+                  )
