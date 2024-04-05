@@ -17,8 +17,8 @@ test_sources = [
 catch2 = subproject('catch2', default_options: 'tests=false')
 
 testexe = executable('screenshot-tests', test_sources,
-                     include_directories: inc_dir,
-                     link_with: pyrolib,
+                     include_directories: inc,
+                     link_with: pyro,
                      dependencies: [catch2.get_variable('catch2_dep'), eigen_dep],
                      install: false)
 
