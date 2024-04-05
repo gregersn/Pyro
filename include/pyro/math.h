@@ -22,8 +22,17 @@ namespace Pyro
         return t >= low ? t : low;
     };
 
-    // TODO: dist
-    // TODO: exp
+    template <typename T>
+    T dist(T x1, T y1, T x2, T y2) {
+        return mag(x2 - x1, y2 - y1);
+    };
+
+    template <typename T>
+    T dist(T x1, T y1, T z1, T x2, T y2, T z2) {
+        return mag(x2 - x1, y2 - y1, z2 - z1);
+    };
+
+    float exp(float n);
 
     template <typename T>
     T lerp(T start, T stop, float amt)
@@ -31,8 +40,15 @@ namespace Pyro
         return (stop * amt) + (start * (1.0 - amt));
     };
 
-    // TODO: log
-    // TODO: mag
+    template <typename T>
+    T mag(T a, T b) {
+        return sqrt(a * a + b * b);
+    };
+
+    template <typename T>
+    T mag(T a, T b, T c) {
+        return sqrt(a * a + b * b + c * c);
+    };
 
     template <typename T>
     T map(T value, T start1, T stop1, T start2, T stop2)
@@ -40,7 +56,8 @@ namespace Pyro
         return ((value - start1) * (stop2 - start2) / (stop1 - start1)) + start2;
     };
 
-    // TODO: floor
+    template <typename T>
+    auto floor(T a) { return std::floor(a); };
 
     template <typename T, typename U>
     auto max(T a, U b) { return a > b ? a : b; };
@@ -48,29 +65,41 @@ namespace Pyro
     template <typename T, typename U>
     auto min(T a, U b) { return a < b ? a : b; };
 
-    // TODO: norm
-    // TODO: pow
+    float norm(float value, float start, float stop);
 
-    // TODO: round
-    // TODO: sq
-    // TODO: sqrt
+    template <typename T, typename U>
+    auto pow(T n, U e) { return std::pow(n, e); };
+
+    template <typename T>
+    auto round(T a) { return std::round(a); };
+
+    template <typename T>
+    auto sq(T a) { return a * a; };
+
+    template <typename T>
+    auto sqrt(T a) { return std::sqrt(a); };
 
     // **** TRIGONOMETRY ***
 
-    /* TODO:
-    acos
-    asin
-    atan2
-    atan
-    cos
-    */
+    template <typename T, typename U>
+    auto atan2(T y, U x) { return std::atan2(y, x); };
+
+    template <typename T>
+    auto acos(T v) { return std::acos(v); };
+    template <typename T>
+    auto asin(T v) { return std::asin(v); };
+    template <typename T>
+    auto atan(T v) { return std::atan(v); };
+
     float radians(float degree);
     float degrees(float radians);
 
-    /*  TODO:
-    sin
-    tan
-    */
+    template <typename T>
+    auto cos(T v) { return std::cos(v); };
+    template <typename T>
+    auto sin(T v) { return std::sin(v); };
+    template <typename T>
+    auto tan(T v) { return std::tan(v); };
 
     // ****** RANDOM *****
 

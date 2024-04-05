@@ -63,6 +63,11 @@ TEST_CASE("Values can be...", "[math]")
         REQUIRE(Pyro::constrain(0, 10, 20) == 10);
         REQUIRE(Pyro::constrain(30, 10, 20) == 20);
     }
+
+    SECTION("normalized") {
+        REQUIRE(Pyro::norm(20, 0, 50) == 0.4f);
+        REQUIRE(Pyro::norm(-10, 0, 100) == -0.1f);
+    }
 }
 
 TEST_CASE("We have functions that can...", "[math]")

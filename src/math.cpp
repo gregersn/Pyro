@@ -58,4 +58,13 @@ namespace Pyro
         rng.seed(seed);
     }
 
+        float norm(float value, float start, float stop)
+     { 
+        return map(value, start, stop, 0.0f, 1.0f);
+    }
+    float exp(float n) {
+        return std::exp(n);        
+    }
+
+
 }
