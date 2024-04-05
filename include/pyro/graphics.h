@@ -59,14 +59,14 @@ namespace Pyro
             this->_image_mode = mode;
         };
         void image(Image *img, float x, float y);
-        virtual void image_impl(Image *img, float x, float y){};
+        virtual void image_impl(Image */*img*/, float /*x*/, float /*y*/){};
         Image *loadimage(std::string filename) { return Image::load(filename); };
 
         // Color functions
         void nostroke();
         void nofill();
 
-        virtual void blendmode(BlendMode mode){};
+        virtual void blendmode(BlendMode /*mode*/){};
         virtual void colormode(int mode)
         {
             this->stroke_color.colormode(mode);
@@ -127,7 +127,7 @@ namespace Pyro
         };
         virtual void background(float r, float g, float b, float a = 1.0);
 
-        virtual void shape(Shape s, float x, float y, Unit unit = Unit::current){};
+        virtual void shape(Shape /*s*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::current){};
 
         void beginshape()
         {
@@ -147,10 +147,12 @@ namespace Pyro
         };
         void vertex(float x, float y, Unit unit = Unit::current)
         {
+            // TODO: Use unit
             this->_shape.vertex(x, y);
         };
         void curvevertex(float x, float y, Unit unit = Unit::current)
         {
+            // TODO: Use unit
             this->_shape.curvevertex(x, y);
         };
         void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4, Unit unit = Unit::current)
@@ -165,7 +167,7 @@ namespace Pyro
 
         // Primitive shapes
         void point(float x, float y, Unit unit = Unit::current);
-        virtual void line(float x0, float y0, float x1, float y1, Unit unit = Unit::current){};
+        virtual void line(float /*x0*/, float /*y0*/, float /*x1*/, float /*y1*/, Unit /*unit*/ = Unit::current){};
         void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::current);
         void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::current);
 
@@ -199,8 +201,8 @@ namespace Pyro
         void text(std::string text, float x, float y, Unit unit = Unit::current);
         void textfont(Font *font);
 
-        virtual void textfont_impl(Font *font){};
-        virtual void text_impl(std::string text, float x, float y, Unit unit = Unit::current){};
+        virtual void textfont_impl(Font */*font*/){};
+        virtual void text_impl(std::string /*text*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::current){};
     };
 };
 

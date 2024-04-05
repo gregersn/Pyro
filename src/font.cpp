@@ -16,6 +16,7 @@ namespace Pyro
 
     Font *create_font(std::string filename, int size)
     {
+        // TODO: Use size
         return Font::load(filename);
     }
 }

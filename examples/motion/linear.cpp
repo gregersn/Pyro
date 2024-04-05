@@ -16,7 +16,7 @@ void setup()
     stroke(255);
     a = height / 2;
 
-    set_keypressed(&kb_keypressed);
+    set_keypressed(kb_keypressed);
 }
 
 void draw()

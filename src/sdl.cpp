@@ -3,10 +3,6 @@
 
 namespace Pyro
 {
-    SDLRunner::SDLRunner() : Runner()
-    {
-    }
-
     SDLRunner::SDLRunner(bool headless) : Runner(), headless(headless)
     {
     }

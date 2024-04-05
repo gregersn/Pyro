@@ -22,9 +22,8 @@ namespace Pyro
         unsigned int height;
 
     public:
-        SDLRunner();
-        SDLRunner(const SDLRunner &in);
         SDLRunner(bool headless = false);
+        SDLRunner(const SDLRunner &in);
         SDLRunner &operator=(const SDLRunner &in);
         ~SDLRunner();
         int update();

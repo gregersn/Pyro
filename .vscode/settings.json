@@ -95,8 +95,12 @@
   "C_Cpp.errorSquiggles": "enabled",
   "mesonbuild.buildFolder": "build",
   "python.testing.cwd": "${workspaceFolder}/sipyro",
-  "python.testing.nosetestArgs": [
-    "sipyro"
+  "python.testing.nosetestArgs": ["sipyro"],
+  "testMate.cpp.test.workingDirectory": "${workspaceFolder}",
+  "c-cpp-flylint.clang.includePaths": [
+    "./include",
+    "./subprojects/eigen-3.4.0"
   ],
-  "testMate.cpp.test.workingDirectory": "${workspaceFolder}"
+  "c-cpp-flylint.standard": ["c99", "c++14"],
+  "c-cpp-flylint.flawfinder.enable": false
 }

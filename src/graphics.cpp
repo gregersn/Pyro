@@ -386,16 +386,19 @@ namespace Pyro
 
     void Graphics::strokecap(int cap)
     {
+        // TODO: Use unit
     }
 
     void Graphics::strokejoin(int join)
     {
+        // TODO: Use unit
     }
 
     // Typography
 
     void Graphics::textsize(float size, Unit unit)
     {
+        // TODO: Use unit
         this->text_size = size;
     }
 

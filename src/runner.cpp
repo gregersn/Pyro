@@ -63,7 +63,7 @@ namespace Pyro
         return key;
     }
 
-    void set_keypressed(const std::function<void(void)> &keypressed)
+    void set_keypressed(std::function<void()> keypressed)
     {
         std::cout << "in set keypressed" << std::endl;
         runner->set_keypressed(keypressed);
@@ -105,7 +105,7 @@ namespace Pyro
         looping = false;
     }
 
-    void run(const std::function<void(void)> &setup, const std::function<void(void)> &draw, bool headless)
+    void run(const std::function<void()> &setup, const std::function<void()> &draw, bool headless)
     {
         presetup(headless);
         std::cout << "Calling setup\n";
@@ -128,7 +128,7 @@ namespace Pyro
         quit();
     }
 
-    void Runner::set_keypressed(const std::function<void(void)> keypressedkb)
+    void Runner::set_keypressed(std::function<void()> keypressedkb)
     {
         std::cout << "Setting keypressed in the runner" << std::endl;
         //std::cout << "Incoming value is: " << reinterpret_cast<void *>(keypressedkb) << std::endl;

@@ -3,10 +3,10 @@
 
 namespace Pyro
 {
-    Graphics *pg = nullptr;
-    unsigned int width = 640;
-    unsigned int height = 480;
-    uint32_t *pixels = nullptr;
+    Graphics *pg{nullptr};
+    unsigned int width{640};
+    unsigned int height{480};
+    uint32_t *pixels{nullptr};
 
     void exit()
     {
@@ -16,27 +16,28 @@ namespace Pyro
         }
     }
 
+    float size_multiplier(Unit unit, unsigned int dpi = 72) {
+            switch (unit)
+            {
+            case Unit::mm:
+                return dpi / 25.4;
+                break;
+            case Unit::cm:
+                return dpi / 2.54;
+                break;
+            case Unit::in:
+                return dpi;
+                break;
+            case Unit::px:
+            default:
+                return 1.0f;
+                break;
+            }
+        };
+
     void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi)
     {
-        float multiplier = 1.0f;
-        switch (unit)
-        {
-        case Unit::mm:
-            multiplier = dpi / 25.4;
-            break;
-        case Unit::cm:
-            multiplier = dpi / 2.54;
-            break;
-        case Unit::in:
-            multiplier = dpi;
-            break;
-        case Unit::px:
-        default:
-            break;
-        }
-
-        unsigned int w = (unsigned int)width * multiplier;
-        unsigned int h = (unsigned int)height * multiplier;
+        float multiplier{size_multiplier(unit, dpi)};
 
         if (pg == nullptr)
         {
@@ -47,8 +48,8 @@ namespace Pyro
         {
             delete pg;
         }
-        Pyro::width = w;
-        Pyro::height = h;
+        Pyro::width = (unsigned int)width * multiplier;
+        Pyro::height = (unsigned int)height * multiplier;
         pg = Graphics::create(width, height, GraphicsMode::CAIRO, dpi, unit);
     }
 

@@ -31,7 +31,7 @@ void ErrorExit(j_common_ptr cinfo)
     longjmp(pErrorManager->jumpBuffer, 1);
 }
 
-void OutputMessage(j_common_ptr cinfo)
+void OutputMessage(j_common_ptr /*cinfo*/)
 {
     // disable error messages
     /*char buffer[JMSG_LENGTH_MAX];
@@ -1186,7 +1186,7 @@ namespace Pyro
         float srcxoffset{destX1 < 0 ? -destX1 * dx : srcX1 * PRECISIONF};
         float srcyoffset{destY1 < 0 ? -destY1 * dy : srcY1 * PRECISIONF};
 
-        int64_t fracU, ifU, fracV, ifV, u1, u2, v1{0}, v2{0}, sX, iw, iw1, ih1;
+        int64_t fracU, ifU, fracV, ifV, u1, u2, v1{0}, v2{0}, sX, iw{0}, iw1, ih1{0};
         int64_t ul, ll, ur, lr;
 
         uint32_t cUL, cLL, cUR, cLR;

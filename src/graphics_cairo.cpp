@@ -60,6 +60,7 @@ namespace Pyro
 
     void GraphicsCairo::shape(Shape s, float x, float y, Unit unit)
     {
+        // TODO: Use unit
         cairo_save(this->cr);
         cairo_new_path(this->cr);
 
@@ -266,6 +267,7 @@ namespace Pyro
 
     void GraphicsCairo::text_impl(std::string text, float x, float y, Unit unit)
     {
+        // TODO: Use unit
         cairo_set_source_rgba(this->cr,
                               this->fill_color.r(),
                               this->fill_color.g(),
