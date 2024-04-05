@@ -1,7 +1,6 @@
 # Ignore build and lib dirs
 build
 builddir/
-pybuild/
 lib/*
 output/
 screenshots/current/
@@ -11,27 +10,11 @@ bin/*
 
 # Ignore other artifacts
 # *.png
-sipyro/*.png
 *.whl
 
 # Ignore mac specific files
 .DS_Store
 
-# ignore Python bindings stuff
-sipyro/sippyrocmodule.cpp
-sipyro/sippyroPyro.cpp
-sipyro/sipAPIpyro.h
-sipyro/Makefile
-sipyro/nosetests.xml
-libpyro.so
 
 # Ignore subprojects files
 subprojects/*/
-
-# Ignore Python stuff
-*.pyc
-.pytest_cache/
-.mypy_cache/
-__pycache__/
-.noseids
-*.lprof

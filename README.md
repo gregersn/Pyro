@@ -13,14 +13,14 @@ The state of the whole thing is not really userfriendly at the moment, but hopef
 
 ## Dependencies
 
-| Library                                              | Version | License                                 |
-| ---------------------------------------------------- | ------- | --------------------------------------- |
-| [Cairo](https://www.cairographics.org/)              | 1.14.x  | LGPL/MPL                                |
-| [Freetype 2](https://www.freetype.org/)              | 2.10.1  | Freetype project License                |
-| [SDL](https://www.libsdl.org/)                       | 2.x     | zlib                                    |
-| [libjpeg-turbo](https://libjpeg-turbo.org/)          | 2.0.3   |                                         |
-| [libpng](http://www.libpng.org/pub/png/libpng.html)  | 1.6.37  | PNG Reference Library License version 2 |
-| [Catch2](https://github.com/catchorg/Catch2)         | 2.13.7-1     | BSL-1.0                                 |
+| Library                                             | Version  | License                                 |
+| --------------------------------------------------- | -------- | --------------------------------------- |
+| [Cairo](https://www.cairographics.org/)             | 1.14.x   | LGPL/MPL                                |
+| [Freetype 2](https://www.freetype.org/)             | 2.10.1   | Freetype project License                |
+| [SDL](https://www.libsdl.org/)                      | 2.x      | zlib                                    |
+| [libjpeg-turbo](https://libjpeg-turbo.org/)         | 2.0.3    |                                         |
+| [libpng](http://www.libpng.org/pub/png/libpng.html) | 1.6.37   | PNG Reference Library License version 2 |
+| [Catch2](https://github.com/catchorg/Catch2)        | 2.13.7-1 | BSL-1.0                                 |
 
 ## Building
 
@@ -77,17 +77,6 @@ Some tests have been implemented using [Catch2](https://github.com/catchorg/Catc
 If you run `make install` at the moment, it is just doing some dumb stuff to get it installed on Mac.
 You can then compile and link a file with something like:
 `g++ -MMD -MP -lpyro -std=c++17 somefile.cpp`
-
-## Python bindings
-
-Bindings between this library and Python can be compiled using [SIP](https://riverbankcomputing.com/software/sip).
-Last tested with SIP 6.3.1, bindings can be compiled doing
-
-```sh
-./build_bindings.sh
-```
-
-after building the native library.
 
 ## Todo
 
