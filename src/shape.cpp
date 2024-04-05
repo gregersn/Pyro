@@ -85,7 +85,7 @@ namespace Pyro
             for (unsigned int curveiterator = 0; curveiterator < points.size(); curveiterator++)
             {
                 auto point = points[curveiterator];
-                if (point.type == PointType::curvevertex)
+                if (point.type == PointType::CURVEVERTEX)
                 {
                     if (curveiterator < 1)
                     {
@@ -108,7 +108,7 @@ namespace Pyro
                                 curvepoint(p0.v.y, point.v.y, p2.v.y, p3.v.y, i * delta)));
                     }
                 }
-                else if (point.type == PointType::beziervertex)
+                else if (point.type == PointType::BEZIERVERTEX)
                 {
                     if (curveiterator < 1)
                     {
@@ -160,21 +160,21 @@ namespace Pyro
 
     void Shape::vertex(float x, float y)
     {
-        this->points.push_back({Pyro::Vector(x, y), PointType::vertex});
+        this->points.push_back({Pyro::Vector(x, y), PointType::VERTEX});
     }
 
     void Shape::curvevertex(float x, float y)
     {
-        this->points.push_back({Pyro::Vector(x, y), PointType::curvevertex});
+        this->points.push_back({Pyro::Vector(x, y), PointType::CURVEVERTEX});
     }
 
     void Shape::beziervertex(float x2, float y2, float x3, float y3, float x4, float y4, Unit unit)
     {
         // TODO: Use unit
         assert(this->points.size() > 0);
-        this->points.push_back({Pyro::Vector(x2, y2), PointType::beziervertex});
-        this->points.push_back({Pyro::Vector(x3, y3), PointType::beziervertex});
-        this->points.push_back({Pyro::Vector(x4, y4), PointType::beziervertex});
+        this->points.push_back({Pyro::Vector(x2, y2), PointType::BEZIERVERTEX});
+        this->points.push_back({Pyro::Vector(x3, y3), PointType::BEZIERVERTEX});
+        this->points.push_back({Pyro::Vector(x4, y4), PointType::BEZIERVERTEX});
     }
 
 }

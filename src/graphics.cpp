@@ -38,7 +38,7 @@ namespace Pyro
 
     void Graphics::point(float x, float y, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
         x = unit2pixels(x, unit, this->get_dpi());
         y = unit2pixels(y, unit, this->get_dpi());
@@ -49,7 +49,7 @@ namespace Pyro
     // Coordinates
     void Graphics::translate(float x, float y, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x = unit2pixels(x, unit, this->get_dpi());
@@ -130,7 +130,7 @@ namespace Pyro
 
     void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x0 = unit2pixels(x0, unit, this->get_dpi());
@@ -151,7 +151,7 @@ namespace Pyro
 
     void Graphics::rect(float a, float b, float c, float d, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         a = unit2pixels(a, unit, this->get_dpi());
@@ -177,7 +177,7 @@ namespace Pyro
 
     void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x0 = unit2pixels(x0, unit, this->get_dpi());
@@ -201,7 +201,7 @@ namespace Pyro
 
     void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x0 = unit2pixels(x0, unit, this->get_dpi());
@@ -235,7 +235,7 @@ namespace Pyro
 
     void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x0 = unit2pixels(x0, unit, this->get_dpi());
@@ -261,7 +261,7 @@ namespace Pyro
                        float w, float h,
                        float start, float end, int mode, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x = unit2pixels(x, unit, this->get_dpi());
@@ -299,7 +299,7 @@ namespace Pyro
         Shape s = Shape();
         s.begin();
         float da = M_PI / (segments / 2.0f);
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x = unit2pixels(x, unit, this->get_dpi());
@@ -378,7 +378,7 @@ namespace Pyro
     {
         unsigned int dpi = this->get_dpi();
 
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         this->stroke_weight = unit2pixels(w, unit, dpi);
@@ -409,7 +409,7 @@ namespace Pyro
 
     void Graphics::text(std::string text, float x, float y, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
         this->text_impl(text, unit2pixels(x, unit, this->get_dpi()), unit2pixels(y, unit, this->get_dpi()));
     }

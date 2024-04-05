@@ -43,13 +43,13 @@ namespace Pyro
     const int HSBA{7};
     const int ALPHA{8};
 
-    enum class Unit
+    enum Unit
     {
-        px,
-        cm,
-        mm,
-        in,
-        current
+        PX,
+        CM,
+        MM,
+        IN,
+        CURRENT
     };
 
 }

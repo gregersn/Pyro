@@ -36,13 +36,13 @@ namespace Pyro
         return Graphics::create(width, height, mode);
     }
 
-    inline Graphics *create(unsigned int width, unsigned int height, Unit unit = Unit::px, unsigned int dpi = 72)
+    inline Graphics *create(unsigned int width, unsigned int height, Unit unit = Unit::PX, unsigned int dpi = 72)
     {
         return Graphics::create(width, height, GraphicsMode::CAIRO, dpi, unit);
     }
 
     // Initialize the library with this.
-    void size(unsigned int width, unsigned int height, Unit unit = Unit::px, unsigned int dpi = 72);
+    void size(unsigned int width, unsigned int height, Unit unit = Unit::PX, unsigned int dpi = 72);
 
     inline void save(const char *file) { pg->save(file); };
     inline void save(const char *file, unsigned int dpi) { pg->save(file, dpi); };
@@ -90,7 +90,7 @@ namespace Pyro
     inline void smooth() { pg->smooth(); };
     inline void nosmooth() { pg->nosmooth(); };
 
-    inline void strokeweight(float w, Unit unit = Unit::current) { pg->strokeweight(w, unit); };
+    inline void strokeweight(float w, Unit unit = Unit::CURRENT) { pg->strokeweight(w, unit); };
 
     inline void beginshape() { pg->beginshape(); };
     inline void endshape() { pg->endshape(); };
@@ -107,10 +107,10 @@ namespace Pyro
 
     inline void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN) { pg->arc(a, b, c, d, start, end, mode); };
 
-    inline void ellipse(float x, float y, float w, float h, unsigned int segments = 32, Unit unit = Unit::current) { pg->ellipse(x, y, w, h, segments, unit); };
-    inline void circle(float x, float y, float r, unsigned int segments = 32, Unit unit = Unit::current) { ellipse(x, y, r, r, segments, unit); };
+    inline void ellipse(float x, float y, float w, float h, unsigned int segments = 32, Unit unit = Unit::CURRENT) { pg->ellipse(x, y, w, h, segments, unit); };
+    inline void circle(float x, float y, float r, unsigned int segments = 32, Unit unit = Unit::CURRENT) { ellipse(x, y, r, r, segments, unit); };
 
-    inline void translate(float x, float y, Unit unit = Unit::current) { pg->translate(x, y, unit); };
+    inline void translate(float x, float y, Unit unit = Unit::CURRENT) { pg->translate(x, y, unit); };
     inline void scale(float sx, float sy) { pg->scale(sx, sy); };
     inline void rotate(float a) { pg->rotate(a); };
     inline void pushmatrix() { pg->pushmatrix(); };

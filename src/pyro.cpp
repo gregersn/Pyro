@@ -19,16 +19,16 @@ namespace Pyro
     float size_multiplier(Unit unit, unsigned int dpi = 72) {
             switch (unit)
             {
-            case Unit::mm:
+            case Unit::MM:
                 return dpi / 25.4;
                 break;
-            case Unit::cm:
+            case Unit::CM:
                 return dpi / 2.54;
                 break;
-            case Unit::in:
+            case Unit::IN:
                 return dpi;
                 break;
-            case Unit::px:
+            case Unit::PX:
             default:
                 return 1.0f;
                 break;

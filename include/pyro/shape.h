@@ -11,9 +11,9 @@ namespace Pyro
     float curvepoint(float p0, float p1, float p2, float p3, float t);
     enum class PointType
     {
-        vertex,
-        curvevertex,
-        beziervertex
+        VERTEX,
+        CURVEVERTEX,
+        BEZIERVERTEX
     };
 
     struct t_shapepoint
@@ -45,7 +45,7 @@ namespace Pyro
         void vertex(Vector v) { this->vertex(v.x, v.y); };
         void vertex(float x, float y);
         void curvevertex(float x, float y);
-        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4, Unit unit = Unit::px);
+        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4, Unit unit = Unit::PX);
         std::vector<std::vector<Pyro::Vector>> getpoints() { return this->outpoints; };
     };
 };

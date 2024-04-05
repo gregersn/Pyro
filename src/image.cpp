@@ -1055,7 +1055,7 @@ namespace Pyro
 
     void Image::blend(Image *src,
                       int sx, int sy, unsigned int sw, unsigned int sh,
-                      int dx, int dy, unsigned int dw, unsigned int dh, BLENDMODE mode)
+                      int dx, int dy, unsigned int dw, unsigned int dh, BlendMode mode)
     {
 
         int sx2 = sx + sw;
@@ -1244,46 +1244,46 @@ namespace Pyro
 
         switch (mode)
         {
-        case BLENDMODE::EXCLUSION:
+        case BlendMode::EXCLUSION:
             blend_function = {blend_exclusion};
             break;
-        case BLENDMODE::HARD_LIGHT:
+        case BlendMode::HARD_LIGHT:
             blend_function = {blend_hard_light};
             break;
-        case BLENDMODE::SOFT_LIGHT:
+        case BlendMode::SOFT_LIGHT:
             blend_function = {blend_soft_light};
             break;
-        case BLENDMODE::DODGE:
+        case BlendMode::DODGE:
             blend_function = {blend_dodge};
             break;
-        case BLENDMODE::BURN:
+        case BlendMode::BURN:
             blend_function = {blend_burn};
             break;
-        case BLENDMODE::OVERLAY:
+        case BlendMode::OVERLAY:
             blend_function = {blend_overlay};
             break;
-        case BLENDMODE::SCREEN:
+        case BlendMode::SCREEN:
             blend_function = {blend_screen};
             break;
-        case BLENDMODE::MULTIPLY:
+        case BlendMode::MULTIPLY:
             blend_function = {blend_multiply};
             break;
-        case BLENDMODE::DIFFERENCE:
+        case BlendMode::DIFFERENCE:
             blend_function = {blend_difference};
             break;
-        case BLENDMODE::LIGHTEST:
+        case BlendMode::LIGHTEST:
             blend_function = {blend_lightest};
             break;
-        case BLENDMODE::DARKEST:
+        case BlendMode::DARKEST:
             blend_function = {blend_darkest};
             break;
-        case BLENDMODE::SUBTRACT:
+        case BlendMode::SUBTRACT:
             blend_function = {blend_sub_pin};
             break;
-        case BLENDMODE::ADD:
+        case BlendMode::ADD:
             blend_function = {blend_add_pin};
             break;
-        case BLENDMODE::BLEND:
+        case BlendMode::BLEND:
         default:
             blend_function = {blend_blend};
             break;
@@ -1382,7 +1382,7 @@ namespace Pyro
         return out;
     }
 
-    Image *Image::resize(unsigned int width, unsigned int height, RESIZEMETHOD method)
+    Image *Image::resize(unsigned int width, unsigned int height, ResizeMethod method)
     {
         if (width == 0)
         {
@@ -1480,14 +1480,14 @@ namespace Pyro
                lerp(BLUE(a), BLUE(b), t);
     }
 
-    Image *Image::rotate(double angle, RESIZEMETHOD method)
+    Image *Image::rotate(double angle, ResizeMethod method)
     {
         switch (method)
         {
-        case RESIZEMETHOD::NEAREST:
+        case ResizeMethod::NEAREST:
             return this->rotate_nearest(angle);
             break;
-        case RESIZEMETHOD::BILINEAR:
+        case ResizeMethod::BILINEAR:
         default:
             return this->rotate_bilinear(angle);
             break;

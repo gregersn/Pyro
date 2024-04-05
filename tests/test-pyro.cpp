@@ -28,7 +28,7 @@ TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]")
         unsigned int dpi = 1;
         unsigned int pwidth = 10;
         unsigned int pheight = 10;
-        Pyro::size(inwidth, inheight, Pyro::Unit::in, dpi);
+        Pyro::size(inwidth, inheight, Pyro::Unit::IN, dpi);
 
         REQUIRE(pwidth == Pyro::width);
         REQUIRE(pheight == Pyro::height);
@@ -41,7 +41,7 @@ TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]")
         unsigned int dpi = 2;
         unsigned int pwidth = dpi * 100;
         unsigned int pheight = dpi * 100;
-        Pyro::size(cmwidth, cmheight, Pyro::Unit::cm, dpi);
+        Pyro::size(cmwidth, cmheight, Pyro::Unit::CM, dpi);
 
         REQUIRE(pwidth == Pyro::width);
         REQUIRE(pheight == Pyro::height);
@@ -54,7 +54,7 @@ TEST_CASE("The pixel size of the canvas is calculated correctly", "[pyro]")
         unsigned int dpi = 2;
         unsigned int pwidth = dpi * 100;
         unsigned int pheight = dpi * 100;
-        Pyro::size(cmwidth, cmheight, Pyro::Unit::mm, dpi);
+        Pyro::size(cmwidth, cmheight, Pyro::Unit::MM, dpi);
 
         REQUIRE(pwidth == Pyro::width);
         REQUIRE(pheight == Pyro::height);

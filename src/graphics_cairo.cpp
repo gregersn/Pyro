@@ -23,7 +23,7 @@ namespace Pyro
         cairo_surface_destroy(this->surface);
     }
 
-    void GraphicsCairo::blendmode(BlendMode mode)
+    void GraphicsCairo::blendmode(int mode)
     {
         switch (mode)
         {
@@ -140,7 +140,7 @@ namespace Pyro
     }
     void GraphicsCairo::translate(float x, float y, Unit unit)
     {
-        if (unit == Unit::current)
+        if (unit == Unit::CURRENT)
             unit = this->unit;
 
         x = unit2pixels(x, unit, this->get_dpi());
@@ -173,7 +173,7 @@ namespace Pyro
     {
         if (this->stroke_enable)
         {
-            if (unit == Unit::current)
+            if (unit == Unit::CURRENT)
                 unit = this->unit;
             x0 = unit2pixels(x0, unit, this->get_dpi());
             y0 = unit2pixels(y0, unit, this->get_dpi());

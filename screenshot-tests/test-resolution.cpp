@@ -6,20 +6,20 @@ TEST_CASE("Test varied DPI")
 {
     SECTION("Check result matching")
     {
-        Pyro::Graphics *pa = Pyro::Graphics::create(508, 254, testmode, 100, Pyro::Unit::mm);
+        Pyro::Graphics *pa = Pyro::Graphics::create(508, 254, testmode, 100, Pyro::Unit::MM);
 
         REQUIRE(pa->width() == 2000);
         REQUIRE(pa->height() == 1000);
 
-        Pyro::Graphics *pb = Pyro::Graphics::create(508, 254, testmode, 200, Pyro::Unit::mm);
+        Pyro::Graphics *pb = Pyro::Graphics::create(508, 254, testmode, 200, Pyro::Unit::MM);
 
         REQUIRE(pb->width() == 4000);
         REQUIRE(pb->height() == 2000);
 
         pa->nosmooth();
         pb->nosmooth();
-        pa->strokeweight(50, Pyro::Unit::mm);
-        pb->strokeweight(50, Pyro::Unit::mm);
+        pa->strokeweight(50, Pyro::Unit::MM);
+        pb->strokeweight(50, Pyro::Unit::MM);
 
         pa->line(0, 0, pa->width(), pa->height());
         pb->line(0, 0, pb->width(), pb->height());

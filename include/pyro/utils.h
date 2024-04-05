@@ -9,13 +9,13 @@ namespace Pyro
     {
         switch (unit)
         {
-        case Unit::in:
+        case Unit::IN:
             return value * dpi;
-        case Unit::cm:
+        case Unit::CM:
             return (value * float(dpi)) / 2.54;
-        case Unit::mm:
+        case Unit::MM:
             return (value * float(dpi)) / 25.4;
-        case Unit::px:
+        case Unit::PX:
         default:
             return value;
         }
@@ -26,13 +26,13 @@ namespace Pyro
     {
         switch (unit)
         {
-        case Unit::in:
+        case Unit::IN:
             return value / dpi;
-        case Unit::cm:
+        case Unit::CM:
             return (value * 2.54) / dpi;
-        case Unit::mm:
+        case Unit::MM:
             return (value * 25.4) / dpi;
-        case Unit::px:
+        case Unit::PX:
         default:
             return value;
         }

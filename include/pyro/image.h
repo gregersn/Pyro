@@ -7,34 +7,35 @@
 
 namespace Pyro
 {
-    enum FILETYPE
+    enum FileType
     {
         JPEG,
         PNG,
         TIFF
     };
-    enum RESIZEMETHOD
+    enum ResizeMethod
     {
         NEAREST,
         BILINEAR
     };
 
-    enum BLENDMODE
+    enum BlendMode
     {
-        BLEND,
         ADD,
-        SUBTRACT,
-        LIGHTEST,
+        BLEND,
+        BURN,
         DARKEST,
         DIFFERENCE,
-        EXCLUSION,
-        MULTIPLY,
-        SCREEN,
-        OVERLAY,
-        HARD_LIGHT,
-        SOFT_LIGHT,
         DODGE,
-        BURN
+        EXCLUSION,
+        HARD_LIGHT,
+        LIGHTEST,
+        MULTIPLY,
+        OVERLAY,
+        REPLACE,
+        SCREEN,
+        SOFT_LIGHT,
+        SUBTRACT,
     };
     class Image
     {
@@ -66,12 +67,12 @@ namespace Pyro
         unsigned int width() { return this->_pixelwidth; };
         unsigned int height() { return this->_pixelheight; };
         unsigned int channels();
-        Unit unit{Unit::px};
+        Unit unit{Unit::PX};
 
         Image(const Image &in);
         Image();
-        Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::px);
-        void init(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::px);
+        Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::PX);
+        void init(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::PX);
 
         Image &operator=(const Image &in);
         virtual ~Image();
@@ -106,20 +107,20 @@ namespace Pyro
         void set(int x, int y, Image *img);
         void set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c);
 
-        void blend(Image *src, int sx, int sy, unsigned int sw, unsigned int sh, int dx, int dy, unsigned int dw, unsigned int dh, BLENDMODE mode);
+        void blend(Image *src, int sx, int sy, unsigned int sw, unsigned int sh, int dx, int dy, unsigned int dw, unsigned int dh, BlendMode mode);
 
         void mask(Image *mask);
 
         // Image manipulation functions
-        Image *resize(unsigned int width, unsigned int height, RESIZEMETHOD method = RESIZEMETHOD::NEAREST);
+        Image *resize(unsigned int width, unsigned int height, ResizeMethod method = ResizeMethod::NEAREST);
 
         Image *convert(unsigned int format);
 
-        Image *rotate(double angle, RESIZEMETHOD method = RESIZEMETHOD::BILINEAR);
+        Image *rotate(double angle, ResizeMethod method = ResizeMethod::BILINEAR);
         Image *rotate_nearest(double angle);
         Image *rotate_bilinear(double angle);
     };
 
-    Image *createimage(unsigned int width, unsigned int height, int format = RGB, unsigned int dpi = 72, Unit unit = Unit::px);
+    Image *createimage(unsigned int width, unsigned int height, int format = RGB, unsigned int dpi = 72, Unit unit = Unit::PX);
 }
 #endif
