@@ -131,19 +131,17 @@ namespace Pyro
         {
             this->_shape.vertex(v.x, v.y);
         };
-        void vertex(float x, float y, Unit unit = Unit::CURRENT)
+        void vertex(float x, float y)
         {
-            // TODO: Use unit
             this->_shape.vertex(x, y);
         };
-        void curvevertex(float x, float y, Unit unit = Unit::CURRENT)
+        void curvevertex(float x, float y)
         {
-            // TODO: Use unit
             this->_shape.curvevertex(x, y);
         };
-        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4, Unit unit = Unit::CURRENT)
+        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4)
         {
-            this->_shape.beziervertex(x2, y2, x3, y3, x4, y4, unit);
+            this->_shape.beziervertex(x2, y2, x3, y3, x4, y4);
         }
         void endshape(int close);
         void endshape()

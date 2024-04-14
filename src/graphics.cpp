@@ -386,12 +386,12 @@ namespace Pyro
 
     void Graphics::strokecap(int cap)
     {
-        // TODO: Use unit
+        // TODO: Implement stroke cap
     }
 
     void Graphics::strokejoin(int join)
     {
-        // TODO: Use unit
+        // TODO: Implement strokejoin
     }
 
     // Typography

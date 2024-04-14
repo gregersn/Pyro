@@ -168,9 +168,8 @@ namespace Pyro
         this->points.push_back({Pyro::Vector(x, y), PointType::CURVEVERTEX});
     }
 
-    void Shape::beziervertex(float x2, float y2, float x3, float y3, float x4, float y4, Unit unit)
+    void Shape::beziervertex(float x2, float y2, float x3, float y3, float x4, float y4)
     {
-        // TODO: Use unit
         assert(this->points.size() > 0);
         this->points.push_back({Pyro::Vector(x2, y2), PointType::BEZIERVERTEX});
         this->points.push_back({Pyro::Vector(x3, y3), PointType::BEZIERVERTEX});
