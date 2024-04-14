@@ -1,4 +1,4 @@
-project('Pyro', 'cpp',
+project('pyro', 'cpp',
         version: '0.0.1-alpha',
         license: 'GPLv3',
         default_options: ['cpp_std=c++17'])
