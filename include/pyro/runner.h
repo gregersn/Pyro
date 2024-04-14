@@ -10,6 +10,7 @@ namespace Pyro
     {
     public:
         std::function<void()> keypressed_cb{nullptr};
+        std::function<void()> mousepressed_cb{nullptr};
         Runner() : running(true){};
         Runner(const Runner &/*in*/){};
         Runner &operator=(const Runner &/*in*/) { return *this; };
@@ -33,6 +34,7 @@ namespace Pyro
         int key;         // Value of key pressed
 
         void set_keypressed(std::function<void()> keypressed); // Set callback for keypressed
+        void set_mousepressed(std::function<void()> mousepressed); // Set callback for mousepressed
 
         bool mousepressed;
         int mousebutton;
@@ -59,6 +61,7 @@ namespace Pyro
     void set_keypressed(std::function<void()> keypressed);
 
     bool get_mousepressed();
+    void set_mousepressed(std::function<void()> mousepressed);
     int get_mousebutton();
     int get_mousex();
     int get_mousey();

@@ -48,6 +48,9 @@ namespace Pyro
         pmousey = runner->pmousey;
 
         mousepressed = runner->mousepressed;
+        if(mousepressed && runner->mousepressed_cb != nullptr) {
+            runner->mousepressed_cb();
+        }
         mousebutton = runner->mousebutton;
 
         framecount++;
@@ -72,6 +75,10 @@ namespace Pyro
     bool get_mousepressed()
     {
         return mousepressed;
+    }
+
+    void set_mousepressed(std::function<void()> mousepressed) {
+        runner->set_mousepressed(mousepressed);
     }
 
     int get_mousebutton()
@@ -128,12 +135,20 @@ namespace Pyro
         quit();
     }
 
-    void Runner::set_keypressed(std::function<void()> keypressedkb)
+    void Runner::set_keypressed(std::function<void()> keypressed_cb)
     {
         std::cout << "Setting keypressed in the runner" << std::endl;
-        //std::cout << "Incoming value is: " << reinterpret_cast<void *>(keypressedkb) << std::endl;
-        this->keypressed_cb = keypressedkb;
+        //std::cout << "Incoming value is: " << reinterpret_cast<void *>(keypressed_cb) << std::endl;
+        this->keypressed_cb = keypressed_cb;
         std::cout << "Done setting" << std::endl;
-        // keypressedkb();
+        // keypressed_cb();
+    }
+    void Runner::set_mousepressed(std::function<void()> mousepressed_cb)
+    {
+        std::cout << "Setting mousepressed in the runner" << std::endl;
+        //std::cout << "Incoming value is: " << reinterpret_cast<void *>(mousepressed_cb) << std::endl;
+        this->mousepressed_cb = mousepressed_cb;
+        std::cout << "Done setting" << std::endl;
+        // mousepressed_cb();
     }
 }
