@@ -14,21 +14,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name:
-          [
-            ubuntu-22.04-gcc-12,
-            macos-13-xcode,
-          ]
+        name: [ubuntu-22.04-gcc-12, macos-13-xcode]
 
         include:
           - name: ubuntu-22.04-gcc-12
             os: ubuntu-22.04
-            compiler: gcc
             version: "12"
 
           - name: macos-13-xcode
             os: macos-13
-            compiler: gcc
             version: "13"
 
     steps:
@@ -45,15 +39,9 @@ jobs:
         run: |
           sudo apt-get update
 
-          if [ "${{ matrix.compiler }}" = "gcc" ]; then
-            sudo apt-get install -y g++-${{ matrix.version }} g++-${{ matrix.version }}-multilib
-            echo "name=CC::gcc-${{ matrix.version }}" >> $GITHUB_ENV
-            echo "name=CXX::g++-${{ matrix.version }}" >> $GITHUB_ENV 
-          else
-            sudo apt-get install -y clang-${{ matrix.version }} g++-multilib
-            echo "name=CC::clang-${{ matrix.version }}" >> $GITHUB_ENV
-            echo "name=CXX::clang++-${{ matrix.version }}" >> $GITHUB_ENV
-          fi
+          sudo apt-get install -y g++-${{ matrix.version }} g++-${{ matrix.version }}-multilib
+          echo "name=CC::gcc-${{ matrix.version }}" >> $GITHUB_ENV
+          echo "name=CXX::g++-${{ matrix.version }}" >> $GITHUB_ENV 
 
           sudo apt-get install libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev libeigen3-dev
           pip install meson ninja
@@ -64,24 +52,11 @@ jobs:
           pip3 install meson ninja
           brew install freetype libjpeg-turbo cairo libpng sdl2 pkg-config eigen
 
-          if [ "${{ matrix.compiler }}" = "gcc" ]; then
-            brew install gcc@${{ matrix.version }}
-            echo "name=CC::gcc-${{ matrix.version }}" >> $GITHUB_ENV
-            echo "name=CXX::g++-${{ matrix.version }}" >> $GITHUB_ENV
-          else
-            ls -ls /Applications/
-            # sudo xcode-select -switch /Applications/Xcode_${{ matrix.version }}.app
-            echo "name=CC::clang" >> $GITHUB_ENV
-            echo "name=CXX::clang++" >> $GITHUB_ENV
-          fi
-
+          # ls -ls /Applications/
+          # sudo xcode-select -switch /Applications/Xcode_${{ matrix.version }}.app
       - name: Build project
         run: |
-          if [ "${{ runner.os }}" = "macOS" ]; then
-            ./configure_mac.sh
-          else
-            meson setup build
-          fi
+          meson setup build
           ninja -C build
       - name: Run tests
         run: |
