@@ -96,13 +96,13 @@ namespace Pyro
     void Graphics::background(float r, float g, float b, float a)
     {
         Color c{Color(r, g, b, a)};
-        uint32_t *buf{(uint32_t *)this->get_data()};
-        uint32_t color = c.to_uint();
+        uint32_t *buf{static_cast<uint32_t *>(this->get_data())};
+        uint32_t _color = c.to_uint();
 
         size_t count{this->_pixelwidth * this->_pixelheight};
         while (count--)
         {
-            *buf++ = color;
+            *buf++ = _color;
         }
     }
 
@@ -407,7 +407,7 @@ namespace Pyro
         this->textfont_impl(font);
     }
 
-    void Graphics::text(std::string text, float x, float y, Unit unit)
+    void Graphics::text(std::string const &text, float x, float y, Unit unit)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;

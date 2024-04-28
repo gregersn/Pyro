@@ -396,28 +396,26 @@ namespace Pyro
         FILE *fp = fopen(filename.c_str(), "wb");
         if (!fp)
         {
-            throw;
+            std::terminate();
         }
 
         png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
         if (!png_ptr)
         {
             fclose(fp);
-            throw;
+            std::terminate();
         }
 
         png_infop info_ptr = png_create_info_struct(png_ptr);
         if (!info_ptr)
         {
             png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-            fclose(fp);
-            throw;
+            std::terminate();
         }
 
         if (setjmp(png_jmpbuf(png_ptr)))
         {
-            fclose(fp);
-            throw;
+            std::terminate();
         }
         png_init_io(png_ptr, fp);
 
@@ -523,7 +521,7 @@ namespace Pyro
     {
         if (this->data == nullptr)
         {
-            throw;
+            std::terminate();
         }
         this->pixels_locked = true;
 
@@ -592,7 +590,7 @@ namespace Pyro
             // return (this->load_pixels())[index];
             return this->data[index];
         }
-        throw;
+        std::terminate();
     }
 
     Image *Image::get()
@@ -616,7 +614,7 @@ namespace Pyro
         case ALPHA:
             return (data[y * this->_pixelwidth + x] << 24) | 0xffffff;
         }
-        throw;
+        throw std::invalid_argument("Unknown image format.");
     }
 
     Image *Image::get(int x, int y, int width, int height)
@@ -1317,11 +1315,11 @@ namespace Pyro
     {
         if (this->format == 1 || this->format == 3)
         {
-            throw;
+            throw std::invalid_argument("Can't mask image without alpha channel.");
         }
         if (this->_pixelwidth != mask->_pixelwidth || this->_pixelheight != mask->_pixelheight)
         {
-            throw;
+            throw std::invalid_argument("Size of mask does not match image.");
         }
         uint32_t *mask_data = mask->load_pixels();
         uint32_t *data = this->load_pixels();

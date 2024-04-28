@@ -10,7 +10,7 @@
 
 namespace Pyro
 {
-    enum  GraphicsMode
+    enum GraphicsMode
     {
         CAIRO
     };
@@ -45,8 +45,8 @@ namespace Pyro
             this->_image_mode = mode;
         };
         void image(Image *img, float x, float y);
-        virtual void image_impl(Image */*img*/, float /*x*/, float /*y*/){};
-        Image *loadimage(std::string filename) { return Image::load(filename); };
+        virtual void image_impl(Image * /*img*/, float /*x*/, float /*y*/){};
+        Image *loadimage(std::string const &filename) { return Image::load(filename); };
 
         // Color functions
         void nostroke();
@@ -115,9 +115,9 @@ namespace Pyro
 
         virtual void shape(Shape /*s*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::CURRENT){};
 
-        void beginshape()
+        void beginshape(int kind = LINES)
         {
-            this->_shape.begin();
+            this->_shape.begin(kind);
         };
         void begincontour()
         {
@@ -182,10 +182,10 @@ namespace Pyro
         // Typography
 
         void textsize(float size, Unit unit = Unit::CURRENT);
-        void text(std::string text, float x, float y, Unit unit = Unit::CURRENT);
+        void text(std::string const &text, float x, float y, Unit unit = Unit::CURRENT);
         void textfont(Font *font);
 
-        virtual void textfont_impl(Font */*font*/){};
+        virtual void textfont_impl(Font * /*font*/){};
         virtual void text_impl(std::string /*text*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::CURRENT){};
     };
 };

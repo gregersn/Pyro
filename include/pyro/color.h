@@ -43,7 +43,7 @@ namespace Pyro
         {
         }
 
-        explicit Color(std::string color)
+        explicit Color(std::string const &color)
         {
             if (color.length() == 7)
             {

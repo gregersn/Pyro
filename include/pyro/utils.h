@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PYRO_UTILS_H_
+#define PYRO_UTILS_H_
 
 #include "constants.h"
 
@@ -38,5 +39,6 @@ namespace Pyro
         }
     };
 
-    
 }
+
+#endif

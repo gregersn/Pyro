@@ -38,8 +38,9 @@ namespace Pyro
         return;
     }
 
-    void Shape::begin()
+    void Shape::begin(int kind)
     {
+        this->kind = kind;
         this->contours.clear();
         this->points.clear();
         this->outpoints.clear();
