@@ -82,7 +82,7 @@ namespace Pyro
     // **** /COLOR ****
 
     // **** RENDERING ****
-    inline void blendmode(BlendMode mode) { pg->blendmode(mode); };
+    inline void blendmode(int mode) { pg->blendmode(mode); };
     // TODO: clip
 
     // **** /RENDERING ****

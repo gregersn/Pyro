@@ -1053,7 +1053,7 @@ namespace Pyro
 
     void Image::blend(Image *src,
                       int sx, int sy, unsigned int sw, unsigned int sh,
-                      int dx, int dy, unsigned int dw, unsigned int dh, BlendMode mode)
+                      int dx, int dy, unsigned int dw, unsigned int dh, int mode)
     {
 
         int sx2 = sx + sw;
@@ -1242,48 +1242,51 @@ namespace Pyro
 
         switch (mode)
         {
-        case BlendMode::EXCLUSION:
-            blend_function = {blend_exclusion};
+        // case Pyro::REPLACE:
+        case Pyro::BLEND:
+            blend_function = {blend_blend};
             break;
-        case BlendMode::HARD_LIGHT:
-            blend_function = {blend_hard_light};
-            break;
-        case BlendMode::SOFT_LIGHT:
-            blend_function = {blend_soft_light};
-            break;
-        case BlendMode::DODGE:
-            blend_function = {blend_dodge};
-            break;
-        case BlendMode::BURN:
-            blend_function = {blend_burn};
-            break;
-        case BlendMode::OVERLAY:
-            blend_function = {blend_overlay};
-            break;
-        case BlendMode::SCREEN:
-            blend_function = {blend_screen};
-            break;
-        case BlendMode::MULTIPLY:
-            blend_function = {blend_multiply};
-            break;
-        case BlendMode::DIFFERENCE:
-            blend_function = {blend_difference};
-            break;
-        case BlendMode::LIGHTEST:
-            blend_function = {blend_lightest};
-            break;
-        case BlendMode::DARKEST:
-            blend_function = {blend_darkest};
-            break;
-        case BlendMode::SUBTRACT:
-            blend_function = {blend_sub_pin};
-            break;
-        case BlendMode::ADD:
+        case Pyro::ADD:
             blend_function = {blend_add_pin};
             break;
-        case BlendMode::BLEND:
+        case Pyro::SUBTRACT:
+            blend_function = {blend_sub_pin};
+            break;
+        case Pyro::LIGHTEST:
+            blend_function = {blend_lightest};
+            break;
+        case Pyro::DARKEST:
+            blend_function = {blend_darkest};
+            break;
+        case Pyro::DIFFERENCE:
+            blend_function = {blend_difference};
+            break;
+        case Pyro::EXCLUSION:
+            blend_function = {blend_exclusion};
+            break;
+        case Pyro::MULTIPLY:
+            blend_function = {blend_multiply};
+            break;
+        case Pyro::SCREEN:
+            blend_function = {blend_screen};
+            break;
+        case Pyro::OVERLAY:
+            blend_function = {blend_overlay};
+            break;
+        case Pyro::HARD_LIGHT:
+            blend_function = {blend_hard_light};
+            break;
+        case Pyro::SOFT_LIGHT:
+            blend_function = {blend_soft_light};
+            break;
+        case Pyro::DODGE:
+            blend_function = {blend_dodge};
+            break;
+        case Pyro::BURN:
+            blend_function = {blend_burn};
+            break;
         default:
-            blend_function = {blend_blend};
+            throw std::logic_error("Blend mode not implemented.");
             break;
         }
 

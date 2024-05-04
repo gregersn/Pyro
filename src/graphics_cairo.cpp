@@ -27,33 +27,41 @@ namespace Pyro
     {
         switch (mode)
         {
-        case BlendMode::ADD:
-            cairo_set_operator(this->cr, CAIRO_OPERATOR_ADD);
-            break;
-        case BlendMode::DARKEST:
-            cairo_set_operator(this->cr, CAIRO_OPERATOR_DARKEN);
-            break;
-        case BlendMode::DIFFERENCE:
-            cairo_set_operator(this->cr, CAIRO_OPERATOR_DIFFERENCE);
-            break;
-        case BlendMode::EXCLUSION:
-            cairo_set_operator(this->cr, CAIRO_OPERATOR_EXCLUSION);
-            break;
-        case BlendMode::LIGHTEST:
-            cairo_set_operator(this->cr, CAIRO_OPERATOR_LIGHTEN);
-            break;
-        case BlendMode::MULTIPLY:
-            cairo_set_operator(this->cr, CAIRO_OPERATOR_MULTIPLY);
-            break;
-        case BlendMode::REPLACE:
+        case Pyro::REPLACE:
             cairo_set_operator(this->cr, CAIRO_OPERATOR_SOURCE);
             break;
-        case BlendMode::SCREEN:
+        case Pyro::BLEND:
+            cairo_set_operator(this->cr, CAIRO_OPERATOR_OVER);
+            break;
+        case Pyro::ADD:
+            cairo_set_operator(this->cr, CAIRO_OPERATOR_ADD);
+            break;
+        // case Pyro::SUBTRACT:
+        case Pyro::LIGHTEST:
+            cairo_set_operator(this->cr, CAIRO_OPERATOR_LIGHTEN);
+            break;
+        case Pyro::DARKEST:
+            cairo_set_operator(this->cr, CAIRO_OPERATOR_DARKEN);
+            break;
+        case Pyro::DIFFERENCE:
+            cairo_set_operator(this->cr, CAIRO_OPERATOR_DIFFERENCE);
+            break;
+        case Pyro::EXCLUSION:
+            cairo_set_operator(this->cr, CAIRO_OPERATOR_EXCLUSION);
+            break;
+        case Pyro::MULTIPLY:
+            cairo_set_operator(this->cr, CAIRO_OPERATOR_MULTIPLY);
+            break;
+        case Pyro::SCREEN:
             cairo_set_operator(this->cr, CAIRO_OPERATOR_SCREEN);
             break;
-        case BlendMode::BLEND:
+        // case Pyro::OVERLAY:
+        // case Pyro::HARD_LIGHT:
+        // case Pyro::SOFT_LIGHT:
+        // case Pyro::DODGE:
+        // case Pyro::BURN:
         default:
-            cairo_set_operator(this->cr, CAIRO_OPERATOR_OVER);
+            throw std::logic_error("Blend mode not implemented.");
             break;
         }
     }

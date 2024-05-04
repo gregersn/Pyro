@@ -52,7 +52,7 @@ namespace Pyro
         void nostroke();
         void nofill();
 
-        virtual void blendmode(BlendMode /*mode*/){};
+        virtual void blendmode(int /*mode*/){};
         virtual void colormode(int mode)
         {
             this->stroke_color.colormode(mode);

@@ -52,6 +52,22 @@ namespace Pyro
         CURRENT
     };
 
+    // Blend mode
+    const int REPLACE{0};
+    const int BLEND{1 << 0};
+    const int ADD{1 << 1};
+    const int SUBTRACT{1 << 2};
+    const int LIGHTEST{1 << 3};
+    const int DARKEST{1 << 4};
+    const int DIFFERENCE{1 << 5};
+    const int EXCLUSION{1 << 6};
+    const int MULTIPLY{1 << 7};
+    const int SCREEN{1 << 8};
+    const int OVERLAY{1 << 9};
+    const int HARD_LIGHT{1 << 10};
+    const int SOFT_LIGHT{1 << 11};
+    const int DODGE{1 << 12};
+    const int BURN{1 << 13};
 }
 
 #endif

@@ -19,24 +19,7 @@ namespace Pyro
         BILINEAR
     };
 
-    enum BlendMode
-    {
-        ADD,
-        BLEND,
-        BURN,
-        DARKEST,
-        DIFFERENCE,
-        DODGE,
-        EXCLUSION,
-        HARD_LIGHT,
-        LIGHTEST,
-        MULTIPLY,
-        OVERLAY,
-        REPLACE,
-        SCREEN,
-        SOFT_LIGHT,
-        SUBTRACT,
-    };
+
     class Image
     {
     private:
@@ -107,7 +90,7 @@ namespace Pyro
         void set(int x, int y, Image *img);
         void set(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int c);
 
-        void blend(Image *src, int sx, int sy, unsigned int sw, unsigned int sh, int dx, int dy, unsigned int dw, unsigned int dh, BlendMode mode);
+        void blend(Image *src, int sx, int sy, unsigned int sw, unsigned int sh, int dx, int dy, unsigned int dw, unsigned int dh, int mode);
 
         void mask(Image *mask);
 
