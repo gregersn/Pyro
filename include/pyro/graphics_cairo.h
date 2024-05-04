@@ -18,9 +18,9 @@ namespace Pyro
 
     public:
         GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi, Unit unit);
-        ~GraphicsCairo();
+        ~GraphicsCairo() override;
 
-        void blendmode(int mode);
+        void blendmode(int mode) override;
 
         void translate(float x, float, Unit unit = Unit::CURRENT) override;
         void rotate(float a) override;

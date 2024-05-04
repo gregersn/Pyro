@@ -277,10 +277,9 @@ namespace Pyro
         }
         int steps{32};
         float da{(end - start) / (float)steps};
-        float a{start};
         for (int i{0}; i < steps + 1; i++)
         {
-            a = start + i * da;
+            float a = start + i * da;
             s.vertex(cos(a) * w / 2.0f, sin(a) * h / 2.0f);
         }
         if (mode == PIE)

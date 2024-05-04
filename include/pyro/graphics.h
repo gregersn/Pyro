@@ -36,7 +36,7 @@ namespace Pyro
 
     public:
         Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi, Unit unit = Unit::PX);
-        virtual ~Graphics();
+        virtual ~Graphics() override;
 
         static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO, unsigned int dpi = 72, Unit unit = Unit::PX);
 
