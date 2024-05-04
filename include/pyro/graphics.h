@@ -115,7 +115,7 @@ namespace Pyro
 
         virtual void shape(Shape /*s*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::CURRENT){};
 
-        void beginshape(int kind = LINES)
+        void beginshape(int kind = DEFAULT)
         {
             this->_shape.begin(kind);
         };

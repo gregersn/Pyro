@@ -92,7 +92,7 @@ namespace Pyro
 
     inline void strokeweight(float w, Unit unit = Unit::CURRENT) { pg->strokeweight(w, unit); };
 
-    inline void beginshape(int kind = LINES) { pg->beginshape(kind); };
+    inline void beginshape(int kind = DEFAULT) { pg->beginshape(kind); };
     inline void endshape() { pg->endshape(); };
     inline void endshape(int close) { pg->endshape(close); };
     inline void vertex(float x, float y) { pg->vertex(x, y); };
