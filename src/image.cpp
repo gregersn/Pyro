@@ -39,7 +39,7 @@ void OutputMessage(j_common_ptr /*cinfo*/)
     fprintf(stderr, "%s\n", buffer);*/
 }
 
-std::string get_extension(std::string filename)
+std::string get_extension(const std::string &filename)
 {
     // Find file extension
     // https://stackoverflow.com/a/51992/7097
@@ -269,53 +269,53 @@ namespace Pyro
         png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_BGR, NULL);
         png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
 
-        unsigned int width = png_get_image_width(png_ptr, info_ptr);
-        unsigned int height = png_get_image_height(png_ptr, info_ptr);
-        unsigned int channels = png_get_channels(png_ptr, info_ptr);
-        unsigned int dpi = png_get_pixels_per_inch(png_ptr, info_ptr);
+        unsigned int _width = png_get_image_width(png_ptr, info_ptr);
+        unsigned int _height = png_get_image_height(png_ptr, info_ptr);
+        unsigned int _channels = png_get_channels(png_ptr, info_ptr);
+        unsigned int _dpi = png_get_pixels_per_inch(png_ptr, info_ptr);
 
         unsigned int format = ARGB;
-        if (channels == 4)
+        if (_channels == 4)
         {
             format = ARGB;
         }
-        else if (channels == 3)
+        else if (_channels == 3)
         {
             format = RGB;
         }
-        else if (channels == 2)
+        else if (_channels == 2)
         {
             format = GRAYALPHA;
         }
-        else if (channels == 1)
+        else if (_channels == 1)
         {
             format = ALPHA;
         }
-        Image *img = new Image(width, height, format, 1, dpi);
-        uint32_t *d = (uint32_t *)img->load_pixels();
+        Image *img = new Image(_width, _height, format, 1, _dpi);
+        uint32_t *d = static_cast<uint32_t *>(img->load_pixels());
         uint32_t col = 0xffbada55;
-        for (unsigned int y = 0; y < height; y++)
+        for (unsigned int y = 0; y < _height; y++)
         {
             png_bytep row = row_pointers[y];
-            unsigned int line = y * width;
+            unsigned int line = y * _width;
 
-            for (unsigned int x = 0; x < width; x++)
+            for (unsigned int x = 0; x < _width; x++)
             {
-                if (channels == 4)
+                if (_channels == 4)
                 {
-                    col = (row[x * channels + 3] << 24) | (row[x * channels + 2] << 16) | (row[x * channels + 1] << 8) | (row[x * channels + 0]);
+                    col = (row[x * _channels + 3] << 24) | (row[x * _channels + 2] << 16) | (row[x * _channels + 1] << 8) | (row[x * _channels + 0]);
                 }
-                else if (channels == 3)
+                else if (_channels == 3)
                 {
-                    col = 0xff000000 | (row[x * channels + 2] << 16) | (row[x * channels + 1] << 8) | (row[x * channels + 0]);
+                    col = 0xff000000 | (row[x * _channels + 2] << 16) | (row[x * _channels + 1] << 8) | (row[x * _channels + 0]);
                 }
-                else if (channels == 2)
+                else if (_channels == 2)
                 {
-                    col = (row[x * channels + 1] << 24) | (row[x * channels + 0] << 16) | (row[x * channels + 0] << 8) | (row[x * channels + 0]);
+                    col = (row[x * _channels + 1] << 24) | (row[x * _channels + 0] << 16) | (row[x * _channels + 0] << 8) | (row[x * _channels + 0]);
                 }
-                else if (channels == 1)
+                else if (_channels == 1)
                 {
-                    col = 0xff000000 | (row[x * channels + 0] << 16) | (row[x * channels + 0] << 8) | (row[x * channels + 0]);
+                    col = 0xff000000 | (row[x * _channels + 0] << 16) | (row[x * _channels + 0] << 8) | (row[x * _channels + 0]);
                 }
                 d[line + x] = col;
             }
@@ -360,7 +360,7 @@ namespace Pyro
         jpeg_start_decompress(&cinfo);
 
         Image *img = new Image(cinfo.image_width, cinfo.image_height, cinfo.num_components);
-        uint8_t *d = (uint8_t *)img->get_data();
+        uint8_t *d = static_cast<uint8_t *>(img->get_data());
 
         while (cinfo.output_scanline < cinfo.image_height)
         {
@@ -478,15 +478,15 @@ namespace Pyro
             break;
         case ARGB:
         default:
-            converted_data = (uint8_t *)this->get_data();
+            converted_data = static_cast<uint8_t *>(this->get_data());
             stride = this->_pixelwidth * 4;
             break;
         }
 
-        png_bytep data = (png_bytep)converted_data;
+        png_bytep _data = (png_bytep)converted_data;
         for (unsigned int y = 0; y < this->_pixelheight; y++)
         {
-            row_pointers.push_back(&(data[y * stride]));
+            row_pointers.push_back(&(_data[y * stride]));
         }
 
         png_set_rows(png_ptr, info_ptr, &row_pointers[0]);
@@ -503,15 +503,15 @@ namespace Pyro
         if (this->cache == nullptr)
         {
             this->cache = malloc(this->_pixelwidth * this->_pixelheight * sizeof(unsigned char) * this->format);
-            unsigned char *cache = (unsigned char *)this->cache;
-            unsigned char *source = this->load_bytes();
+            unsigned char *_cache = static_cast<unsigned char *>(this->cache);
+            const unsigned char *source = this->load_bytes();
 
             for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight * 4; i += 4)
             {
-                cache[i] = source[i] * source[i + 3] / 255;
-                cache[i + 1] = source[i + 1] * source[i + 3] / 255;
-                cache[i + 2] = source[i + 2] * source[i + 3] / 255;
-                cache[i + 3] = source[i + 3];
+                _cache[i] = source[i] * source[i + 3] / 255;
+                _cache[i + 1] = source[i + 1] * source[i + 3] / 255;
+                _cache[i + 2] = source[i + 2] * source[i + 3] / 255;
+                _cache[i + 3] = source[i + 3];
             }
         }
         return this->cache;
@@ -620,7 +620,7 @@ namespace Pyro
     Image *Image::get(int x, int y, int width, int height)
     {
         Image *out = createimage(width, height, this->format);
-        uint32_t *src_data = this->load_pixels();
+        const uint32_t *src_data = this->load_pixels();
         uint32_t *dst_data = out->load_pixels();
 
         for (int ty = 0; ty < height; ty++)
@@ -650,7 +650,7 @@ namespace Pyro
     void Image::set(int x, int y, Image *img)
     {
         unsigned int *pixels = this->load_pixels();
-        unsigned int *inpixels = img->load_pixels();
+        const unsigned int *inpixels = img->load_pixels();
 
         for (unsigned int sy = 0; sy < img->_pixelheight; sy++)
         {
@@ -1067,12 +1067,12 @@ namespace Pyro
             {
                 blit_resize(get(sx, sy, sw, sh),
                             0, 0, sw, sh,
-                            (uint32_t *)this->get_data(), this->_pixelwidth, this->_pixelheight, dx, dy, dx2, dy2, mode);
+                            static_cast<uint32_t *>(this->get_data()), this->_pixelwidth, this->_pixelheight, dx, dy, dx2, dy2, mode);
             }
             else
             {
                 blit_resize(src, sx, sy, sx2, sy2,
-                            (uint32_t *)this->get_data(), this->_pixelwidth, this->_pixelheight,
+                            static_cast<uint32_t *>(this->get_data()), this->_pixelwidth, this->_pixelheight,
                             dx, dy, dx2, dy2, mode);
             }
         }
@@ -1146,11 +1146,11 @@ namespace Pyro
 
         bool smooth{true};
 
-        if (!smooth)
+        /*if (!smooth)
         {
             srcW++;
             srcH++;
-        }
+        }*/
 
         if (destW <= 0 || destH <= 0 ||
             srcW <= 0 || srcH <= 0 ||
@@ -1178,8 +1178,7 @@ namespace Pyro
         destW = min(destW, screenW - destX1);
         destH = min(destH, screenH - destY1);
 
-        int64_t destoffset{destY1 * screenW + destX1};
-        uint32_t *srcbuffer{img->load_pixels()};
+        const uint32_t *srcbuffer{img->load_pixels()};
 
         float srcxoffset{destX1 < 0 ? -destX1 * dx : srcX1 * PRECISIONF};
         float srcyoffset{destY1 < 0 ? -destY1 * dy : srcY1 * PRECISIONF};
@@ -1292,6 +1291,7 @@ namespace Pyro
 
         if (smooth)
         {
+            int64_t destoffset{destY1 * screenW + destX1};
             iw = img->_pixelwidth;
             iw1 = img->_pixelwidth - 1;
             ih1 = img->_pixelheight - 1;
@@ -1324,12 +1324,12 @@ namespace Pyro
         {
             throw std::invalid_argument("Size of mask does not match image.");
         }
-        uint32_t *mask_data = mask->load_pixels();
-        uint32_t *data = this->load_pixels();
+        const uint32_t *mask_data = mask->load_pixels();
+        uint32_t *_data = this->load_pixels();
 
         for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
         {
-            data[i] = (data[i] & 0xffffff) | (BLUE(mask_data[i]) << 24);
+            _data[i] = (_data[i] & 0xffffff) | (BLUE(mask_data[i]) << 24);
         }
 
         mask->update_pixels();
@@ -1345,7 +1345,7 @@ namespace Pyro
 
         Image *out = createimage(this->_pixelwidth, this->_pixelheight, format);
         uint32_t *out_p = out->load_pixels();
-        uint32_t *in_p = this->load_pixels();
+        const uint32_t *in_p = this->load_pixels();
 
         for (unsigned int i = 0; i < this->_pixelwidth * this->_pixelheight; i++)
         {
@@ -1411,7 +1411,7 @@ namespace Pyro
         Image *out = createimage(width, height, this->format);
 
         uint32_t *out_pixels = out->load_pixels();
-        uint32_t *in_pixels = this->load_pixels();
+        const uint32_t *in_pixels = this->load_pixels();
 
         for (unsigned int oy = 0; oy < out->_pixelheight; oy++)
         {
@@ -1437,8 +1437,8 @@ namespace Pyro
 
         Image *out = createimage(width, height, this->format);
 
-        unsigned char *out_pixels = (unsigned char *)out->get_data();
-        unsigned char *in_pixels = (unsigned char *)this->get_data();
+        unsigned char *out_pixels = static_cast<unsigned char *>(out->get_data());
+        const unsigned char *in_pixels = static_cast<unsigned char *>(this->get_data());
 
         for (unsigned int y = 0; y < height; y++)
         {
