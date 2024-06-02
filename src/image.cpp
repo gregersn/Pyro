@@ -114,6 +114,7 @@ namespace Pyro
         this->cache = nullptr;
         this->data = (uint32_t *)::operator new(this->_pixelwidth *this->_pixelheight * sizeof(uint32_t));
         std::memcpy(this->get_data(), in.get_data(), this->_pixelwidth * this->_pixelheight * sizeof(uint32_t));
+        this->initialized = true;
     }
 
     Image::Image()
@@ -124,19 +125,31 @@ namespace Pyro
 
     Image::Image(unsigned int width, unsigned int height, unsigned int format, unsigned int factor, unsigned int dpi, Unit unit)
     {
-        init(width, height, format, factor, dpi, unit);
-    }
-
-    void Image::init(unsigned int width, unsigned int height, unsigned int format, unsigned int factor, unsigned int dpi, Unit unit)
-    {
         this->dpi = dpi;
         this->density = factor;
         this->unit = unit;
-        this->_pixelwidth = unit2pixels(width, unit, dpi) * factor;
-        this->_pixelheight = unit2pixels(height, unit, dpi) * factor;
+        this->_width = width;
+        this->_height = height;
         this->format = format;
+    }
 
+    void Image::init()
+    {
+        this->_pixelwidth = unit2pixels(_width, unit, dpi) * density;
+        this->_pixelheight = unit2pixels(_height, unit, dpi) * density;
         this->data = (uint32_t *)::operator new(this->_pixelwidth *this->_pixelheight * sizeof(uint32_t));
+        this->initialized = true;
+    }
+
+    void Image::set_dpi(int dpi)
+    {
+        this->dpi = dpi;
+    }
+
+    void Image::set_unit(Unit unit)
+    {
+        this->unit = unit;
+        this->initialized = false;
     }
 
     Image &Image::operator=(const Image &in)
@@ -190,13 +203,6 @@ namespace Pyro
         default:
             return 4;
         }
-    }
-
-    Image *Image::create(unsigned int width, unsigned int height)
-    {
-        unsigned int format = ARGB;
-        Image *img = new Image(width, height, format, 1);
-        return img;
     }
 
     Image *Image::load(const std::string &filename)
@@ -292,6 +298,7 @@ namespace Pyro
             format = ALPHA;
         }
         Image *img = new Image(_width, _height, format, 1, _dpi);
+        img->init();
         uint32_t *d = static_cast<uint32_t *>(img->load_pixels());
         uint32_t col = 0xffbada55;
         for (unsigned int y = 0; y < _height; y++)
@@ -360,6 +367,7 @@ namespace Pyro
         jpeg_start_decompress(&cinfo);
 
         Image *img = new Image(cinfo.image_width, cinfo.image_height, cinfo.num_components);
+        img->init();
         uint8_t *d = static_cast<uint8_t *>(img->get_data());
 
         while (cinfo.output_scanline < cinfo.image_height)
@@ -1534,6 +1542,7 @@ namespace Pyro
         float hh = (new_height - 1) / 2.0;
 
         Image *out = new Image(new_width, new_height, ARGB);
+        out->init();
         uint32_t *pixels = out->load_pixels();
         for (unsigned int y = 0; y < out->_pixelheight; y++)
         {
@@ -1564,8 +1573,10 @@ namespace Pyro
     }
 
     // Utility functions
-    Image *createimage(unsigned int width, unsigned int height, int format, unsigned int dpi, Unit unit)
+    Image *createimage(unsigned int width, unsigned int height, int format)
     {
-        return new Image(width, height, format, 1, dpi, unit);
+        Image *img = new Image(width, height, format, 1, 72, Unit::PX);
+        img->init();
+        return img;
     }
 } // namespace Pyro
