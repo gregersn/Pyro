@@ -19,7 +19,6 @@ namespace Pyro
         BILINEAR
     };
 
-
     class Image
     {
     private:
@@ -27,6 +26,7 @@ namespace Pyro
         void *cache{nullptr};
         uint32_t *data{nullptr};
         unsigned int dpi{72};
+        bool initialized{false};
 
         Image *resize_nearest(unsigned int width, unsigned int height);
         Image *resize_bilinear(unsigned int width, unsigned int height);
@@ -38,6 +38,8 @@ namespace Pyro
                          unsigned int mode);
 
     protected:
+        unsigned int _width{0};
+        unsigned int _height{0};
         unsigned int _pixelwidth{0};
         unsigned int _pixelheight{0};
         unsigned int density{1};
@@ -55,12 +57,11 @@ namespace Pyro
         Image(const Image &in);
         Image();
         Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::PX);
-        void init(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::PX);
+        void init();
 
         Image &operator=(const Image &in);
         virtual ~Image();
 
-        static Image *create(unsigned int width, unsigned int height);
         static Image *load(const std::string &filename);
         static Image *loadPNG(const std::string &filename);
         static Image *loadJPEG(const std::string &filename);
@@ -72,6 +73,9 @@ namespace Pyro
         void savePNG(const std::string &filename, unsigned int dpi);
 
         unsigned int get_dpi() { return this->dpi; }
+        void set_dpi(int dpi);
+
+        void set_unit(Unit unit);
 
         // Pixel access
         void *get_data() const { return this->data; };
@@ -104,6 +108,6 @@ namespace Pyro
         Image *rotate_bilinear(double angle);
     };
 
-    Image *createimage(unsigned int width, unsigned int height, int format = RGB, unsigned int dpi = 72, Unit unit = Unit::PX);
+    Image *createimage(unsigned int width, unsigned int height, int format = RGB);
 }
 #endif

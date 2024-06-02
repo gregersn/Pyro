@@ -21,7 +21,7 @@ TEST_CASE("images can be composited")
     {
         std::string filename = "image_a_over_b_with_alpha.png";
         Pyro::Image *a = Pyro::Image::load(actual_folder + "test_image.png");
-        Pyro::Image *b = Pyro::Image::create(a->width(), a->height());
+        Pyro::Image *b = Pyro::createimage(a->width(), a->height(), Pyro::ARGB);
 
         unsigned char *data = b->load_bytes();
         for (uint32_t y = 0; y < b->height(); y++)

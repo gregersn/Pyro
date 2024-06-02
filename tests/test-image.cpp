@@ -43,7 +43,7 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
 
     SECTION("saving an image and loading it gives same colors back")
     {
-        Pyro::Image *img = Pyro::Image::create(1, 1);
+        Pyro::Image *img = Pyro::createimage(1, 1);
 
         unsigned int pixel = 0xffff9911;
 
@@ -84,7 +84,7 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
 
     SECTION("saving an image and loading it gives the same size")
     {
-        Pyro::Image *img = Pyro::Image::create(4, 2);
+        Pyro::Image *img = Pyro::createimage(4, 2);
         img->save("test.png");
         unsigned int pixel = 0xffff9911;
 
@@ -112,7 +112,7 @@ TEST_CASE("Images are saved and loaded correctly", "[image]")
     {
         SECTION("Create and save the image")
         {
-            Pyro::Image *img = Pyro::Image::create(256, 5);
+            Pyro::Image *img = Pyro::createimage(256, 5, Pyro::ARGB);
 
             unsigned int *pixels = img->load_pixels();
             REQUIRE(pixels != nullptr);
@@ -183,7 +183,7 @@ TEST_CASE("PNG files can be loaded and saved", "[image]")
     {
         SECTION("Create and save")
         {
-            Pyro::Image *img = Pyro::Image::create(256, 5);
+            Pyro::Image *img = Pyro::createimage(256, 5, Pyro::ARGB);
 
             unsigned int *pixels = img->load_pixels();
             REQUIRE(pixels != nullptr);
@@ -225,7 +225,7 @@ TEST_CASE("Images can be resized", "[image]")
 {
     SECTION("resize a created image")
     {
-        Pyro::Image *img = Pyro::Image::create(64, 32);
+        Pyro::Image *img = Pyro::createimage(64, 32);
         unsigned int pixelcolor = 0xff362d68;
 
         REQUIRE(img->width() == 64);
@@ -308,7 +308,7 @@ SCENARIO("Image can be created with a given size and depth", "[image]")
 {
     WHEN("Creating calling create with parameters 400, 300")
     {
-        Pyro::Image *img = Pyro::Image::create(400, 300);
+        Pyro::Image *img = Pyro::createimage(400, 300, Pyro::ARGB);
         THEN(" width is 400, height is 300 and depth is 4")
         {
             REQUIRE(img->width() == 400);
@@ -404,7 +404,8 @@ SCENARIO("Images can have DPI set", "[image]")
 {
     GIVEN("A newly created image")
     {
-        Pyro::Image *img = Pyro::createimage(400, 300, Pyro::ARGB, 144);
+        Pyro::Image *img = Pyro::createimage(400, 300, Pyro::ARGB);
+        img->set_dpi(144);
         img->save("/tmp/400_300_144.png");
         delete img;
         WHEN("Loaded back")
@@ -422,7 +423,7 @@ SCENARIO("Images can be resized proportionally", "[image]")
 {
     GIVEN("An image that is 400x300")
     {
-        Pyro::Image *img = Pyro::Image::create(400, 300);
+        Pyro::Image *img = Pyro::createimage(400, 300);
         WHEN("Scaling down, setting only width to 200")
         {
             Pyro::Image *img2 = img->resize(200, 0);

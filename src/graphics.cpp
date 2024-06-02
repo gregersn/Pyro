@@ -12,6 +12,7 @@ namespace Pyro
 {
     Graphics::Graphics(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi, Unit unit) : Image(width, height, format, 1, dpi, unit)
     {
+        this->init();
         this->smooth();
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);
         this->stroke(0.0f, 0.0f, 0.0f, 1.0f);
