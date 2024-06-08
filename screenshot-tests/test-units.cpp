@@ -5,7 +5,10 @@ SCENARIO("Check that different units can be used.")
 {
     SECTION("Check using current unit")
     {
-        Pyro::Graphics *p = Pyro::creategraphics(4, 4, testmode, 72u, Pyro::Unit::IN);
+        Pyro::Graphics *p = Pyro::creategraphics(4, 4, testmode);
+        p->set_dpi(72);
+        p->set_unit(Pyro::Unit::IN);
+        p->init();
         std::string filename = "using_current_unit.png";
         p->nostroke();
         p->background(192);

@@ -194,7 +194,7 @@ namespace Pyro
      * @param width The width of the canvas
      * @param height The height of the canvas
      */
-    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO, unsigned int dpi = 72, Unit unit = Unit::PX);
+    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO);
 
 };
 
