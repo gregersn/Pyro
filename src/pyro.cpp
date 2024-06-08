@@ -16,24 +16,25 @@ namespace Pyro
         }
     }
 
-    float size_multiplier(Unit unit, unsigned int dpi = 72) {
-            switch (unit)
-            {
-            case Unit::MM:
-                return dpi / 25.4;
-                break;
-            case Unit::CM:
-                return dpi / 2.54;
-                break;
-            case Unit::IN:
-                return dpi;
-                break;
-            case Unit::PX:
-            default:
-                return 1.0f;
-                break;
-            }
-        };
+    float size_multiplier(Unit unit, unsigned int dpi = 72)
+    {
+        switch (unit)
+        {
+        case Unit::MM:
+            return dpi / 25.4;
+            break;
+        case Unit::CM:
+            return dpi / 2.54;
+            break;
+        case Unit::IN:
+            return dpi;
+            break;
+        case Unit::PX:
+        default:
+            return 1.0f;
+            break;
+        }
+    };
 
     void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi)
     {
@@ -50,7 +51,7 @@ namespace Pyro
         }
         Pyro::width = (unsigned int)width * multiplier;
         Pyro::height = (unsigned int)height * multiplier;
-        pg = Graphics::create(width, height, GraphicsMode::CAIRO, dpi, unit);
+        pg = creategraphics(width, height, GraphicsMode::CAIRO, dpi, unit);
     }
 
     void loadpixels()

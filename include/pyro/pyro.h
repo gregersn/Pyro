@@ -20,27 +20,6 @@ namespace Pyro
     extern unsigned int height;
     extern uint32_t *pixels;
 
-    /**
-     * Create a graphics object
-     *
-     * @param width The width of the canvas
-     * @param height The height of the canvas
-     */
-    inline Graphics *create(unsigned int width, unsigned int height)
-    {
-        return Graphics::create(width, height);
-    }
-
-    inline Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode)
-    {
-        return Graphics::create(width, height, mode);
-    }
-
-    inline Graphics *create(unsigned int width, unsigned int height, Unit unit = Unit::PX, unsigned int dpi = 72)
-    {
-        return Graphics::create(width, height, GraphicsMode::CAIRO, dpi, unit);
-    }
-
     // Initialize the library with this.
     void size(unsigned int width, unsigned int height, Unit unit = Unit::PX, unsigned int dpi = 72);
 

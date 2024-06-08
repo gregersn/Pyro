@@ -8,7 +8,7 @@ TEST_CASE("Test Rect", "[shapes]")
 
     SECTION("Corner drawing")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(250, 250, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(250, 250, testmode);
         filename = "shape_rect_corner.png";
         p->nofill();
         p->stroke(0.0f, 1.0f);
@@ -33,7 +33,7 @@ TEST_CASE("Test Rect", "[shapes]")
 
     SECTION("Center drawing")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(250, 250, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(250, 250, testmode);
         std::string filename = "shape_rect_center.png";
         p->rectmode(Pyro::CENTER);
         p->nofill();
@@ -60,7 +60,7 @@ TEST_CASE("Test Rect", "[shapes]")
 
 TEST_CASE("Draw shapes", "[shapes]")
 {
-    Pyro::Graphics *p = Pyro::Graphics::create(128, 128, testmode);
+    Pyro::Graphics *p = Pyro::creategraphics(128, 128, testmode);
     SECTION("Draw triangle")
     {
         std::string filename = "shape_triangle.png";
@@ -99,7 +99,7 @@ TEST_CASE("Draw shapes", "[shapes]")
 
 TEST_CASE("Variable side count ellipses", "[shapes]")
 {
-    Pyro::Graphics *p = Pyro::Graphics::create(512, 512, testmode);
+    Pyro::Graphics *p = Pyro::creategraphics(512, 512, testmode);
     SECTION("Draw ellipses with n siders")
     {
         std::string filename = "shape_n_ellipses.png";
@@ -126,7 +126,7 @@ TEST_CASE("Variable side count ellipses", "[shapes]")
 
 TEST_CASE("Complex shapes", "[shapes]")
 {
-    Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode, Pyro::ARGB);
+    Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode, Pyro::ARGB);
     SECTION("Draw shape with hole")
     {
         std::string filename = "shape_multi_contour.png";
