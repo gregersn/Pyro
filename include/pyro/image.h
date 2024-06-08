@@ -26,7 +26,6 @@ namespace Pyro
         void *cache{nullptr};
         uint32_t *data{nullptr};
         unsigned int dpi{72};
-        bool initialized{false};
 
         Image *resize_nearest(unsigned int width, unsigned int height);
         Image *resize_bilinear(unsigned int width, unsigned int height);
@@ -46,6 +45,7 @@ namespace Pyro
 
         bool modified{false};
         int mx1{0}, my1{0}, mx2{0}, my2{0};
+        bool initialized{false};
 
     public:
         unsigned int format{ARGB};
@@ -57,7 +57,7 @@ namespace Pyro
         Image(const Image &in);
         Image();
         Image(unsigned int width, unsigned int height, unsigned int format = RGB, unsigned int factor = 1, unsigned int dpi = 72, Unit unit = Unit::PX);
-        void init();
+        virtual void init();
 
         Image &operator=(const Image &in);
         virtual ~Image();
