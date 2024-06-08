@@ -5,7 +5,7 @@ SCENARIO("A color can be specified with various types")
 {
     SECTION("Fill can be set with ints")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(1024, 512, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(1024, 512, testmode);
         std::string filename = "fill_with_ints.png";
         p->nostroke();
         for (int i = 0; i < 256; i++)
@@ -29,7 +29,7 @@ SCENARIO("A color can be specified with various types")
     }
     SECTION("Fill can be set with floas")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(1024, 512, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(1024, 512, testmode);
         std::string filename = "fill_with_floats.png";
         p->nostroke();
         for (int i = 0; i < 256; i++)

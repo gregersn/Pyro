@@ -29,7 +29,7 @@ namespace Pyro
         this->background(192);
     }
 
-    Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi, Unit unit)
+    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi, Unit unit)
     {
 
         switch (mode)

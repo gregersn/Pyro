@@ -4,7 +4,7 @@
 
 TEST_CASE("Draw line", "[strokes]")
 {
-    Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+    Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode);
 
     SECTION("Stroke weight")
     {
@@ -43,7 +43,7 @@ TEST_CASE("Draw line", "[strokes]")
 
     SECTION("Stroke join")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 300, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(100, 300, testmode);
 
         std::string filename = "stroke_join.png";
         p->background(192);
@@ -90,7 +90,7 @@ TEST_CASE("Test curve", "[shapes]")
 {
     SECTION("Draw with curvevertex()")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode);
         std::string filename = "shape_curve_vertex.png";
         p->background(192);
         p->nofill();
@@ -109,7 +109,7 @@ TEST_CASE("Test curve", "[shapes]")
 
     SECTION("Draw with curve()")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode);
         std::string filename = "shape_curve.png";
         p->background(192);
         p->nofill();
@@ -131,7 +131,7 @@ TEST_CASE("Bezier curve", "[shapes]")
     std::string filename = "";
     SECTION("Draw with beziervertex()")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 100, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode);
         std::string filename = "shape_curve_bezier_vertex.png";
         p->background(192);
         p->nofill();
@@ -146,7 +146,7 @@ TEST_CASE("Bezier curve", "[shapes]")
 
     SECTION("Draw with bezier()")
     {
-        Pyro::Graphics *p = Pyro::Graphics::create(100, 200, testmode);
+        Pyro::Graphics *p = Pyro::creategraphics(100, 200, testmode);
         std::string filename = "shape_curve_bezier.png";
         p->background(192);
         p->nofill();
