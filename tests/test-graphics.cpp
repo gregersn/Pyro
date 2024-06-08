@@ -6,7 +6,7 @@ TEST_CASE("Graphics objects can be initialized", "[graphics]")
 {
     SECTION("Create a graphics object")
     {
-        Pyro::Graphics *graphics = Pyro::Graphics::create(400, 300);
+        Pyro::Graphics *graphics = Pyro::creategraphics(400, 300);
         REQUIRE(graphics->width() == 400);
         REQUIRE(graphics->height() == 300);
     }
@@ -14,7 +14,7 @@ TEST_CASE("Graphics objects can be initialized", "[graphics]")
 
 TEST_CASE("Graphics can have backgrounds", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::Graphics::create(4, 4);
+    Pyro::Graphics *pg = Pyro::creategraphics(4, 4);
 
     SECTION("Set a red background")
     {
@@ -43,7 +43,7 @@ TEST_CASE("Graphics can have backgrounds", "[graphics]")
 
 TEST_CASE("Fill can be set", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::Graphics::create(8, 8);
+    Pyro::Graphics *pg = Pyro::creategraphics(8, 8);
 
     SECTION("Set a red fill")
     {
@@ -62,7 +62,7 @@ TEST_CASE("Fill can be set", "[graphics]")
 
 TEST_CASE("Stroke can be set", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::Graphics::create(10, 1);
+    Pyro::Graphics *pg = Pyro::creategraphics(10, 1);
 
     SECTION("Set no stroke")
     {
@@ -97,7 +97,7 @@ TEST_CASE("Stroke can be set", "[graphics]")
 
 TEST_CASE("Shapes can be drawn", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::Graphics::create(8, 8);
+    Pyro::Graphics *pg = Pyro::creategraphics(8, 8);
 
     SECTION("Draw a filled square")
     {
@@ -204,7 +204,7 @@ TEST_CASE("Shapes can be drawn", "[graphics]")
 
 TEST_CASE("Select different color modes", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::Graphics::create(3, 3);
+    Pyro::Graphics *pg = Pyro::creategraphics(3, 3);
 
     SECTION("Use HSB")
     {
@@ -221,7 +221,7 @@ TEST_CASE("Select different color modes", "[graphics]")
 
 TEST_CASE("Save and load images", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::Graphics::create(4, 4);
+    Pyro::Graphics *pg = Pyro::creategraphics(4, 4);
     const char *filename = "__4x4_ARGB__.png";
     SECTION("Create, save and load")
     {

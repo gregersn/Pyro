@@ -40,8 +40,6 @@ namespace Pyro
 
         virtual void init() override;
 
-        static Graphics *create(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO, unsigned int dpi = 72, Unit unit = Unit::PX);
-
         void imagemode(int mode)
         {
             this->_image_mode = mode;
@@ -190,6 +188,14 @@ namespace Pyro
         virtual void textfont_impl(Font * /*font*/) {};
         virtual void text_impl(std::string /*text*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::CURRENT) {};
     };
+    /**
+     * Create a graphics object
+     *
+     * @param width The width of the canvas
+     * @param height The height of the canvas
+     */
+    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO, unsigned int dpi = 72, Unit unit = Unit::PX);
+
 };
 
 #endif
