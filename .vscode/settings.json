@@ -115,7 +115,9 @@
     "utility": "cpp",
     "valarray": "cpp",
     "variant": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "nonlinearoptimization": "cpp",
+    "ios": "cpp"
   },
   "mesonbuild.buildFolder": "build",
   "terminal.integrated.env.linux": {

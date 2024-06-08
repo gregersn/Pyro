@@ -5,11 +5,17 @@ namespace Pyro
 {
     GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi, Unit unit) : Graphics(width, height, format, dpi, unit)
     {
+    }
+
+    void GraphicsCairo::init()
+    {
+        Image::init();
         this->surface = cairo_image_surface_create_for_data(this->load_bytes(),
                                                             CAIRO_FORMAT_ARGB32,
                                                             this->_pixelwidth, this->_pixelheight,
                                                             this->_pixelwidth * 4);
         this->cr = cairo_create(this->surface);
+        Graphics::init();
     }
 
     GraphicsCairo::~GraphicsCairo()

@@ -12,7 +12,14 @@ namespace Pyro
 {
     Graphics::Graphics(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi, Unit unit) : Image(width, height, format, 1, dpi, unit)
     {
-        this->init();
+    }
+
+    Graphics::~Graphics()
+    {
+    }
+
+    void Graphics::init()
+    {
         this->smooth();
         this->fill(1.0f, 1.0f, 1.0f, 1.0f);
         this->stroke(0.0f, 0.0f, 0.0f, 1.0f);
@@ -22,10 +29,6 @@ namespace Pyro
         this->background(192);
     }
 
-    Graphics::~Graphics()
-    {
-    }
-
     Graphics *Graphics::create(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi, Unit unit)
     {
 
@@ -33,7 +36,9 @@ namespace Pyro
         {
         case GraphicsMode::CAIRO:
         default:
-            return new GraphicsCairo(width, height, ARGB, dpi, unit);
+            Graphics *g = new GraphicsCairo(width, height, ARGB, dpi, unit);
+            g->init();
+            return g;
         }
     }
 
