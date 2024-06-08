@@ -126,7 +126,7 @@ TEST_CASE("Variable side count ellipses", "[shapes]")
 
 TEST_CASE("Complex shapes", "[shapes]")
 {
-    Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode, Pyro::ARGB);
+    Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode);
     SECTION("Draw shape with hole")
     {
         std::string filename = "shape_multi_contour.png";

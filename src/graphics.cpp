@@ -29,14 +29,14 @@ namespace Pyro
         this->background(192);
     }
 
-    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode, unsigned int dpi, Unit unit)
+    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode)
     {
 
         switch (mode)
         {
         case GraphicsMode::CAIRO:
         default:
-            Graphics *g = new GraphicsCairo(width, height, ARGB, dpi, unit);
+            Graphics *g = new GraphicsCairo(width, height, ARGB, 72, Unit::PX);
             g->init();
             return g;
         }
