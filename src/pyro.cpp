@@ -51,7 +51,8 @@ namespace Pyro
         }
         Pyro::width = (unsigned int)width * multiplier;
         Pyro::height = (unsigned int)height * multiplier;
-        pg = creategraphics(width, height, GraphicsMode::CAIRO, dpi, unit);
+        pg = creategraphics(width, height, GraphicsMode::CAIRO);
+        // , 100, Pyro::Unit::MM
     }
 
     void loadpixels()
