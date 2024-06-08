@@ -7,7 +7,6 @@ TEST_CASE("Graphics objects can be initialized", "[graphics]")
     SECTION("Create a graphics object")
     {
         Pyro::Graphics *graphics = Pyro::Graphics::create(400, 300);
-
         REQUIRE(graphics->width() == 400);
         REQUIRE(graphics->height() == 300);
     }

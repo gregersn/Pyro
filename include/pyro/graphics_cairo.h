@@ -19,6 +19,7 @@ namespace Pyro
     public:
         GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi, Unit unit);
         ~GraphicsCairo() override;
+        void init() override;
 
         void blendmode(int mode) override;
 
