@@ -10,8 +10,9 @@
 
 namespace Pyro
 {
-    Graphics::Graphics(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi, Unit unit) : Image(width, height, format, 1, dpi, unit)
+    Graphics::Graphics(unsigned int width, unsigned int height, std::filesystem::path filename) : Image(width, height, ARGB)
     {
+        this->filename = filename;
     }
 
     Graphics::~Graphics()
@@ -29,17 +30,24 @@ namespace Pyro
         this->background(192);
     }
 
-    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode)
+    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode, std::filesystem::path filename)
     {
 
+        Graphics *g = nullptr;
         switch (mode)
         {
+        case GraphicsMode::SVG:
+        case GraphicsMode::PDF:
+            assert(filename != "");
+            g = new GraphicsCairo(width, height, mode, filename);
+            break;
         case GraphicsMode::CAIRO:
         default:
-            Graphics *g = new GraphicsCairo(width, height, ARGB, 72, Unit::PX);
-            g->init();
-            return g;
+            g = new GraphicsCairo(width, height);
         }
+        assert(g != nullptr);
+        g->init();
+        return g;
     }
 
     void Graphics::point(float x, float y, Unit unit)

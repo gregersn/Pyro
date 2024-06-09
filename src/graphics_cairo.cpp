@@ -1,19 +1,34 @@
 #include "pyro/graphics_cairo.h"
 #include "pyro/font_impl.h"
 #include "pyro/utils.h"
+#include <cairo-svg.h>
+#include <cairo-pdf.h>
+
 namespace Pyro
 {
-    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, unsigned int format, unsigned int dpi, Unit unit) : Graphics(width, height, format, dpi, unit)
+    GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, GraphicsMode mode, std::filesystem::path filename) : Graphics(width, height, filename)
     {
+        this->mode = mode;
     }
 
     void GraphicsCairo::init()
     {
         Image::init();
-        this->surface = cairo_image_surface_create_for_data(this->load_bytes(),
-                                                            CAIRO_FORMAT_ARGB32,
-                                                            this->_pixelwidth, this->_pixelheight,
-                                                            this->_pixelwidth * 4);
+        switch (this->mode)
+        {
+        case SVG:
+            this->surface = cairo_svg_surface_create(filename.c_str(), _width, _height);
+            break;
+        case PDF:
+            this->surface = cairo_pdf_surface_create(filename.c_str(), _width, _height);
+            break;
+        default:
+            this->surface = cairo_image_surface_create_for_data(this->load_bytes(),
+                                                                CAIRO_FORMAT_ARGB32,
+                                                                this->_pixelwidth, this->_pixelheight,
+                                                                this->_pixelwidth * 4);
+            break;
+        }
         this->cr = cairo_create(this->surface);
         Graphics::init();
     }

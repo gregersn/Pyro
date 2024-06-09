@@ -117,7 +117,12 @@
     "variant": "cpp",
     "vector": "cpp",
     "nonlinearoptimization": "cpp",
-    "ios": "cpp"
+    "ios": "cpp",
+    "charconv": "cpp",
+    "numbers": "cpp",
+    "__locale": "cpp",
+    "__verbose_abort": "cpp",
+    "execution": "cpp"
   },
   "mesonbuild.buildFolder": "build",
   "terminal.integrated.env.linux": {

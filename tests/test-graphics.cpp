@@ -243,3 +243,25 @@ TEST_CASE("Save and load images", "[graphics]")
         remove(filename);
     }
 }
+
+TEST_CASE("Use different modes", "[graphics]")
+{
+    SECTION("SVG")
+    {
+        Pyro::Graphics *svg = Pyro::creategraphics(640, 480, Pyro::GraphicsMode::SVG, "test-file.svg");
+        svg->rect(10, 10, 20, 20);
+        REQUIRE(svg);
+        delete svg;
+        std::remove("test-file.svg");
+    }
+
+    SECTION("PDF")
+    {
+
+        Pyro::Graphics *pdf = Pyro::creategraphics(640, 480, Pyro::GraphicsMode::PDF, "test-file.pdf");
+        pdf->rect(10, 10, 20, 20);
+        REQUIRE(pdf);
+        delete pdf;
+        std::remove("test-file.pdf");
+    }
+}
