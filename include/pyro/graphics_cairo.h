@@ -17,7 +17,9 @@ namespace Pyro
         cairo_font_face_t *font{nullptr};
 
     public:
-        GraphicsCairo(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi, Unit unit);
+        GraphicsCairo(unsigned int width, unsigned int height,
+                      GraphicsMode mode = GraphicsMode::CAIRO,
+                      std::filesystem::path filename = "");
         ~GraphicsCairo() override;
         void init() override;
 

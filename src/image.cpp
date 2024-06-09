@@ -1575,7 +1575,7 @@ namespace Pyro
     // Utility functions
     Image *createimage(unsigned int width, unsigned int height, int format)
     {
-        Image *img = new Image(width, height, format, 1, 72, Unit::PX);
+        Image *img = new Image(width, height, format);
         img->init();
         return img;
     }

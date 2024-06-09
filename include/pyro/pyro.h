@@ -33,7 +33,7 @@ namespace Pyro
     // Drawing functions
 
     // **** COLOR ****
-    inline void background(Color c) { pg->background(c); };
+    inline void background(const Color &c) { pg->background(c); };
 
     inline void background(int c, int a = 255) { pg->background(c / 255.0f, c / 255.0f, c / 255.0f, a / 255.0); };
     inline void background(int r, int g, int b, int a = 255) { pg->background(r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f); };
@@ -44,7 +44,7 @@ namespace Pyro
     // TODO: clear
     // TODO: colormode
 
-    inline void fill(Color c) { pg->fill(c); };
+    inline void fill(const Color &c) { pg->fill(c); };
     inline void fill(float c, float a = 1.0) { pg->fill(c, c, c, a); };
     inline void fill(float r, float g, float b, float a = 1.0) { pg->fill(r, g, b, a); };
     inline void fill(int c, int a = 255) { pg->fill(c, a); };

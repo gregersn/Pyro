@@ -8,16 +8,22 @@
 #include "font.h"
 #include "transformer.h"
 
+#include <filesystem>
+
 namespace Pyro
 {
     enum GraphicsMode
     {
-        CAIRO
+        CAIRO,
+        PDF,
+        SVG,
     };
 
     class Graphics : public Image
     {
     protected:
+        GraphicsMode mode;
+        std::filesystem::path filename{""};
         bool stroke_enable{true};
         bool fill_enable{true};
 
@@ -35,7 +41,7 @@ namespace Pyro
         Transformer2D transformer;
 
     public:
-        Graphics(unsigned int width, unsigned int height, unsigned int channels, unsigned int dpi, Unit unit = Unit::PX);
+        Graphics(unsigned int width, unsigned int height, std::filesystem::path filename = "");
         virtual ~Graphics() override;
 
         virtual void init() override;
@@ -194,7 +200,10 @@ namespace Pyro
      * @param width The width of the canvas
      * @param height The height of the canvas
      */
-    Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode = GraphicsMode::CAIRO);
+    Graphics *creategraphics(unsigned int width,
+                             unsigned int height,
+                             GraphicsMode mode = GraphicsMode::CAIRO,
+                             std::filesystem::path filename = "");
 
 };
 
