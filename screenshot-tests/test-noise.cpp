@@ -5,7 +5,7 @@
 
 TEST_CASE("Test noise")
 {
-    std::string filename = "noise_2d.png";
+    std::filesystem::path filename = "noise_2d.png";
     Pyro::Image *img = Pyro::createimage(128, 128, Pyro::ARGB);
     unsigned int *pixels = img->load_pixels();
 
@@ -20,8 +20,8 @@ TEST_CASE("Test noise")
         }
     }
 
-    img->save(current_folder + filename);
+    img->save(current_folder / filename);
     delete img;
 
-    CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
 }

@@ -2,6 +2,7 @@
 #define PYROIMAGE_H
 
 #include <string>
+#include <filesystem>
 #include <cstdint>
 #include "constants.h"
 
@@ -63,15 +64,15 @@ namespace Pyro
         Image &operator=(const Image &in);
         virtual ~Image();
 
-        static Image *load(const std::string &filename);
-        static Image *loadPNG(const std::string &filename);
-        static Image *loadJPEG(const std::string &filename);
+        static Image *load(const std::filesystem::path &filename);
+        static Image *loadPNG(const std::filesystem::path &filename);
+        static Image *loadJPEG(const std::filesystem::path &filename);
 
-        void save(const std::string &filename);
-        void save(const std::string &filename, unsigned int dpi);
+        void save(const std::filesystem::path &filename);
+        void save(const std::filesystem::path &filename, unsigned int dpi);
 
-        void savePNG(const std::string &filename) { this->savePNG(filename, this->dpi); };
-        void savePNG(const std::string &filename, unsigned int dpi);
+        void savePNG(const std::filesystem::path &filename) { this->savePNG(filename, this->dpi); };
+        void savePNG(const std::filesystem::path &filename, unsigned int dpi);
 
         unsigned int get_dpi() { return this->dpi; }
         void set_dpi(int dpi);

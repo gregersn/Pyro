@@ -4,7 +4,7 @@
 #include "pyro/image.h"
 #include "test-settings.h"
 
-bool ImageMatch::match(std::string const &filename) const
+bool ImageMatch::match(std::filesystem::path const &filename) const
 {
     if (access(this->actual_file.c_str(), F_OK) == -1)
     {

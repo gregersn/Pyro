@@ -1,12 +1,14 @@
 #include <catch2/catch_all.hpp>
 #include "test-settings.h"
 
+#include <filesystem>
+
 SCENARIO("A color can be specified with various types")
 {
     SECTION("Fill can be set with ints")
     {
         Pyro::Graphics *p = Pyro::creategraphics(1024, 512, testmode);
-        std::string filename = "fill_with_ints.png";
+        std::filesystem::path filename = "fill_with_ints.png";
         p->nostroke();
         for (int i = 0; i < 256; i++)
         {
@@ -23,14 +25,14 @@ SCENARIO("A color can be specified with various types")
             p->rect(i * 4, 384, 4, 128);
         }
 
-        p->save(current_folder + filename);
+        p->save(current_folder / filename);
         delete p;
-        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
     }
     SECTION("Fill can be set with floas")
     {
         Pyro::Graphics *p = Pyro::creategraphics(1024, 512, testmode);
-        std::string filename = "fill_with_floats.png";
+        std::filesystem::path filename = "fill_with_floats.png";
         p->nostroke();
         for (int i = 0; i < 256; i++)
         {
@@ -47,8 +49,8 @@ SCENARIO("A color can be specified with various types")
             p->rect(i * 4, 384, 4, 128);
         }
 
-        p->save(current_folder + filename);
+        p->save(current_folder / filename);
         delete p;
-        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+        CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
     }
 }

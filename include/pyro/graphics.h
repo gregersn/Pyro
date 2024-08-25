@@ -52,7 +52,7 @@ namespace Pyro
         };
         void image(Image *img, float x, float y);
         virtual void image_impl(Image * /*img*/, float /*x*/, float /*y*/) {};
-        Image *loadimage(std::string const &filename) { return Image::load(filename); };
+        Image *loadimage(std::filesystem::path const &filename) { return Image::load(filename); };
 
         // Color functions
         void nostroke();

@@ -3,18 +3,18 @@
 
 namespace Pyro
 {
-    Font::Font(std::string filename) : filename(filename)
+    Font::Font(std::filesystem::path filename) : filename(filename)
     {
         this->impl = new FontImpl(filename);
     }
 
-    Font *Font::load(std::string filename)
+    Font *Font::load(std::filesystem::path filename)
     {
         Font *font{new Font(filename)};
         return font;
     }
 
-    Font *create_font(std::string filename, int size)
+    Font *create_font(std::filesystem::path filename, int size)
     {
         // TODO: Use size
         return Font::load(filename);

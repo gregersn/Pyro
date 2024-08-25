@@ -39,21 +39,6 @@ void OutputMessage(j_common_ptr /*cinfo*/)
     fprintf(stderr, "%s\n", buffer);*/
 }
 
-std::string get_extension(const std::string &filename)
-{
-    // Find file extension
-    // https://stackoverflow.com/a/51992/7097
-    std::string::size_type idx;
-    idx = filename.rfind('.');
-
-    if (idx != std::string::npos)
-    {
-        std::string extension = filename.substr(idx);
-        return extension;
-    }
-    return std::string("");
-}
-
 namespace Pyro
 {
     // fixed point precision is limited to 15 bits!!
@@ -135,7 +120,7 @@ namespace Pyro
 
     void Image::init()
     {
-        if(unit != Unit::PX)
+        if (unit != Unit::PX)
             this->pixel_multiplier = unit2pixels(1.0f, unit, dpi) * density;
         else
             this->pixel_multiplier = 1.0f;
@@ -209,7 +194,7 @@ namespace Pyro
         }
     }
 
-    Image *Image::load(const std::string &filename)
+    Image *Image::load(const std::filesystem::path &filename)
     {
         if (access(filename.c_str(), F_OK) == -1)
         {
@@ -217,7 +202,7 @@ namespace Pyro
             return nullptr;
         }
 
-        std::string extension = get_extension(filename);
+        std::string extension = filename.extension().c_str();
         std::transform(extension.begin(), extension.end(), extension.begin(),
                        [](unsigned char c)
                        { return std::tolower(c); });
@@ -234,7 +219,7 @@ namespace Pyro
         return nullptr;
     }
 
-    Image *Image::loadPNG(const std::string &filename)
+    Image *Image::loadPNG(const std::filesystem::path &filename)
     {
         FILE *fp = fopen(filename.c_str(), "rb");
         if (!fp)
@@ -336,7 +321,7 @@ namespace Pyro
         return img;
     }
 
-    Image *Image::loadJPEG(const std::string &filename)
+    Image *Image::loadJPEG(const std::filesystem::path &filename)
     {
         jpeg_decompress_struct cinfo;
         ErrorManager jerr;
@@ -389,12 +374,12 @@ namespace Pyro
         return img;
     }
 
-    void Image::save(const std::string &filename)
+    void Image::save(const std::filesystem::path &filename)
     {
         this->save(filename, this->dpi);
     }
 
-    void Image::save(const std::string &filename, unsigned int dpi)
+    void Image::save(const std::filesystem::path &filename, unsigned int dpi)
     {
         if (access(filename.c_str(), F_OK) == 0)
         {
@@ -403,7 +388,7 @@ namespace Pyro
         return this->savePNG(filename, dpi);
     }
 
-    void Image::savePNG(const std::string &filename, unsigned int dpi)
+    void Image::savePNG(const std::filesystem::path &filename, unsigned int dpi)
     {
         FILE *fp = fopen(filename.c_str(), "wb");
         if (!fp)

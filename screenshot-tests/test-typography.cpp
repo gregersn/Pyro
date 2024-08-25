@@ -4,7 +4,7 @@
 
 TEST_CASE("Write text")
 {
-    std::string filename = "";
+    std::filesystem::path filename = "";
     SECTION("Simple strings")
     {
         Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode);
@@ -21,8 +21,8 @@ TEST_CASE("Write text")
         p->fill(0, 102, 153, 51);
         p->text("word", 10, 90);
 
-        p->save(current_folder + filename);
+        p->save(current_folder / filename);
         delete p;
-        CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename, 4.02942e-05));
+        CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename, 4.02942e-05));
     }
 }

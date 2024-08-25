@@ -1,6 +1,6 @@
 #ifndef PYROFONT_H
 #define PYROFONT_H
-#include <string>
+#include <filesystem>
 
 namespace Pyro
 {
@@ -9,14 +9,14 @@ namespace Pyro
     class Font
     {
     private:
-        std::string filename{""};
+        std::filesystem::path filename{""};
 
     public:
-        explicit Font(std::string filename);
-        static Font *load(std::string filename);
+        explicit Font(std::filesystem::path filename);
+        static Font *load(std::filesystem::path filename);
         FontImpl *impl;
     };
 
-    Font *create_font(std::string filename, int size);
+    Font *create_font(std::filesystem::path filename, int size);
 }
 #endif

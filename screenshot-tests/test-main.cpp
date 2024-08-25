@@ -7,7 +7,7 @@
 
 TEST_CASE("Create test image")
 {
-    std::string filename = "test_image.png";
+    std::filesystem::path filename = "test_image.png";
     Pyro::Graphics *p = Pyro::creategraphics(128, 128, testmode);
 
     p->nostroke();
@@ -32,10 +32,10 @@ TEST_CASE("Create test image")
     p->line(p->width() / 2.0f, 0, 0, p->height() / 2.0f);
     p->line(p->width() / 2.0f, 0, p->width(), p->height() / 2.0f);
 
-    p->save(current_folder + filename);
+    p->save(current_folder / filename);
     delete p;
 
-    CHECK_THAT(current_folder + filename, LooksLike(actual_folder + filename));
+    CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
 }
 
 int main(int argc, char *argv[])

@@ -32,8 +32,8 @@ TEST_CASE("Test varied DPI")
 
         Pyro::Image *pc = pb->resize(pa->width(), pa->height());
 
-        std::string filename_a = "/tmp/508mm_by_254mm_100_dpi.png";
-        std::string filename_b = "/tmp/508mm_by_254mm_200_dpi.png";
+        std::filesystem::path filename_a = "/tmp/508mm_by_254mm_100_dpi.png";
+        std::filesystem::path filename_b = "/tmp/508mm_by_254mm_200_dpi.png";
 
         pa->save(filename_a);
         pc->save(filename_b);
