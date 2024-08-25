@@ -30,18 +30,18 @@ namespace Pyro
         };
         bool running;
 
-        bool keypressed; // True if a key is pressed
-        int key;         // Value of key pressed
+        bool keypressed{false}; // True if a key is pressed
+        int key{0};         // Value of key pressed
 
         void set_keypressed(std::function<void()> keypressed); // Set callback for keypressed
         void set_mousepressed(std::function<void()> mousepressed); // Set callback for mousepressed
 
-        bool mousepressed;
-        int mousebutton;
-        int mousex;  // Current horizontal coordinate of the mouse
-        int mousey;  // Current vertical coodrinate of the mouse
-        int pmousex; // Previous horizontal coordinate of the mouse
-        int pmousey; // Previous vertical coordinate of the mouse
+        bool mousepressed{false};
+        int mousebutton{0};
+        int mousex{0};  // Current horizontal coordinate of the mouse
+        int mousey{0};  // Current vertical coodrinate of the mouse
+        int pmousex{0}; // Previous horizontal coordinate of the mouse
+        int pmousey{0}; // Previous vertical coordinate of the mouse
     };
 
     // State variables

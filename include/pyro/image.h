@@ -42,6 +42,7 @@ namespace Pyro
         unsigned int _pixelwidth{0};
         unsigned int _pixelheight{0};
         unsigned int density{1};
+        float pixel_multiplier{1.0f};
 
         bool modified{false};
         int mx1{0}, my1{0}, mx2{0}, my2{0};

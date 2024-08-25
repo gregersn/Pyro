@@ -91,7 +91,7 @@ namespace Pyro
         virtual void nosmooth();
 
         // Transformation
-        virtual void translate(float x, float, Unit unit = Unit::CURRENT);
+        virtual void translate(float x, float y);
         virtual void rotate(float a);
         virtual void scale(float sx, float sy);
         virtual void pushmatrix();
@@ -119,7 +119,7 @@ namespace Pyro
         };
         virtual void background(float r, float g, float b, float a = 1.0);
 
-        virtual void shape(Shape /*s*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::CURRENT) {};
+        virtual void shape(Shape /*s*/, float /*x*/, float /*y*/) {};
 
         void beginshape(int kind = DEFAULT)
         {
@@ -156,33 +156,33 @@ namespace Pyro
         };
 
         // Primitive shapes
-        void point(float x, float y, Unit unit = Unit::CURRENT);
-        virtual void line(float /*x0*/, float /*y0*/, float /*x1*/, float /*y1*/, Unit /*unit*/ = Unit::CURRENT) {};
-        void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::CURRENT);
-        void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::CURRENT);
+        void point(float x, float y);
+        virtual void line(float /*x0*/, float /*y0*/, float /*x1*/, float /*y1*/) {};
+        void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
+        void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
         void triangle(Vector a, Vector b, Vector c);
-        void triangle(float x0, float y0, float x1, float y1, float x2, float y2, Unit unit = Unit::CURRENT);
+        void triangle(float x0, float y0, float x1, float y1, float x2, float y2);
 
         void rectmode(int mode)
         {
             this->_rect_mode = mode;
         };
-        void rect(float a, float b, float c, float d, Unit unit = Unit::CURRENT);
+        void rect(float a, float b, float c, float d);
 
         void quad(Vector a, Vector b, Vector c, Vector d);
-        void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit = Unit::CURRENT);
+        void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
-        void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN, Unit unit = Unit::CURRENT);
+        void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN);
 
         void ellipsemode(int mode)
         {
             this->_ellipse_mode = mode;
         };
-        void ellipse(float x, float y, float w, float h, unsigned int segments, Unit unit = Unit::CURRENT);
-        void ellipse(float x, float y, float r, unsigned int segments, Unit unit = Unit::CURRENT)
+        void ellipse(float x, float y, float w, float h, unsigned int segments);
+        void ellipse(float x, float y, float r, unsigned int segments)
         {
-            this->ellipse(x, y, r, r, segments, unit);
+            this->ellipse(x, y, r, r, segments);
         };
 
         // Typography
@@ -192,7 +192,7 @@ namespace Pyro
         void textfont(Font *font);
 
         virtual void textfont_impl(Font * /*font*/) {};
-        virtual void text_impl(std::string /*text*/, float /*x*/, float /*y*/, Unit /*unit*/ = Unit::CURRENT) {};
+        virtual void text_impl(std::string /*text*/, float /*x*/, float /*y*/) {};
     };
     /**
      * Create a graphics object

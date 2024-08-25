@@ -135,8 +135,12 @@ namespace Pyro
 
     void Image::init()
     {
-        this->_pixelwidth = unit2pixels(_width, unit, dpi) * density;
-        this->_pixelheight = unit2pixels(_height, unit, dpi) * density;
+        if(unit != Unit::PX)
+            this->pixel_multiplier = unit2pixels(1.0f, unit, dpi) * density;
+        else
+            this->pixel_multiplier = 1.0f;
+        this->_pixelwidth = _width * pixel_multiplier;
+        this->_pixelheight = _height * pixel_multiplier;
         this->data = (uint32_t *)::operator new(this->_pixelwidth *this->_pixelheight * sizeof(uint32_t));
         this->initialized = true;
     }

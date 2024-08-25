@@ -87,7 +87,7 @@ namespace Pyro
         }
     }
 
-    void GraphicsCairo::shape(Shape s, float x, float y, Unit unit)
+    void GraphicsCairo::shape(Shape s, float x, float y)
     {
         // TODO: Use unit
         cairo_save(this->cr);
@@ -167,15 +167,9 @@ namespace Pyro
             cairo_surface_destroy(src);
         }
     }
-    void GraphicsCairo::translate(float x, float y, Unit unit)
+    void GraphicsCairo::translate(float x, float y)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
-        x = unit2pixels(x, unit, this->get_dpi());
-        y = unit2pixels(y, unit, this->get_dpi());
-
-        cairo_translate(this->cr, x, y);
+        cairo_translate(this->cr, x * pixel_multiplier, y * pixel_multiplier);
     }
 
     void GraphicsCairo::rotate(float a)
@@ -198,21 +192,13 @@ namespace Pyro
         cairo_restore(this->cr);
     }
 
-    void GraphicsCairo::line(float x0, float y0, float x1, float y1, Unit unit)
+    void GraphicsCairo::line(float x0, float y0, float x1, float y1)
     {
         if (this->stroke_enable)
         {
-            if (unit == Unit::CURRENT)
-                unit = this->unit;
-            x0 = unit2pixels(x0, unit, this->get_dpi());
-            y0 = unit2pixels(y0, unit, this->get_dpi());
-
-            x1 = unit2pixels(x1, unit, this->get_dpi());
-            y1 = unit2pixels(y1, unit, this->get_dpi());
-
             cairo_new_path(this->cr);
-            cairo_move_to(this->cr, x0, y0);
-            cairo_line_to(this->cr, x1, y1);
+            cairo_move_to(this->cr, x0 * pixel_multiplier, y0 * pixel_multiplier);
+            cairo_line_to(this->cr, x1 * pixel_multiplier, y1 * pixel_multiplier);
             cairo_set_line_width(this->cr, this->stroke_weight);
             cairo_set_source_rgba(this->cr,
                                   this->stroke_color.r(),
@@ -294,9 +280,8 @@ namespace Pyro
 
     // Typography
 
-    void GraphicsCairo::text_impl(std::string text, float x, float y, Unit unit)
+    void GraphicsCairo::text_impl(std::string text, float x, float y)
     {
-        // TODO: Use unit
         cairo_set_source_rgba(this->cr,
                               this->fill_color.r(),
                               this->fill_color.g(),
@@ -308,7 +293,7 @@ namespace Pyro
             cairo_set_font_face(this->cr, this->font);
         }
         cairo_set_font_size(this->cr, this->text_size);
-        cairo_move_to(this->cr, x, y);
+        cairo_move_to(this->cr, x * pixel_multiplier, y * pixel_multiplier);
         cairo_show_text(this->cr, text.c_str());
     }
 

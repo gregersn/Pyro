@@ -50,24 +50,24 @@ namespace Pyro
         return g;
     }
 
-    void Graphics::point(float x, float y, Unit unit)
+    void Graphics::point(float x, float y)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;
-        x = unit2pixels(x, unit, this->get_dpi());
-        y = unit2pixels(y, unit, this->get_dpi());
+        x = x * pixel_multiplier;
+        y = y * pixel_multiplier;
 
         this->line(x, y, x + 1, y + 1);
     }
 
     // Coordinates
-    void Graphics::translate(float x, float y, Unit unit)
+    void Graphics::translate(float x, float y)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        x = unit2pixels(x, unit, this->get_dpi());
-        y = unit2pixels(y, unit, this->get_dpi());
+        x = x * pixel_multiplier;
+        y = y * pixel_multiplier;
 
         this->transformer.translate(x, y);
     }
@@ -142,17 +142,17 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2, Unit unit)
+    void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        x0 = unit2pixels(x0, unit, this->get_dpi());
-        y0 = unit2pixels(y0, unit, this->get_dpi());
-        x1 = unit2pixels(x1, unit, this->get_dpi());
-        y1 = unit2pixels(y1, unit, this->get_dpi());
-        x2 = unit2pixels(x2, unit, this->get_dpi());
-        y2 = unit2pixels(y2, unit, this->get_dpi());
+        x0 = x0 * pixel_multiplier;
+        y0 = y0 * pixel_multiplier;
+        x1 = x1 * pixel_multiplier;
+        y1 = y1 * pixel_multiplier;
+        x2 = x2 * pixel_multiplier;
+        y2 = y2 * pixel_multiplier;
 
         Shape s{Shape()};
         s.begin();
@@ -163,15 +163,15 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::rect(float a, float b, float c, float d, Unit unit)
+    void Graphics::rect(float a, float b, float c, float d)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        a = unit2pixels(a, unit, this->get_dpi());
-        b = unit2pixels(b, unit, this->get_dpi());
-        c = unit2pixels(c, unit, this->get_dpi());
-        d = unit2pixels(d, unit, this->get_dpi());
+        a = a * pixel_multiplier;
+        b = b * pixel_multiplier;
+        c = c * pixel_multiplier;
+        d = d * pixel_multiplier;
 
         if (this->_rect_mode == CENTER)
         {
@@ -189,19 +189,19 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
+    void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        x0 = unit2pixels(x0, unit, this->get_dpi());
-        y0 = unit2pixels(y0, unit, this->get_dpi());
-        x1 = unit2pixels(x1, unit, this->get_dpi());
-        y1 = unit2pixels(y1, unit, this->get_dpi());
-        x2 = unit2pixels(x2, unit, this->get_dpi());
-        y2 = unit2pixels(y2, unit, this->get_dpi());
-        x3 = unit2pixels(x3, unit, this->get_dpi());
-        y3 = unit2pixels(y3, unit, this->get_dpi());
+        x0 = x0 * pixel_multiplier;
+        y0 = y0 * pixel_multiplier;
+        x1 = x1 * pixel_multiplier;
+        y1 = y1 * pixel_multiplier;
+        x2 = x2 * pixel_multiplier;
+        y2 = y2 * pixel_multiplier;
+        x3 = x3 * pixel_multiplier;
+        y3 = y3 * pixel_multiplier;
 
         Shape s{Shape()};
         s.begin();
@@ -213,19 +213,19 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
+    void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        x0 = unit2pixels(x0, unit, this->get_dpi());
-        y0 = unit2pixels(y0, unit, this->get_dpi());
-        x1 = unit2pixels(x1, unit, this->get_dpi());
-        y1 = unit2pixels(y1, unit, this->get_dpi());
-        x2 = unit2pixels(x2, unit, this->get_dpi());
-        y2 = unit2pixels(y2, unit, this->get_dpi());
-        x3 = unit2pixels(x3, unit, this->get_dpi());
-        y3 = unit2pixels(y3, unit, this->get_dpi());
+        x0 = x0 * pixel_multiplier;
+        y0 = y0 * pixel_multiplier;
+        x1 = x1 * pixel_multiplier;
+        y1 = y1 * pixel_multiplier;
+        x2 = x2 * pixel_multiplier;
+        y2 = y2 * pixel_multiplier;
+        x3 = x3 * pixel_multiplier;
+        y3 = y3 * pixel_multiplier;
 
         Shape s{Shape()};
         s.begin();
@@ -247,19 +247,19 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
-    void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3, Unit unit)
+    void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        x0 = unit2pixels(x0, unit, this->get_dpi());
-        y0 = unit2pixels(y0, unit, this->get_dpi());
-        x1 = unit2pixels(x1, unit, this->get_dpi());
-        y1 = unit2pixels(y1, unit, this->get_dpi());
-        x2 = unit2pixels(x2, unit, this->get_dpi());
-        y2 = unit2pixels(y2, unit, this->get_dpi());
-        x3 = unit2pixels(x3, unit, this->get_dpi());
-        y3 = unit2pixels(y3, unit, this->get_dpi());
+        x0 = x0 * pixel_multiplier;
+        y0 = y0 * pixel_multiplier;
+        x1 = x1 * pixel_multiplier;
+        y1 = y1 * pixel_multiplier;
+        x2 = x2 * pixel_multiplier;
+        y2 = y2 * pixel_multiplier;
+        x3 = x3 * pixel_multiplier;
+        y3 = y3 * pixel_multiplier;
 
         Shape s{Shape()};
         s.begin();
@@ -273,15 +273,12 @@ namespace Pyro
 
     void Graphics::arc(float x, float y,
                        float w, float h,
-                       float start, float end, int mode, Unit unit)
+                       float start, float end, int mode)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
-        x = unit2pixels(x, unit, this->get_dpi());
-        y = unit2pixels(y, unit, this->get_dpi());
-        w = unit2pixels(w, unit, this->get_dpi());
-        h = unit2pixels(h, unit, this->get_dpi());
+        x = x * pixel_multiplier;
+        y = y * pixel_multiplier;
+        w = w * pixel_multiplier;
+        h = h * pixel_multiplier;
 
         Shape s{Shape()};
         s.begin();
@@ -307,7 +304,7 @@ namespace Pyro
         this->shape(s, x, y);
     }
 
-    void Graphics::ellipse(float x, float y, float w, float h, unsigned int segments, Unit unit)
+    void Graphics::ellipse(float x, float y, float w, float h, unsigned int segments)
     {
         Shape s = Shape();
         s.begin();
@@ -315,10 +312,10 @@ namespace Pyro
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        x = unit2pixels(x, unit, this->get_dpi());
-        y = unit2pixels(y, unit, this->get_dpi());
-        w = unit2pixels(w, unit, this->get_dpi());
-        h = unit2pixels(h, unit, this->get_dpi());
+        x = x * pixel_multiplier;
+        y = y * pixel_multiplier;
+        w = w * pixel_multiplier;
+        h = h * pixel_multiplier;
         for (unsigned int i = 0; i < segments; i++)
         {
             s.vertex(cos(i * da) * w / 2.0f + x,
