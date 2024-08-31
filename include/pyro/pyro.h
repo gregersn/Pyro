@@ -20,8 +20,12 @@ namespace Pyro
     extern unsigned int height;
     extern uint32_t *pixels;
 
+    float real_width();
+    float real_height();
+
     // Initialize the library with this.
-    void size(unsigned int width, unsigned int height, Unit unit = Unit::PX, unsigned int dpi = 72);
+    void size(unsigned int width, unsigned int height);
+    void size(float width, float height, Unit unit, unsigned int dpi = 72);
 
     inline void save(const char *file) { pg->save(file); };
     inline void save(const char *file, unsigned int dpi) { pg->save(file, dpi); };

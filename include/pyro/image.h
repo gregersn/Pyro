@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <cstdint>
 #include "constants.h"
+#include "utils.h"
 
 namespace Pyro
 {
@@ -54,6 +55,8 @@ namespace Pyro
         unsigned int width() { return this->_pixelwidth; };
         unsigned int height() { return this->_pixelheight; };
         unsigned int channels();
+        float real_width() { return pixels2unit(this->_pixelwidth, this->unit, this->dpi); };
+        float real_height() { return pixels2unit(this->_pixelwidth, this->unit, this->dpi); };
         Unit unit{Unit::PX};
 
         Image(const Image &in);

@@ -63,9 +63,6 @@ namespace Pyro
     // Coordinates
     void Graphics::translate(float x, float y)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
         x = x * pixel_multiplier;
         y = y * pixel_multiplier;
 

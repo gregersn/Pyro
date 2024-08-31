@@ -8,6 +8,9 @@ namespace Pyro
     unsigned int height{480};
     uint32_t *pixels{nullptr};
 
+    float real_width() { return pg->real_width(); }
+    float real_height() { return pg->real_height(); }
+
     void exit()
     {
         if (pg != nullptr)
@@ -36,10 +39,13 @@ namespace Pyro
         }
     };
 
-    void size(unsigned int width, unsigned int height, Unit unit, unsigned int dpi)
+    void size(unsigned int width, unsigned int height)
     {
-        float multiplier{size_multiplier(unit, dpi)};
+        size(width, height, Unit::PX, 72);
+    }
 
+    void size(float width, float height, Unit unit, unsigned int dpi)
+    {
         if (pg == nullptr)
         {
             std::atexit(exit);
@@ -49,10 +55,12 @@ namespace Pyro
         {
             delete pg;
         }
-        Pyro::width = (unsigned int)width * multiplier;
-        Pyro::height = (unsigned int)height * multiplier;
         pg = creategraphics(width, height, GraphicsMode::CAIRO);
-        // , 100, Pyro::Unit::MM
+        pg->set_dpi(dpi);
+        pg->set_unit(unit);
+        pg->init();
+        Pyro::width = pg->width();
+        Pyro::height = pg->height();
     }
 
     void loadpixels()
