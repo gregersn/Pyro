@@ -132,7 +132,7 @@ TEST_CASE("Bezier curve", "[shapes]")
     SECTION("Draw with beziervertex()")
     {
         Pyro::Graphics *p = Pyro::creategraphics(100, 100, testmode);
-        std::filesystem::path filename = "shape_curve_bezier_vertex.png";
+        filename = "shape_curve_bezier_vertex.png";
         p->background(192);
         p->nofill();
         p->beginshape();

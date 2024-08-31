@@ -209,20 +209,6 @@ namespace Pyro
         }
     }
 
-    void GraphicsCairo::ellipse(float x, float y, float w, float h, unsigned int segments)
-    {
-        Shape s{Shape()};
-        s.begin();
-        double da{M_PI / (segments / 2)};
-        for (unsigned int i{0}; i < segments; i++)
-        {
-            s.vertex(cos(i * da) * w / 2, sin(i * da) * h / 2);
-        }
-        s.end(CLOSE);
-
-        this->shape(s, x, y);
-    }
-
     void GraphicsCairo::background(float r, float g, float b, float a)
     {
         Graphics::background(r, g, b, a); // memset(this->data, 0, this->_pixelwidth * this->_pixelheight * 4);

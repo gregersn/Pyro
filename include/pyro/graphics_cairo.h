@@ -35,7 +35,6 @@ namespace Pyro
         void shape(Shape s, float x, float y) override;
         void line(float x0, float y0, float x1, float y1) override;
 
-        void ellipse(float x, float y, float w, float h, unsigned int segments);
         void background(float r, float g, float b, float a) override;
         void smooth() override;
         void nosmooth() override;

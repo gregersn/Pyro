@@ -5,6 +5,8 @@ namespace Pyro
 {
     SDLRunner::SDLRunner(bool headless) : Runner(), headless(headless)
     {
+        this->width = 0;
+        this->height = 0;
     }
 
     SDLRunner::~SDLRunner()

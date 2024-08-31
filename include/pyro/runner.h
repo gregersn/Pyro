@@ -11,10 +11,10 @@ namespace Pyro
     public:
         std::function<void()> keypressed_cb{nullptr};
         std::function<void()> mousepressed_cb{nullptr};
-        Runner() : running(true){};
-        Runner(const Runner &/*in*/){};
-        Runner &operator=(const Runner &/*in*/) { return *this; };
-        virtual ~Runner(){};
+        Runner() : running(true) {};
+        Runner(const Runner & /*in*/) {};
+        Runner &operator=(const Runner & /*in*/) { return *this; };
+        virtual ~Runner() {};
 
         virtual int update()
         {
@@ -31,9 +31,9 @@ namespace Pyro
         bool running;
 
         bool keypressed{false}; // True if a key is pressed
-        int key{0};         // Value of key pressed
+        int key{0};             // Value of key pressed
 
-        void set_keypressed(std::function<void()> keypressed); // Set callback for keypressed
+        void set_keypressed(std::function<void()> keypressed);     // Set callback for keypressed
         void set_mousepressed(std::function<void()> mousepressed); // Set callback for mousepressed
 
         bool mousepressed{false};

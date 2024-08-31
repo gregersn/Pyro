@@ -40,7 +40,7 @@ bool ImageMatch::match(std::filesystem::path const &filename) const
     }
 
     // Check all pixels
-    uint8_t *actual_pixels = actual->load_bytes();
+    const uint8_t *actual_pixels = actual->load_bytes();
     uint8_t *input_pixels = input->load_bytes();
     bool result = true;
 

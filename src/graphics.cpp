@@ -12,6 +12,7 @@ namespace Pyro
 {
     Graphics::Graphics(unsigned int width, unsigned int height, std::filesystem::path filename) : Image(width, height, ARGB)
     {
+        this->mode = CAIRO;
         this->filename = filename;
     }
 
@@ -52,8 +53,6 @@ namespace Pyro
 
     void Graphics::point(float x, float y)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
         x = x * pixel_multiplier;
         y = y * pixel_multiplier;
 
@@ -141,9 +140,6 @@ namespace Pyro
 
     void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
         x0 = x0 * pixel_multiplier;
         y0 = y0 * pixel_multiplier;
         x1 = x1 * pixel_multiplier;
@@ -162,9 +158,6 @@ namespace Pyro
 
     void Graphics::rect(float a, float b, float c, float d)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
         a = a * pixel_multiplier;
         b = b * pixel_multiplier;
         c = c * pixel_multiplier;
@@ -188,9 +181,6 @@ namespace Pyro
 
     void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
         x0 = x0 * pixel_multiplier;
         y0 = y0 * pixel_multiplier;
         x1 = x1 * pixel_multiplier;
@@ -212,9 +202,6 @@ namespace Pyro
 
     void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
         x0 = x0 * pixel_multiplier;
         y0 = y0 * pixel_multiplier;
         x1 = x1 * pixel_multiplier;
@@ -246,9 +233,6 @@ namespace Pyro
 
     void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
         x0 = x0 * pixel_multiplier;
         y0 = y0 * pixel_multiplier;
         x1 = x1 * pixel_multiplier;
@@ -315,12 +299,12 @@ namespace Pyro
         h = h * pixel_multiplier;
         for (unsigned int i = 0; i < segments; i++)
         {
-            s.vertex(cos(i * da) * w / 2.0f + x,
-                     sin(i * da) * h / 2.0f + y);
+            s.vertex(cos(i * da) * w / 2.0f,
+                     sin(i * da) * h / 2.0f);
         }
         s.end(CLOSE);
 
-        this->shape(s, 0, 0);
+        this->shape(s, x, y);
     }
 
     void Graphics::stroke(float r, float g, float b, float a)

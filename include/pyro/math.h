@@ -23,12 +23,14 @@ namespace Pyro
     };
 
     template <typename T>
-    T dist(T x1, T y1, T x2, T y2) {
+    T dist(T x1, T y1, T x2, T y2)
+    {
         return mag(x2 - x1, y2 - y1);
     };
 
     template <typename T>
-    T dist(T x1, T y1, T z1, T x2, T y2, T z2) {
+    T dist(T x1, T y1, T z1, T x2, T y2, T z2)
+    {
         return mag(x2 - x1, y2 - y1, z2 - z1);
     };
 
@@ -41,12 +43,14 @@ namespace Pyro
     };
 
     template <typename T>
-    T mag(T a, T b) {
+    T mag(T a, T b)
+    {
         return sqrt(a * a + b * b);
     };
 
     template <typename T>
-    T mag(T a, T b, T c) {
+    T mag(T a, T b, T c)
+    {
         return sqrt(a * a + b * b + c * c);
     };
 

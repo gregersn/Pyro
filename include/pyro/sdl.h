@@ -22,13 +22,13 @@ namespace Pyro
         unsigned int height;
 
     public:
-        SDLRunner(bool headless = false);
+        explicit SDLRunner(bool headless = false);
         SDLRunner(const SDLRunner &in);
         SDLRunner &operator=(const SDLRunner &in);
-        ~SDLRunner();
-        int update();
-        int quit();
-        int init(unsigned int width, unsigned int height);
+        ~SDLRunner() override;
+        int update() override;
+        int quit() override;
+        int init(unsigned int width, unsigned int height) override;
     };
 }
 

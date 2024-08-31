@@ -62,9 +62,8 @@ OpenSimplexNoise::~OpenSimplexNoise()
 // Initializes the class using a permutation array generated from a 64-bit seed.
 // Generates a proper permutation (i.e. doesn't merely perform N successive pair swaps on a base array)
 // Uses a simple 64-bit LCG.
-OpenSimplexNoise::OpenSimplexNoise(long seed) : permGradIndex3D({0}), perm({0})
+OpenSimplexNoise::OpenSimplexNoise(long seed) : permGradIndex3D({0}), perm({std::array<int16_t, 256>()})
 {
-	perm = std::array<int16_t, 256>();
 	permGradIndex3D = std::array<int16_t, 256>();
 	std::array<int16_t, 256> source = std::array<int16_t, 256>();
 
