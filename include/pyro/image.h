@@ -46,7 +46,7 @@ namespace Pyro
         unsigned int density{1};
         float pixel_multiplier{1.0f};
 
-        bool modified{false};
+        bool modified{true};
         int mx1{0}, my1{0}, mx2{0}, my2{0};
         bool initialized{false};
 

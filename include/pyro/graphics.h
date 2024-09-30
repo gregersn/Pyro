@@ -99,6 +99,9 @@ namespace Pyro
         virtual float screen_x(float x, float y, float z = 0.0f);
         virtual float screen_y(float x, float y, float z = 0.0f);
 
+        virtual void begindraw() {load_pixels();};
+        virtual void enddraw() {update_pixels();};
+
         // Drawing functions
         void background(Color c)
         {

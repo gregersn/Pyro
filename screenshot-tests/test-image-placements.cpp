@@ -14,8 +14,9 @@ TEST_CASE("Place image full screen")
     }
 
     Pyro::Graphics *p = Pyro::creategraphics(img->width(), img->height(), testmode);
+    p->begindraw();
     p->image(img, 0, 0);
-
+    p->enddraw();
     p->save(current_folder / filename);
 
     delete img;
