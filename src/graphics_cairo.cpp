@@ -93,7 +93,7 @@ namespace Pyro
         cairo_save(this->cr);
         cairo_new_path(this->cr);
 
-        cairo_set_line_width(this->cr, this->stroke_weight);
+        cairo_set_line_width(this->cr, this->style.strokeweight());
 
         cairo_translate(this->cr, x, y);
 
@@ -117,21 +117,21 @@ namespace Pyro
                 cairo_close_path(this->cr);
             }
         }
-        if (this->fill_enable)
+        if (this->style.fill_enabled())
         {
-            cairo_set_source_rgba(this->cr, this->fill_color.r(),
-                                  this->fill_color.g(),
-                                  this->fill_color.b(),
-                                  this->fill_color.a());
+            cairo_set_source_rgba(this->cr, this->style.fill().r(),
+                                  this->style.fill().g(),
+                                  this->style.fill().b(),
+                                  this->style.fill().a());
             cairo_fill_preserve(this->cr);
         }
 
-        if (this->stroke_enable)
+        if (this->style.stroke_enabled())
         {
-            cairo_set_source_rgba(this->cr, this->stroke_color.r(),
-                                  this->stroke_color.g(),
-                                  this->stroke_color.b(),
-                                  this->stroke_color.a());
+            cairo_set_source_rgba(this->cr, this->style.stroke().r(),
+                                  this->style.stroke().g(),
+                                  this->style.stroke().b(),
+                                  this->style.stroke().a());
             cairo_stroke(this->cr);
         }
 
@@ -194,24 +194,24 @@ namespace Pyro
 
     void GraphicsCairo::line(float x0, float y0, float x1, float y1)
     {
-        if (this->stroke_enable)
+        if (this->style.stroke_enabled())
         {
             cairo_new_path(this->cr);
             cairo_move_to(this->cr, x0 * pixel_multiplier, y0 * pixel_multiplier);
             cairo_line_to(this->cr, x1 * pixel_multiplier, y1 * pixel_multiplier);
-            cairo_set_line_width(this->cr, this->stroke_weight);
+            cairo_set_line_width(this->cr, this->style.strokeweight());
             cairo_set_source_rgba(this->cr,
-                                  this->stroke_color.r(),
-                                  this->stroke_color.g(),
-                                  this->stroke_color.b(),
-                                  this->stroke_color.a());
+                                  this->style.stroke().r(),
+                                  this->style.stroke().g(),
+                                  this->style.stroke().b(),
+                                  this->style.stroke().a());
             cairo_stroke(this->cr);
         }
     }
 
     void GraphicsCairo::background(float r, float g, float b, float a)
     {
-        Graphics::background(r, g, b, a); // memset(this->data, 0, this->_pixelwidth * this->_pixelheight * 4);
+        Graphics::background(r, g, b, a);
         cairo_set_source_rgba(this->cr, r, g, b, a);
         cairo_paint(this->cr);
     }
@@ -230,6 +230,7 @@ namespace Pyro
 
     void GraphicsCairo::strokecap(int cap)
     {
+        Graphics::strokecap(cap);
         if (cap == ROUND)
         {
             cairo_set_line_cap(this->cr, CAIRO_LINE_CAP_ROUND);
@@ -248,6 +249,7 @@ namespace Pyro
 
     void GraphicsCairo::strokejoin(int join)
     {
+        Graphics::strokejoin(join);
         if (join == MITER)
         {
             cairo_set_line_join(this->cr, CAIRO_LINE_JOIN_MITER);
@@ -264,21 +266,28 @@ namespace Pyro
         }
     }
 
+    void GraphicsCairo::popstyle()
+    {
+        Graphics::popstyle();
+        this->strokecap(this->style.strokecap());
+        this->strokejoin(this->style.strokejoin());
+    }
+
     // Typography
 
     void GraphicsCairo::text_impl(std::string text, float x, float y)
     {
         cairo_set_source_rgba(this->cr,
-                              this->fill_color.r(),
-                              this->fill_color.g(),
-                              this->fill_color.b(),
-                              this->fill_color.a());
+                              this->style.fill().r(),
+                              this->style.fill().g(),
+                              this->style.fill().b(),
+                              this->style.fill().a());
 
         if (this->font != nullptr)
         {
             cairo_set_font_face(this->cr, this->font);
         }
-        cairo_set_font_size(this->cr, this->text_size);
+        cairo_set_font_size(this->cr, this->style.textsize());
         cairo_move_to(this->cr, x * pixel_multiplier, y * pixel_multiplier);
         cairo_show_text(this->cr, text.c_str());
     }

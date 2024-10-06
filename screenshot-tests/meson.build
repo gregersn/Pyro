@@ -9,6 +9,7 @@ test_sources = [
                 'test-lines.cpp',
                 'test-noise.cpp',
                 'test-shapes.cpp',
+                'test-style.cpp',
                 'test-typography.cpp',
                 'test-resolution.cpp',
                 'test-colors.cpp',

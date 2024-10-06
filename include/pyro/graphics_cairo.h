@@ -31,6 +31,8 @@ namespace Pyro
         void pushmatrix() override;
         void popmatrix() override;
 
+        void popstyle() override;
+
         void image_impl(Image *img, float x, float y) override;
         void shape(Shape s, float x, float y) override;
         void line(float x0, float y0, float x1, float y1) override;

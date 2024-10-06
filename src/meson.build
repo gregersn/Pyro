@@ -14,6 +14,7 @@ pyro_sources = ['pyro.cpp',
                 'vector.cpp',
                 'noise.cpp',
                 'string.cpp',
+                'style.cpp',
                 'transformer.cpp',
                 'opensimplexnoise.cpp']
 

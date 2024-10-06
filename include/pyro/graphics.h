@@ -7,6 +7,7 @@
 #include "shape.h"
 #include "font.h"
 #include "transformer.h"
+#include "style.h"
 
 #include <filesystem>
 
@@ -24,21 +25,12 @@ namespace Pyro
     protected:
         GraphicsMode mode;
         std::filesystem::path filename{""};
-        bool stroke_enable{true};
-        bool fill_enable{true};
 
         bool _smooth{true};
 
-        Color stroke_color{Color(0.0f, 1.0f)};
-        Color fill_color{Color(1.0f, 1.0f)};
-        int _rect_mode{Pyro::CORNER};
-        int _image_mode{Pyro::CORNER};
-        int _ellipse_mode{Pyro::CENTER};
-        float stroke_weight{1.0f};
-        float text_size{16.0f};
-
         Shape _shape{Shape()};
         Transformer2D transformer;
+        StyleStack style;
 
     public:
         Graphics(unsigned int width, unsigned int height, std::filesystem::path filename = "");
@@ -48,7 +40,7 @@ namespace Pyro
 
         void imagemode(int mode)
         {
-            this->_image_mode = mode;
+            this->style.imagemode(mode);
         };
         void image(Image *img, float x, float y);
         virtual void image_impl(Image * /*img*/, float /*x*/, float /*y*/) {};
@@ -59,10 +51,9 @@ namespace Pyro
         void nofill();
 
         virtual void blendmode(int /*mode*/) {};
-        virtual void colormode(int mode)
+        void colormode(int mode)
         {
-            this->stroke_color.colormode(mode);
-            this->fill_color.colormode(mode);
+            this->style.colormode(mode);
         };
 
         void fill(Color c) { this->fill(c.r(), c.g(), c.b(), c.a()); };
@@ -96,11 +87,13 @@ namespace Pyro
         virtual void scale(float sx, float sy);
         virtual void pushmatrix();
         virtual void popmatrix();
+        void pushstyle();
+        virtual void popstyle();
         virtual float screen_x(float x, float y, float z = 0.0f);
         virtual float screen_y(float x, float y, float z = 0.0f);
 
-        virtual void begindraw() {load_pixels();};
-        virtual void enddraw() {update_pixels();};
+        virtual void begindraw() { load_pixels(); };
+        virtual void enddraw() { update_pixels(); };
 
         // Drawing functions
         void background(Color c)
@@ -169,7 +162,7 @@ namespace Pyro
 
         void rectmode(int mode)
         {
-            this->_rect_mode = mode;
+            this->style.rectmode(mode);
         };
         void rect(float a, float b, float c, float d);
 
@@ -180,7 +173,7 @@ namespace Pyro
 
         void ellipsemode(int mode)
         {
-            this->_ellipse_mode = mode;
+            this->style.ellipsemode(mode);
         };
         void ellipse(float x, float y, float w, float h, unsigned int segments);
         void ellipse(float x, float y, float r, unsigned int segments)
@@ -190,8 +183,8 @@ namespace Pyro
 
         // Typography
 
-        void textsize(float size, Unit unit = Unit::CURRENT);
-        void text(std::string const &text, float x, float y, Unit unit = Unit::CURRENT);
+        void textsize(float size);
+        void text(std::string const &text, float x, float y);
         void textfont(Font *font);
 
         virtual void textfont_impl(Font * /*font*/) {};

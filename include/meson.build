@@ -6,6 +6,7 @@ header_files = ['pyro/pyro.h',
                 'pyro/image.h',
                 'pyro/math.h',
                 'pyro/shape.h',
+                'pyro/style.h',
                 'pyro/vector.h',
                 'pyro/graphics_cairo.h']
 

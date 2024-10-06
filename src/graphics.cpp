@@ -88,6 +88,23 @@ namespace Pyro
         this->transformer.popmatrix();
     }
 
+    void Graphics::pushstyle()
+    {
+        /*
+        The style information controlled by the following functions are included in the style:
+        fill(), stroke(), tint(), strokeWeight(), strokeCap(),strokeJoin(),
+        imageMode(), rectMode(), ellipseMode(), shapeMode(), colorMode(),
+        textAlign(), textFont(), textMode(), textSize(), textLeading(),
+        emissive(), specular(), shininess(), ambient()
+        */
+        this->style.push();
+    }
+
+    void Graphics::popstyle()
+    {
+        this->style.pop();
+    }
+
     float Graphics::screen_x(float x, float y, float z)
     {
         return this->transformer.screen_x(x, y, z);
@@ -118,7 +135,7 @@ namespace Pyro
 
     void Graphics::image(Image *img, float x, float y)
     {
-        if (this->_image_mode == CENTER)
+        if (this->style.imagemode() == CENTER)
         {
             x -= img->width() / 2.0f;
             y -= img->height() / 2.0f;
@@ -163,7 +180,7 @@ namespace Pyro
         c = c * pixel_multiplier;
         d = d * pixel_multiplier;
 
-        if (this->_rect_mode == CENTER)
+        if (this->style.rectmode() == CENTER)
         {
             a -= c / 2.0f;
             b -= d / 2.0f;
@@ -309,8 +326,7 @@ namespace Pyro
 
     void Graphics::stroke(float r, float g, float b, float a)
     {
-        this->stroke_color.set(r, g, b, a);
-        this->stroke_enable = true;
+        this->style.stroke(r, g, b, a);
     }
 
     void Graphics::stroke(int r, int g, int b, int a)
@@ -328,8 +344,7 @@ namespace Pyro
 
     void Graphics::fill(float r, float g, float b, float a)
     {
-        this->fill_color.set(r, g, b, a);
-        this->fill_enable = true;
+        this->style.fill(r, g, b, a);
     }
 
     void Graphics::fill(int r, int g, int b, int a)
@@ -347,12 +362,12 @@ namespace Pyro
 
     void Graphics::nostroke()
     {
-        this->stroke_enable = false;
+        this->style.nostroke();
     }
 
     void Graphics::nofill()
     {
-        this->fill_enable = false;
+        this->style.nofill();
     }
 
     void Graphics::smooth()
@@ -372,25 +387,24 @@ namespace Pyro
         if (unit == Unit::CURRENT)
             unit = this->unit;
 
-        this->stroke_weight = unit2pixels(w, unit, dpi);
+        this->style.strokeweight(unit2pixels(w, unit, dpi));
     }
 
     void Graphics::strokecap(int cap)
     {
-        // TODO: Implement stroke cap
+        this->style.strokecap(cap);
     }
 
     void Graphics::strokejoin(int join)
     {
-        // TODO: Implement strokejoin
+        this->style.strokejoin(join);
     }
 
     // Typography
 
-    void Graphics::textsize(float size, Unit unit)
+    void Graphics::textsize(float size)
     {
-        // TODO: Use unit
-        this->text_size = size;
+        this->style.textsize(size);
     }
 
     void Graphics::textfont(Font *font)
@@ -398,10 +412,8 @@ namespace Pyro
         this->textfont_impl(font);
     }
 
-    void Graphics::text(std::string const &text, float x, float y, Unit unit)
+    void Graphics::text(std::string const &text, float x, float y)
     {
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-        this->text_impl(text, unit2pixels(x, unit, this->get_dpi()), unit2pixels(y, unit, this->get_dpi()));
+        this->text_impl(text, unit2pixels(x, this->unit, this->get_dpi()), unit2pixels(y, this->unit, this->get_dpi()));
     }
 }
