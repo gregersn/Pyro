@@ -56,25 +56,28 @@ namespace Pyro
             this->style.colormode(mode);
         };
 
-        void fill(Color c) { this->fill(c.r(), c.g(), c.b(), c.a()); };
+        Color fill() { return this->style.fill(); };
+        Color fill(Color c) { return this->fill(c.r(), c.g(), c.b(), c.a()); };
 
-        void fill(float c, float a = 1.0) { this->fill(c, c, c, a); };
-        void fill(float r, float g, float b, float a = 1.0);
+        Color fill(float c, float a = 1.0) { return this->fill(c, c, c, a); };
+        Color fill(float r, float g, float b, float a = 1.0);
 
-        void fill(int c, int a = 255);
-        void fill(int r, int g, int b, int a = 255);
+        Color fill(int c, int a = 255);
+        Color fill(int r, int g, int b, int a = 255);
 
-        void stroke(Color c) { this->stroke(c.r(), c.g(), c.b(), c.a()); };
+        Color stroke() { return this->style.stroke(); };
+        Color stroke(Color c) { return this->stroke(c.r(), c.g(), c.b(), c.a()); };
 
-        void stroke(float c) { this->stroke(c, c, c, 1.0); };
-        void stroke(float c, float a) { this->stroke(c, c, c, a); };
-        void stroke(float r, float g, float b) { this->stroke(r, g, b, 1.0); };
-        void stroke(float r, float g, float b, float a);
+        Color stroke(float c) { return this->stroke(c, c, c, 1.0); };
+        Color stroke(float c, float a) { return this->stroke(c, c, c, a); };
+        Color stroke(float r, float g, float b) { return this->stroke(r, g, b, 1.0); };
+        Color stroke(float r, float g, float b, float a);
 
-        void stroke(int c, int a = 255);
-        void stroke(int r, int g, int b, int a = 255);
+        Color stroke(int c, int a = 255);
+        Color stroke(int r, int g, int b, int a = 255);
 
-        void strokeweight(float w, Unit unit = Unit::CURRENT);
+        float strokeweight();
+        float strokeweight(float w);
         virtual void strokecap(int cap);
         virtual void strokejoin(int join);
 

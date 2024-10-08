@@ -48,20 +48,22 @@ namespace Pyro
     // TODO: clear
     // TODO: colormode
 
-    inline void fill(Color const &c) { pg->fill(c); };
-    inline void fill(float c, float a = 1.0) { pg->fill(c, c, c, a); };
-    inline void fill(float r, float g, float b, float a = 1.0) { pg->fill(r, g, b, a); };
-    inline void fill(int c, int a = 255) { pg->fill(c, a); };
-    inline void fill(int r, int g, int b, int a = 255) { pg->fill(r, g, b, a); };
+    Color fill();
+    Color fill(Color const &c);
+    Color fill(float c, float a = 1.0);
+    Color fill(float r, float g, float b, float a = 1.0);
+    Color fill(int c, int a = 255);
+    Color fill(int r, int g, int b, int a = 255);
 
-    inline void nofill() { pg->nofill(); };
-    inline void nostroke() { pg->nostroke(); };
+    void nofill();
+    void nostroke();
 
-    inline void stroke(Color const &c) { pg->stroke(c); };
-    inline void stroke(float c, float a = 1.0) { pg->stroke(c, c, c, a); };
-    inline void stroke(float r, float g, float b, float a = 1.0) { pg->stroke(r, g, b, a); };
-    inline void stroke(int c, int a = 255) { pg->stroke(c, a); };
-    inline void stroke(int r, int g, int b, int a = 255) { pg->stroke(r, g, b, a); };
+    Color stroke();
+    Color stroke(Color const &c);
+    Color stroke(float c, float a = 1.0);
+    Color stroke(float r, float g, float b, float a = 1.0);
+    Color stroke(int c, int a = 255);
+    Color stroke(int r, int g, int b, int a = 255);
     // **** /COLOR ****
 
     // **** RENDERING ****
@@ -73,7 +75,8 @@ namespace Pyro
     inline void smooth() { pg->smooth(); };
     inline void nosmooth() { pg->nosmooth(); };
 
-    inline void strokeweight(float w, Unit unit = Unit::CURRENT) { pg->strokeweight(w, unit); };
+    inline float strokeweight() { return pg->strokeweight(); };
+    inline float strokeweight(float w) { return pg->strokeweight(w); };
 
     inline void beginshape(int kind = DEFAULT) { pg->beginshape(kind); };
     inline void endshape() { pg->endshape(); };

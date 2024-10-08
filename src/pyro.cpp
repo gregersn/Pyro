@@ -73,4 +73,21 @@ namespace Pyro
         pixels = nullptr;
     }
 
+    Color fill() { return pg->fill(); };
+    Color fill(Color const &c) { return pg->fill(c); };
+    Color fill(float c, float a) { return pg->fill(c, c, c, a); };
+    Color fill(float r, float g, float b, float a) { return pg->fill(r, g, b, a); };
+    Color fill(int c, int a) { return pg->fill(c, a); };
+    Color fill(int r, int g, int b, int a) { return pg->fill(r, g, b, a); };
+
+    void nofill() { pg->nofill(); };
+    void nostroke() { pg->nostroke(); };
+
+    Color stroke() { return pg->stroke(); }
+    Color stroke(Color const &c) { return pg->stroke(c); };
+    Color stroke(float c, float a) { return pg->stroke(c, c, c, a); };
+    Color stroke(float r, float g, float b, float a) { return pg->stroke(r, g, b, a); };
+    Color stroke(int c, int a) { return pg->stroke(c, a); };
+    Color stroke(int r, int g, int b, int a) { return pg->stroke(r, g, b, a); };
+
 }

@@ -60,9 +60,10 @@ namespace Pyro
         return this->current.stroke_weight;
     }
 
-    void StyleStack::strokeweight(float w)
+    float StyleStack::strokeweight(float w)
     {
         this->current.stroke_weight = w;
+        return w;
     }
 
     void StyleStack::nostroke()
@@ -90,10 +91,11 @@ namespace Pyro
         return this->current.fill;
     }
 
-    void StyleStack::fill(float r, float g, float b, float a)
+    Color StyleStack::fill(float r, float g, float b, float a)
     {
         this->current.fill.set(r, g, b, a);
         this->current.fill_enable = true;
+        return this->current.fill;
     }
 
     Color StyleStack::stroke()
@@ -101,10 +103,11 @@ namespace Pyro
         return this->current.stroke;
     }
 
-    void StyleStack::stroke(float r, float g, float b, float a)
+    Color StyleStack::stroke(float r, float g, float b, float a)
     {
         this->current.stroke.set(r, g, b, a);
         this->current.stroke_enable = true;
+        return this->current.stroke;
     }
 
     void StyleStack::strokecap(int cap)

@@ -324,40 +324,40 @@ namespace Pyro
         this->shape(s, x, y);
     }
 
-    void Graphics::stroke(float r, float g, float b, float a)
+    Color Graphics::stroke(float r, float g, float b, float a)
     {
-        this->style.stroke(r, g, b, a);
+        return this->style.stroke(r, g, b, a);
     }
 
-    void Graphics::stroke(int r, int g, int b, int a)
+    Color Graphics::stroke(int r, int g, int b, int a)
     {
-        this->stroke(r / 255.0f,
-                     g / 255.0f,
-                     b / 255.0f,
-                     a / 255.0f);
+        return this->stroke(r / 255.0f,
+                            g / 255.0f,
+                            b / 255.0f,
+                            a / 255.0f);
     }
 
-    void Graphics::stroke(int c, int a)
+    Color Graphics::stroke(int c, int a)
     {
-        this->stroke(c, c, c, a);
+        return this->stroke(c, c, c, a);
     }
 
-    void Graphics::fill(float r, float g, float b, float a)
+    Color Graphics::fill(float r, float g, float b, float a)
     {
-        this->style.fill(r, g, b, a);
+        return this->style.fill(r, g, b, a);
     }
 
-    void Graphics::fill(int r, int g, int b, int a)
+    Color Graphics::fill(int r, int g, int b, int a)
     {
-        this->fill(r / 255.0f,
-                   g / 255.0f,
-                   b / 255.0f,
-                   a / 255.0f);
+        return this->fill(r / 255.0f,
+                          g / 255.0f,
+                          b / 255.0f,
+                          a / 255.0f);
     }
 
-    void Graphics::fill(int c, int a)
+    Color Graphics::fill(int c, int a)
     {
-        this->fill(c, c, c, a);
+        return this->fill(c, c, c, a);
     }
 
     void Graphics::nostroke()
@@ -380,14 +380,16 @@ namespace Pyro
         this->_smooth = false;
     }
 
-    void Graphics::strokeweight(float w, Unit unit)
+    float Graphics::strokeweight()
+    {
+        return this->style.strokeweight();
+    }
+
+    float Graphics::strokeweight(float w)
     {
         unsigned int dpi = this->get_dpi();
 
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
-
-        this->style.strokeweight(unit2pixels(w, unit, dpi));
+        return this->style.strokeweight(unit2pixels(w, this->unit, dpi));
     }
 
     void Graphics::strokecap(int cap)

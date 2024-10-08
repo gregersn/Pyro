@@ -24,8 +24,8 @@ TEST_CASE("Test varied DPI")
 
         pa->nosmooth();
         pb->nosmooth();
-        pa->strokeweight(50, Pyro::Unit::MM);
-        pb->strokeweight(50, Pyro::Unit::MM);
+        pa->strokeweight(50);
+        pb->strokeweight(50);
 
         pa->line(0, 0, pa->width(), pa->height());
         pb->line(0, 0, pb->width(), pb->height());

@@ -65,15 +65,15 @@ namespace Pyro
 
         void textsize(float size);
         float strokeweight();
-        void strokeweight(float w);
+        float strokeweight(float w);
         void nostroke();
         bool stroke_enabled();
         void nofill();
         bool fill_enabled();
         Color fill();
-        void fill(float r, float g, float b, float a);
+        Color fill(float r, float g, float b, float a);
         Color stroke();
-        void stroke(float r, float g, float b, float a);
+        Color stroke(float r, float g, float b, float a);
         void strokecap(int cap);
         int strokecap();
         void strokejoin(int join);
