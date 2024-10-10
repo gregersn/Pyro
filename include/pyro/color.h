@@ -147,6 +147,8 @@ namespace Pyro
         float lightness();
 
         void lightness(float l);
+
+        bool operator==(const Color &rhs) const;
     };
 
     class Palette

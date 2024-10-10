@@ -3,6 +3,7 @@
 #include "pyro/color.h"
 
 using Catch::Approx;
+using Pyro::Color;
 
 TEST_CASE("Color objects", "[color]")
 {
@@ -183,5 +184,12 @@ TEST_CASE("Color objects", "[color]")
         REQUIRE(b.g() == Approx(29 / 255.0f).margin(2.0f / 255.0f));
         REQUIRE(b.b() == Approx(240 / 255.0f).margin(2.0f / 255.0f));
         REQUIRE(b.a() == 1.0f);
+    }
+
+    SECTION("Colors can be compared")
+    {
+        REQUIRE(Color(1.0f, 0.0f, 0.0f, 1.0f) == Color(1.0f, 0.0f, 0.0f, 1.0f));
+
+        REQUIRE(!(Color(1.0f, 0.0f, 0.1f, 1.0f) == Color(1.0f, 0.0f, 0.0f, 1.0f)));
     }
 }

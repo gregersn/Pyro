@@ -220,6 +220,11 @@ namespace Pyro
         this->dirty_rgb = true;
     }
 
+    bool Color::operator==(const Color &rhs) const
+    {
+        return (std::abs(this->_red - rhs._red) + std::abs(this->_green - rhs._green) + std::abs(this->_blue - rhs._blue) + std::abs(this->_alpha - rhs._alpha)) < __DBL_EPSILON__;
+    }
+
     Palette::Palette() : colors(std::vector<Color>())
     {
     }
