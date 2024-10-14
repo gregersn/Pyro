@@ -204,6 +204,8 @@ namespace Pyro
                              GraphicsMode mode = GraphicsMode::CAIRO,
                              std::filesystem::path filename = "");
 
+    Graphics *creategraphics(unsigned int width, unsigned int height, int dpi, Unit unit, GraphicsMode mode = GraphicsMode::CAIRO, std::filesystem::path filename = "");
+
 };
 
 #endif

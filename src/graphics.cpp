@@ -51,6 +51,15 @@ namespace Pyro
         return g;
     }
 
+    Graphics *creategraphics(unsigned int width, unsigned int height, int dpi, Unit unit, GraphicsMode mode, std::filesystem::path filename)
+    {
+        Graphics *g = creategraphics(width, height, mode, filename);
+        g->set_dpi(dpi);
+        g->set_unit(unit);
+        g->init();
+        return g;
+    }
+
     void Graphics::point(float x, float y)
     {
         x = x * pixel_multiplier;
