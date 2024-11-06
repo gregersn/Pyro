@@ -9,11 +9,14 @@ TEST_CASE("Push and pop style")
 
     Pyro::Graphics *p = Pyro::creategraphics(400, 400);
 
+    p->curvedetail(132);
+
     p->ellipse(0, 200, 132, 132); // Left circle
 
     p->pushstyle(); // Start a new style
     p->strokeweight(40);
     p->fill(204, 153, 0);
+
     p->ellipse(200, 200, 132, 132); // Middle circle
     p->popstyle();                  // Restore original style
 

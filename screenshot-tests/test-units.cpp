@@ -13,7 +13,8 @@ SCENARIO("Check that different units can be used.")
         p->nostroke();
         p->background(192);
         p->fill(0, 0, 0, 255);
-        p->ellipse(2, 2, 2, 8);
+        p->curvedetail(8);
+        p->ellipse(2, 2, 2);
         p->save(current_folder / filename);
         delete p;
         CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));

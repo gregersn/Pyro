@@ -78,7 +78,8 @@ TEST_CASE("Draw shapes", "[shapes]")
         p->background(192);
         p->nostroke();
         p->fill(64, 64, 255);
-        p->ellipse(p->width() / 2, p->height() / 2, 60.f, 64);
+        p->curvedetail(64);
+        p->ellipse(p->width() / 2, p->height() / 2, 60.f);
         p->save(current_folder / filename);
         CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
     }
@@ -89,7 +90,8 @@ TEST_CASE("Draw shapes", "[shapes]")
         p->background(192);
         p->nostroke();
         p->fill(255, 64, 128);
-        p->ellipse(p->width() / 2, p->height() / 2, 60, 120, 64);
+        p->curvedetail(64);
+        p->ellipse(p->width() / 2, p->height() / 2, 60, 120);
         p->save(current_folder / filename);
         CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
     }
@@ -112,7 +114,8 @@ TEST_CASE("Variable side count ellipses", "[shapes]")
             p->pushmatrix();
             for (uint32_t x = 0; x < 4; x++)
             {
-                p->ellipse(512 / 8, 512 / 8, 500 / 4, 500 / 4, (y * 4) + x + 3);
+                p->curvedetail((y * 4) + x + 3);
+                p->ellipse(512 / 8, 512 / 8, 500 / 4, 500 / 4);
                 p->translate(512 / 4, 0);
             }
             p->popmatrix();

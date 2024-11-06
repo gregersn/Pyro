@@ -60,6 +60,11 @@ namespace Pyro
         return g;
     }
 
+    void Graphics::curvedetail(int segments)
+    {
+        this->_curvedetail = segments;
+    }
+
     void Graphics::point(float x, float y)
     {
         this->line(x, y, x + 1, y + 1);
@@ -261,13 +266,13 @@ namespace Pyro
         this->shape(s, x, y);
     }
 
-    void Graphics::ellipse(float x, float y, float w, float h, unsigned int segments)
+    void Graphics::ellipse(float x, float y, float w, float h)
     {
         Shape s = Shape();
         s.begin();
-        float da = M_PI / (segments / 2.0f);
+        float da = M_PI / (this->_curvedetail / 2.0f);
 
-        for (unsigned int i = 0; i < segments; i++)
+        for (unsigned int i = 0; i < this->_curvedetail; i++)
         {
             s.vertex(cos(i * da) * w / 2.0f,
                      sin(i * da) * h / 2.0f);

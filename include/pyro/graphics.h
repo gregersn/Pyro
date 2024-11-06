@@ -27,6 +27,7 @@ namespace Pyro
         std::filesystem::path filename{""};
 
         bool _smooth{true};
+        int _curvedetail{32};
 
         Shape _shape{Shape()};
         Transformer2D transformer;
@@ -75,6 +76,8 @@ namespace Pyro
 
         Color stroke(int c, int a = 255);
         Color stroke(int r, int g, int b, int a = 255);
+
+        void curvedetail(int segments);
 
         float strokeweight();
         float strokeweight(float w);
@@ -178,10 +181,10 @@ namespace Pyro
         {
             this->style.ellipsemode(mode);
         };
-        void ellipse(float x, float y, float w, float h, unsigned int segments);
-        void ellipse(float x, float y, float r, unsigned int segments)
+        void ellipse(float x, float y, float w, float h);
+        void ellipse(float x, float y, float r)
         {
-            this->ellipse(x, y, r, r, segments);
+            this->ellipse(x, y, r, r);
         };
 
         // Typography
@@ -205,7 +208,6 @@ namespace Pyro
                              std::filesystem::path filename = "");
 
     Graphics *creategraphics(unsigned int width, unsigned int height, int dpi, Unit unit, GraphicsMode mode = GraphicsMode::CAIRO, std::filesystem::path filename = "");
-
 };
 
 #endif
