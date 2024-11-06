@@ -60,7 +60,7 @@ namespace Pyro
         return g;
     }
 
-    void Graphics::curvedetail(int segments)
+    void Graphics::curvedetail(unsigned int segments)
     {
         this->_curvedetail = segments;
     }

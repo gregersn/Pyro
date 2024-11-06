@@ -73,6 +73,8 @@ namespace Pyro
         pixels = nullptr;
     }
 
+    void curvedetail(int segments) { pg->curvedetail(segments); }
+
     Color fill() { return pg->fill(); };
     Color fill(Color const &c) { return pg->fill(c); };
     Color fill(float c, float a) { return pg->fill(c, c, c, a); };

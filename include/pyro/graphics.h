@@ -27,7 +27,7 @@ namespace Pyro
         std::filesystem::path filename{""};
 
         bool _smooth{true};
-        int _curvedetail{32};
+        unsigned int _curvedetail{32};
 
         Shape _shape{Shape()};
         Transformer2D transformer;
@@ -77,7 +77,7 @@ namespace Pyro
         Color stroke(int c, int a = 255);
         Color stroke(int r, int g, int b, int a = 255);
 
-        void curvedetail(int segments);
+        void curvedetail(unsigned int segments);
 
         float strokeweight();
         float strokeweight(float w);

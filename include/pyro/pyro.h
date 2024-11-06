@@ -48,6 +48,8 @@ namespace Pyro
     // TODO: clear
     // TODO: colormode
 
+    void curvedetail(int segments);
+
     Color fill();
     Color fill(Color const &c);
     Color fill(float c, float a = 1.0);
