@@ -95,7 +95,7 @@ namespace Pyro
 
         cairo_set_line_width(this->cr, this->style.strokeweight());
 
-        cairo_translate(this->cr, x, y);
+        cairo_translate(this->cr, x * pixel_multiplier, y * pixel_multiplier);
 
         for (size_t contour_index{0}; contour_index < s.getpoints().size(); contour_index++)
         {
@@ -105,11 +105,11 @@ namespace Pyro
             {
                 if (i == 0)
                 {
-                    cairo_move_to(this->cr, contour_points[i].x, contour_points[i].y);
+                    cairo_move_to(this->cr, contour_points[i].x * pixel_multiplier, contour_points[i].y * pixel_multiplier);
                 }
                 else
                 {
-                    cairo_line_to(this->cr, contour_points[i].x, contour_points[i].y);
+                    cairo_line_to(this->cr, contour_points[i].x * pixel_multiplier, contour_points[i].y * pixel_multiplier);
                 }
             }
             if (s.close == CLOSE)

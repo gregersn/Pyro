@@ -62,18 +62,12 @@ namespace Pyro
 
     void Graphics::point(float x, float y)
     {
-        x = x * pixel_multiplier;
-        y = y * pixel_multiplier;
-
         this->line(x, y, x + 1, y + 1);
     }
 
     // Coordinates
     void Graphics::translate(float x, float y)
     {
-        x = x * pixel_multiplier;
-        y = y * pixel_multiplier;
-
         this->transformer.translate(x, y);
     }
 
@@ -166,13 +160,6 @@ namespace Pyro
 
     void Graphics::triangle(float x0, float y0, float x1, float y1, float x2, float y2)
     {
-        x0 = x0 * pixel_multiplier;
-        y0 = y0 * pixel_multiplier;
-        x1 = x1 * pixel_multiplier;
-        y1 = y1 * pixel_multiplier;
-        x2 = x2 * pixel_multiplier;
-        y2 = y2 * pixel_multiplier;
-
         Shape s{Shape()};
         s.begin();
         s.vertex(x0, y0);
@@ -184,11 +171,6 @@ namespace Pyro
 
     void Graphics::rect(float a, float b, float c, float d)
     {
-        a = a * pixel_multiplier;
-        b = b * pixel_multiplier;
-        c = c * pixel_multiplier;
-        d = d * pixel_multiplier;
-
         if (this->style.rectmode() == CENTER)
         {
             a -= c / 2.0f;
@@ -207,15 +189,6 @@ namespace Pyro
 
     void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
-        x0 = x0 * pixel_multiplier;
-        y0 = y0 * pixel_multiplier;
-        x1 = x1 * pixel_multiplier;
-        y1 = y1 * pixel_multiplier;
-        x2 = x2 * pixel_multiplier;
-        y2 = y2 * pixel_multiplier;
-        x3 = x3 * pixel_multiplier;
-        y3 = y3 * pixel_multiplier;
-
         Shape s{Shape()};
         s.begin();
         s.curvevertex(x0, y0);
@@ -228,15 +201,6 @@ namespace Pyro
 
     void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
-        x0 = x0 * pixel_multiplier;
-        y0 = y0 * pixel_multiplier;
-        x1 = x1 * pixel_multiplier;
-        y1 = y1 * pixel_multiplier;
-        x2 = x2 * pixel_multiplier;
-        y2 = y2 * pixel_multiplier;
-        x3 = x3 * pixel_multiplier;
-        y3 = y3 * pixel_multiplier;
-
         Shape s{Shape()};
         s.begin();
         s.vertex(x0, y0);
@@ -259,15 +223,6 @@ namespace Pyro
 
     void Graphics::quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
-        x0 = x0 * pixel_multiplier;
-        y0 = y0 * pixel_multiplier;
-        x1 = x1 * pixel_multiplier;
-        y1 = y1 * pixel_multiplier;
-        x2 = x2 * pixel_multiplier;
-        y2 = y2 * pixel_multiplier;
-        x3 = x3 * pixel_multiplier;
-        y3 = y3 * pixel_multiplier;
-
         Shape s{Shape()};
         s.begin();
         s.vertex(x0, y0);
@@ -282,11 +237,6 @@ namespace Pyro
                        float w, float h,
                        float start, float end, int mode)
     {
-        x = x * pixel_multiplier;
-        y = y * pixel_multiplier;
-        w = w * pixel_multiplier;
-        h = h * pixel_multiplier;
-
         Shape s{Shape()};
         s.begin();
         if (end < start)
@@ -316,13 +266,7 @@ namespace Pyro
         Shape s = Shape();
         s.begin();
         float da = M_PI / (segments / 2.0f);
-        if (unit == Unit::CURRENT)
-            unit = this->unit;
 
-        x = x * pixel_multiplier;
-        y = y * pixel_multiplier;
-        w = w * pixel_multiplier;
-        h = h * pixel_multiplier;
         for (unsigned int i = 0; i < segments; i++)
         {
             s.vertex(cos(i * da) * w / 2.0f,
