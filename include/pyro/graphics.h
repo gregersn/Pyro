@@ -26,7 +26,7 @@ namespace Pyro
         GraphicsMode mode;
         std::filesystem::path filename{""};
 
-        bool _smooth{true};
+        int _smooth{3};
         unsigned int _curvedetail{32};
 
         Shape _shape{Shape()};
@@ -85,6 +85,7 @@ namespace Pyro
         virtual void strokejoin(int join);
 
         virtual void smooth();
+        virtual void smooth(int level);
         virtual void nosmooth();
 
         // Transformation

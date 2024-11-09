@@ -89,7 +89,6 @@ namespace Pyro
 
     void GraphicsCairo::shape(Shape s, float x, float y)
     {
-        // TODO: Use unit
         cairo_save(this->cr);
         cairo_new_path(this->cr);
 
@@ -218,14 +217,39 @@ namespace Pyro
 
     void GraphicsCairo::smooth()
     {
-        this->_smooth = true;
-        cairo_set_antialias(this->cr, CAIRO_ANTIALIAS_DEFAULT);
+        this->smooth(2);
+    }
+
+    void GraphicsCairo::smooth(int level)
+    {
+        this->_smooth = level;
+        cairo_antialias_t cairo_antialias_level = CAIRO_ANTIALIAS_DEFAULT;
+        switch (this->_smooth)
+        {
+        case 0:
+            cairo_antialias_level = CAIRO_ANTIALIAS_NONE;
+            break;
+        case 1:
+        case 2:
+            cairo_antialias_level = CAIRO_ANTIALIAS_FAST;
+            break;
+        case 3:
+            cairo_antialias_level = CAIRO_ANTIALIAS_GOOD;
+            break;
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+            cairo_antialias_level = CAIRO_ANTIALIAS_BEST;
+            break;
+        }
+        cairo_set_antialias(this->cr, cairo_antialias_level);
     }
 
     void GraphicsCairo::nosmooth()
     {
-        this->_smooth = false;
-        cairo_set_antialias(this->cr, CAIRO_ANTIALIAS_NONE);
+        this->smooth(0);
     }
 
     void GraphicsCairo::strokecap(int cap)

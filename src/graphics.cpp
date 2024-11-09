@@ -330,12 +330,17 @@ namespace Pyro
 
     void Graphics::smooth()
     {
-        this->_smooth = true;
+        this->smooth(2);
+    }
+
+    void Graphics::smooth(int level)
+    {
+        this->_smooth = max(min(level, 8), 0);
     }
 
     void Graphics::nosmooth()
     {
-        this->_smooth = false;
+        this->smooth(0);
     }
 
     float Graphics::strokeweight()

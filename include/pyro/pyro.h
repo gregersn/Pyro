@@ -75,6 +75,7 @@ namespace Pyro
     // **** /RENDERING ****
 
     inline void smooth() { pg->smooth(); };
+    inline void smooth(int level) { pg->smooth(level); };
     inline void nosmooth() { pg->nosmooth(); };
 
     inline float strokeweight() { return pg->strokeweight(); };

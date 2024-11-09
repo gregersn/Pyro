@@ -39,6 +39,7 @@ namespace Pyro
 
         void background(float r, float g, float b, float a) override;
         void smooth() override;
+        void smooth(int level) override;
         void nosmooth() override;
         void strokecap(int cap) override;
         void strokejoin(int join) override;
