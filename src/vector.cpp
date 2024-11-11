@@ -5,6 +5,7 @@
 namespace Pyro
 {
     Vector::Vector() : x(0.0f), y(0.0f), z(0.0f) {}
+    Vector::Vector(Vector const &other) : x(other.x), y(other.y), z(other.z) {}
     Vector::Vector(float x, float y, float z) : x(x), y(y), z(z) {}
 
     Vector Vector::random2d()
