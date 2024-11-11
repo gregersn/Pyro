@@ -14,7 +14,7 @@ namespace Pyro
         return font;
     }
 
-    Font *create_font(std::filesystem::path filename, int size)
+    Font *create_font(std::filesystem::path filename, int /*size*/)
     {
         // TODO: Use size
         return Font::load(filename);
