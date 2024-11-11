@@ -85,22 +85,35 @@ namespace Pyro
     inline void endshape() { pg->endshape(); };
     inline void endshape(int close) { pg->endshape(close); };
     inline void vertex(float x, float y) { pg->vertex(x, y); };
+    inline void vertex(Vector p) { pg->vertex(p); };
     inline void curvevertex(float x, float y) { pg->curvevertex(x, y); };
+    inline void curvevertex(Vector p) { pg->curvevertex(p); };
     inline void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { pg->beziervertex(x2, y2, x3, y3, x4, y4); };
+    inline void beziervertex(Vector p2, Vector p3, Vector p4) { pg->beziervertex(p2, p3, p4); };
 
     inline void point(float x, float y) { pg->point(x, y); };
+    inline void point(Vector p) { pg->point(p); };
     inline void line(float x0, float y0, float x1, float y1) { pg->line(x0, y0, x1, y1); };
+    inline void line(Vector p0, Vector p1) { pg->line(p0, p1); };
     inline void triangle(float x0, float y0, float x1, float y1, float x2, float y2) { pg->triangle(x0, y0, x1, y1, x2, y2); };
+    inline void triangle(Vector p0, Vector p1, Vector p2) { pg->triangle(p0, p1, p2); };
     inline void rect(float a, float b, float c, float d) { pg->rect(a, b, c, d); };
+    inline void rect(Vector p0, Vector p1) { pg->rect(p0, p1); };
     inline void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->quad(x0, y0, x1, y1, x2, y2, x3, y3); };
+    inline void quad(Vector p0, Vector p1, Vector p2, Vector p3) { pg->quad(p0, p1, p2, p3); };
 
     inline void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN) { pg->arc(a, b, c, d, start, end, mode); };
+    inline void arc(Vector p0, Vector p1, float start, float end, int mode = OPEN) { pg->arc(p0, p1, start, end, mode); };
 
     inline void ellipse(float x, float y, float w, float h) { pg->ellipse(x, y, w, h); };
+    inline void ellipse(Vector p0, float w, float h) { pg->ellipse(p0, w, h); };
     inline void circle(float x, float y, float r) { ellipse(x, y, r, r); };
+    inline void circle(Vector p0, float r) { ellipse(p0, r, r); };
 
     inline void translate(float x, float y) { pg->translate(x, y); };
+    inline void translate(Vector v) { pg->translate(v); };
     inline void scale(float sx, float sy) { pg->scale(sx, sy); };
+    inline void scale(Vector v) { pg->scale(v); };
     inline void rotate(float a) { pg->rotate(a); };
     inline void pushmatrix() { pg->pushmatrix(); };
     inline void popmatrix() { pg->popmatrix(); };

@@ -52,10 +52,12 @@ namespace Pyro
         void end(int close);
         void begincontour();
         void endcontour();
-        void vertex(Vector v) { this->vertex(v.x, v.y); };
-        void vertex(float x, float y);
-        void curvevertex(float x, float y);
-        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4);
+        void vertex(Vector p);
+        void vertex(float x, float y) { this->vertex(Vector(x, y)); };
+        void curvevertex(Vector p);
+        void curvevertex(float x, float y) { this->curvevertex(Vector(x, y)); };
+        void beziervertex(Vector p2, Vector p3, Vector p4);
+        void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { this->beziervertex(Vector(x2, y2), Vector(x3, y3), Vector(x4, y4)); };
         std::vector<std::vector<Pyro::Vector>> getpoints() { return this->outpoints; };
     };
 };

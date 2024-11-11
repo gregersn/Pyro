@@ -90,8 +90,10 @@ namespace Pyro
 
         // Transformation
         virtual void translate(float x, float y);
+        virtual void translate(Vector v);
         virtual void rotate(float a);
         virtual void scale(float sx, float sy);
+        virtual void scale(Vector v);
         virtual void pushmatrix();
         virtual void popmatrix();
         void pushstyle();
@@ -136,18 +138,26 @@ namespace Pyro
         {
             this->_shape.endcontour();
         };
-        void vertex(Vector v)
+        void vertex(Vector p)
         {
-            this->_shape.vertex(v.x, v.y);
+            this->_shape.vertex(p);
         };
         void vertex(float x, float y)
         {
             this->_shape.vertex(x, y);
         };
+        void curvevertex(Vector p)
+        {
+            this->_shape.curvevertex(p);
+        };
         void curvevertex(float x, float y)
         {
             this->_shape.curvevertex(x, y);
         };
+        void beziervertex(Vector p2, Vector p3, Vector p4)
+        {
+            this->_shape.beziervertex(p2, p3, p4);
+        }
         void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4)
         {
             this->_shape.beziervertex(x2, y2, x3, y3, x4, y4);
@@ -160,8 +170,12 @@ namespace Pyro
 
         // Primitive shapes
         void point(float x, float y);
+        void point(Vector p);
+        virtual void line(Vector /*p0*/, Vector /*p1*/){};
         virtual void line(float /*x0*/, float /*y0*/, float /*x1*/, float /*y1*/) {};
+        void curve(Vector p0, Vector p1, Vector p2, Vector p3);
         void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
+        void bezier(Vector p0, Vector p1, Vector p2, Vector p3);
         void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
         void triangle(Vector a, Vector b, Vector c);
@@ -172,10 +186,12 @@ namespace Pyro
             this->style.rectmode(mode);
         };
         void rect(float a, float b, float c, float d);
+        void rect(Vector p0, Vector p1);
 
         void quad(Vector a, Vector b, Vector c, Vector d);
         void quad(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
 
+        void arc(Vector p0, Vector p1, float start, float end, int mode = OPEN);
         void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN);
 
         void ellipsemode(int mode)
@@ -186,6 +202,11 @@ namespace Pyro
         void ellipse(float x, float y, float r)
         {
             this->ellipse(x, y, r, r);
+        };
+        void ellipse(Vector p0, float w, float h);
+        void ellipse(Vector p0, float r)
+        {
+            this->ellipse(p0, r, r);
         };
 
         // Typography

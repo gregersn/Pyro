@@ -15,8 +15,10 @@ namespace Pyro
 
     public:
         Transformer2D();
+        void translate(Vector v);
         void translate(float x, float y);
         void rotate(float a);
+        void scale(Vector v);
         void scale(float sx, float sy);
 
         void pushmatrix();

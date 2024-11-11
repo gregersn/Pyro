@@ -159,22 +159,22 @@ namespace Pyro
     {
     }
 
-    void Shape::vertex(float x, float y)
+    void Shape::vertex(Vector p)
     {
-        this->points.push_back({Pyro::Vector(x, y), PointType::VERTEX});
+        this->points.push_back({p, PointType::VERTEX});
     }
 
-    void Shape::curvevertex(float x, float y)
+    void Shape::curvevertex(Vector p)
     {
-        this->points.push_back({Pyro::Vector(x, y), PointType::CURVEVERTEX});
+        this->points.push_back({p, PointType::CURVEVERTEX});
     }
 
-    void Shape::beziervertex(float x2, float y2, float x3, float y3, float x4, float y4)
+    void Shape::beziervertex(Vector p2, Vector p3, Vector p4)
     {
         assert(this->points.size() > 0);
-        this->points.push_back({Pyro::Vector(x2, y2), PointType::BEZIERVERTEX});
-        this->points.push_back({Pyro::Vector(x3, y3), PointType::BEZIERVERTEX});
-        this->points.push_back({Pyro::Vector(x4, y4), PointType::BEZIERVERTEX});
+        this->points.push_back({p2, PointType::BEZIERVERTEX});
+        this->points.push_back({p3, PointType::BEZIERVERTEX});
+        this->points.push_back({p4, PointType::BEZIERVERTEX});
     }
 
 }

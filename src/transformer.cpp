@@ -9,6 +9,11 @@ namespace Pyro
         this->current = Eigen::Affine2d::Identity();
         this->stack = std::vector<Eigen::Affine2d>();
     }
+    void Transformer2D::translate(Vector v)
+    {
+        Eigen::Vector2d t = Eigen::Vector2d(v.x, v.y);
+        this->current *= Eigen::Translation2d(t);
+    }
 
     void Transformer2D::translate(float x, float y)
     {
@@ -25,6 +30,11 @@ namespace Pyro
     void Transformer2D::scale(float sx, float sy)
     {
         this->current *= Eigen::Scaling<double>(sx, sy);
+    }
+
+    void Transformer2D::scale(Vector v)
+    {
+        this->current *= Eigen::Scaling<double>(v.x, v.y);
     }
 
     void Transformer2D::pushmatrix()

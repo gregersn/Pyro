@@ -76,11 +76,20 @@ namespace Pyro
         this->transformer.translate(x, y);
     }
 
+    void Graphics::translate(Vector v)
+    {
+        this->transformer.translate(v);
+    }
+
     void Graphics::rotate(float a)
     {
         this->transformer.rotate(a);
     }
 
+    void Graphics::scale(Vector v)
+    {
+        this->transformer.scale(v);
+    }
     void Graphics::scale(float sx, float sy)
     {
         this->transformer.scale(sx, sy);
@@ -188,6 +197,18 @@ namespace Pyro
         s.vertex(a + c, b);
         s.vertex(a + c, b + d);
         s.vertex(a, b + d);
+        s.end(CLOSE);
+        this->shape(s, 0, 0);
+    }
+
+    void Graphics::rect(Vector p0, Vector p1)
+    {
+        Shape s{Shape()};
+        s.begin();
+        s.vertex(p0);
+        s.vertex(p1.x, p0.y);
+        s.vertex(p1);
+        s.vertex(p0.x, p1.y);
         s.end(CLOSE);
         this->shape(s, 0, 0);
     }
