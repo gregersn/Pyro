@@ -65,6 +65,11 @@ namespace Pyro
         this->_curvedetail = segments;
     }
 
+    void Graphics::point(Vector p)
+    {
+        this->line(p, p + Vector(1.0f, 1.0f));
+    }
+
     void Graphics::point(float x, float y)
     {
         this->line(x, y, x + 1, y + 1);
@@ -215,22 +220,31 @@ namespace Pyro
 
     void Graphics::curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
+        curve(Vector(x0, y0), Vector(x1, y1), Vector(x2, y2), Vector(x3, y3));
+    }
+    void Graphics::curve(Vector p0, Vector p1, Vector p2, Vector p3)
+    {
         Shape s{Shape()};
         s.begin();
-        s.curvevertex(x0, y0);
-        s.curvevertex(x1, y1);
-        s.curvevertex(x2, y2);
-        s.curvevertex(x3, y3);
+        s.curvevertex(p0);
+        s.curvevertex(p1);
+        s.curvevertex(p2);
+        s.curvevertex(p3);
         s.end(OPEN);
         this->shape(s, 0, 0);
     }
 
     void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
+        bezier(Vector(x0, y0), Vector(x1, y1), Vector(x2, y2), Vector(x3, y3));
+    }
+
+    void Graphics::bezier(Vector p0, Vector p1, Vector p2, Vector p3)
+    {
         Shape s{Shape()};
         s.begin();
-        s.vertex(x0, y0);
-        s.beziervertex(x1, y1, x2, y2, x3, y3);
+        s.vertex(p0);
+        s.beziervertex(p1, p2, p3);
         s.end(OPEN);
         this->shape(s, 0, 0);
     }
@@ -259,6 +273,11 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
+    void Graphics::arc(Vector p0, Vector p1, float start, float end, int mode)
+    {
+        arc(p0.x, p0.y, p1.x, p1.y, start, end, mode);
+    }
+
     void Graphics::arc(float x, float y,
                        float w, float h,
                        float start, float end, int mode)
@@ -285,6 +304,11 @@ namespace Pyro
             s.end(OPEN);
 
         this->shape(s, x, y);
+    }
+
+    void Graphics::ellipse(Vector p0, float w, float h)
+    {
+        ellipse(p0.x, p0.y, w, h);
     }
 
     void Graphics::ellipse(float x, float y, float w, float h)
