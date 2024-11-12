@@ -40,6 +40,23 @@ TEST_CASE("Basic transformations", "[transformer]")
         REQUIRE(t.getcurrent()(2, 2) == 1);
     }
 
+    SECTION("Translate to position with vector")
+    {
+        Transformer2D t = Transformer2D();
+        t.translate(Vector(2, 4));
+        REQUIRE(t.getcurrent()(0, 0) == 1);
+        REQUIRE(t.getcurrent()(0, 1) == 0);
+        REQUIRE(t.getcurrent()(0, 2) == 2);
+
+        REQUIRE(t.getcurrent()(1, 0) == 0);
+        REQUIRE(t.getcurrent()(1, 1) == 1);
+        REQUIRE(t.getcurrent()(1, 2) == 4);
+
+        REQUIRE(t.getcurrent()(2, 0) == 0);
+        REQUIRE(t.getcurrent()(2, 1) == 0);
+        REQUIRE(t.getcurrent()(2, 2) == 1);
+    }
+
     SECTION("Rotate")
     {
         Transformer2D t = Transformer2D();
@@ -61,6 +78,22 @@ TEST_CASE("Basic transformations", "[transformer]")
     {
         Transformer2D t = Transformer2D();
         t.scale(1.5, 2.3);
+        REQUIRE(t.getcurrent()(0, 0) == 1.5);
+        REQUIRE(t.getcurrent()(0, 1) == 0);
+        REQUIRE(t.getcurrent()(0, 2) == 0);
+
+        REQUIRE(t.getcurrent()(1, 0) == 0);
+        REQUIRE(t.getcurrent()(1, 1) == Approx(2.3));
+        REQUIRE(t.getcurrent()(1, 2) == 0);
+
+        REQUIRE(t.getcurrent()(2, 0) == 0);
+        REQUIRE(t.getcurrent()(2, 1) == 0);
+        REQUIRE(t.getcurrent()(2, 2) == 1);
+    }
+    SECTION("Scale with vector")
+    {
+        Transformer2D t = Transformer2D();
+        t.scale(Vector(1.5, 2.3));
         REQUIRE(t.getcurrent()(0, 0) == 1.5);
         REQUIRE(t.getcurrent()(0, 1) == 0);
         REQUIRE(t.getcurrent()(0, 2) == 0);
@@ -138,4 +171,50 @@ TEST_CASE("Get screen coordinates from Pyro", "[transform]")
         REQUIRE(Pyro::screen_y(0, 0, 10) == Approx(0.0));
         REQUIRE(Pyro::screen_y(4, 0, 0) == Approx(0.0));
     }
+}
+
+TEST_CASE("Push and pop matrix")
+{
+    Transformer2D t = Transformer2D();
+    t.translate(2, 4);
+    REQUIRE(t.getcurrent()(0, 0) == 1);
+    REQUIRE(t.getcurrent()(0, 1) == 0);
+    REQUIRE(t.getcurrent()(0, 2) == 2);
+
+    REQUIRE(t.getcurrent()(1, 0) == 0);
+    REQUIRE(t.getcurrent()(1, 1) == 1);
+    REQUIRE(t.getcurrent()(1, 2) == 4);
+
+    REQUIRE(t.getcurrent()(2, 0) == 0);
+    REQUIRE(t.getcurrent()(2, 1) == 0);
+    REQUIRE(t.getcurrent()(2, 2) == 1);
+
+    t.pushmatrix();
+
+    t.translate(2, 4);
+    REQUIRE(t.getcurrent()(0, 0) == 1);
+    REQUIRE(t.getcurrent()(0, 1) == 0);
+    REQUIRE(t.getcurrent()(0, 2) == 4);
+
+    REQUIRE(t.getcurrent()(1, 0) == 0);
+    REQUIRE(t.getcurrent()(1, 1) == 1);
+    REQUIRE(t.getcurrent()(1, 2) == 8);
+
+    REQUIRE(t.getcurrent()(2, 0) == 0);
+    REQUIRE(t.getcurrent()(2, 1) == 0);
+    REQUIRE(t.getcurrent()(2, 2) == 1);
+
+    t.popmatrix();
+
+    REQUIRE(t.getcurrent()(0, 0) == 1);
+    REQUIRE(t.getcurrent()(0, 1) == 0);
+    REQUIRE(t.getcurrent()(0, 2) == 2);
+
+    REQUIRE(t.getcurrent()(1, 0) == 0);
+    REQUIRE(t.getcurrent()(1, 1) == 1);
+    REQUIRE(t.getcurrent()(1, 2) == 4);
+
+    REQUIRE(t.getcurrent()(2, 0) == 0);
+    REQUIRE(t.getcurrent()(2, 1) == 0);
+    REQUIRE(t.getcurrent()(2, 2) == 1);
 }
