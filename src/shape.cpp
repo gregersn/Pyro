@@ -8,19 +8,22 @@ namespace Pyro
 {
     unsigned int curve_resolution = 32;
     void curveresolution(unsigned int res) { curve_resolution = res; }
-    float bezierpoint(float a, float b, float c, float d, float t)
-    {
-        float ab = lerp(a, b, t);
-        float bc = lerp(b, c, t);
-        float cd = lerp(c, d, t);
 
-        float ac = lerp(ab, bc, t);
-        float bd = lerp(bc, cd, t);
+    template <typename T>
+    T bezierpoint(T a, T b, T c, T d, float t)
+    {
+        T ab = lerp(a, b, t);
+        T bc = lerp(b, c, t);
+        T cd = lerp(c, d, t);
+
+        T ac = lerp(ab, bc, t);
+        T bd = lerp(bc, cd, t);
 
         return lerp(ac, bd, t);
     }
 
-    float curvepoint(float p0, float p1, float p2, float p3, float t)
+    template <typename T>
+    T curvepoint(T p0, T p1, T p2, T p3, float t)
     {
         return 0.5 * ((2 * p1) +
                       (-p0 + p2) * t +
@@ -103,10 +106,7 @@ namespace Pyro
 
                     for (unsigned int i = 0; i < curve_resolution + 1; i++)
                     {
-                        contour.push_back(
-                            Pyro::Vector(
-                                curvepoint(p0.v.x, point.v.x, p2.v.x, p3.v.x, i * delta),
-                                curvepoint(p0.v.y, point.v.y, p2.v.y, p3.v.y, i * delta)));
+                        contour.push_back(curvepoint(p0.v, point.v, p2.v, p3.v, i * delta));
                     }
                 }
                 else if (point.type == PointType::BEZIERVERTEX)
@@ -129,10 +129,7 @@ namespace Pyro
 
                     for (unsigned int i = 1; i < curve_resolution + 1; i++)
                     {
-                        contour.push_back(
-                            Pyro::Vector(
-                                bezierpoint(p0.v.x, point.v.x, p2.v.x, p3.v.x, i * delta),
-                                bezierpoint(p0.v.y, point.v.y, p2.v.y, p3.v.y, i * delta)));
+                        contour.push_back(bezierpoint(p0.v, point.v, p2.v, p3.v, i * delta));
                     }
                     curveiterator += 2;
                 }

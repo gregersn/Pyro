@@ -112,5 +112,9 @@ namespace Pyro
     {
         return Vector(x / v, y / v, z / v);
     }
+    Vector operator*(float const f, Vector const v)
+    {
+        return Vector(v.x * f, v.y * f, v.z * f);
+    }
 
 }

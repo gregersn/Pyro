@@ -44,6 +44,11 @@ namespace Pyro
             return Vector(x - other.x, y - other.y, z - other.z);
         }
 
+        Vector operator-() const
+        {
+            return Vector(-x, -y, -z);
+        }
+
         void operator-=(Vector const &other)
         {
             x -= other.x;
@@ -139,6 +144,9 @@ namespace Pyro
             return oss.str();
         }
     };
+
+    Vector operator*(float const f, Vector const v);
+
 }
 
 #endif
