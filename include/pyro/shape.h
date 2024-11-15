@@ -16,12 +16,22 @@ namespace Pyro
     const int QUADS{6};
     const int QUAD_STRIP{7};
 
-    template <typename T>
-    T bezierpoint(T a, T b, T c, T d, float t);
 
     template <typename T>
-    T curvepoint(T p0, T p1, T p2, T p3, float t);
+    T bezierpoint(T a, T b, T c, T d, float t)
+    {
+        float t1 = 1.0f - t;
+        return (a*t1 + 3*b*t)*t1*t1 + (3*c*t1 + d*t)*t*t;
+    };
 
+    template <typename T>
+    T curvepoint(T p0, T p1, T p2, T p3, float t)
+    {
+        return 0.5 * ((2 * p1) +
+                      (-p0 + p2) * t +
+                      (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t +
+                      (-p0 + 3 * p1 - 3 * p2 + p3) * t * t * t);
+    };
     enum class PointType
     {
         VERTEX,

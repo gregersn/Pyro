@@ -9,27 +9,6 @@ namespace Pyro
     unsigned int curve_resolution = 32;
     void curveresolution(unsigned int res) { curve_resolution = res; }
 
-    template <typename T>
-    T bezierpoint(T a, T b, T c, T d, float t)
-    {
-        T ab = lerp(a, b, t);
-        T bc = lerp(b, c, t);
-        T cd = lerp(c, d, t);
-
-        T ac = lerp(ab, bc, t);
-        T bd = lerp(bc, cd, t);
-
-        return lerp(ac, bd, t);
-    }
-
-    template <typename T>
-    T curvepoint(T p0, T p1, T p2, T p3, float t)
-    {
-        return 0.5 * ((2 * p1) +
-                      (-p0 + p2) * t +
-                      (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t +
-                      (-p0 + 3 * p1 - 3 * p2 + p3) * t * t * t);
-    }
 
     Shape::Shape()
     {

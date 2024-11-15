@@ -1,6 +1,8 @@
 #ifndef PYRO_H
 #define PYRO_H
 
+#include <filesystem>
+
 #include "constants.h"
 #include "string.h"
 #include "math.h"
@@ -27,8 +29,8 @@ namespace Pyro
     void size(unsigned int width, unsigned int height);
     void size(float width, float height, Unit unit, unsigned int dpi = 72);
 
-    inline void save(const char *file) { pg->save(file); };
-    inline void save(const char *file, unsigned int dpi) { pg->save(file, dpi); };
+    inline void save(const std::filesystem::path file) { pg->save(file); };
+    inline void save(const std::filesystem::path file, unsigned int dpi) { pg->save(file, dpi); };
 
     void loadpixels();
     void updatepixels();
@@ -91,6 +93,11 @@ namespace Pyro
     inline void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { pg->beziervertex(x2, y2, x3, y3, x4, y4); };
     inline void beziervertex(Vector p2, Vector p3, Vector p4) { pg->beziervertex(p2, p3, p4); };
 
+    inline void curve(Vector p0, Vector p1, Vector p2, Vector p3) { pg->curve( p0,  p1,  p2,  p3); };
+    inline void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->curve( x0,  y0,  x1,  y1,  x2,  y2,  x3,  y3); };
+    inline void bezier(Vector p0, Vector p1, Vector p2, Vector p3) { pg->bezier( p0,  p1,  p2,  p3); };
+    inline void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->bezier( x0,  y0,  x1,  y1,  x2,  y2,  x3,  y3); };
+
     inline void point(float x, float y) { pg->point(x, y); };
     inline void point(Vector p) { pg->point(p); };
     inline void line(float x0, float y0, float x1, float y1) { pg->line(x0, y0, x1, y1); };
@@ -105,6 +112,7 @@ namespace Pyro
     inline void arc(float a, float b, float c, float d, float start, float end, int mode = OPEN) { pg->arc(a, b, c, d, start, end, mode); };
     inline void arc(Vector p0, Vector p1, float start, float end, int mode = OPEN) { pg->arc(p0, p1, start, end, mode); };
 
+    inline void ellipsemode(int mode) { pg->ellipsemode(mode); };
     inline void ellipse(float x, float y, float w, float h) { pg->ellipse(x, y, w, h); };
     inline void ellipse(Vector p0, float w, float h) { pg->ellipse(p0, w, h); };
     inline void circle(float x, float y, float r) { ellipse(x, y, r, r); };

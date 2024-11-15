@@ -1,5 +1,6 @@
 test_sources = [
                 'test-main.cpp',
+                'test-curves.cpp',
                 'test-graphics.cpp',
                 'test-image.cpp',
                 'test-image-composition.cpp',
