@@ -18,3 +18,5 @@ bin/*
 
 # Ignore subprojects files
 subprojects/*/
+
+.cache/
