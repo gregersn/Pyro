@@ -7,6 +7,7 @@ test_sources = [
                 'test-noise.cpp',
                 'test-pyro.cpp',
                 'test-vector.cpp',
+                'test-runner.cpp',
                 'test-string.cpp',
                 'test-transformer2d.cpp',
                 'test-shape.cpp']
