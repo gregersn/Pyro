@@ -8,7 +8,7 @@ namespace Pyro
 {
     class SDLRunner : public Runner
     {
-    protected:
+      protected:
         SDL_Window *sdl_window{nullptr};
         SDL_Renderer *sdl_renderer{nullptr};
         SDL_Texture *sdl_texture{nullptr};
@@ -21,7 +21,7 @@ namespace Pyro
         unsigned int width;
         unsigned int height;
 
-    public:
+      public:
         explicit SDLRunner(bool headless = false);
         SDLRunner(const SDLRunner &in);
         SDLRunner &operator=(const SDLRunner &in);
@@ -30,6 +30,6 @@ namespace Pyro
         int quit() override;
         int init(unsigned int width, unsigned int height) override;
     };
-}
+} // namespace Pyro
 
 #endif

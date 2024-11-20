@@ -16,7 +16,7 @@ TEST_CASE("Test noise")
             Pyro::noisedetail(1, 1.0);
             double v = Pyro::noise(x * 0.1, y * 0.1);
             REQUIRE(v >= 0.0);
-            pixels[y * 128 + x] = 0xff000000 | (uint8_t)((v) * 255);
+            pixels[y * 128 + x] = 0xff000000 | (uint8_t)(v * 255);
         }
     }
 

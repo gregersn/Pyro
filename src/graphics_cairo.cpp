@@ -325,4 +325,4 @@ namespace Pyro
         }
         this->font = cairo_ft_font_face_create_for_ft_face(font->impl->get_ft_face(), 0);
     }
-}
+} // namespace Pyro

@@ -53,4 +53,4 @@ namespace Pyro
         Eigen::Vector2d out = this->current * Eigen::Vector2d(v.x, v.y);
         return Pyro::Vector(out(0), out(1));
     }
-}
+} // namespace Pyro

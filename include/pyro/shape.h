@@ -16,12 +16,11 @@ namespace Pyro
     const int QUADS{6};
     const int QUAD_STRIP{7};
 
-
     template <typename T>
     T bezierpoint(T a, T b, T c, T d, float t)
     {
         float t1 = 1.0f - t;
-        return (a*t1 + 3*b*t)*t1*t1 + (3*c*t1 + d*t)*t*t;
+        return (a * t1 + 3 * b * t) * t1 * t1 + (3 * c * t1 + d * t) * t * t;
     };
 
     template <typename T>
@@ -55,7 +54,7 @@ namespace Pyro
         std::vector<std::vector<Pyro::t_shapepoint>> contours{std::vector<std::vector<Pyro::t_shapepoint>>()};
         int kind{DEFAULT};
 
-    public:
+      public:
         int close{false};
         Shape();
         ~Shape();
@@ -74,5 +73,5 @@ namespace Pyro
         void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { this->beziervertex(Vector(x2, y2), Vector(x3, y3), Vector(x4, y4)); };
         std::vector<std::vector<Pyro::Vector>> getpoints() { return this->outpoints; };
     };
-};
+}; // namespace Pyro
 #endif

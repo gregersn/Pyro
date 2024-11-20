@@ -23,7 +23,7 @@ namespace Pyro
 
     class Image
     {
-    private:
+      private:
         bool pixels_locked{false};
         void *cache{nullptr};
         uint32_t *data{nullptr};
@@ -38,7 +38,7 @@ namespace Pyro
                          int destX1, int destY1, int destX2, int destY2,
                          unsigned int mode);
 
-    protected:
+      protected:
         unsigned int _width{0};
         unsigned int _height{0};
         unsigned int _pixelwidth{0};
@@ -50,7 +50,7 @@ namespace Pyro
         int mx1{0}, my1{0}, mx2{0}, my2{0};
         bool initialized{false};
 
-    public:
+      public:
         unsigned int format{ARGB};
         unsigned int width() { return this->_pixelwidth; };
         unsigned int height() { return this->_pixelheight; };
@@ -114,5 +114,5 @@ namespace Pyro
     };
 
     Image *createimage(unsigned int width, unsigned int height, int format = RGB);
-}
+} // namespace Pyro
 #endif

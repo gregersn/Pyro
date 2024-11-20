@@ -92,4 +92,4 @@ namespace Pyro
     Color stroke(int c, int a) { return pg->stroke(c, a); };
     Color stroke(int r, int g, int b, int a) { return pg->stroke(r, g, b, a); };
 
-}
+} // namespace Pyro

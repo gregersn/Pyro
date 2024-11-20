@@ -8,13 +8,13 @@ namespace Pyro
 {
     class Runner
     {
-    public:
+      public:
         std::function<void()> keypressed_cb{nullptr};
         std::function<void()> mousepressed_cb{nullptr};
-        Runner() : running(true) {};
-        Runner(const Runner & /*in*/) {};
+        Runner() : running(true){};
+        Runner(const Runner & /*in*/){};
         Runner &operator=(const Runner & /*in*/) { return *this; };
-        virtual ~Runner() {};
+        virtual ~Runner(){};
 
         virtual int update()
         {
@@ -79,6 +79,6 @@ namespace Pyro
 
     extern bool running;
     extern Runner *pyro;
-}
+} // namespace Pyro
 
 #endif

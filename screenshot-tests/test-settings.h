@@ -13,9 +13,9 @@ class ImageMatch : public Catch::Matchers::MatcherBase<std::filesystem::path>
     std::filesystem::path actual_file;
     float tolerance = 0.0f;
 
-public:
-    ImageMatch(std::filesystem::path const &actual) : actual_file(actual) {};
-    ImageMatch(std::filesystem::path const &actual, float tolerance) : actual_file(actual), tolerance(tolerance) {};
+  public:
+    ImageMatch(std::filesystem::path const &actual) : actual_file(actual){};
+    ImageMatch(std::filesystem::path const &actual, float tolerance) : actual_file(actual), tolerance(tolerance){};
     bool match(std::filesystem::path const &filename) const override;
     virtual std::string describe() const override;
 };

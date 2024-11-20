@@ -25,4 +25,4 @@ namespace Pyro
             ... be opened or read, or that it is broken...*/
         }
     }
-}
+} // namespace Pyro

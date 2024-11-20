@@ -93,10 +93,10 @@ namespace Pyro
     inline void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { pg->beziervertex(x2, y2, x3, y3, x4, y4); };
     inline void beziervertex(Vector p2, Vector p3, Vector p4) { pg->beziervertex(p2, p3, p4); };
 
-    inline void curve(Vector p0, Vector p1, Vector p2, Vector p3) { pg->curve( p0,  p1,  p2,  p3); };
-    inline void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->curve( x0,  y0,  x1,  y1,  x2,  y2,  x3,  y3); };
-    inline void bezier(Vector p0, Vector p1, Vector p2, Vector p3) { pg->bezier( p0,  p1,  p2,  p3); };
-    inline void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->bezier( x0,  y0,  x1,  y1,  x2,  y2,  x3,  y3); };
+    inline void curve(Vector p0, Vector p1, Vector p2, Vector p3) { pg->curve(p0, p1, p2, p3); };
+    inline void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->curve(x0, y0, x1, y1, x2, y2, x3, y3); };
+    inline void bezier(Vector p0, Vector p1, Vector p2, Vector p3) { pg->bezier(p0, p1, p2, p3); };
+    inline void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->bezier(x0, y0, x1, y1, x2, y2, x3, y3); };
 
     inline void point(float x, float y) { pg->point(x, y); };
     inline void point(Vector p) { pg->point(p); };

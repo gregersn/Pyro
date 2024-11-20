@@ -426,4 +426,4 @@ namespace Pyro
     {
         this->text_impl(text, unit2pixels(x, this->unit, this->get_dpi()), unit2pixels(y, this->unit, this->get_dpi()));
     }
-}
+} // namespace Pyro

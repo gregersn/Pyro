@@ -68,6 +68,6 @@ namespace Pyro
     const int SOFT_LIGHT{1 << 11};
     const int DODGE{1 << 12};
     const int BURN{1 << 13};
-}
+} // namespace Pyro
 
 #endif

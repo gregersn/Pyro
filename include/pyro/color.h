@@ -11,7 +11,7 @@ namespace Pyro
 {
     class Color
     {
-    private:
+      private:
         float _hue{0.0f};
         float _saturation{0.0f};
         float _lightness{0.0f};
@@ -26,7 +26,7 @@ namespace Pyro
         void update_hsl();
         void update_rgb();
 
-    public:
+      public:
         float r();
         float g();
         float b();
@@ -155,7 +155,7 @@ namespace Pyro
     {
         std::vector<Pyro::Color> colors;
 
-    public:
+      public:
         Palette();
         unsigned int add(Color col);
         Color get(unsigned int index);
@@ -182,6 +182,6 @@ namespace Pyro
 
     */
 
-}
+} // namespace Pyro
 
 #endif

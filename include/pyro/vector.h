@@ -8,7 +8,7 @@ namespace Pyro
 {
     class Vector
     {
-    public:
+      public:
         float x{};
         float y{};
         float z{};
@@ -147,6 +147,6 @@ namespace Pyro
 
     Vector operator*(float const f, Vector const v);
 
-}
+} // namespace Pyro
 
 #endif

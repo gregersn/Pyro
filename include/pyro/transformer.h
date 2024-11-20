@@ -9,11 +9,11 @@ namespace Pyro
 {
     class Transformer2D
     {
-    private:
+      private:
         std::vector<Eigen::Affine2d> stack;
         Eigen::Affine2d current;
 
-    public:
+      public:
         Transformer2D();
         void translate(Vector v);
         void translate(float x, float y);
@@ -36,5 +36,5 @@ namespace Pyro
         float screen_y(float x, float y, float z = 0.0f) { return this->screen_y(Vector(x, y, z)); };
     };
 
-}
+} // namespace Pyro
 #endif

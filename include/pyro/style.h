@@ -43,11 +43,11 @@ namespace Pyro
 
     class StyleStack
     {
-    private:
+      private:
         std::vector<t_style> stack;
         t_style current;
 
-    public:
+      public:
         StyleStack();
         void push();
         void pop();
@@ -79,6 +79,6 @@ namespace Pyro
         void strokejoin(int join);
         int strokejoin();
     };
-}
+} // namespace Pyro
 
 #endif

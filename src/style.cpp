@@ -129,4 +129,4 @@ namespace Pyro
     {
         return this->current.stroke_join;
     }
-}
+} // namespace Pyro

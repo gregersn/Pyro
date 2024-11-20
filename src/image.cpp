@@ -501,7 +501,8 @@ namespace Pyro
         {
             this->cache = malloc(this->_pixelwidth * this->_pixelheight * sizeof(unsigned char) * this->format);
         }
-        if(this->modified) {
+        if (this->modified)
+        {
             unsigned char *_cache = static_cast<unsigned char *>(this->cache);
             const unsigned char *source = this->load_bytes();
 

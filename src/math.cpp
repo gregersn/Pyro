@@ -67,4 +67,4 @@ namespace Pyro
         return std::exp(n);
     }
 
-}
+} // namespace Pyro

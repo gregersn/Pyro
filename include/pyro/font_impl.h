@@ -9,13 +9,13 @@ namespace Pyro
 {
     class FontImpl
     {
-    private:
+      private:
         std::filesystem::path filename{""};
         FT_Face face{nullptr};
 
-    public:
+      public:
         explicit FontImpl(std::filesystem::path filename);
         FT_Face get_ft_face() { return this->face; };
     };
-}
+} // namespace Pyro
 #endif

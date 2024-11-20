@@ -117,4 +117,4 @@ namespace Pyro
         return Vector(v.x * f, v.y * f, v.z * f);
     }
 
-}
+} // namespace Pyro

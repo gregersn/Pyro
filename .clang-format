@@ -7,4 +7,13 @@ Language: Cpp
 # Force pointers to the type for C++.
 # DerivePointerAlignment: false
 # PointerAlignment: Right
-ColumnLimit: 80
+ColumnLimit: 0
+SortIncludes: Never
+NamespaceIndentation: All
+AllowShortFunctionsOnASingleLine: All
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements: true
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeLambdaBody: true

@@ -8,6 +8,6 @@ namespace Pyro
     double noise(double x, double y);
     double noise(double x, double y, double z);
     double noise(double x, double y, double z, double w);
-}
+} // namespace Pyro
 
 #endif

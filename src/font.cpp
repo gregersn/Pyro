@@ -19,4 +19,4 @@ namespace Pyro
         // TODO: Use size
         return Font::load(filename);
     }
-}
+} // namespace Pyro

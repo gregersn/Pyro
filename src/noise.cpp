@@ -81,4 +81,4 @@ namespace Pyro
         return noise(x, 0.0);
     }
 
-}
+} // namespace Pyro

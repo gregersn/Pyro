@@ -9,7 +9,6 @@ namespace Pyro
     unsigned int curve_resolution = 32;
     void curveresolution(unsigned int res) { curve_resolution = res; }
 
-
     Shape::Shape()
     {
         return;
@@ -153,4 +152,4 @@ namespace Pyro
         this->points.push_back({p4, PointType::BEZIERVERTEX});
     }
 
-}
+} // namespace Pyro

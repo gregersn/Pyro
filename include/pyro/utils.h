@@ -39,6 +39,6 @@ namespace Pyro
         }
     };
 
-}
+} // namespace Pyro
 
 #endif

@@ -156,4 +156,4 @@ namespace Pyro
         return 0;
     }
 
-}
+} // namespace Pyro

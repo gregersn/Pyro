@@ -10,13 +10,13 @@ namespace Pyro
 {
     class GraphicsCairo : public Graphics
     {
-    private:
+      private:
         cairo_surface_t *surface{nullptr};
         cairo_t *cr{nullptr};
 
         cairo_font_face_t *font{nullptr};
 
-    public:
+      public:
         GraphicsCairo(unsigned int width, unsigned int height,
                       GraphicsMode mode = GraphicsMode::CAIRO,
                       std::filesystem::path filename = "");
@@ -47,6 +47,6 @@ namespace Pyro
         void text_impl(std::string text, float x, float y) override;
         void textfont_impl(Font *font) override;
     };
-}
+} // namespace Pyro
 
 #endif
