@@ -9,7 +9,7 @@ freetype_dep = dependency('freetype2')
 libjpeg_dep = dependency('libjpeg')
 libpng_dep = dependency('libpng')
 cairo_dep = dependency('cairo')
-sdl_dep = dependency('sdl2')
+sdl_dep = dependency('sdl3')
 eigen_dep = dependency('eigen3')
 
 eigen_dep = subproject('eigen').get_variable('eigen_dep')
