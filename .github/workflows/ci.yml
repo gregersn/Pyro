@@ -14,12 +14,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name: [ubuntu-22.04-gcc-12, macos-13-xcode]
+        name: [ubuntu-24.04-gcc-14, macos-13-xcode]
 
         include:
-          - name: ubuntu-22.04-gcc-12
-            os: ubuntu-22.04
-            version: "12"
+          - name: ubuntu-24.04-gcc-14
+            os: ubuntu-24.04
+            version: "14"
 
           - name: macos-13-xcode
             os: macos-13
@@ -32,7 +32,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v1
         with:
-          python-version: "3.8"
+          python-version: "3.9"
 
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
@@ -43,7 +43,7 @@ jobs:
           echo "name=CC::gcc-${{ matrix.version }}" >> $GITHUB_ENV
           echo "name=CXX::g++-${{ matrix.version }}" >> $GITHUB_ENV 
 
-          sudo apt-get install libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev libeigen3-dev
+          sudo apt-get install libfreetype-dev libcairo2 libcairo2-dev libsdl2-dev libpng-dev git-lfs libjpeg-turbo8-dev libeigen3-dev
           pip install meson ninja
 
       - name: Install dependencies (macOS)
@@ -51,6 +51,7 @@ jobs:
         run: |
           pip3 install meson ninja
           brew install freetype libjpeg-turbo cairo libpng sdl2 pkg-config eigen
+
 
           # ls -ls /Applications/
           # sudo xcode-select -switch /Applications/Xcode_${{ matrix.version }}.app
