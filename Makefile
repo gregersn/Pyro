@@ -17,9 +17,9 @@ CXXFLAGS = -Wall -std=c++17 -I include -I subprojects/eigen-3.4.0
 LDFLAGS = -L. -L./build/src
 LDLIBS = -lpyro
 
-PYRO_CXXFLAGS := -g -Wall `pkg-config --cflags cairo sdl2` -std=c++17 -I include -fPIC
+PYRO_CXXFLAGS := -g -Wall `pkg-config --cflags cairo sdl3` -std=c++17 -I include -fPIC
 PYRO_LDFLAGS = -shared
-LIB := `pkg-config --libs cairo sdl2` -lfreeimage -lstdc++
+LIB := `pkg-config --libs cairo sdl3` -lfreeimage -lstdc++
 # INC := -I include
 
 ifeq ($(OS), Windows_NT)

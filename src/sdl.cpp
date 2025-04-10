@@ -20,7 +20,12 @@ namespace Pyro
 
         if (!headless)
         {
-            if (SDL_Init(SDL_INIT_VIDEO) != 0)
+            if (SDL_Init(SDL_INIT_VIDEO))
+            {
+                std::cout << "SDL_init was okay" << std::endl;
+                ;
+            }
+            else
             {
                 std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
                 return 1;
@@ -41,8 +46,6 @@ namespace Pyro
     int SDLRunner::open_window()
     {
         sdl_window = SDL_CreateWindow("Pyro",
-                                      SDL_WINDOWPOS_UNDEFINED,
-                                      SDL_WINDOWPOS_UNDEFINED,
                                       this->width, this->height,
                                       SDL_WINDOW_OPENGL);
 
@@ -58,7 +61,7 @@ namespace Pyro
 
     int SDLRunner::create_renderer()
     {
-        sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
+        sdl_renderer = SDL_CreateRenderer(sdl_window, NULL);
         if (sdl_renderer == nullptr)
         {
             SDL_DestroyWindow(sdl_window);
@@ -91,22 +94,22 @@ namespace Pyro
         SDL_UpdateTexture(sdl_texture, NULL, pg->get_data(), this->width * sizeof(uint32_t));
         SDL_Event e;
         SDL_RenderClear(sdl_renderer);
-        SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, NULL);
+        SDL_RenderTexture(sdl_renderer, sdl_texture, NULL, NULL);
         SDL_RenderPresent(sdl_renderer);
 
         while (SDL_PollEvent(&e))
         {
             switch (e.type)
             {
-            case SDL_QUIT:
+            case SDL_EVENT_QUIT:
                 this->running = false;
                 break;
 
-            case SDL_KEYDOWN:
+            case SDL_EVENT_KEY_DOWN:
                 // std::cout << "Keydown" << std::endl;
                 this->keypressed = true;
-                this->key = e.key.keysym.sym;
-                if (e.key.keysym.sym == SDLK_ESCAPE)
+                this->key = e.key.key;
+                if (e.key.mod == SDLK_ESCAPE)
                     this->running = false;
 
                 if (this->keypressed_cb != nullptr)
@@ -115,23 +118,23 @@ namespace Pyro
                 }
                 break;
 
-            case SDL_KEYUP:
+            case SDL_EVENT_KEY_UP:
                 // std::cout << "Keyup" << std::endl;
                 this->keypressed = false;
-                this->key = e.key.keysym.sym;
+                this->key = e.key.key;
                 break;
 
-            case SDL_MOUSEBUTTONDOWN:
+            case SDL_EVENT_MOUSE_BUTTON_DOWN:
                 this->mousepressed = true;
                 this->mousebutton = e.button.button;
                 break;
 
-            case SDL_MOUSEBUTTONUP:
+            case SDL_EVENT_MOUSE_BUTTON_UP:
                 this->mousepressed = false;
                 this->mousebutton = e.button.button;
                 break;
 
-            case SDL_MOUSEMOTION:
+            case SDL_EVENT_MOUSE_MOTION:
                 pmousex = mousex;
                 pmousey = mousey;
                 mousex = e.motion.x;
