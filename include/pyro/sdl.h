@@ -2,7 +2,7 @@
 #define PYRO_SDL_H
 
 #include "pyro/pyro.h"
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 namespace Pyro
 {

@@ -3,7 +3,7 @@
 
 #include "pyro/pyro.h"
 #include "pyro/runner.h"
-#include <SDL2/SDL_events.h>
+#include <sdl3/SDL_events.h>
 
 using namespace Pyro;
 
