@@ -1,5 +1,5 @@
 project('pyro', 'cpp',
-        version: '0.2.0',
+        version: run_command(['tools/gitversion.py'], check: true).stdout().strip(), 
         license: 'GPLv3',
         default_options: ['cpp_std=c++17'])
 
