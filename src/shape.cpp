@@ -1,9 +1,34 @@
 #include "pyro/shape.h"
 #include "pyro/math.h"
 
+#include "earcut.hpp"
+
 #include <iostream>
 #include <cassert>
 
+namespace mapbox
+{
+    namespace util
+    {
+        template <>
+        struct nth<0, Pyro::Vector>
+        {
+            inline static auto get(const Pyro::Vector &t)
+            {
+                return t.x;
+            };
+        };
+        template <>
+        struct nth<1, Pyro::Vector>
+        {
+            inline static auto get(const Pyro::Vector &t)
+            {
+                return t.y;
+            };
+        };
+    } // namespace util
+
+} // namespace mapbox
 namespace Pyro
 {
     unsigned int curve_resolution = 32;
@@ -150,6 +175,11 @@ namespace Pyro
         this->points.push_back({p2, PointType::BEZIERVERTEX});
         this->points.push_back({p3, PointType::BEZIERVERTEX});
         this->points.push_back({p4, PointType::BEZIERVERTEX});
+    }
+
+    std::vector<int32_t> Shape::indices()
+    {
+        return mapbox::earcut<int32_t>(this->getpoints());
     }
 
 } // namespace Pyro
