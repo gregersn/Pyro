@@ -40,7 +40,19 @@ TEST_CASE("Create test image")
 
 int main(int argc, char *argv[])
 {
-    const int direrr = system("mkdir -p ./screenshots/current");
+    int direrr = system("mkdir -p ./screenshots/current");
+    if (direrr == -1)
+    {
+        exit(1);
+    }
+
+    direrr = system("mkdir -p ./screenshots/current/Cairo");
+    if (direrr == -1)
+    {
+        exit(1);
+    }
+
+    direrr = system("mkdir -p ./screenshots/current/SDL");
     if (direrr == -1)
     {
         exit(1);

@@ -1,9 +1,10 @@
 #include "pyro/pyro.h"
 #include <cstdlib>
-
+#include <iostream>
 namespace Pyro
 {
     Graphics *pg{nullptr};
+    GraphicsMode default_mode{GraphicsMode::CAIRO};
     unsigned int width{640};
     unsigned int height{480};
     uint32_t *pixels{nullptr};
@@ -55,7 +56,7 @@ namespace Pyro
         {
             delete pg;
         }
-        pg = creategraphics(width, height, GraphicsMode::CAIRO);
+        pg = creategraphics(width, height, default_mode);
         pg->set_dpi(dpi);
         pg->set_unit(unit);
         pg->init();

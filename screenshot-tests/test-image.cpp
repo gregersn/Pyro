@@ -12,6 +12,7 @@ SCENARIO("Image can be converted to different depths")
 
         WHEN("Converted to 3 channels")
         {
+            REQUIRE(img);
             std::filesystem::path filename = "image_convert_4ch_to_3ch.png";
             Pyro::Image *img2 = img->convert(Pyro::RGB);
             THEN(" the new depth will be 3")
@@ -26,6 +27,7 @@ SCENARIO("Image can be converted to different depths")
 
         WHEN("Converted to 1 channel")
         {
+            REQUIRE(img);
             std::filesystem::path filename = "image_convert_4ch_to_1ch.png";
             Pyro::Image *img2 = img->convert(Pyro::GRAY);
             THEN(" the new depth will be 1")

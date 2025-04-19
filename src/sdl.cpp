@@ -1,12 +1,15 @@
 #include "pyro/sdl.h"
+#include "pyro/graphics_sdl.h"
 #include <iostream>
 
 namespace Pyro
 {
+
     SDLRunner::SDLRunner(bool headless) : Runner(), headless(headless)
     {
         this->width = 0;
         this->height = 0;
+        default_mode = GraphicsMode::SDL;
     }
 
     SDLRunner::~SDLRunner()
@@ -22,17 +25,17 @@ namespace Pyro
         {
             if (!SDL_Init(SDL_INIT_VIDEO))
             {
-                std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init error: %s", SDL_GetError());
                 return 1;
             }
-            std::cout << "SDL initialized\n";
+            SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "SDL initialized");
             open_window();
             create_renderer();
             create_texture();
         }
         else
         {
-            std::cout << "Running in headless mode\n";
+            SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Running in headless mode");
         }
 
         return 0;
@@ -40,13 +43,17 @@ namespace Pyro
 
     int SDLRunner::open_window()
     {
-        sdl_window = SDL_CreateWindow("Pyro",
-                                      this->width, this->height,
-                                      SDL_WINDOW_OPENGL);
+        if (!sdl_window)
+        {
+            sdl_window = SDL_CreateWindow("Pyro",
+                                          this->width, this->height,
+                                          SDL_WINDOW_OPENGL);
+        }
 
+        SDL_ShowWindow(sdl_window);
         if (sdl_window == nullptr)
         {
-            std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateWindow Error: %s", SDL_GetError());
             SDL_Quit();
             return 1;
         }
@@ -56,11 +63,14 @@ namespace Pyro
 
     int SDLRunner::create_renderer()
     {
-        sdl_renderer = SDL_CreateRenderer(sdl_window, NULL);
+        if (!sdl_renderer)
+        {
+            sdl_renderer = SDL_CreateRenderer(sdl_window, NULL);
+        }
         if (sdl_renderer == nullptr)
         {
             SDL_DestroyWindow(sdl_window);
-            std::cout << "SDL_CreateRenderer: " << SDL_GetError() << std::endl;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateRenderer: %s", SDL_GetError());
             SDL_Quit();
             return 1;
         }
@@ -77,7 +87,7 @@ namespace Pyro
         {
             SDL_DestroyRenderer(sdl_renderer);
             SDL_DestroyWindow(sdl_window);
-            std::cout << "SDL_CreateTexture Error: " << SDL_GetError() << std::endl;
+            SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_CreateTexture Error: %s", SDL_GetError());
             SDL_Quit();
             return 1;
         }
@@ -86,12 +96,15 @@ namespace Pyro
 
     int SDLRunner::update()
     {
-        SDL_UpdateTexture(sdl_texture, NULL, pg->get_data(), this->width * sizeof(uint32_t));
-        SDL_Event e;
-        SDL_RenderClear(sdl_renderer);
-        SDL_RenderTexture(sdl_renderer, sdl_texture, NULL, NULL);
+        if (dynamic_cast<GraphicsSDL *>(pg) == nullptr)
+        {
+            SDL_UpdateTexture(sdl_texture, NULL, pg->get_data(), this->width * sizeof(uint32_t));
+            SDL_RenderClear(sdl_renderer);
+            SDL_RenderTexture(sdl_renderer, sdl_texture, NULL, NULL);
+        }
         SDL_RenderPresent(sdl_renderer);
 
+        SDL_Event e;
         while (SDL_PollEvent(&e))
         {
             switch (e.type)
@@ -101,7 +114,6 @@ namespace Pyro
                 break;
 
             case SDL_EVENT_KEY_DOWN:
-                // std::cout << "Keydown" << std::endl;
                 this->keypressed = true;
                 this->key = e.key.key;
                 if (e.key.mod == SDLK_ESCAPE)
@@ -114,7 +126,6 @@ namespace Pyro
                 break;
 
             case SDL_EVENT_KEY_UP:
-                // std::cout << "Keyup" << std::endl;
                 this->keypressed = false;
                 this->key = e.key.key;
                 break;
@@ -145,7 +156,7 @@ namespace Pyro
 
     int SDLRunner::quit()
     {
-        std::cout << "SDL runner quitting\n";
+        SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "SDL runner quitting");
         this->running = false;
         SDL_DestroyTexture(sdl_texture);
         SDL_DestroyRenderer(sdl_renderer);

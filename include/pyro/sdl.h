@@ -6,11 +6,12 @@
 
 namespace Pyro
 {
+    extern SDL_Window *sdl_window;
+    extern SDL_Renderer *sdl_renderer;
+
     class SDLRunner : public Runner
     {
       protected:
-        SDL_Window *sdl_window{nullptr};
-        SDL_Renderer *sdl_renderer{nullptr};
         SDL_Texture *sdl_texture{nullptr};
 
         int open_window();

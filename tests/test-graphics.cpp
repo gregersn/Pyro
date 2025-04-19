@@ -4,17 +4,21 @@
 
 TEST_CASE("Graphics objects can be initialized", "[graphics]")
 {
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL, Pyro::GraphicsMode::PDF, Pyro::GraphicsMode::SVG);
     SECTION("Create a graphics object")
     {
-        Pyro::Graphics *graphics = Pyro::creategraphics(400, 300);
+        Pyro::Graphics *graphics = Pyro::creategraphics(400, 300, mode, "/tmp/testfile");
         REQUIRE(graphics->width() == 400);
         REQUIRE(graphics->height() == 300);
+        delete graphics;
     }
+    remove("/tmp/testfile");
 }
 
 TEST_CASE("Graphics can have backgrounds", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::creategraphics(4, 4);
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+    Pyro::Graphics *pg = Pyro::creategraphics(4, 4, mode);
 
     SECTION("Set a red background")
     {
@@ -39,11 +43,14 @@ TEST_CASE("Graphics can have backgrounds", "[graphics]")
 
         REQUIRE(p == 0xff0000ff);
     }
+    delete pg;
 }
 
 TEST_CASE("Fill can be set", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::creategraphics(8, 8);
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+
+    Pyro::Graphics *pg = Pyro::creategraphics(8, 8, mode);
 
     SECTION("Set a red fill")
     {
@@ -54,15 +61,17 @@ TEST_CASE("Fill can be set", "[graphics]")
 
         uint32_t p = pg->get(0, 0);
         uint32_t q = pg->get(4, 4);
-
         REQUIRE(p == 0x00000000);
         REQUIRE(q == 0xffff0000);
     }
+    delete pg;
 }
 
 TEST_CASE("Stroke can be set", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::creategraphics(10, 1);
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+
+    Pyro::Graphics *pg = Pyro::creategraphics(10, 1, mode);
 
     SECTION("Set no stroke")
     {
@@ -93,11 +102,14 @@ TEST_CASE("Stroke can be set", "[graphics]")
         REQUIRE(p == 0x00000000);
         REQUIRE(q == 0xffff0000);
     }
+    delete pg;
 }
 
 TEST_CASE("Shapes can be drawn", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::creategraphics(8, 8);
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+
+    Pyro::Graphics *pg = Pyro::creategraphics(8, 8, mode);
 
     SECTION("Draw a filled square")
     {
@@ -200,11 +212,14 @@ TEST_CASE("Shapes can be drawn", "[graphics]")
             remove("t.png");
         }
     }
+    delete pg;
 }
 
 TEST_CASE("Select different color modes", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::creategraphics(3, 3);
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+
+    Pyro::Graphics *pg = Pyro::creategraphics(3, 3, mode);
 
     SECTION("Use HSB")
     {
@@ -215,13 +230,25 @@ TEST_CASE("Select different color modes", "[graphics]")
         pg->rect(0, 0, 2, 2);
 
         uint32_t p = pg->get(1, 1);
-        REQUIRE(p == 0xff008080);
+
+        // Rounding differences since colors stay in float.
+        if (mode == Pyro::GraphicsMode::SDL)
+        {
+            REQUIRE(p == 0xff007f7f);
+        }
+        else
+        {
+            REQUIRE(p == 0xff008080);
+        }
     }
+    delete pg;
 }
 
 TEST_CASE("Save and load images", "[graphics]")
 {
-    Pyro::Graphics *pg = Pyro::creategraphics(4, 4);
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+
+    Pyro::Graphics *pg = Pyro::creategraphics(4, 4, mode);
     const char *filename = "__4x4_ARGB__.png";
     SECTION("Create, save and load")
     {
@@ -242,6 +269,7 @@ TEST_CASE("Save and load images", "[graphics]")
 
         remove(filename);
     }
+    delete pg;
 }
 
 TEST_CASE("Use different modes", "[graphics]")

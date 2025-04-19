@@ -72,7 +72,7 @@ namespace Pyro
         static Image *loadJPEG(const std::filesystem::path &filename);
 
         void save(const std::filesystem::path &filename);
-        void save(const std::filesystem::path &filename, unsigned int dpi);
+        virtual void save(const std::filesystem::path &filename, unsigned int dpi);
 
         void savePNG(const std::filesystem::path &filename) { this->savePNG(filename, this->dpi); };
         void savePNG(const std::filesystem::path &filename, unsigned int dpi);
@@ -83,17 +83,17 @@ namespace Pyro
         void set_unit(Unit unit);
 
         // Pixel access
-        void *get_data() const { return this->data; };
+        virtual void *get_data() const { return this->data; };
         void *get_pre_multiplied_data();
-        uint32_t *load_pixels();
-        uint8_t *load_bytes();
+        virtual uint32_t *load_pixels();
+        virtual uint8_t *load_bytes();
         void update_pixels();
         void update_pixels(int x, int y, int w, int h);
         unsigned int operator[](unsigned int);
 
-        Image *get();
-        uint32_t get(int x, int y);
-        Image *get(int x, int y, int width, int height);
+        virtual Image *get();
+        virtual uint32_t get(int x, int y);
+        virtual Image *get(int x, int y, int width, int height);
 
         void set(unsigned int x, unsigned int y, unsigned int c);
         void set(int x, int y, Image *img);

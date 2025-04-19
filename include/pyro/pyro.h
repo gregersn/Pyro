@@ -18,6 +18,7 @@
 namespace Pyro
 {
     extern Graphics *pg; // Graphics context
+    extern GraphicsMode default_mode;
     extern unsigned int width;
     extern unsigned int height;
     extern uint32_t *pixels;

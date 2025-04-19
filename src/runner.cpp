@@ -2,6 +2,8 @@
 #include "pyro/sdl.h"
 #include "pyro/pyro.h"
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 namespace Pyro
 {
@@ -15,6 +17,7 @@ namespace Pyro
     int mousey = 0;
     int pmousex = 0;
     int pmousey = 0;
+    float framerate = 60.0f;
 
     Runner *runner = nullptr;
     bool running;
@@ -123,8 +126,10 @@ namespace Pyro
         init(Pyro::width, Pyro::height);
 
         std::cout << "Starting run loop\n";
+        double frame_time = 1000.0f / framerate;
         while (running)
         {
+            double start_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
             if (looping)
             {
                 pushmatrix();
@@ -132,6 +137,12 @@ namespace Pyro
                 popmatrix();
             }
             update();
+            double end_time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+            auto diff_time = end_time - start_time;
+            if (diff_time < frame_time)
+            {
+                std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(frame_time - diff_time));
+            }
         }
         std::cout << "Exiting run loop\n";
         quit();

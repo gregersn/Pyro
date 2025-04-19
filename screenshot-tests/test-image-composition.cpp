@@ -5,10 +5,12 @@
 
 TEST_CASE("images can be composited")
 {
+    Pyro::Image *a = Pyro::Image::load(actual_folder / "test_image.png");
+    REQUIRE(a);
+
     SECTION("a over b")
     {
         std::filesystem::path filename = "image_a_over_b.png";
-        Pyro::Image *a = Pyro::Image::load(actual_folder / "test_image.png");
         Pyro::Image *b = a->resize(a->width() / 2, a->height() / 2);
 
         a->set(a->width() / 2, a->height() / 2, b);
@@ -20,7 +22,6 @@ TEST_CASE("images can be composited")
     SECTION("a over b with alpha")
     {
         std::filesystem::path filename = "image_a_over_b_with_alpha.png";
-        Pyro::Image *a = Pyro::Image::load(actual_folder / "test_image.png");
         Pyro::Image *b = Pyro::createimage(a->width(), a->height(), Pyro::ARGB);
 
         unsigned char *data = b->load_bytes();
@@ -46,11 +47,13 @@ TEST_CASE("images can be composited")
 
 TEST_CASE("Images can mask each other")
 {
+    Pyro::Image *a = Pyro::Image::load(actual_folder / "test_image.png");
+    REQUIRE(a);
+
     SECTION("Use single channel image as mask")
     {
         std::filesystem::path filename = "image_single_channel_mask.png";
 
-        Pyro::Image *a = Pyro::Image::load(actual_folder / "test_image.png");
         Pyro::Image *b = Pyro::createimage(a->width(), a->height(), Pyro::GRAY);
 
         u_int32_t *mask_pixels = b->load_pixels();

@@ -1,8 +1,11 @@
+#include "pyro/graphics_sdl.h"
+#include <stdexcept>
 #define _USE_MATH_DEFINES
 #include <cmath>
 
 #include "pyro/graphics.h"
 #include "pyro/graphics_cairo.h"
+#include "pyro/graphics_sdl.h"
 #include "pyro/utils.h"
 
 #include <iostream>
@@ -43,8 +46,14 @@ namespace Pyro
             g = new GraphicsCairo(width, height, mode, filename);
             break;
         case GraphicsMode::CAIRO:
-        default:
             g = new GraphicsCairo(width, height);
+            break;
+        case GraphicsMode::SDL:
+            g = new GraphicsSDL(width, height);
+            break;
+        default:
+            throw std::logic_error("Unknown graphics mode");
+            break;
         }
         assert(g != nullptr);
         g->init();

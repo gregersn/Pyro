@@ -1,12 +1,15 @@
 #include <catch2/catch_all.hpp>
+#include "pyro/graphics.h"
 #include "test-settings.h"
 
 #include <filesystem>
 
 TEST_CASE("Draw multiple times")
 {
-    Pyro::Graphics *a = Pyro::creategraphics(100, 40);
-    Pyro::Graphics *b = Pyro::creategraphics(100, 40);
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+
+    Pyro::Graphics *a = Pyro::creategraphics(100, 40, mode);
+    Pyro::Graphics *b = Pyro::creategraphics(100, 40, mode);
 
     a->begindraw();
     a->background(0.0f, 1.0f);
@@ -46,11 +49,29 @@ TEST_CASE("Draw multiple times")
     std::remove("multidraw_b_2.png");
 }
 
+TEST_CASE("Test triangle")
+{
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
+    std::filesystem::path filename = "graphics_triangle.png";
+
+    Pyro::Graphics *triangle = Pyro::creategraphics(256, 256, mode);
+    triangle->begindraw();
+    triangle->fill(1.0f, 0.0f, 1.0f, 1.0f);
+    triangle->stroke(0.0f, 1.0f, 0.0f, 1.0f);
+    triangle->triangle(128, 5, 251, 251, 5, 251);
+    triangle->enddraw();
+    triangle->save(current_folder / Pyro::GraphicsModeName[mode] / filename);
+    delete triangle;
+    CHECK_THAT(current_folder / Pyro::GraphicsModeName[mode] / filename, LooksLike(actual_folder / Pyro::GraphicsModeName[mode] / filename));
+}
+
 TEST_CASE("Test smoothing")
 {
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
     std::filesystem::path filename = "graphics_smooth.png";
 
-    Pyro::Graphics *smoothing = Pyro::creategraphics(9 * 50, 50);
+    Pyro::Graphics *smoothing = Pyro::creategraphics(9 * 50, 50, mode);
+    smoothing->begindraw();
     smoothing->ellipsemode(Pyro::CENTER);
     for (unsigned int i = 0; i < 9; i++)
     {
@@ -58,16 +79,18 @@ TEST_CASE("Test smoothing")
         smoothing->ellipse(25, 25, 25, 25);
         smoothing->translate(50, 0);
     }
-
-    smoothing->save(current_folder / filename);
+    smoothing->enddraw();
+    smoothing->save(current_folder / Pyro::GraphicsModeName[mode] / filename);
     delete smoothing;
-    CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
+    CHECK_THAT(current_folder / Pyro::GraphicsModeName[mode] / filename, LooksLike(actual_folder / Pyro::GraphicsModeName[mode] / filename));
 }
 
 TEST_CASE("Test blend modes")
 {
+
+    auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
     std::filesystem::path filename = "graphics_blend.png";
-    Pyro::Graphics *blending = Pyro::creategraphics(300, 300);
+    Pyro::Graphics *blending = Pyro::creategraphics(300, 300, mode);
 
     blending->nostroke();
 
@@ -107,7 +130,7 @@ TEST_CASE("Test blend modes")
     blending->fill(0.5f, 1.0f, 0.0f, .5f);
     blending->rect(200, 200, 125, 125);
 
-    blending->save(current_folder / filename);
+    blending->save(current_folder / Pyro::GraphicsModeName[mode] / filename);
     delete blending;
-    CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
+    CHECK_THAT(current_folder / Pyro::GraphicsModeName[mode] / filename, LooksLike(actual_folder / Pyro::GraphicsModeName[mode] / filename, 0.00105));
 }

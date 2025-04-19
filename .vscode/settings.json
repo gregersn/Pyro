@@ -116,7 +116,10 @@
     "numbers": "cpp",
     "__locale": "cpp",
     "__verbose_abort": "cpp",
-    "execution": "cpp"
+    "execution": "cpp",
+    "print": "cpp",
+    "semaphore": "cpp",
+    "text_encoding": "cpp"
   },
   "mesonbuild.buildFolder": "build",
   "terminal.integrated.env.linux": {

@@ -18,7 +18,10 @@ namespace Pyro
         CAIRO,
         PDF,
         SVG,
+        SDL,
     };
+
+    static const std::string GraphicsModeName[4] = {"Cairo", "PDF", "SVG", "SDL"};
 
     class Graphics : public Image
     {
@@ -44,14 +47,14 @@ namespace Pyro
             this->style.imagemode(mode);
         };
         void image(Image *img, float x, float y);
-        virtual void image_impl(Image * /*img*/, float /*x*/, float /*y*/){};
+        virtual void image_impl(Image * /*img*/, float /*x*/, float /*y*/) {};
         Image *loadimage(std::filesystem::path const &filename) { return Image::load(filename); };
 
         // Color functions
         void nostroke();
         void nofill();
 
-        virtual void blendmode(int /*mode*/){};
+        virtual void blendmode(int /*mode*/) {};
         void colormode(int mode)
         {
             this->style.colormode(mode);
@@ -124,7 +127,7 @@ namespace Pyro
         };
         virtual void background(float r, float g, float b, float a = 1.0);
 
-        virtual void shape(Shape /*s*/, float /*x*/, float /*y*/){};
+        virtual void shape(Shape /*s*/, float /*x*/, float /*y*/) {};
 
         void beginshape(int kind = DEFAULT)
         {
@@ -169,10 +172,10 @@ namespace Pyro
         };
 
         // Primitive shapes
-        void point(float x, float y);
-        void point(Vector p);
+        virtual void point(float x, float y);
+        virtual void point(Vector p);
         virtual void line(Vector /*p0*/, Vector /*p1*/){};
-        virtual void line(float /*x0*/, float /*y0*/, float /*x1*/, float /*y1*/){};
+        virtual void line(float /*x0*/, float /*y0*/, float /*x1*/, float /*y1*/) {};
         void curve(Vector p0, Vector p1, Vector p2, Vector p3);
         void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
         void bezier(Vector p0, Vector p1, Vector p2, Vector p3);
@@ -215,8 +218,8 @@ namespace Pyro
         void text(std::string const &text, float x, float y);
         void textfont(Font *font);
 
-        virtual void textfont_impl(Font * /*font*/){};
-        virtual void text_impl(std::string /*text*/, float /*x*/, float /*y*/){};
+        virtual void textfont_impl(Font * /*font*/) {};
+        virtual void text_impl(std::string /*text*/, float /*x*/, float /*y*/) {};
     };
     /**
      * Create a graphics object
