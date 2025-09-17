@@ -218,7 +218,7 @@ TEST_CASE("Vector initialisation", "[vector]")
 
     SECTION("Random 2D")
     {
-        unsigned int tests = 1000000;
+        const unsigned int tests = 1000000;
         double values[tests];
         double sum = 0.0f;
         for (unsigned int i = 0; i < tests; i++)

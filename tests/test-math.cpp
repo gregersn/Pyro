@@ -113,7 +113,7 @@ TEST_CASE("Random generation seems sane", "[random]")
 
     SECTION("Test random number standard deviation")
     {
-        unsigned int tests = 1000000;
+        const unsigned int tests = 1000000;
         double values[tests];
         double sum = 0.0f;
         for (unsigned int i = 0; i < tests; i++)

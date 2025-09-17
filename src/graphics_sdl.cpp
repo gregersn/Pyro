@@ -18,7 +18,7 @@ namespace Pyro
         SDL_LogDebug(SDL_LOG_CATEGORY_RENDER, "Available renderers: %i", render_driver_count);
         for (int i{0}; i < render_driver_count; i++)
         {
-            SDL_LogDebug(SDL_LOG_CATEGORY_RENDER, SDL_GetRenderDriver(i));
+            SDL_LogDebug(SDL_LOG_CATEGORY_RENDER, "%s", SDL_GetRenderDriver(i));
         }
     }
 

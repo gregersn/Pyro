@@ -140,6 +140,11 @@ TEST_CASE("Bezier curve", "[shapes]")
         p->endshape();
     }
 
+#if defined(__APPLE__) && defined(__MACH__)
+    if (mode == Pyro::GraphicsMode::SDL)
+        SKIP("Test does not run well on Mac and SDL.");
+#endif
+
     SECTION("Draw with bezier()")
     {
         p = Pyro::creategraphics(100, 200, mode);
