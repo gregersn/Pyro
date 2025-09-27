@@ -232,7 +232,14 @@ TEST_CASE("Select different color modes", "[graphics]")
         uint32_t p = pg->get(1, 1);
 
         // Rounding differences since colors stay in float.
+#if defined(__APPLE__) && defined(__MACH__)
         REQUIRE(p == 0xff008080);
+#else
+        if (mode == Pyro::GraphicsMode::SDL)
+            REQUIRE(p == 0xff007f7f);
+        else
+            REQUIRE(p == 0xff008080);
+#endif
     }
     delete pg;
 }
