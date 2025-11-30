@@ -1,11 +1,27 @@
 #include "pyro/graphics_cairo.h"
+#include "pyro/constants.h"
 #include "pyro/font_impl.h"
-#include "pyro/utils.h"
 #include <cairo-svg.h>
 #include <cairo-pdf.h>
 
 namespace Pyro
 {
+    cairo_svg_unit_t pyrounit2cairounit(Unit pyrounit)
+    {
+        switch (pyrounit)
+        {
+
+        case CM:
+            return CAIRO_SVG_UNIT_CM;
+        case IN:
+            return CAIRO_SVG_UNIT_IN;
+        case MM:
+            return CAIRO_SVG_UNIT_MM;
+        case PX:
+        default:
+            return CAIRO_SVG_UNIT_PX;
+        }
+    }
     GraphicsCairo::GraphicsCairo(unsigned int width, unsigned int height, GraphicsMode mode, std::filesystem::path filename) : Graphics(width, height, filename)
     {
         this->mode = mode;
@@ -18,6 +34,7 @@ namespace Pyro
         {
         case SVG:
             this->surface = cairo_svg_surface_create(filename.c_str(), _width, _height);
+            cairo_svg_surface_set_document_unit(this->surface, pyrounit2cairounit(this->unit));
             break;
         case PDF:
             this->surface = cairo_pdf_surface_create(filename.c_str(), _width, _height);
