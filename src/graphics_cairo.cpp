@@ -106,12 +106,18 @@ namespace Pyro
 
     void GraphicsCairo::shape(Shape s, float x, float y)
     {
+
+        float multiplier = pixel_multiplier;
+        if (this->mode == SVG)
+        {
+            multiplier = 1.0f;
+        }
         cairo_save(this->cr);
         cairo_new_path(this->cr);
 
         cairo_set_line_width(this->cr, this->style.strokeweight());
 
-        cairo_translate(this->cr, x * pixel_multiplier, y * pixel_multiplier);
+        cairo_translate(this->cr, x * multiplier, y * multiplier);
 
         for (size_t contour_index{0}; contour_index < s.getpoints().size(); contour_index++)
         {
@@ -121,11 +127,11 @@ namespace Pyro
             {
                 if (i == 0)
                 {
-                    cairo_move_to(this->cr, contour_points[i].x * pixel_multiplier, contour_points[i].y * pixel_multiplier);
+                    cairo_move_to(this->cr, contour_points[i].x * multiplier, contour_points[i].y * multiplier);
                 }
                 else
                 {
-                    cairo_line_to(this->cr, contour_points[i].x * pixel_multiplier, contour_points[i].y * pixel_multiplier);
+                    cairo_line_to(this->cr, contour_points[i].x * multiplier, contour_points[i].y * multiplier);
                 }
             }
             if (s.close == CLOSE)
@@ -185,7 +191,10 @@ namespace Pyro
     }
     void GraphicsCairo::translate(float x, float y)
     {
-        cairo_translate(this->cr, x * pixel_multiplier, y * pixel_multiplier);
+        if (this->mode != SVG)
+            cairo_translate(this->cr, x * pixel_multiplier, y * pixel_multiplier);
+        else
+            cairo_translate(this->cr, x, y);
     }
 
     void GraphicsCairo::rotate(float a)
@@ -212,9 +221,14 @@ namespace Pyro
     {
         if (this->style.stroke_enabled())
         {
+            float multiplier = pixel_multiplier;
+            if (this->mode == SVG)
+            {
+                multiplier = 1.0f;
+            }
             cairo_new_path(this->cr);
-            cairo_move_to(this->cr, x0 * pixel_multiplier, y0 * pixel_multiplier);
-            cairo_line_to(this->cr, x1 * pixel_multiplier, y1 * pixel_multiplier);
+            cairo_move_to(this->cr, x0 * multiplier, y0 * multiplier);
+            cairo_line_to(this->cr, x1 * multiplier, y1 * multiplier);
             cairo_set_line_width(this->cr, this->style.strokeweight());
             cairo_set_source_rgba(this->cr,
                                   this->style.stroke().r(),
@@ -329,7 +343,15 @@ namespace Pyro
             cairo_set_font_face(this->cr, this->font);
         }
         cairo_set_font_size(this->cr, this->style.textsize());
-        cairo_move_to(this->cr, x * pixel_multiplier, y * pixel_multiplier);
+        if (this->mode != SVG)
+        {
+            cairo_move_to(this->cr, x * pixel_multiplier, y * pixel_multiplier);
+        }
+        else
+        {
+
+            cairo_move_to(this->cr, x, y);
+        }
         cairo_show_text(this->cr, text.c_str());
     }
 
