@@ -2,6 +2,7 @@
 #define PYRO_H
 
 #include <filesystem>
+#include <vector>
 
 #include "constants.h"
 #include "string.h"
@@ -98,6 +99,8 @@ namespace Pyro
     inline void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->curve(x0, y0, x1, y1, x2, y2, x3, y3); };
     inline void bezier(Vector p0, Vector p1, Vector p2, Vector p3) { pg->bezier(p0, p1, p2, p3); };
     inline void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->bezier(x0, y0, x1, y1, x2, y2, x3, y3); };
+    inline void bspline(std::vector<Vector> points, int degree = 3) { pg->bspline(points, degree); };
+    inline void bsplinecurve(std::vector<Vector> const &points, int degree, std::vector<int> knots) { pg->bsplinecurve(points, degree, knots); };
 
     inline void point(float x, float y) { pg->point(x, y); };
     inline void point(Vector p) { pg->point(p); };

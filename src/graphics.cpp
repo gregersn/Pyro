@@ -1,4 +1,5 @@
 #include "pyro/graphics_sdl.h"
+#include "pyro/shape.h"
 #include <stdexcept>
 #define _USE_MATH_DEFINES
 #include <cmath>
@@ -254,6 +255,34 @@ namespace Pyro
         s.begin();
         s.vertex(p0);
         s.beziervertex(p1, p2, p3);
+        s.end(OPEN);
+        this->shape(s, 0, 0);
+    }
+
+    void Graphics::bspline(std::vector<Vector> points, int degree)
+    {
+        Shape s{Shape()};
+        s.begin();
+        for (float t = 0.0f; t < 1.0f; t += 0.02f)
+        {
+            s.vertex(bsplinepoint(points, t, degree));
+        }
+        s.end(OPEN);
+        this->shape(s, 0, 0);
+    }
+
+    void Graphics::bsplinecurve(std::vector<Vector> const &points, unsigned int degree, std::vector<int> knots)
+    {
+        double interval{0};
+        double increment = (points.size() - degree + 1) / (double)(this->_curvedetail - 1);
+        Shape s{Shape()};
+        s.begin();
+
+        for (unsigned int i = 0; i < this->_curvedetail - 1; i++)
+        {
+            s.vertex(bsplinepoint(points, interval, degree, false, knots));
+            interval += increment;
+        }
         s.end(OPEN);
         this->shape(s, 0, 0);
     }

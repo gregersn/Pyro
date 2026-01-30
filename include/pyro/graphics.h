@@ -180,6 +180,8 @@ namespace Pyro
         void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
         void bezier(Vector p0, Vector p1, Vector p2, Vector p3);
         void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
+        void bspline(std::vector<Vector> points, int degree = 3);
+        void bsplinecurve(std::vector<Vector> const &points, unsigned int degree, std::vector<int> knots);
 
         void triangle(Vector a, Vector b, Vector c);
         void triangle(float x0, float y0, float x1, float y1, float x2, float y2);

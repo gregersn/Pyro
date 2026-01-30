@@ -1,10 +1,11 @@
 #include "pyro/shape.h"
-#include "pyro/math.h"
+#include "pyro/constants.h"
 
 #include "earcut.hpp"
 
 #include <iostream>
 #include <cassert>
+#include <vector>
 
 namespace mapbox
 {
@@ -32,7 +33,115 @@ namespace mapbox
 namespace Pyro
 {
     unsigned int curve_resolution = 32;
+
     void curveresolution(unsigned int res) { curve_resolution = res; }
+
+    void splineknots(std::vector<int> *knots, unsigned int point_count, unsigned int degree, bool clamp)
+    {
+        knots->push_back(0);
+        unsigned int knotcount = (point_count) + (degree) + 1;
+
+        if (clamp)
+        {
+            knotcount -= (degree);
+            for (unsigned int knot = 1; knot < degree; knot++)
+            {
+                knots->push_back(0);
+            }
+            knotcount -= (degree - 1);
+        }
+
+        for (unsigned int knot = 1; knot < knotcount; knot++)
+        {
+            knots->push_back(knot);
+        }
+
+        if (clamp)
+        {
+            for (unsigned int knot = 0; knot < degree; knot++)
+            {
+                knots->push_back(point_count - 1);
+            }
+        }
+    }
+
+    template <typename T>
+    T bsplinepoint(const std::vector<T> &points, float t, unsigned int degree, bool clamp, std::vector<int> &knots)
+    {
+        if (degree < 1)
+        {
+            return points[0];
+        }
+
+        unsigned int point_count = points.size();
+
+        if (degree > (point_count - 1))
+        {
+            return points[0];
+        }
+
+        // Create weight vector, same length as points.
+        std::vector<float> weights;
+        for (unsigned int i = 0; i < point_count; i++)
+        {
+            weights.push_back(1.0f);
+        }
+
+        assert(weights.size() == point_count);
+
+        if (knots.size() == 0)
+        {
+            splineknots(&knots, point_count, degree, clamp);
+        }
+
+        assert(knots.size() == (point_count + degree + 1));
+
+        int domain_bottom = degree;
+        int domain_top = knots.size() - 1 - degree;
+
+        int low = knots[domain_bottom];
+        int high = knots[domain_top];
+
+        t = t * (high - low) + low;
+
+        if (t < low)
+            t = low;
+        // return points[0];
+
+        if (t > high)
+            t = high;
+        // return points[domain_top - 2];
+
+        int s = 0;
+        for (s = domain_bottom; s < domain_top; s++)
+        {
+            if (t >= knots[s] && t <= knots[s + 1])
+            {
+                break;
+            }
+        }
+
+        // convert points to homogeneous coordinates
+        std::vector<T> v;
+        for (unsigned int i = 0; i < point_count; i++)
+        {
+            v.push_back(points[i] * weights[i]);
+        }
+
+        float alpha = 0.0f;
+        for (unsigned int l = 1; l <= degree + 1; l++)
+        {
+            for (unsigned int i = s; i > s - degree - 1 + l; i--)
+            {
+                alpha = (t - knots[i]) / (knots[i + degree + 1 - l] - knots[i]);
+                v[i] = (1 - alpha) * v[i - 1] + alpha * v[i];
+            }
+        }
+
+        return v[s] / weights[s];
+    }
+
+    template Vector bsplinepoint(const std::vector<Vector> &points, float t, unsigned int degree, bool clamp, std::vector<int> &knots);
 
     Shape::Shape()
     {
