@@ -43,6 +43,15 @@ namespace Pyro
     const int HSBA{7};
     const int ALPHA{8};
 
+    // Already defined const int GRAY,
+    const int THRESHOLD{2};
+    const int OPAQUE{3};
+    const int INVERT{4};
+    const int POSTERIZE{5};
+    const int BLUR{6};
+    const int ERODE{7};
+    const int DILATE{8};
+
     enum Unit
     {
         PX,

@@ -103,6 +103,13 @@ namespace Pyro
 
         void mask(Image *mask);
 
+        void filter(int kind, float value);
+        void filter(int kind) { return filter(kind, 0.5f); }
+
+        void threshold(float value);
+        void gray();
+        void invert();
+
         // Image manipulation functions
         Image *resize(unsigned int width, unsigned int height, ResizeMethod method = ResizeMethod::NEAREST);
 

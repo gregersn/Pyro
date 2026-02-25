@@ -1564,6 +1564,63 @@ namespace Pyro
         return out;
     }
 
+    void Image::filter(int kind, float value)
+    {
+        switch (kind)
+        {
+        case GRAY:
+            this->gray();
+            break;
+        case THRESHOLD:
+            this->threshold(value);
+            break;
+        case INVERT:
+            this->invert();
+            break;
+        default:
+            break;
+        }
+    }
+
+    void Image::threshold(float value)
+    {
+        this->gray();
+        uint32_t *pixels = this->load_pixels();
+        for (unsigned int i = 0; i < this->_width * this->_height; i++)
+        {
+            if (RED(pixels[i]) / 255.0 > value)
+                pixels[i] = 0xffffffff;
+            else
+                pixels[i] = 0xff000000;
+        }
+
+        this->update_pixels();
+    }
+
+    void Image::gray()
+    {
+        uint32_t *pixels = this->load_pixels();
+        for (unsigned int i = 0; i < this->_width * this->_height; i++)
+        {
+            unsigned int nw = 0.2126 * RED(pixels[i]) + 0.7152 * GREEN(pixels[i]) + 0.0722 * BLUE(pixels[i]);
+            pixels[i] = ALPHA(pixels[i]) << 24 | nw << 16 | nw << 8 | nw;
+        }
+
+        this->update_pixels();
+    }
+
+    void Image::invert()
+    {
+        uint32_t *pixels = this->load_pixels();
+        for (unsigned int i = 0; i < this->_width * this->_height; i++)
+        {
+
+            pixels[i] = ALPHA(pixels[i]) << 24 | (255 - RED(pixels[i])) << 16 | (255 - GREEN(pixels[i])) << 8 | (255 - BLUE(pixels[i]));
+        }
+
+        this->update_pixels();
+    }
+
     // Utility functions
     Image *createimage(unsigned int width, unsigned int height, int format)
     {
