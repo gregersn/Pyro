@@ -38,20 +38,18 @@ namespace Pyro
 
     void splineknots(std::vector<int> *knots, unsigned int point_count, unsigned int degree, bool clamp)
     {
-        knots->push_back(0);
         unsigned int knotcount = (point_count) + (degree) + 1;
 
         if (clamp)
         {
-            knotcount -= (degree);
-            for (unsigned int knot = 1; knot < degree; knot++)
+            for (unsigned int knot = 0; knot < degree; knot++)
             {
                 knots->push_back(0);
             }
-            knotcount -= (degree - 1);
+            knotcount -= (degree) * 2;
         }
 
-        for (unsigned int knot = 1; knot < knotcount; knot++)
+        for (unsigned int knot = 0; knot < knotcount; knot++)
         {
             knots->push_back(knot);
         }
@@ -60,7 +58,7 @@ namespace Pyro
         {
             for (unsigned int knot = 0; knot < degree; knot++)
             {
-                knots->push_back(point_count - 1);
+                knots->push_back(knotcount - 1);
             }
         }
     }

@@ -31,7 +31,7 @@ namespace Pyro
                       (-p0 + 3 * p1 - 3 * p2 + p3) * t * t * t);
     };
 
-    void splineknots(std::vector<int> *knots, unsigned int point_count, unsigned int degree);
+    void splineknots(std::vector<int> *knots, unsigned int point_count, unsigned int degree, bool clamp);
 
     template <typename T>
     T bsplinepoint(const std::vector<T> &points, float t, unsigned int degree = 2, bool clamp = false)
