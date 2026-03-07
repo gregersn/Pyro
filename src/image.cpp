@@ -11,10 +11,15 @@
 #include <algorithm>
 #include <png.h>
 
-#define ALPHA(x) ((x & 0xff000000) >> 24)
-#define RED(x) ((x & 0xff0000) >> 16)
-#define GREEN(x) ((x & 0xff00) >> 8)
-#define BLUE(x) ((x & 0xff))
+#define ALPHA_MASK(x) (x & 0xff000000)
+#define RED_MASK(x) (x & 0xff0000)
+#define GREEN_MASK(x) (x & 0xff00)
+#define BLUE_MASK(x) (x & 0xff)
+
+#define ALPHA(x) (ALPHA_MASK(x) >> 24)
+#define RED(x) (RED_MASK(x) >> 16)
+#define GREEN(x) (GREEN_MASK(x) >> 8)
+#define BLUE(x) (BLUE_MASK(x))
 
 struct ErrorManager
 {
@@ -1584,14 +1589,13 @@ namespace Pyro
 
     void Image::threshold(float value)
     {
-        this->gray();
+        int thresh = int(value * 255);
+
         uint32_t *pixels = this->load_pixels();
         for (unsigned int i = 0; i < this->_width * this->_height; i++)
         {
-            if (RED(pixels[i]) / 255.0 > value)
-                pixels[i] = 0xffffffff;
-            else
-                pixels[i] = 0xff000000;
+            int max_value = max(RED(pixels[i]), max(GREEN(pixels[i]), BLUE(pixels[i])));
+            pixels[i] = (ALPHA(pixels[i]) << 24) | ((max_value < thresh) ? 0x000000 : 0xffffff);
         }
 
         this->update_pixels();
