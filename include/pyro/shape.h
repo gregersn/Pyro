@@ -16,6 +16,13 @@ namespace Pyro
     const int QUAD_STRIP{7};
 
     template <typename T>
+    T bezierpoint(T a, T b, T c, float t)
+    {
+        float t1 = 1.0f - t;
+        return t1 * t1 * a + 2 * t1 * t * b + t * t * c;
+    };
+
+    template <typename T>
     T bezierpoint(T a, T b, T c, T d, float t)
     {
         float t1 = 1.0f - t;
@@ -47,7 +54,8 @@ namespace Pyro
     {
         VERTEX,
         CURVEVERTEX,
-        BEZIERVERTEX
+        BEZIERVERTEX_2,
+        BEZIERVERTEX_3
     };
 
     struct t_shapepoint
@@ -81,6 +89,8 @@ namespace Pyro
         void vertex(float x, float y) { this->vertex(Vector(x, y)); };
         void curvevertex(Vector p);
         void curvevertex(float x, float y) { this->curvevertex(Vector(x, y)); };
+        void beziervertex(Vector p2, Vector p3);
+        void beziervertex(float x2, float y2, float x3, float y3) { this->beziervertex(Vector(x2, y2), Vector(x3, y3)); };
         void beziervertex(Vector p2, Vector p3, Vector p4);
         void beziervertex(float x2, float y2, float x3, float y3, float x4, float y4) { this->beziervertex(Vector(x2, y2), Vector(x3, y3), Vector(x4, y4)); };
         std::vector<std::vector<Pyro::Vector>> getpoints() { return this->outpoints; };

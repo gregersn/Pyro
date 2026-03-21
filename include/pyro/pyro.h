@@ -97,6 +97,8 @@ namespace Pyro
 
     inline void curve(Vector p0, Vector p1, Vector p2, Vector p3) { pg->curve(p0, p1, p2, p3); };
     inline void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->curve(x0, y0, x1, y1, x2, y2, x3, y3); };
+    inline void bezier(Vector p0, Vector p1, Vector p2) { pg->bezier(p0, p1, p2); };
+    inline void bezier(float x0, float y0, float x1, float y1, float x2, float y2) { pg->bezier(x0, y0, x1, y1, x2, y2); };
     inline void bezier(Vector p0, Vector p1, Vector p2, Vector p3) { pg->bezier(p0, p1, p2, p3); };
     inline void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3) { pg->bezier(x0, y0, x1, y1, x2, y2, x3, y3); };
     inline void bspline(std::vector<Vector> points, int degree = 3) { pg->bspline(points, degree); };

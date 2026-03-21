@@ -34,9 +34,9 @@ TEST_CASE("Test curvepoint", "[shapes]")
     CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
 }
 
-TEST_CASE("Test bezierpoint", "[shapes]")
+TEST_CASE("Test cubic bezierpoint", "[shapes]")
 {
-    std::filesystem::path filename = "curve_bezierpoint.png";
+    std::filesystem::path filename = "curve_cubic_bezierpoint.png";
 
     size(400, 400);
     nofill();
@@ -49,6 +49,28 @@ TEST_CASE("Test bezierpoint", "[shapes]")
         float t = i / float(steps);
         float x = bezierpoint(340, 40, 360, 60, t);
         float y = bezierpoint(80, 40, 360, 320, t);
+        ellipse(x, y, 10, 10);
+    }
+    save(current_folder / filename);
+
+    CHECK_THAT(current_folder / filename, LooksLike(actual_folder / filename));
+}
+
+TEST_CASE("Test quadratic bezierpoint", "[shapes]")
+{
+    std::filesystem::path filename = "curve_quadratic_bezierpoint.png";
+
+    size(400, 400);
+    nofill();
+    bezier(340, 80, 40, 40, 60, 320);
+    fill(255);
+    ellipsemode(CENTER);
+    int steps = 10;
+    for (int i = 0; i <= steps; i++)
+    {
+        float t = i / float(steps);
+        float x = bezierpoint(340, 40, 60, t);
+        float y = bezierpoint(80, 40, 320, t);
         ellipse(x, y, 10, 10);
     }
     save(current_folder / filename);

@@ -178,6 +178,8 @@ namespace Pyro
         virtual void line(float /*x0*/, float /*y0*/, float /*x1*/, float /*y1*/) {};
         void curve(Vector p0, Vector p1, Vector p2, Vector p3);
         void curve(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
+        void bezier(Vector p0, Vector p1, Vector p2);
+        void bezier(float x0, float y0, float x1, float y1, float x2, float y2);
         void bezier(Vector p0, Vector p1, Vector p2, Vector p3);
         void bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3);
         void bspline(std::vector<Vector> points, int degree = 3);

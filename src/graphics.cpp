@@ -244,6 +244,21 @@ namespace Pyro
         this->shape(s, 0, 0);
     }
 
+    void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2)
+    {
+        bezier(Vector(x0, y0), Vector(x1, y1), Vector(x2, y2));
+    }
+
+    void Graphics::bezier(Vector p0, Vector p1, Vector p2)
+    {
+        Shape s{Shape()};
+        s.begin();
+        s.vertex(p0);
+        s.beziervertex(p1, p2);
+        s.end(OPEN);
+        this->shape(s, 0, 0);
+    }
+
     void Graphics::bezier(float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3)
     {
         bezier(Vector(x0, y0), Vector(x1, y1), Vector(x2, y2), Vector(x3, y3));
@@ -258,7 +273,6 @@ namespace Pyro
         s.end(OPEN);
         this->shape(s, 0, 0);
     }
-
     void Graphics::bspline(std::vector<Vector> points, int degree)
     {
         Shape s{Shape()};
