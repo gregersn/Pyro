@@ -36,31 +36,34 @@ namespace Pyro
 
     void curveresolution(unsigned int res) { curve_resolution = res; }
 
-    void splineknots(std::vector<int> *knots, unsigned int point_count, unsigned int degree, bool clamp)
+    std::vector<int> splineknots(unsigned int point_count, unsigned int degree, bool clamp)
     {
         unsigned int knotcount = (point_count) + (degree) + 1;
+        std::vector<int> knots{};
 
         if (clamp)
         {
             for (unsigned int knot = 0; knot < degree; knot++)
             {
-                knots->push_back(0);
+                knots.push_back(0);
             }
             knotcount -= (degree) * 2;
         }
 
         for (unsigned int knot = 0; knot < knotcount; knot++)
         {
-            knots->push_back(knot);
+            knots.push_back(knot);
         }
 
         if (clamp)
         {
             for (unsigned int knot = 0; knot < degree; knot++)
             {
-                knots->push_back(knotcount - 1);
+                knots.push_back(knotcount - 1);
             }
         }
+
+        return knots;
     }
 
     template <typename T>
@@ -73,33 +76,36 @@ namespace Pyro
 
         unsigned int point_count = points.size();
 
-        if (degree > (point_count - 1))
+        // If the number of points - 1 is less than the degree, just return the first point.
+        if ((point_count - 1) < degree)
         {
             return points[0];
         }
 
         // Create weight vector, same length as points.
+        // Set all to 1 for equal weight per point.
         std::vector<float> weights;
         for (unsigned int i = 0; i < point_count; i++)
         {
             weights.push_back(1.0f);
         }
-
         assert(weights.size() == point_count);
 
         if (knots.size() == 0)
         {
-            splineknots(&knots, point_count, degree, clamp);
+            knots = splineknots(point_count, degree, clamp);
         }
 
+        // Assert the right size knot vector
         assert(knots.size() == (point_count + degree + 1));
 
-        int domain_bottom = degree;
-        int domain_top = knots.size() - 1 - degree;
+        int domain_bottom = degree;                 // First processable knot is at "degree"
+        int domain_top = knots.size() - 1 - degree; // Last processable knot is degree + 1 from end
 
-        int low = knots[domain_bottom];
-        int high = knots[domain_top];
+        int low = knots[domain_bottom]; // Low t value is first usable knot
+        int high = knots[domain_top];   // High t value is last usable knot
 
+        // Scale t to high and low knot, within domain.
         t = t * (high - low) + low;
 
         if (t < low)
@@ -115,6 +121,8 @@ namespace Pyro
         {
             if (t >= knots[s] && t <= knots[s + 1])
             {
+                // t is bigger than the knot at s, and less than the next,
+                // so s is found
                 break;
             }
         }

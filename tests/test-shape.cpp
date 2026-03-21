@@ -43,9 +43,8 @@ TEST_CASE("Check bsplinepoint")
 
     SECTION("Check splineknot creation")
     {
-        std::vector<int> knots{};
         std::vector<int> expected_knots = {0, 0, 0, 1, 2, 2, 2};
-        Pyro::splineknots(&knots, 4, 2, true);
+        std::vector<int> knots = Pyro::splineknots(4, 2, true);
         REQUIRE(knots == expected_knots);
     }
 
