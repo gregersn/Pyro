@@ -165,6 +165,14 @@ namespace Pyro
         {
             this->_shape.beziervertex(x2, y2, x3, y3, x4, y4);
         }
+        void beziervertex(Vector p2, Vector p3)
+        {
+            this->_shape.beziervertex(p2, p3);
+        }
+        void beziervertex(float x2, float y2, float x3, float y3)
+        {
+            this->_shape.beziervertex(x2, y2, x3, y3);
+        }
         void endshape(int close);
         void endshape()
         {
