@@ -9,6 +9,7 @@ TEST_CASE("Push and pop style")
 
     Pyro::Graphics *p = Pyro::creategraphics(400, 400);
 
+    p->background(192);
     p->curvedetail(132);
 
     p->ellipse(0, 200, 132, 132); // Left circle

@@ -1,6 +1,6 @@
 #include "pyro/pyro.h"
 #include <cstdlib>
-#include <iostream>
+
 namespace Pyro
 {
     Graphics *pg{nullptr};
@@ -60,6 +60,7 @@ namespace Pyro
         pg->set_dpi(dpi);
         pg->set_unit(unit);
         pg->init();
+        pg->background(192);
         Pyro::width = pg->width();
         Pyro::height = pg->height();
     }

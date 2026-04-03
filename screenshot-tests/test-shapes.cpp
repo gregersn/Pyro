@@ -12,6 +12,7 @@ TEST_CASE("Test Rect", "[shapes]")
     {
         p = Pyro::creategraphics(250, 250, mode);
         filename = "shape_rect_corner.png";
+        p->background(192);
         p->nofill();
         p->stroke(0.0f, 1.0f);
         p->rect(10, 10, 100, 100);
@@ -33,6 +34,7 @@ TEST_CASE("Test Rect", "[shapes]")
     {
         p = Pyro::creategraphics(250, 250, mode);
         filename = "shape_rect_center.png";
+        p->background(192);
         p->rectmode(Pyro::CENTER);
         p->nofill();
         p->stroke(0.0f, 1.0f);
@@ -134,6 +136,7 @@ TEST_CASE("Complex shapes", "[shapes]")
         auto mode = GENERATE(Pyro::GraphicsMode::CAIRO, Pyro::GraphicsMode::SDL);
         Pyro::Graphics *p = Pyro::creategraphics(100, 100, mode);
         std::filesystem::path filename = "shape_multi_contour.png";
+        p->background(192);
         p->translate(50, 50);
         p->stroke(255, 0, 0);
         p->beginshape();

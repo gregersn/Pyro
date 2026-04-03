@@ -2,14 +2,12 @@
 #include "pyro/shape.h"
 #include <stdexcept>
 #define _USE_MATH_DEFINES
-#include <cmath>
 
 #include "pyro/graphics.h"
 #include "pyro/graphics_cairo.h"
 #include "pyro/graphics_sdl.h"
 #include "pyro/utils.h"
 
-#include <iostream>
 #include <cstring>
 
 namespace Pyro
@@ -32,7 +30,6 @@ namespace Pyro
         this->strokeweight(1.0f);
         this->textsize(16.0f);
         this->strokecap(ROUND);
-        this->background(192);
     }
 
     Graphics *creategraphics(unsigned int width, unsigned int height, GraphicsMode mode, std::filesystem::path filename)

@@ -55,6 +55,7 @@ TEST_CASE("Test triangle")
     std::filesystem::path filename = "graphics_triangle.png";
 
     Pyro::Graphics *triangle = Pyro::creategraphics(256, 256, mode);
+    triangle->background(192);
     triangle->begindraw();
     triangle->fill(1.0f, 0.0f, 1.0f, 1.0f);
     triangle->stroke(0.0f, 1.0f, 0.0f, 1.0f);
@@ -71,6 +72,7 @@ TEST_CASE("Test smoothing")
     std::filesystem::path filename = "graphics_smooth.png";
 
     Pyro::Graphics *smoothing = Pyro::creategraphics(9 * 50, 50, mode);
+    smoothing->background(192);
     smoothing->begindraw();
     smoothing->ellipsemode(Pyro::CENTER);
     for (unsigned int i = 0; i < 9; i++)
@@ -92,6 +94,7 @@ TEST_CASE("Test blend modes")
     std::filesystem::path filename = "graphics_blend.png";
     Pyro::Graphics *blending = Pyro::creategraphics(300, 300, mode);
 
+    blending->background(192);
     blending->nostroke();
 
     blending->blendmode(Pyro::BLEND);

@@ -23,6 +23,7 @@ TEST_CASE("Place image in various ways")
         }
 
         p = Pyro::creategraphics(img->width(), img->height(), mode);
+        p->background(192);
         p->begindraw();
         p->image(img, 0, 0);
         p->enddraw();
@@ -41,6 +42,7 @@ TEST_CASE("Place image in various ways")
         }
 
         p = Pyro::creategraphics(img->width(), img->height(), mode);
+        p->background(192);
         p->imagemode(Pyro::CENTER);
         p->translate(p->width() / 2.0f, p->height() / 2.0f);
         p->rotate(Pyro::QUARTER_PI);
